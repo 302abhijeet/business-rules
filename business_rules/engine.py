@@ -1,4 +1,5 @@
 from .fields import FIELD_NO_INPUT
+from .variables import get_all_variables
 
 def run_all(rule_list,
             defined_variables,
@@ -15,12 +16,15 @@ def run_all(rule_list,
     return rule_was_triggered
 
 def run(rule, defined_variables, defined_actions):
-    conditions, actions = rule['conditions'], rule['actions']
+    #added function action for when rule is false
+    conditions, actions_true, actions_false = rule['conditions'], rule['actions_true'], rule['actions_false']
     rule_triggered = check_conditions_recursively(conditions, defined_variables)
     if rule_triggered:
-        do_actions(actions, defined_actions)
+        do_actions(actions_true, defined_actions)
         return True
-    return False
+    else :
+        do_actions(actions_false, defined_actions)
+        return False
 
 
 def check_conditions_recursively(conditions, defined_variables):
@@ -51,8 +55,13 @@ def check_condition(condition, defined_variables):
     object must have a variable defined for any variables in this condition.
     """
     name, op, value = condition['name'], condition['operator'], condition['value']
-    operator_type = _get_variable_value(defined_variables, name)
-    return _do_operator_comparison(operator_type, op, value)
+    operator_type = []                  #allowing for multiple variable....only 2 allowed as of now
+    for var in name :
+        operator_type.append(_get_variable_value(defined_variables, name))
+    if value == None
+        return _do_operator_comparison(operator_type, op, operator_type[1])
+    else :
+        return _do_operator_comparison(operator_type[1], op, value)
 
 def _get_variable_value(defined_variables, name):
     """ Call the function provided on the defined_variables object with the
