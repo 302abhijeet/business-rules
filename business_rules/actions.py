@@ -1,7 +1,7 @@
 import inspect
 
-from . import fields
-from .utils import fn_name_to_pretty_label
+import fields
+from utils import fn_name_to_pretty_label
 
 
 class BaseActions(object):

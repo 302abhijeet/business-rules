@@ -1,4 +1,9 @@
 #test API for runing some basic tests on the engine
+from engine import run_all
+from variables import *
+from actions import *
+import weakref
+
 
 #input variables
 class ProductVariables(BaseVariables):
@@ -8,11 +13,11 @@ class ProductVariables(BaseVariables):
 
     @numeric_rule_variable
     def actual(self):
-        return self.product.current
+        return self.product.actual
 
     @numeric_rule_variable
     def expected(self):
-        return self.product.actual
+        return self.product.expected
 
 
 #action variables
@@ -21,11 +26,11 @@ class ProductActions(BaseActions):
     def __init__(self, product):
         self.product = product
 
-    @rule_action
+    @rule_action()
     def condition_pass(self):
         print("All expected access points are present")
     
-    @rule_action
+    @rule_action()
     def condition_fail(self) :
         print("NOT all expected access points are present")
 
@@ -33,13 +38,46 @@ class ProductActions(BaseActions):
 #build rules
 rules = [
 #expected == actual
-{ "conditions" : {  'name' : ["actual","expected"]
-					'operator' : "equal_to"
+{ "conditions" : {  'name' : ["actual","expected"],
+					'operator' : "equal_to",
 				    'value' : None
 				 },
-  "action_true" : [ { 'name' : "condition_pass",
-                  'params': None}],
-  "action_false": [ { 'name' : "condition_fail",
-                  'params': None}],
+  "actions_true" : [ { 'name' : "condition_pass",
+                       'params' : None}],
+  "actions_false": [ { 'name' : "condition_fail",
+                       'params' : None}],
 }
 ]
+
+
+#build database
+class Products :
+    _instances = set()
+
+    def __init__(self,actual,expected) :
+        self.expected = expected
+        self.actual = actual
+        self._instances.add(weakref.ref(self))
+    
+    @classmethod
+    def getinstances(cls):
+        dead = set()
+        for ref in cls._instances:
+            obj = ref()
+            if obj is not None:
+                yield obj
+            else:
+                dead.add(ref)
+
+term1 = Products(23,44)
+term2 = Products(89,89)
+term3 = Products(94,52)
+
+
+#run Rules
+for product in Products.getinstances():
+    run_all(rule_list=rules,
+            defined_variables=ProductVariables(product),
+            defined_actions=ProductActions(product),
+            stop_on_first_trigger=True
+           )

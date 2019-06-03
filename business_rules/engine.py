@@ -1,5 +1,4 @@
-from .fields import FIELD_NO_INPUT
-from .variables import get_all_variables
+from fields import FIELD_NO_INPUT
 
 def run_all(rule_list,
             defined_variables,
@@ -57,11 +56,16 @@ def check_condition(condition, defined_variables):
     name, op, value = condition['name'], condition['operator'], condition['value']
     operator_type = []                  #allowing for multiple variable....only 2 allowed as of now
     for var in name :
-        operator_type.append(_get_variable_value(defined_variables, name))
-    if value == None
-        return _do_operator_comparison(operator_type, op, operator_type[1])
+        operator_type.append(_get_variable_value(defined_variables, var))
+    if value == None :       #We assume doing operation on similiar data_types
+        def fallback(*args, **kwargs):
+            raise AssertionError("Variable {0} is not defined in class {1}".format(
+                    name, defined_variables.__class__.__name__))
+        method = getattr(defined_variables, name[1], fallback)
+        val = method()
+        return _do_operator_comparison(operator_type[0], op, val)
     else :
-        return _do_operator_comparison(operator_type[1], op, value)
+        return _do_operator_comparison(operator_type[0], op, value)
 
 def _get_variable_value(defined_variables, name):
     """ Call the function provided on the defined_variables object with the
