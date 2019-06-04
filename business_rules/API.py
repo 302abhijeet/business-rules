@@ -1,10 +1,13 @@
 #API for the Rule based engine
 
 from engine import run_all
+from variables import *
+from actions import *
+import weakref
 import json
 
 #import prodcut variables from UI
-with open('variables.json') as f:
+with open('variables.txt') as f:
     variables = json.load(f)
 
 
@@ -15,18 +18,15 @@ class ProductVariables(BaseVariables):
         self.product = product
 
     for var in variables :
-    	if var['options'] == 'None' :
-	    	exec("@" + var['field'] + "(" + var['label'] + ")" + """
-	    	def """ + var['name'] + """(self):
-		    	return """ + var['formulae'])
-	    else :
-	    	exec("@" + var['field'] + "(" + var['label'] + "," + var['options'] + """)
-	    	def """ + var['name'] + """(self):
-		    	return """ + var['formulae'])
+        if var['options'] == 'None' :
+            exec("@" + var['field'] + "(" + var['label'] + ")" + """\ndef """ + var['name'] + """(self): \n\treturn """ + var['formulae'])
+        else :
+            exec("@" + var['field'] + "(" + var['label'] + "," + var['options'] + """)\ndef """ + var['name'] + """(self):\n\treturn """ + var['formulae'])
+
 
 
 #import product actions from UI
-with open('actions.json') as f:
+with open('actions.txt') as f:
     actions = json.load(f)
 
 
@@ -37,25 +37,45 @@ class ProductActions(BaseActions):
         self.product = product
 
     for act in actions : 
-		li = []
-    	for args in act['params'] :
-    		li.append(args)
-    	args = "(self," + ','.join(li) + ")"
-    	@rule_action(params = act['params'])
-    	exec("def " + act['name'] + args + """ :
-    		""" + act["formulae"])
+        li = []
+        if act['params'] :
+            for args in act['params'] :
+                li.append(args)
+        args = "(self" + ','.join(li) + ")"
+        exec("@rule_action(params = act['params'])\n" "def " + act['name'] + args + """ :\n\t""" + act["formulae"])
 
 
 #take the input rules
-with open('rules.json') as f:
+with open('rules.txt') as f:
     rules = json.load(f)
 
 
-#access the database to get all products
+#build database
+class Products :
+    _instances = set()
+
+    def __init__(self,actual,expected) :
+        self.expected = expected
+        self.actual = actual
+        self._instances.add(weakref.ref(self))
+    
+    @classmethod
+    def getinstances(cls):
+        dead = set()
+        for ref in cls._instances:
+            obj = ref()
+            if obj is not None:
+                yield obj
+            else:
+                dead.add(ref)
+
+term1 = Products(23,44)
+term2 = Products(89,89)
+term3 = Products(94,52)
 
 
-#run the engine
-for product in Products.objects.all():
+#run Rules
+for product in Products.getinstances():
     run_all(rule_list=rules,
             defined_variables=ProductVariables(product),
             defined_actions=ProductActions(product),

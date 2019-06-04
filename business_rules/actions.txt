@@ -1,0 +1,1 @@
+[{"name": "condition_pass", "params": null, "formulae": "print('All expected access points are present')"}, {"name": "condition_fail", "params": null, "formulae": "print('NOT all expected access points are present')"}]

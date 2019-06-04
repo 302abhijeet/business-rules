@@ -1,0 +1,1 @@
+[{"conditions": {"name": ["actual", "expected"], "operator": "equal_to", "value": null}, "actions_true": [{"name": "condition_pass", "params": null}], "actions_false": [{"name": "condition_fail", "params": null}]}]

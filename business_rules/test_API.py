@@ -3,6 +3,7 @@ from engine import run_all
 from variables import *
 from actions import *
 import weakref
+import json
 
 
 #input variables
@@ -36,19 +37,8 @@ class ProductActions(BaseActions):
 
 
 #build rules
-rules = [
-#expected == actual
-{ "conditions" : {  'name' : ["actual","expected"],
-					'operator' : "equal_to",
-				    'value' : None
-				 },
-  "actions_true" : [ { 'name' : "condition_pass",
-                       'params' : None}],
-  "actions_false": [ { 'name' : "condition_fail",
-                       'params' : None}],
-}
-]
-
+with open('rules.txt') as json_file:  
+    rules = json.load(json_file)
 
 #build database
 class Products :
