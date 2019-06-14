@@ -107,6 +107,7 @@ for case in use_case:
 
 
 #take input on which use case to run
+print("Enter use case :")
 case = input()
 for x in use_cases :
     if x['name'] == case :
@@ -114,14 +115,10 @@ for x in use_cases :
         break
 if(type(case) == type('')) :
     assert Exception("case not found")
-    
-#populate date from case variables
-class Product :
-    def __init__(self) :
-        product = collector.Collector()
-        self = product.create(case['variables'])
 
-product = Product()
+#populate date from case variables
+prod = collector.Collector()
+product = prod.create(case['variables'])
 
 #import prodcut variables from UI
 variables = case['variables']
