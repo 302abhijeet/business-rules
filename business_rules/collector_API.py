@@ -1,9 +1,15 @@
 #API module
 
 import requests
-def _get_value():
+def _get_value(var = []):
 	response = requests.get(var['input_method']['url'], params = var['input_method']['params'])
-	exec("out = " + var['input_method']['command'],locals(),globals())
+	
+	ldict = locals()
+	exec("out = " + var['input_method']['command'],globals(),ldict)
+	out = ldict['out']
+
+	if not response :
+		assert Exception(response)
 
 	#have to make changes here
 	if  var["input_method"]['evaluation'] and type(response) is not type(exec(var["input_method"]['evaluation'])) :

@@ -1,10 +1,9 @@
-#file for configuring the rules
-import json
+#configuration file for the API
 
-#export use cases
-
-use_cases = [ 
-            { 'name' : 'case1',
+use_cases = { 
+			#case 1
+            'case1' : {
+              #for finding closest match
               'parameter1' : {'name1' : {'formulae' : '',
 										  'percentage' : 20,
 										  'match' : 0},
@@ -25,27 +24,17 @@ use_cases = [
 							   'percentage' : 80,
 							   'match' : 0},
 			   'match' : 0,
-			   'rules' : [
-							#(expected == actual and expected < 100) or actual > expected 
-							{ "conditions" : {'any' : [ { 'all': [{'name' : ["actual","expected"],
-												                   'operator' : "equal_to",
-											                       'value' : None},
-							                                      {'name' : ["expected"],
-							                                       'operator': 'less_than',
-							                                        'value' : 100}
-							                                     ]
-							                            },
-							                            { 'name' : ['actual','expected'],
-							                              'operator' : "greater_than",
-							                              'value' : None }
-							                           ]
-							                 },
-							  "actions_true" : [ { 'name' : "condition_pass",
-							                       'params' : None}],
-							  "actions_false": [ { 'name' : "condition_fail",
-							                       'params' : None}],
-							}
-							],
+
+			   'rules' : [{'all' : ['rule1','rule2'],
+			              'then': ['rule3'],
+			              'else': ['rule2']
+			              },
+			              {'any': {1 :['rule1','rule2','rule3'] },
+			              'then': ['rule3','rule2'],
+			              'else': None
+			              } 
+			            ],
+
 				'variables' : [
 							#actual numeric
 							{ 'name' : "actual",
@@ -85,19 +74,22 @@ use_cases = [
 							                    }
 							  }
 							],
+
                 'actions' : [
 							{ 'name' : 'condition_pass',
 							  'params' : None,
-							  'formulae' : "print('All expected access points are present')"
+							  'formulae' : "print('All expected access points are present in case 1')"
 							  },
 							{ 'name' : 'condition_fail',
 							  'params' : None,
-							  'formulae' : "print('NOT all expected access points are present')"
+							  'formulae' : "print('NOT all expected access points are present in case 1')"
 							}
 							]
 				},
 			 
-			  {'name' : 'case2',
+			 #case 2 begins
+			 'case2' : {
+			  #closest match for case2
 			   'parameter1' : {'name5' : {'formulae' : '',
 										  'percentage' : 20,
 										  'match' : 0},
@@ -118,27 +110,9 @@ use_cases = [
 							   'percentage' : 80,
 							   'match' : 0},
 			  'match' : 0,
-			  'rules' : [
-						#(expected == actual and expected < 100) or actual > expected 
-						{ "conditions" : {'any' : [ { 'all': [{'name' : ["actual","expected"],
-											                   'operator' : "equal_to",
-										                       'value' : None},
-						                                      {'name' : ["expected"],
-						                                       'operator': 'less_than',
-						                                        'value' : 100}
-						                                     ]
-						                            },
-						                            { 'name' : ['actual','expected'],
-						                              'operator' : "greater_than",
-						                              'value' : None }
-						                           ]
-						                 },
-						  "actions_true" : [ { 'name' : "condition_pass",
-						                       'params' : None}],
-						  "actions_false": [ { 'name' : "condition_fail",
-						                       'params' : None}],
-						}
-						],
+
+			  'rules' : [ ('rule1',['rule2','rule3'])],
+
 				'variables' : [
 							#actual numeric
 							{ 'name' : "actual",
@@ -147,7 +121,7 @@ use_cases = [
 							  'options' : 'None',
 							  'formulae' : 'self.product.actual',
 							  'input_method' : {'method' : 'API',
-							                    'url' : 'https://541d0516-65f5-4002-a22d-c4dcafa91315.mock.pstmn.io/get',
+							                    'url' : 'https://ce979fb9-c240-4259-bf6a-6d9de424e291.mock.pstmn.io/get',
 							                    'params' : {},
 							                    "command" : 'response.json()["actual"]',
 							                    'evaluation' : None,
@@ -163,7 +137,7 @@ use_cases = [
 							  'options' : 'None',
 							  'formulae' : 'self.product.expected',
 							  'input_method' :  {'method' : 'API',
-							                    'url' : 'https://541d0516-65f5-4002-a22d-c4dcafa91315.mock.pstmn.io/get',
+							                    'url' : 'https://ce979fb9-c240-4259-bf6a-6d9de424e291.mock.pstmn.io/get',
 							                    'params' : {},
 							                    "command" : 'response.json()["expected"]',
 							                    'evaluation' : None,
@@ -172,19 +146,21 @@ use_cases = [
 							                    }
 							  }
 							],
+
                 'actions' : [
 							{ 'name' : 'condition_pass',
 							  'params' : None,
-							  'formulae' : "print('All expected access points are present')"
+							  'formulae' : "print('All expected access points are present in case 2')"
 							  },
 							{ 'name' : 'condition_fail',
 							  'params' : None,
-							  'formulae' : "print('NOT all expected access points are present')"
+							  'formulae' : "print('NOT all expected access points are present in case 2')"
 							}
 							]
 				},
-
-				{'name' : 'case3',
+                
+                #new case
+				'case3' : {
 			   'parameter1' : {'name5' : {'formulae' : '',
 										  'percentage' : 20,
 										  'match' : 0},
@@ -205,27 +181,8 @@ use_cases = [
 							   'percentage' : 80,
 							   'match' : 0},
 			  'match' : 0,
-			  'rules' : [
-						#(expected == actual and expected < 100) or actual > expected 
-						{ "conditions" : {'any' : [ { 'all': [{'name' : ["actual","expected"],
-											                   'operator' : "equal_to",
-										                       'value' : None},
-						                                      {'name' : ["expected"],
-						                                       'operator': 'less_than',
-						                                        'value' : 100}
-						                                     ]
-						                            },
-						                            { 'name' : ['actual','expected'],
-						                              'operator' : "greater_than",
-						                              'value' : None }
-						                           ]
-						                 },
-						  "actions_true" : [ { 'name' : "condition_pass",
-						                       'params' : None}],
-						  "actions_false": [ { 'name' : "condition_fail",
-						                       'params' : None}],
-						}
-						],
+
+			  'rules' : ['rule1','rule2','rule3'],
 				'variables' : [
 							#actual numeric
 							{ 'name' : "actual",
@@ -272,68 +229,56 @@ use_cases = [
 							}
 							]
 				}
- ]
-#export rules (these are compulsory)
-rules = [
-#(expected == actual and expected < 100) or actual > expected 
-{ "conditions" : {'any' : [ { 'all': [{'name' : ["actual","expected"],
-					                   'operator' : "equal_to",
-				                       'value' : None},
-                                      {'name' : ["expected"],
-                                       'operator': 'less_than',
-                                        'value' : 100}
-                                     ]
-                            },
-                            { 'name' : ['actual','expected'],
-                              'operator' : "greater_than",
-                              'value' : None }
-                           ]
-                 },
-  "actions_true" : [ { 'name' : "condition_pass",
-                       'params' : None}],
-  "actions_false": [ { 'name' : "condition_fail",
-                       'params' : None}],
-}
-]
+ }
 
-with open('use_cases.txt', 'w') as outfile:  
-    json.dump(use_cases, outfile)
-with open('rules.txt', 'w') as outfile:  
-    json.dump(rules, outfile)
+rules = { 
+		#(expected == actual and expected < 100) or actual > expected 
+	    'rule1' : { "conditions" : {'any' : [ { 'all': [{'name' : ["actual","expected"],
+											            'operator' : "equal_to",
+										                'value' : None},
+						                               {'name' : ["expected"],
+						                                'operator': 'less_than',
+					                                    'value' : 100}
+						                                ]
+						                       },
+		   	                                  { 'name' : ['actual','expected'],
+			                                    'operator' : "greater_than",
+			                                    'value' : None }
+						                   ]
+				                    },
+				    "actions_true" : [ { 'name' : "condition_pass",
+				                       'params' : None}],
+				    "actions_false": [ { 'name' : "condition_fail",
+				                       'params' : None}],
+				   },
 
+		#(expected < actual and actual <  50)
+		'rule2' :{ "conditions" : { 'all': [{'name' : ["actual","expected"],
+				     			             'operator' : "greater_than",
+							                 'value' : None},
+						                    {'name' : ["actual"],
+		   	                                 'operator': 'less_than',
+				                             'value' : 50}
+						                   ]
+				                    },
+				    "actions_true" : [ { 'name' : "condition_pass",
+				                       'params' : None}],
+				    "actions_false": [ { 'name' : "condition_fail",
+				                       'params' : None}],
+				   },
 
-#export variables (these are compulsory)
-variables = [
-#actual numeric
-{ 'name' : "actual",
-  'field' : "numeric_rule_variable",
-  'label' : 'None',
-  'options' : 'None',
-  'formulae' : 'self.product.actual'
-  },
-
-#expected numeric
-{ 'name' : "expected",
-  'field' : "numeric_rule_variable",
-  'label' : 'None',
-  'options' : 'None',
-  'formulae' : 'self.product.expected',
-  }
-]
-with open('variables.txt', 'w') as outfile:  
-    json.dump(variables, outfile)
-
-
-#export actions (these are compulsory)
-actions = [
-{ 'name' : 'condition_pass',
-  'params' : None,
-  'formulae' : "print('All expected access points are present')"
-  },
-{ 'name' : 'condition_fail',
-  'params' : None,
-  'formulae' : "print('NOT all expected access points are present')"
-}
-]
-with open('actions.txt', 'w') as outfile:  
-    json.dump(actions, outfile)
+	    #(expected = 70 or actual < 100)
+		'rule3' :{ "conditions" : { 'any': [{'name' : ["expected"],
+				     			             'operator' : "equal_to",
+							                 'value' : 70},
+						                    {'name' : ["actual"],
+		   	                                 'operator': 'less_than',
+				                             'value' : 100}
+						                   ]
+				                    },
+				    "actions_true" : [ { 'name' : "condition_pass",
+				                       'params' : None}],
+				    "actions_false": [ { 'name' : "condition_fail",
+				                       'params' : None}],
+				   }
+		}

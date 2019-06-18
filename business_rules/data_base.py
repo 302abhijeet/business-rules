@@ -1,7 +1,7 @@
 #Database module
 
 import mysql.connector
-def _get_value() :
+def _get_value(var = []) :
 	mydb = mysql.connector.connect(
 			  host=var['input_method']['host_name'],
 			  user=var['input_method']['user_name'],
