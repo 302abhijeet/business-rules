@@ -1,5 +1,5 @@
-business-rules
-==============
+# SNU-RuleEngine
+Description about the project along with the PPT should go here
 
 [![Build Status](https://travis-ci.org/venmo/business-rules.svg?branch=master)](https://travis-ci.org/venmo/business-rules)
 
@@ -290,3 +290,4 @@ $ mkvirtualenv business-rules
 $ pip install -r dev-requirements.txt
 $ nosetests
 ```
+
