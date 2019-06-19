@@ -76,8 +76,9 @@ def run_rules_dict(dicts) :
 
 
 
-#import use cases
+#import use cases and rules
 use_cases = rules_config.use_cases
+rules = rules_config.rules
 
 
 
@@ -95,7 +96,6 @@ for case in use_case:
     #run rules
 """
 
-
 #take input on which use case to run
 print("Enter use case and rule:")
 case = input()
@@ -107,12 +107,14 @@ else  :
     exit()
 
 
-#populate date from case variables
-product = collector.Collector(case['variables'])
-
-
 #import prodcut variables from UI
-variables = case['variables']
+variables = []
+for rule in case['rule_list'] :
+    for var in rules[rule]['variables']:
+        variables.append(var)
+
+#populate date from case variables
+product = collector.Collector(variables)
 
 
 #create ruleVariables
@@ -130,7 +132,10 @@ class ProductVariables(BaseVariables):
 
 
 #import product actions from UI
-actions = case['actions']
+actions = []
+for rule in case['rule_list'] :
+    for act in rules[rule]['actions']:
+        actions.append(act)
 
 
 #Create ruleActions
@@ -148,8 +153,6 @@ class ProductActions(BaseActions):
         exec("@rule_action(params = act['params'])\n" "def " + act['name'] + args + """ :\n\t""" + act["formulae"])
 
 
-#import rules
-rules = rules_config.rules
 
 #run rules
 if run_rule:
