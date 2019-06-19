@@ -1,0 +1,41 @@
+case1:
+  rule_list:
+  - rule1
+  - rule2
+  - rule3
+  rules:
+  - all:
+    - rule1
+    - rule2
+    else:
+    - rule2
+    then:
+    - rule3
+  - any:
+      1:
+      - rule1
+      - rule2
+      - rule3
+    else: null
+    then:
+    - rule3
+    - rule2
+case2:
+  rule_list:
+  - rule1
+  - rule2
+  - rule3
+  rules:
+  - !!python/tuple
+    - rule1
+    - - rule2
+      - rule3
+case3:
+  rule_list:
+  - rule1
+  - rule2
+  - rule3
+  rules:
+  - rule1
+  - rule2
+  - rule3

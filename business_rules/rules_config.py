@@ -1,4 +1,5 @@
 #configuration file for the API
+import yaml
 
 use_cases = { 
 	#case 1
@@ -224,6 +225,16 @@ actions = {
 		'formulae' : "print('NOT all expected access points are present')"
 	}
 }
+
+
+with open("./configuration_files/use_cases.yml", 'w') as f:
+    yaml.dump(use_cases, f)
+with open("./configuration_files/rules.yml", 'w') as f:
+    yaml.dump(rules, f)
+with open("./configuration_files/variables.yml", 'w') as f:
+    yaml.dump(variables, f)
+with open("./configuration_files/actions.yml", 'w') as f:
+    yaml.dump(actions, f)
 
 
 """

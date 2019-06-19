@@ -1,1 +1,0 @@
-[{"name": "actual", "field": "numeric_rule_variable", "label": "None", "options": "None", "formulae": "self.product.actual"}, {"name": "expected", "field": "numeric_rule_variable", "label": "None", "options": "None", "formulae": "self.product.expected"}]

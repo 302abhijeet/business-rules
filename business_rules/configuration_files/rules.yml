@@ -1,0 +1,92 @@
+rule1:
+  actions:
+  - condition_pass
+  - condition_fail
+  actions_false:
+  - name: condition_fail
+    params: null
+  actions_true:
+  - name: condition_pass
+    params: null
+  conditions:
+    any:
+    - all:
+      - name:
+        - actual
+        - expected
+        operator: equal_to
+        value: null
+      - name:
+        - expected
+        operator: less_than
+        value: 100
+    - name:
+      - actual
+      - expected
+      operator: greater_than
+      value: null
+    - name:
+      - correct
+      operator: less_than
+      value: 10
+  variables:
+  - actual
+  - expected
+  - correct
+rule2:
+  actions:
+  - condition_pass
+  - condition_fail
+  actions_false:
+  - name: condition_fail
+    params: null
+  actions_true:
+  - name: condition_pass
+    params: null
+  conditions:
+    all:
+    - name:
+      - actual
+      - expected
+      operator: greater_than
+      value: null
+    - name:
+      - actual
+      operator: less_than
+      value: 50
+    - name:
+      - correct
+      operator: less_than
+      value: 10
+  variables:
+  - actual
+  - expected
+  - correct
+rule3:
+  actions:
+  - condition_pass
+  - condition_fail
+  actions_false:
+  - name: condition_fail
+    params: null
+  actions_true:
+  - name: condition_pass
+    params: null
+  conditions:
+    any:
+    - name:
+      - expected
+      operator: equal_to
+      value: 70
+    - name:
+      - actual
+      operator: less_than
+      value: 100
+    - name:
+      - correct
+      operator: less_than
+      value: 10
+  variables:
+  - actual
+  - expected
+  - correct
