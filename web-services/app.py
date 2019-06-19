@@ -3,55 +3,77 @@ from filehandler import *
 import yaml
 
 app = Flask(__name__)
-filename = '../business_rules/rules.yml'
+dirpath = '../business_rules/configuration_files/'
 
-#endpoint to add a new rule to rules.json
-@app.route('/addrule',methods=['POST'])
-def addrule():
+#endpoint to add a new rule
+@app.route('/add/<ty>',methods=['POST'])
+def addrule(ty):
     if request.method == 'POST':
+        
+        filepath = updateFilePath(dirpath,ty) 
+        if filepath == False:
+                return jsonify({'msg':'Wrong type'})
+        
+        
         rule = request.get_data()
         if rule != None:
                 rule = eval(rule)
-                appendData(filename,rule)
+                appendData(filepath,rule)
 
         return jsonify({'msg':'file updated'})
 
 #endpoint to delete a rule, requires rule id
-@app.route('/delrule',methods=['DELETE'])
-def delrule():
+@app.route('/del/<ty>',methods=['DELETE'])
+def delrule(ty):
     if request.method == 'DELETE':
+
+        filepath = updateFilePath(dirpath,ty) 
+        if filepath == False:
+                return jsonify({'msg':'Wrong type'})
+
         id = request.args['id']
-        flag = deleteData(filename,id)
+        flag = deleteData(filepath,id)
         message = 'file updated' if flag is True else 'error'
         return jsonify({'msg':message})
 
 #endpoint to get all or specific rules
-@app.route('/getrule',methods=['GET'])
-def getrule():
+@app.route('/get/<ty>',methods=['GET'])
+def getrule(ty):
     if request.method=='GET':
+
+        filepath = updateFilePath(dirpath,ty) 
+        if filepath == False:
+                return jsonify({'msg':'Wrong type'})
+
         id = request.args['id']
         if id == 'all':
-            data = getAllRules(filename,id)
+            data = getAllRules(filepath,id)
         else:
-            data = getSpecificRule(filename,id)
+            data = getSpecificRule(filepath,id)
 
-        message = 'Rules found' if data != False else 'Rule not found'
-        return jsonify({'msg':message,'rules':data})
+        message = 'data found' if data != False else 'data not found'
+        return jsonify({'msg':message,'data':data})
 
 #endpoint to modify a specific rule
-@app.route('/modifyrule',methods=['POST'])
-def modifyrule():
+@app.route('/modify/<ty>',methods=['POST'])
+def modifyrule(ty):
     if request.method == 'POST':
+
+        filepath = updateFilePath(dirpath,ty) 
+        if filepath == False:
+                return jsonify({'msg':'Wrong type'})
+
         flag =False
         rule = request.get_data()
         if rule!=None:
                 rule=eval(rule)
-                flag = updateRule(filename,rule)
+                flag = updateRule(filepath,rule)
         msg = 'Rule updated' if flag else 'Rule with specified id not found'
     return jsonify({'msg':msg})
 
 
+
 if __name__ == "__main__":
-    checkFileExists(filename)
+    checkFilesExists(dirpath)
     print('Starting server')
     app.run(port=5050,debug=True)
