@@ -76,9 +76,11 @@ def run_rules_dict(dicts) :
 
 
 
-#import use cases and rules
+#import use cases,rules,variables and actions
 use_cases = rules_config.use_cases
 rules = rules_config.rules
+variables = rules_config.variables
+actions = rules_config.actions
 
 
 
@@ -100,21 +102,21 @@ for case in use_case:
 print("Enter use case and rule:")
 case = input()
 run_rule = input()
-if case in use_cases :
+if case :
     case = use_cases[case]
-else  :
-    assert Exception(print("use case not found"))
-    exit()
 
 
 #import prodcut variables from UI
-variables = []
-for rule in case['rule_list'] :
-    for var in rules[rule]['variables']:
-        variables.append(var)
-
+variables_list = []
+if run_rule :
+    for var in rules[run_rule]['variables'] :
+        variables_list.append(variables[var])
+else :
+    for rule in case['rule_list'] :
+        for var in rules[rule]['variables'] :
+            variables_list.append(variables[var])
 #populate date from case variables
-product = collector.Collector(variables)
+product = collector.Collector(variables_list)
 
 
 #create ruleVariables
@@ -123,7 +125,7 @@ class ProductVariables(BaseVariables):
     def __init__(self, product):
         self.product = product
 
-    for var in variables :
+    for var in variables_list :
         if var['options'] == 'None' :
             exec("@" + var['field'] + "(" + var['label'] + ")" + """\ndef """ + var['name'] + """(self): \n\treturn """ + var['formulae'])
         else :
@@ -132,10 +134,14 @@ class ProductVariables(BaseVariables):
 
 
 #import product actions from UI
-actions = []
-for rule in case['rule_list'] :
-    for act in rules[rule]['actions']:
-        actions.append(act)
+actions_list = []
+if run_rule :
+    for act in rules[run_rule]['actions'] :
+        actions_list.append(actions[act])
+else :
+    for rule in case['rule_list'] :
+        for act in rules[rule]['actions'] :
+            actions_list.append(actions[act])
 
 
 #Create ruleActions
@@ -144,7 +150,7 @@ class ProductActions(BaseActions):
     def __init__(self, product):
         self.product = product
 
-    for act in actions : 
+    for act in actions_list : 
         li = []
         if act['params'] :
             for args in act['params'] :

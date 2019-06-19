@@ -10,16 +10,19 @@ def _get_value(var = []) :
 				)
 	
 	command = var['input_method']['command'].split("\n")
+	mycursor = mydb.cursor()
 	for com in command:
 	    mycursor.execute(com)
 	result = mycursor.fetchall()
 
-	if  var["input_method"]['evaluation'] and type(result) is not type(var["input_method"]['evaluation']) :
-		raise Exception("evaluation criteria not met")
+	if var['input_method']['start'] or var['input_method']['end'] :
+		out = result[var["input_method"]['start']:var["input_method"]['end']]
 	else :
-		if not  start or not end :
-			out = result[var["input_method"]['start']:var["input_method"]['end']]
+		if len(result) == 1 :
+			out = result[0]
+			if len(out) == 1 :
+				out = out[0]
 		else :
 			out = result
 
-		return out
+	return out
