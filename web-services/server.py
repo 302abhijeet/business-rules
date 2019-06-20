@@ -5,11 +5,9 @@
      - Name
     Optional inputs are possible too
 '''
-import sys
-sys.path.append('C:\\Users\\avij\\Documents\\busrules\\SNU-RuleEngine\\business_rules')
+import business_rules.API as API
 from flask import Flask,request,jsonify
 import yaml
-import API
 server = Flask(__name__)
 
 #route to run rules
@@ -19,7 +17,7 @@ def runrule():
         #get the optional variable values as arguments
         data_given = request.args.to_dict()
         #API function to run the rules
-        API._run_API(run_rule='rule1',case='case2',parameter_variables={'expected':2,'actual':3,'correct':5})
+        API._run_API(run_rule=None,case='case2',parameter_variables={'expected':2})
         return jsonify({'msg':'run successful'})
 
 

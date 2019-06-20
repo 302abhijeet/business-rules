@@ -1,7 +1,7 @@
 #collector for collecting and populating the data
-import SSH
-import collector_API
-import data_base
+import business_rules.SSH as SSH
+import business_rules.collector_API as collector_API
+import business_rules.data_base as data_base
 class Collector:
 
 	def __init__(self, variables,parameter_variables = None) :

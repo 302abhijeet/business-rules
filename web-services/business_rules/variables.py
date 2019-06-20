@@ -1,7 +1,7 @@
 import inspect
 from functools import wraps
-from utils import fn_name_to_pretty_label
-from operators import (BaseType,
+from business_rules.utils import fn_name_to_pretty_label
+from business_rules.operators import (BaseType,
                         NumericType,
                         StringType,
                         BooleanType,

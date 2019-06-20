@@ -1,7 +1,7 @@
 import inspect
 
-import fields
-from utils import fn_name_to_pretty_label
+import business_rules.fields
+from business_rules.utils import fn_name_to_pretty_label
 
 
 class BaseActions(object):

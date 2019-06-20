@@ -1,4 +1,4 @@
-from fields import FIELD_NO_INPUT
+from business_rules.fields import FIELD_NO_INPUT
 
 def run_all(rule_list,
             defined_variables,

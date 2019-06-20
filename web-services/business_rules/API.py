@@ -1,13 +1,13 @@
 #API for the Rule based engine
 
-from engine import *
-from variables import *
-from actions import *
-from best_case import *
+from business_rules.engine import *
+from business_rules.variables import *
+from business_rules.actions import *
+from business_rules.best_case import *
 import weakref
 import json
-import collector
-import rules_config
+import business_rules.collector as collector
+import business_rules.rules_config as rules_config
 import threading
 
 def _run_API(case = "case2",run_rule = None,parameter_variables = {}) :

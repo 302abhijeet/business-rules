@@ -235,13 +235,13 @@ actions = {
 }
 
 
-with open("./configuration_files/use_cases.yml", 'w') as f:
+with open("./business_rules/configuration_files/use_cases.yml", 'w') as f:
     yaml.dump(use_cases, f)
-with open("./configuration_files/rules.yml", 'w') as f:
+with open("./business_rules/configuration_files/rules.yml", 'w') as f:
     yaml.dump(rules, f)
-with open("./configuration_files/variables.yml", 'w') as f:
+with open("./business_rules/configuration_files/variables.yml", 'w') as f:
     yaml.dump(variables, f)
-with open("./configuration_files/actions.yml", 'w') as f:
+with open("./business_rules/configuration_files/actions.yml", 'w') as f:
     yaml.dump(actions, f)
 
 
