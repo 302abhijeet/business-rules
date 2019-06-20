@@ -5,9 +5,8 @@ from business_rules.variables import *
 from business_rules.actions import *
 from business_rules.best_case import *
 import weakref
-import json
+import yaml
 import business_rules.collector as collector
-import business_rules.rules_config as rules_config
 import threading
 
 def _run_API(case = "case2",run_rule = None,parameter_variables = {}) :
@@ -96,10 +95,14 @@ def _run_API(case = "case2",run_rule = None,parameter_variables = {}) :
 
 
     #import use cases,rules,variables and actions
-    use_cases = rules_config.use_cases
-    rules = rules_config.rules
-    variables = rules_config.variables
-    actions = rules_config.actions
+    with open("./business_rules/configuration_files/use_cases.yml", 'r') as f:
+        use_cases = yaml.load(f)
+    with open("./business_rules/configuration_files/rules.yml", 'r') as f:
+        rules = yaml.load(f)
+    with open("./business_rules/configuration_files/variables.yml", 'r') as f:
+        variables = yaml.load( f)
+    with open("./business_rules/configuration_files/actions.yml", 'r') as f:
+        actions = yaml.load( f)
     if case :
         case = use_cases[case]
 
