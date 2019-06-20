@@ -10,179 +10,175 @@ import collector
 import rules_config
 import threading
 
+def _run_API(case = "case2",run_rule = None,parameter_variables = {}) :
+    #have to add functionality for multithreading
+    def run_rules_tuple(tuples) :
+        passed = True
 
-#have to add functionality for multithreading
-def run_rules_tuple(tuples) :
-    passed = True
+        def run_rules_thread(rule) :
+            nonlocal passed
 
-    def run_rules_thread(rule) :
-        nonlocal passed
+            if type(rule) == type('') :
+                if rules[rule]['multi_thread']:
+                    if not run(rule = rules[rule],defined_variables = ProductVariables(product),defined_actions = ProductActions(product)) :
+                        passed = False
+                else:
+                    raise Exception(print("Rule cannot be multi threaded"))
+                    exit()
 
-        if type(rule) == type('') :
-            if rules[rule]['multi_thread']:
-                if not run(rule = rules[rule],defined_variables = ProductVariables(product),defined_actions = ProductActions(product)) :
+            elif type(rule) == type(dict()):
+                if not run_rules_dict(rule) :
                     passed = False
-            else:
-                raise Exception(print("Rule cannot be multi threaded"))
-                exit()
 
-        elif type(rule) == type(dict()):
-            if not run_rules_dict(rule) :
-                passed = False
+            elif type(rule) == type(list()):
+                if not run_rules_list(rule):
+                    passed = False
 
-        elif type(rule) == type(list()):
-            if not run_rules_list(rule):
-                passed = False
-
-    
-    threads = []
-    for rule in tuples :
-        thread = threading.Thread(target = run_rules_thread, args = (rule,))
-        thread.start()
-        threads.append(thread)
-    
-    for thread in threads:
-        thread.join()
         
-    return passed
+        threads = []
+        for rule in tuples :
+            thread = threading.Thread(target = run_rules_thread, args = (rule,))
+            thread.start()
+            threads.append(thread)
+        
+        for thread in threads:
+            thread.join()
+            
+        return passed
 
 
 
-def run_rules_list(lists,pass_param = None) :
-    passed = 0
-    all_pass = True
-    if not lists :
-        return True
-    for rule in lists :
+    def run_rules_list(lists,pass_param = None) :
+        passed = 0
+        all_pass = True
+        if not lists :
+            return True
+        for rule in lists :
 
-        if type(rule) == type('') :
-            if run(rule = rules[rule],defined_variables = ProductVariables(product),defined_actions = ProductActions(product)) :
-                passed += 1
-            else :
-                all_pass = False
+            if type(rule) == type('') :
+                if run(rule = rules[rule],defined_variables = ProductVariables(product),defined_actions = ProductActions(product)) :
+                    passed += 1
+                else :
+                    all_pass = False
 
-        elif type(rule) == type(dict()):
-            if run_rules_dict(rule) :
-                passed += 1
-            else :
-                all_pass = False
+            elif type(rule) == type(dict()):
+                if run_rules_dict(rule) :
+                    passed += 1
+                else :
+                    all_pass = False
 
-        elif type(rule) == type(tuple()):
-            if run_rules_tuple(rule) :
-                passed += 1
-            else :
-                all_pass = False
+            elif type(rule) == type(tuple()):
+                if run_rules_tuple(rule) :
+                    passed += 1
+                else :
+                    all_pass = False
 
-    if pass_param and pass_param <= passed:
-        return True
-    else :
-        return  all_pass
-
-
-
-def run_rules_dict(dicts) :
-    if 'all' in dicts:
-        if run_rules_list(dicts['all']) :
-            return run_rules_list(dicts['then'])
+        if pass_param and pass_param <= passed:
+            return True
         else :
-            return run_rules_list(dicts['else'])
-    else:
-        if run_rules_list(dicts['any'][list(dicts['any'].keys())[0]],list(dicts['any'].keys())[0]):
-            return run_rules_list(dicts['then'])
-        else :
-            return run_rules_list(dicts['else'])
+            return  all_pass
 
 
 
-#import use cases,rules,variables and actions
-use_cases = rules_config.use_cases
-rules = rules_config.rules
-variables = rules_config.variables
-actions = rules_config.actions
+    def run_rules_dict(dicts) :
+        if 'all' in dicts:
+            if run_rules_list(dicts['all']) :
+                return run_rules_list(dicts['then'])
+            else :
+                return run_rules_list(dicts['else'])
+        else:
+            if run_rules_list(dicts['any'][list(dicts['any'].keys())[0]],list(dicts['any'].keys())[0]):
+                return run_rules_list(dicts['then'])
+            else :
+                return run_rules_list(dicts['else'])
 
 
 
-"""
-To be added later for parameter matching to use case
-#load parameters
-parameters = {}
-#input set of uses cases
-with open('use_cases.txt') as f:
-    use_cases = json.load(f)
-#find the best case and run it's rule
-use_case = case_rules(use_cases,parameters):
-for case in use_case:
-    rules = case['rules']
-    #run rules
-"""
 
-#take input on which use case to run
-print("Enter use case and rule:")
-case = input()
-run_rule = input()
-if case :
-    case = use_cases[case]
+    #import use cases,rules,variables and actions
+    use_cases = rules_config.use_cases
+    rules = rules_config.rules
+    variables = rules_config.variables
+    actions = rules_config.actions
+    if case :
+        case = use_cases[case]
 
 
-#import prodcut variables from UI
-variables_list = []
-if run_rule :
-    for var in rules[run_rule]['variables'] :
-        variables_list.append(variables[var])
-else :
-    for rule in case['rule_list'] :
-        for var in rules[rule]['variables'] :
+
+    """
+    To be added later for parameter matching to use case
+    #load parameters
+    parameters = {}
+    #input set of uses cases
+    with open('use_cases.txt') as f:
+        use_cases = json.load(f)
+    #find the best case and run it's rule
+    use_case = case_rules(use_cases,parameters):
+    for case in use_case:
+        rules = case['rules']
+        #run rules
+    """
+
+
+    #import prodcut variables from UI
+    variables_list = []
+    if run_rule :
+        for var in rules[run_rule]['variables'] :
             variables_list.append(variables[var])
-#populate date from case variables
-product = collector.Collector(variables_list,parameter_variables = None)
+    else :
+        for rule in case['rule_list'] :
+            for var in rules[rule]['variables'] :
+                variables_list.append(variables[var])
+    #populate date from case variables
+    product = collector.Collector(variables_list,parameter_variables = None)
 
 
-#create ruleVariables
-class ProductVariables(BaseVariables):
+    #create ruleVariables
+    class ProductVariables(BaseVariables):
 
-    def __init__(self, product):
-        self.product = product
+        def __init__(self, product):
+            self.product = product
 
-    for var in variables_list :
-        if var['options'] == 'None' :
-            exec("@" + var['field'] + "(" + var['label'] + ")" + """\ndef """ + var['name'] + """(self): \n\treturn """ + var['formulae'])
-        else :
-            exec("@" + var['field'] + "(" + var['label'] + "," + var['options'] + """)\ndef """ + var['name'] + """(self):\n\treturn """ + var['formulae'])
+        for var in variables_list :
+            if var['options'] == 'None' :
+                exec("@" + var['field'] + "(" + var['label'] + ")" + """\ndef """ + var['name'] + """(self): \n\treturn """ + var['formulae'])
+            else :
+                exec("@" + var['field'] + "(" + var['label'] + "," + var['options'] + """)\ndef """ + var['name'] + """(self):\n\treturn """ + var['formulae'])
 
 
 
-#import product actions from UI
-actions_list = []
-if run_rule :
-    for act in rules[run_rule]['actions'] :
-        actions_list.append(actions[act])
-else :
-    for rule in case['rule_list'] :
-        for act in rules[rule]['actions'] :
+    #import product actions from UI
+    actions_list = []
+    if run_rule :
+        for act in rules[run_rule]['actions'] :
             actions_list.append(actions[act])
+    else :
+        for rule in case['rule_list'] :
+            for act in rules[rule]['actions'] :
+                actions_list.append(actions[act])
 
 
-#Create ruleActions
-class ProductActions(BaseActions):
+    #Create ruleActions
+    class ProductActions(BaseActions):
 
-    def __init__(self, product):
-        self.product = product
+        def __init__(self, product):
+            self.product = product
 
-    for act in actions_list : 
-        li = []
-        if act['params'] :
-            for args in act['params'] :
-                li.append(args)
-        args = "(self" + ','.join(li) + ")"
-        exec("@rule_action(params = act['params'])\n" "def " + act['name'] + args + """ :\n\t""" + act["formulae"])
+        for act in actions_list : 
+            li = []
+            if act['params'] :
+                for args in act['params'] :
+                    li.append(args)
+            args = "(self" + ','.join(li) + ")"
+            exec("@rule_action(params = act['params'])\n" "def " + act['name'] + args + """ :\n\t""" + act["formulae"])
 
 
 
-#run rules
-if run_rule:
-    run(rule = rules[run_rule], defined_variables = ProductVariables(product), defined_actions = ProductActions(product))
-else :
-    run_rules_list(case['rules'])
+    #run rules
+    if run_rule:
+        run(rule = rules[run_rule], defined_variables = ProductVariables(product), defined_actions = ProductActions(product))
+    else :
+        run_rules_list(case['rules'])
 
 
 

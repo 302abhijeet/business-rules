@@ -8,7 +8,7 @@ class Collector:
 		
 		for var in variables :
 			
-			if parameter_variables and var in parameter_variables:
+			if parameter_variables and var['name'] in parameter_variables:
 				exec("self." + var['name'] + " = " + var['input_method']['evaluation'] + '(parameter_variables[var["name"]])')
 				continue
 
