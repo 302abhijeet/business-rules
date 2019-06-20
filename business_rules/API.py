@@ -130,7 +130,7 @@ def _run_API(case = "case2",run_rule = None,parameter_variables = {}) :
             for var in rules[rule]['variables'] :
                 variables_list.append(variables[var])
     #populate date from case variables
-    product = collector.Collector(variables_list,parameter_variables = None)
+    product = collector.Collector(variables_list,parameter_variables)
 
 
     #create ruleVariables
