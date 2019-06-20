@@ -4,12 +4,13 @@ actual:
   input_method:
     command: response.json()["actual"]
     end: null
-    evaluation: null
+    evaluation: int
     method: API
     params: {}
     start: null
     url: https://ce979fb9-c240-4259-bf6a-6d9de424e291.mock.pstmn.io/get
   label: None
+  multi_thread: true
   name: actual
   options: None
 correct:
@@ -19,13 +20,14 @@ correct:
     command: select correct from rule where correct order by correct limit 1
     data_base: rules_engine
     end: null
-    evaluation: null
+    evaluation: int
     host_name: localhost
     method: data_base
     password: Perfacio1
     start: null
     user_name: root
   label: None
+  multi_thread: true
   name: correct
   options: None
 expected:
@@ -44,5 +46,6 @@ expected:
     start: null
     user_name: ubuntu
   label: None
+  multi_thread: true
   name: expected
   options: None

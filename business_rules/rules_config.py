@@ -168,10 +168,11 @@ variables = {
             'url' : 'https://ce979fb9-c240-4259-bf6a-6d9de424e291.mock.pstmn.io/get',
             'params' : {},
             "command" : 'response.json()["actual"]',
-            'evaluation' : None,
+            'evaluation' : 'int',
             'start' : None,
 	        'end' : None
-       }
+       },
+       'multi_thread' : True
 	},
 
 	'expected' : { #expected numeric
@@ -190,7 +191,8 @@ variables = {
 	        'evaluation' : 'int',
 	        'start' : None,
 	        'end' : None,
-	                    }
+	    },
+	    'multi_thread' : True
 	},
 
 	'correct' : {#correct numeric
@@ -206,10 +208,11 @@ variables = {
 		    'password' : 'Perfacio1',
 		    'data_base' : 'rules_engine',
 		    "command" : 'select correct from rule where correct order by correct limit 1',
-		    'evaluation' : None,
+		    'evaluation' : 'int',
 		    'start' : None,
 		    'end' : None,
-	     }
+	     },
+	     'multi_thread' : True
  	}
 }
 
@@ -217,12 +220,14 @@ actions = {
 	"condition_pass" : { 
 		'name' : 'condition_pass',
 		'params' : None,
-		'formulae' : "print('All expected access points are present')"
+		'formulae' : "print('All expected access points are present')",
+		'multi_thread' : True
 	},
 	"condition_fail" :{
 	    'name' : 'condition_fail',
 		'params' : None,
-		'formulae' : "print('NOT all expected access points are present')"
+		'formulae' : "print('NOT all expected access points are present')",
+		'multi_thread' : True
 	}
 }
 
