@@ -3,7 +3,7 @@ from filehandler import *
 import yaml
 
 app = Flask(__name__)
-dirpath = '../business_rules/configuration_files/'
+dirpath = './business_rules/configuration_files/'
 
 #endpoint to add a new rule
 @app.route('/add/<ty>',methods=['POST'])
