@@ -68,13 +68,15 @@ rules = {
 		"actions_true" : [ 
 			{
 				'name' : "condition_pass",
-			    'params' : None
+			    'params' : None,
+				'multi_thread' : True
 			}
 		],
 		"actions_false": [
 			{ 
 				'name' : "condition_fail",
-			    'params' : None
+			    'params' : None,
+				'multi_thread' : True
 			}
 		],
 		"variables" : ['actual','expected',"correct"],
@@ -115,13 +117,15 @@ rules = {
 		"actions_true" : [ 
 			{
 				'name' : "condition_pass",
-			    'params' : None
+			    'params' : None,
+				'multi_thread' : True
 			}
 		],
 		"actions_false": [ 
 			{
 				'name' : "condition_fail",
-			    'params' : None
+			    'params' : None,
+				'multi_thread' : True
 			}
 		],
 		"variables" : ['actual','expected',"correct","incorrect"],
@@ -153,13 +157,15 @@ rules = {
 		"actions_true" : [ 
 			{
 				'name' : "condition_pass",
-			    'params' : None
+			    'params' : None,
+				'multi_thread' : True
 			}
 		],
 		"actions_false": [
 			{
 				'name' : "condition_fail",
-			    'params' : None
+			    'params' : None,
+				'multi_thread' : True
 			}
 		],
 		"variables" : ['actual','expected',"correct"],
@@ -254,13 +260,11 @@ actions = {
 		'name' : 'condition_pass',
 		'params' : None,
 		'formulae' : "print('All expected access points are present')",
-		'multi_thread' : True
 	},
 	"condition_fail" :{
 	    'name' : 'condition_fail',
 		'params' : None,
 		'formulae' : "print('NOT all expected access points are present')",
-		'multi_thread' : True
 	}
 }
 

@@ -3,10 +3,12 @@ rule1:
   - condition_pass
   - condition_fail
   actions_false:
-  - name: condition_fail
+  - multi_thread: true
+    name: condition_fail
     params: null
   actions_true:
-  - name: condition_pass
+  - multi_thread: true
+    name: condition_pass
     params: null
   conditions:
     any:
@@ -39,10 +41,12 @@ rule2:
   - condition_pass
   - condition_fail
   actions_false:
-  - name: condition_fail
+  - multi_thread: true
+    name: condition_fail
     params: null
   actions_true:
-  - name: condition_pass
+  - multi_thread: true
+    name: condition_pass
     params: null
   conditions:
     any:
@@ -75,10 +79,12 @@ rule3:
   - condition_pass
   - condition_fail
   actions_false:
-  - name: condition_fail
+  - multi_thread: true
+    name: condition_fail
     params: null
   actions_true:
-  - name: condition_pass
+  - multi_thread: true
+    name: condition_pass
     params: null
   conditions:
     any:

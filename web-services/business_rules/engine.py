@@ -1,4 +1,5 @@
 from business_rules.fields import FIELD_NO_INPUT
+import threading
 
 def run_all(rule_list,
             defined_variables,
@@ -99,11 +100,23 @@ def _do_operator_comparison(operator_type, operator_name, comparison_value):
 
 
 def do_actions(actions, defined_actions):
+    threads = []
     for action in actions:
-        method_name = action['name']
-        def fallback(*args, **kwargs):
-            raise AssertionError("Action {0} is not defined in class {1}"\
-                    .format(method_name, defined_actions.__class__.__name__))
-        params = action.get('params') or {}
-        method = getattr(defined_actions, method_name, fallback)
-        method(**params)
+        if action['multi_thread'] :
+            thread = threading.Thread(target = _run_action, args = (action,defined_actions,))
+            thread.start()
+            threads.append(thread)
+        else :
+            _run_action(action,defined_actions)
+    for thread in threads:
+        thread.join()
+        
+
+def _run_action(action, defined_actions) :
+    method_name = action['name']
+    def fallback(*args, **kwargs):
+        raise AssertionError("Action {0} is not defined in class {1}"\
+                .format(method_name, defined_actions.__class__.__name__))
+    params = action.get('params') or {}
+    method = getattr(defined_actions, method_name, fallback)
+    method(**params)

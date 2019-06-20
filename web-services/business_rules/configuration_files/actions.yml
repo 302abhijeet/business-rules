@@ -1,10 +1,8 @@
 condition_fail:
   formulae: print('NOT all expected access points are present')
-  multi_thread: true
   name: condition_fail
   params: null
 condition_pass:
   formulae: print('All expected access points are present')
-  multi_thread: true
   name: condition_pass
   params: null
