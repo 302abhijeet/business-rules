@@ -45,25 +45,31 @@ rule2:
   - name: condition_pass
     params: null
   conditions:
-    all:
+    any:
+    - all:
+      - name:
+        - actual
+        - expected
+        operator: greater_than
+        value: null
+      - name:
+        - actual
+        operator: less_than
+        value: 50
+      - name:
+        - correct
+        operator: less_than
+        value: 10
     - name:
-      - actual
-      - expected
-      operator: greater_than
-      value: null
-    - name:
-      - actual
-      operator: less_than
-      value: 50
-    - name:
-      - correct
-      operator: less_than
-      value: 10
+      - incorrect
+      operator: equal_to
+      value: 23
   multi_thread: true
   variables:
   - actual
   - expected
   - correct
+  - incorrect
 rule3:
   actions:
   - condition_pass

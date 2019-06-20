@@ -55,14 +55,16 @@ incorrect:
   formulae: self.product.incorrect
   input_method:
     command: response.json()["incorrect"]
-    data: {}
+    data:
+      method: POST
+      value: 13
     end: null
     evaluation: int
     method: API
     params: {}
     request: post
     start: null
-    url: https://ce979fb9-c240-4259-bf6a-6d9de424e291.mock.pstmn.io/get
+    url: https://50e3b433-59fc-4582-80f2-3d006f1ab57d.mock.pstmn.io/post
   label: None
   multi_thread: true
   name: incorrect

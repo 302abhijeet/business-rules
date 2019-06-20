@@ -82,25 +82,34 @@ rules = {
 		'multi_thread' : True		
      	},
 
-	#(expected < actual and actual <  50 and correct < 10)
+	#(expected < actual and actual <  50 and correct < 10) or incorrect = 23
 	'rule2' :{ 
 		"conditions" : { 
-			'all': [
+			'any' : [
 				{
-					'name' : ["actual","expected"],
-			     	'operator' : "greater_than",
-					'value' : None
+					'all': [
+						{
+							'name' : ["actual","expected"],
+							'operator' : "greater_than",
+							'value' : None
+						},
+						{
+							'name' : ["actual"],
+							'operator': 'less_than',
+							'value' : 50
+						},
+						{
+							'name' : ["correct"],
+							'operator': 'less_than',
+							'value' : 10
+						}
+					]
 				},
 				{
-					'name' : ["actual"],
-	   	            'operator': 'less_than',
-			        'value' : 50
-			    },
-			    {
-					'name' : ["correct"],
-	   	            'operator': 'less_than',
-			        'value' : 10
-			    }
+					'name' : ["incorrect"],
+					'operator' : "equal_to",
+					'value' : 23
+				}
 			]
 		},
 		"actions_true" : [ 
@@ -115,7 +124,7 @@ rules = {
 			    'params' : None
 			}
 		],
-		"variables" : ['actual','expected',"correct"],
+		"variables" : ['actual','expected',"correct","incorrect"],
 		"actions" : ["condition_pass","condition_fail"],
 		'multi_thread' : True
 	},
@@ -188,9 +197,9 @@ variables = {
 		'input_method' : {
 			'method' : 'API',
 			'request' : 'post',
-            'url' : 'https://ce979fb9-c240-4259-bf6a-6d9de424e291.mock.pstmn.io/get',
+            'url' : 'https://50e3b433-59fc-4582-80f2-3d006f1ab57d.mock.pstmn.io/post',
             'params' : {},
-			'data' : {},
+			'data' : { "method" : "POST", "value" : 13},
             "command" : 'response.json()["incorrect"]',
             'evaluation' : 'int',
             'start' : None,
