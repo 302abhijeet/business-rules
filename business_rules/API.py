@@ -116,7 +116,7 @@ else :
         for var in rules[rule]['variables'] :
             variables_list.append(variables[var])
 #populate date from case variables
-product = collector.Collector(variables_list)
+product = collector.Collector(variables_list,parameter_variables = None)
 
 
 #create ruleVariables

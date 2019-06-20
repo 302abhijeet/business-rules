@@ -5,10 +5,13 @@ import data_base
 class Collector:
 
 	def __init__(self, variables,parameter_variables = None) :
+		
 		for var in variables :
+			
 			if parameter_variables and var in parameter_variables:
 				exec("self." + var['name'] + " = " + var['input_method']['evaluation'] + '(parameter_variables[var["name"]])')
 				continue
+
 			if var['input_method']['method'] == 'SSH' :
 				exec("self." + var['name'] + " = " + var['input_method']['evaluation'] + '(SSH._get_value(var))')
 
