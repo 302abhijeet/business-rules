@@ -29,6 +29,7 @@ rule1:
       - correct
       operator: less_than
       value: 10
+  multi_thread: true
   variables:
   - actual
   - expected
@@ -58,6 +59,7 @@ rule2:
       - correct
       operator: less_than
       value: 10
+  multi_thread: true
   variables:
   - actual
   - expected
@@ -86,6 +88,7 @@ rule3:
       - correct
       operator: less_than
       value: 10
+  multi_thread: true
   variables:
   - actual
   - expected

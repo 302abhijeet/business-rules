@@ -78,7 +78,8 @@ rules = {
 			}
 		],
 		"variables" : ['actual','expected',"correct"],
-		"actions" : ["condition_pass","condition_fail"]
+		"actions" : ["condition_pass","condition_fail"],
+		'multi_thread' : True		
      	},
 
 	#(expected < actual and actual <  50 and correct < 10)
@@ -115,7 +116,8 @@ rules = {
 			}
 		],
 		"variables" : ['actual','expected',"correct"],
-		"actions" : ["condition_pass","condition_fail"]
+		"actions" : ["condition_pass","condition_fail"],
+		'multi_thread' : True
 	},
 
     #(expected = 70 or actual < 100 or correct < 10)
@@ -152,7 +154,8 @@ rules = {
 			}
 		],
 		"variables" : ['actual','expected',"correct"],
-	    "actions" : ["condition_pass","condition_fail"]
+	    "actions" : ["condition_pass","condition_fail"],
+		'multi_thread' : True
 	}
 }
 

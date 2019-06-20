@@ -8,16 +8,23 @@ import weakref
 import json
 import collector
 import rules_config
+import threading
 
 
 #have to add functionality for multithreading
 def run_rules_tuple(tuples) :
     passed = True
-    for rule in tuples :
+
+    def run_rules_thread(rule) :
+        nonlocal passed
 
         if type(rule) == type('') :
-            if not run(rule = rules[rule],defined_variables = ProductVariables(product),defined_actions = ProductActions(product)) :
-                passed = False
+            if rules[rule]['multi_thread']:
+                if not run(rule = rules[rule],defined_variables = ProductVariables(product),defined_actions = ProductActions(product)) :
+                    passed = False
+            else:
+                raise Exception(print("Rule cannot be multi threaded"))
+                exit()
 
         elif type(rule) == type(dict()):
             if not run_rules_dict(rule) :
@@ -26,6 +33,17 @@ def run_rules_tuple(tuples) :
         elif type(rule) == type(list()):
             if not run_rules_list(rule):
                 passed = False
+
+    
+    threads = []
+    for rule in tuples :
+        thread = threading.Thread(target = run_rules_thread, args = (rule,))
+        thread.start()
+        threads.append(thread)
+    
+    for thread in threads:
+        thread.join()
+        
     return passed
 
 
