@@ -17,7 +17,7 @@ def runrule():
         #get the optional variable values as arguments
         data_given = request.args.to_dict()
         #API function to run the rules
-        API._run_API(run_rule=None,case='case2',parameter_variables={'expected':2})
+        API._run_API(run_rule=None,case='case1',parameter_variables=None)
         return jsonify({'msg':'run successful'})
 
 
