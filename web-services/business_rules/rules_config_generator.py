@@ -266,6 +266,9 @@ actions = {
 		'params' : None,
 		'formulae' : "print('NOT all expected access points are present')",
 	}
+	"change_correct" : {
+		'name' : 'change_correct',
+	}
 }
 
 

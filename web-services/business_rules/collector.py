@@ -6,8 +6,8 @@ import threading
 class Collector:
 	def _get_value(self,var,parameter_variables= None) :
 		if parameter_variables and var['name'] in parameter_variables:
-				exec("self." + var['name'] + " = " + var['input_method']['evaluation'] + '(parameter_variables[var["name"]])')
-				return
+			exec("self." + var['name'] + " = " + var['input_method']['evaluation'] + '(parameter_variables[var["name"]])')
+			return
 
 		if var['input_method']['method'] == 'SSH' :
 			exec("self." + var['name'] + " = " + var['input_method']['evaluation'] + '(SSH._get_value(var))')

@@ -131,6 +131,8 @@ def _run_API(case = "case2",run_rule = None,parameter_variables = {}) :
     else :
         for rule in case['rule_list'] :
             for var in rules[rule]['variables'] :
+                if variables[var] in variables_list:
+                    continue
                 variables_list.append(variables[var])
     #populate date from case variables
     product = collector.Collector(variables_list,parameter_variables)
@@ -158,6 +160,8 @@ def _run_API(case = "case2",run_rule = None,parameter_variables = {}) :
     else :
         for rule in case['rule_list'] :
             for act in rules[rule]['actions'] :
+                if actions[act] in actions_list:
+                    continue
                 actions_list.append(actions[act])
 
 
