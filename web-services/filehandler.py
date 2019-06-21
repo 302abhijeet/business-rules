@@ -6,7 +6,7 @@ def appendData(filepath,rule):
         data.update(rule)
     else:
         with open(filepath,'r') as f:
-            data = yaml.load(f)
+            data = yaml.load(f, Loader=yaml.FullLoader)
             data.update(rule)
     with open(filepath,'w') as f:
         yaml.dump(data,f)
@@ -14,7 +14,7 @@ def appendData(filepath,rule):
     
 def deleteData(filepath,id):
     with open(filepath,'r') as f:
-        data = yaml.load(f)
+        data = yaml.load(f, Loader=yaml.FullLoader)
         try:
             del data[id]
         except:
@@ -42,13 +42,13 @@ def checkFilesExists(filepath):
         
 def getAllRules(filepath,id):
     with open(filepath,'r') as f:
-        data = yaml.load(f)
+        data = yaml.load(f, Loader=yaml.FullLoader)
     
     return data
 
 def getSpecificRule(filepath,id):
     with open(filepath,'r') as f:
-        data = yaml.load(f)
+        data = yaml.load(f, Loader=yaml.FullLoader)
         for key in data.keys():
             if key == id:
                 return data[key]
@@ -56,7 +56,7 @@ def getSpecificRule(filepath,id):
 
 def updateRule(filepath,newrule):
     with open(filepath,'r') as f:
-        data= yaml.load(f)
+        data= yaml.load(f, Loader=yaml.FullLoader)
         key = list(newrule.keys())[0]
         if key in data.keys():
             data.update(newrule)
