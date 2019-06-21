@@ -307,7 +307,7 @@ variables = {
 		'options' : 'None',
 		'formulae' : 'self.product.memory = 100 * self.product.free_mem / self.product.total_mem',
 		'input_method' : {
-			'method' : 'data_bus'
+			'method' : 'derived'
        },
        'multi_thread' : False
 	},

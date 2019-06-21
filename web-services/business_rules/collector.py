@@ -20,12 +20,11 @@ class Collector:
 			exec("self." + var['name'] + " = " + var['input_method']['evaluation'] + '(collector_API._get_value(var))')
 		
 
-		elif var['input_method']['method'] == "data_bus":
+		elif var['input_method']['method'] == "derived":
 			pass
 
 		else :
-			raise Exception(print(var['input_method']['method'] + " Not found"))
-			exit()
+			raise Exception(var['input_method']['method'] + " Not found")
 
 	def __init__(self, variables,parameter_variables = None) :
 		
@@ -33,13 +32,17 @@ class Collector:
 		for var in variables :
 
 			if var['multi_thread'] :
+				print(var['name'] + "in multi-thread")
 				thread = threading.Thread(target = self._get_value, args = (var,parameter_variables,))
 				thread.start()
 				threads.append(thread)
 			else :
+				if threads:
+					for thread in threads :
+						thread.join()
+				threads = []
 				self._get_value(var)
-
-		for thread in threads :
+		for thread in threads:
 			thread.join()
 			
 			

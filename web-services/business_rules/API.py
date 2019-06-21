@@ -9,8 +9,8 @@ import yaml
 import business_rules.collector as collector
 import threading
 
-def _run_API(case = "case2",run_rule = None,parameter_variables = {}) :
-    #have to add functionality for multithreading
+def _run_API(case = "",run_rule = None,parameter_variables = {}) :
+    
     def run_rules_tuple(tuples) :
         passed = True
 
@@ -22,8 +22,7 @@ def _run_API(case = "case2",run_rule = None,parameter_variables = {}) :
                     if not run(rule = rules[rule],defined_variables = ProductVariables(product),defined_actions = ProductActions(product)) :
                         passed = False
                 else:
-                    raise Exception(print("Rule cannot be multi threaded"))
-                    exit()
+                    raise Exception("The " + rule + " rule cannot be multi threaded")
 
             elif type(rule) == type(dict()):
                 if not run_rules_dict(rule) :
@@ -32,6 +31,9 @@ def _run_API(case = "case2",run_rule = None,parameter_variables = {}) :
             elif type(rule) == type(list()):
                 if not run_rules_list(rule):
                     passed = False
+                
+            else :
+                raise Exception("Incorrect rule order in rule: " + rule)
 
         
         threads = []
@@ -72,6 +74,9 @@ def _run_API(case = "case2",run_rule = None,parameter_variables = {}) :
                 else :
                     all_pass = False
 
+            else :
+                raise Exception("Incorrect rule order in rule: " + rule)
+
         if pass_param and pass_param <= passed:
             return True
         else :
@@ -85,11 +90,14 @@ def _run_API(case = "case2",run_rule = None,parameter_variables = {}) :
                 return run_rules_list(dicts['then'])
             else :
                 return run_rules_list(dicts['else'])
-        else:
+        elif 'any' in dicts:
             if run_rules_list(dicts['any'][list(dicts['any'].keys())[0]],list(dicts['any'].keys())[0]):
                 return run_rules_list(dicts['then'])
             else :
                 return run_rules_list(dicts['else'])
+        
+        else :
+                raise Exception("Incorrect rule order in rule: " + rule)
 
 
 
@@ -103,8 +111,10 @@ def _run_API(case = "case2",run_rule = None,parameter_variables = {}) :
         variables = yaml.load( f, Loader=yaml.FullLoader)
     with open("./business_rules/configuration_files/actions.yml", 'r') as f:
         actions = yaml.load( f, Loader=yaml.FullLoader)
-    if case :
+    if case and case in use_cases:
         case = use_cases[case]
+    elif case:
+        raise Exception("Case not found : " + case)
 
 
 
@@ -127,12 +137,16 @@ def _run_API(case = "case2",run_rule = None,parameter_variables = {}) :
     variables_list = []
     if run_rule :
         for var in rules[run_rule]['variables'] :
+            if not var in variables :
+                raise Exception("Rule Variable not defined : " + var)
             variables_list.append(variables[var])
     else :
         for rule in case['rule_list'] :
             for var in rules[rule]['variables'] :
                 if variables[var] in variables_list:
                     continue
+                if not var in variables :
+                    raise Exception("Rule Variable not defined : " + var)
                 variables_list.append(variables[var])
     #populate date from case variables
     product = collector.Collector(variables_list,parameter_variables)
@@ -144,11 +158,15 @@ def _run_API(case = "case2",run_rule = None,parameter_variables = {}) :
         def __init__(self, product):
             self.product = product
 
-        for var in variables_list :
-            if var['options'] == 'None' :
-                exec("@" + var['field'] + "(" + var['label'] + ")" + """\ndef """ + var['name'] + """(self): \n\t""" + var['formulae'] + """\n\treturn self.product.""" + var['name'])
-            else :
-                exec("@" + var['field'] + "(" + var['label'] + "," + var['options'] + """)\ndef """ + var['name'] + """(self):\n\t""" + var['formulae'] + """\n\treturn self.product.""" + var['name'])
+        try :
+            for var in variables_list :
+                if var['options'] == 'None' :
+                    exec("@" + var['field'] + "(" + var['label'] + ")" + """\ndef """ + var['name'] + """(self): \n\t""" + var['formulae'] + """\n\treturn self.product.""" + var['name'])
+                else :
+                    exec("@" + var['field'] + "(" + var['label'] + "," + var['options'] + """)\ndef """ + var['name'] + """(self):\n\t""" + var['formulae'] + """\n\treturn self.product.""" + var['name'])
+        except Exception as e:
+            print("Product Variables couldn't be declared")
+            raise e
 
 
 
@@ -156,12 +174,16 @@ def _run_API(case = "case2",run_rule = None,parameter_variables = {}) :
     actions_list = []
     if run_rule :
         for act in rules[run_rule]['actions'] :
+            if not act in actions :
+                    raise Exception("Rule Action not defined : " + act)
             actions_list.append(actions[act])
     else :
         for rule in case['rule_list'] :
             for act in rules[rule]['actions'] :
                 if actions[act] in actions_list:
                     continue
+                if not act in actions :
+                    raise Exception("Rule Action not defined : " + act)
                 actions_list.append(actions[act])
 
 
@@ -171,21 +193,29 @@ def _run_API(case = "case2",run_rule = None,parameter_variables = {}) :
         def __init__(self, product):
             self.product = product
 
-        for act in actions_list : 
-            li = []
-            if act['params'] :
-                for args in act['params'] :
-                    li.append(args)
-            args = "(self" + ','.join(li) + ")"
-            exec("@rule_action(params = act['params'])\n" "def " + act['name'] + args + """ :\n\t""" + act["formulae"])
+        try :
+            for act in actions_list : 
+                li = []
+                if act['params'] :
+                    for args in act['params'] :
+                        li.append(args)
+                args = "(self" + ','.join(li) + ")"
+                exec("@rule_action(params = act['params'])\n" "def " + act['name'] + args + """ :\n\t""" + act["formulae"])
+        except Exception as e:
+            print("Product Actions couldn't be declared")
+            raise e
 
 
 
     #run rules
-    if run_rule:
-        run(rule = rules[run_rule], defined_variables = ProductVariables(product), defined_actions = ProductActions(product))
-    else :
-        run_rules_list(case['rules'])
+    try :
+        if run_rule:
+            run(rule = rules[run_rule], defined_variables = ProductVariables(product), defined_actions = ProductActions(product))
+        else :
+            run_rules_list(case['rules'])
+    except Exception as e:
+        print("Couldn't Run Rules Successfully")
+        raise e
 
 
 

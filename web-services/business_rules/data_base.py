@@ -11,12 +11,20 @@ def _get_value(var = []) :
 	
 	command = var['input_method']['command'].split("\n")
 	mycursor = mydb.cursor()
-	for com in command:
-	    mycursor.execute(com)
-	result = mycursor.fetchall()
+	try:
+		for com in command:
+			mycursor.execute(com)
+		result = mycursor.fetchall()
+	except Exception as e:
+		print(var['name'] + " Error in data_base commands:" + var['input_method']['command'])
+		raise e
 
 	if var['input_method']['start'] or var['input_method']['end'] :
-		out = result[var["input_method"]['start']:var["input_method"]['end']]
+		try:
+			out = result[var["input_method"]['start']:var["input_method"]['end']]
+		except Exception as e:
+			print(var['name'] + " Error in SSH splitting of variable: ")
+			raise e
 	else :
 		if len(result) == 1 :
 			out = result[0]

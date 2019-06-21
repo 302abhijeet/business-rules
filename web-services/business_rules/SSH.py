@@ -15,8 +15,15 @@ def _get_value(var = []) :
 		raise Exception(ex)
 	else :
 		if var['input_method']['start'] or var['input_method']['end'] :
-			out = stdout.readlines()[0]
-			out = out[out.index(var["input_method"]['start']) +1:out.index(var["input_method"]['end'])]
+			try:
+				out = stdout.readlines()[0]
+				if type(var['input_method']['start']) == type(int()) :
+					out = out[var['input_method']['start']:var['input_method']['end']]
+				else :
+					out = out[out.index(var["input_method"]['start']) +1:out.index(var["input_method"]['end'])]
+			except Exception as e:
+				print(var['name'] + " Error in SSH splitting of variable: ")
+				raise e
 		else :
 			out = stdout.readlines()[0]
 

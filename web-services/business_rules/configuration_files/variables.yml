@@ -125,7 +125,7 @@ memory:
   field: numeric_rule_variable
   formulae: self.product.memory = 100 * self.product.free_mem / self.product.total_mem
   input_method:
-    method: data_bus
+    method: derived
   label: None
   multi_thread: false
   name: memory
