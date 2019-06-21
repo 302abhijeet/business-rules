@@ -1,3 +1,19 @@
+CPU_usage:
+  field: numeric_rule_variable
+  formulae: self.product.CPU_usage
+  input_method:
+    command: response.json()["actual"]
+    end: null
+    evaluation: int
+    method: API
+    params: {}
+    request: get
+    start: null
+    url: https://ce979fb9-c240-4259-bf6a-6d9de424e291.mock.pstmn.io/get
+  label: None
+  multi_thread: true
+  name: CPU_usage
+  options: None
 actual:
   field: numeric_rule_variable
   formulae: self.product.actual
@@ -31,6 +47,25 @@ correct:
   multi_thread: true
   name: correct
   options: None
+disk_space:
+  field: numeric_rule_variable
+  formulae: self.product.disk_space
+  input_method:
+    command: response.json()["incorrect"]
+    data:
+      method: POST
+      value: 13
+    end: null
+    evaluation: int
+    method: API
+    params: {}
+    request: post
+    start: null
+    url: https://50e3b433-59fc-4582-80f2-3d006f1ab57d.mock.pstmn.io/post
+  label: None
+  multi_thread: true
+  name: disk_space
+  options: None
 expected:
   field: numeric_rule_variable
   formulae: self.product.expected
@@ -50,6 +85,23 @@ expected:
   multi_thread: true
   name: expected
   options: None
+free_mem:
+  field: numeric_rule_variable
+  formulae: self.product.free_mem
+  input_method:
+    command: cat /proc/meminfo | grep MemAvailable
+    end: kB
+    evaluation: int
+    host_name: 10.137.89.13
+    key_filename: C:\Users\axsingh\Documents\Rules-engine.pem
+    method: SSH
+    password: null
+    start: ':'
+    user_name: ubuntu
+  label: None
+  multi_thread: false
+  name: free_mem
+  options: None
 incorrect:
   field: numeric_rule_variable
   formulae: self.product.incorrect
@@ -68,4 +120,30 @@ incorrect:
   label: None
   multi_thread: true
   name: incorrect
+  options: None
+memory:
+  field: numeric_rule_variable
+  formulae: self.product.memory = 100 * self.product.free_mem / self.product.total_mem
+  input_method:
+    method: derived
+  label: None
+  multi_thread: false
+  name: memory
+  options: None
+total_mem:
+  field: numeric_rule_variable
+  formulae: self.product.total_mem
+  input_method:
+    command: cat /proc/meminfo | grep MemTotal
+    end: kB
+    evaluation: int
+    host_name: 10.137.89.13
+    key_filename: C:\Users\axsingh\Documents\Rules-engine.pem
+    method: SSH
+    password: null
+    start: ':'
+    user_name: ubuntu
+  label: None
+  multi_thread: false
+  name: total_mem
   options: None

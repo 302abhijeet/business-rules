@@ -4,31 +4,49 @@ import requests
 def _run_get(var) :
 	response = requests.get(var['input_method']['url'], params = var['input_method']['params'])
 	
-	ldict = locals()
-	exec("out = " + var['input_method']['command'],globals(),ldict)
-	out = ldict['out']
+	try: 
+		ldict = locals()
+		exec("out = " + var['input_method']['command'],globals(),ldict)
+		out = ldict['out']
+	except Exception as e:
+		print(var['name'] + " Error in API commands:" + var['input_method']['command'])
+		raise e
 
 	if not response :
-		assert Exception(response)
+		raise Exception(response)
 
 	#have to make changes here
-	if var['input_method']['start'] or var['input_method']['end'] :
-		out = out[var["input_method"]['start']:var["input_method"]['end']]
+	try :
+		if var['input_method']['start'] or var['input_method']['end'] :
+			out = out[var["input_method"]['start']:var["input_method"]['end']]
+	except Exception as e:
+		print(var['name'] + " Error in API splitting of variable: ")
+		raise e
+
 	return out
 
 def _run_post(var):
 	response = requests.post(var['input_method']['url'], params = var['input_method']['params'],data = var['input_method']['data'])
 	
-	ldict = locals()
-	exec("out = " + var['input_method']['command'],globals(),ldict)
-	out = ldict['out']
+	try :
+		ldict = locals()
+		exec("out = " + var['input_method']['command'],globals(),ldict)
+		out = ldict['out']
+	except Exception as e:
+		print(var['name'] + " Error in API commands:" + var['input_method']['command'])
+		raise e
 
 	if not response :
 		assert Exception(response)
 
 	#have to make changes here
-	if var['input_method']['start'] or var['input_method']['end'] :
-		out = out[var["input_method"]['start']:var["input_method"]['end']]
+	try :
+		if var['input_method']['start'] or var['input_method']['end'] :
+			out = out[var["input_method"]['start']:var["input_method"]['end']]
+	except Exception as e:
+		print(var['name'] + " Error in API splitting of variable: ")
+		raise e
+
 	return out
 
 

@@ -1,3 +1,11 @@
+CPU_false:
+  formulae: 'print(''CPU usage NOT under threshold(50): '', self.product.CPU_usage)'
+  name: CPU_false
+  params: null
+CPU_true:
+  formulae: 'print(''CPU usage under threshold(50) : '', self.product.CPU_usage)'
+  name: CPU_true
+  params: null
 condition_fail:
   formulae: print('NOT all expected access points are present')
   name: condition_fail
@@ -5,4 +13,20 @@ condition_fail:
 condition_pass:
   formulae: print('All expected access points are present')
   name: condition_pass
+  params: null
+disk_false:
+  formulae: 'print(''disk usage NOT under threshod(70) : '', self.product.disk_space)'
+  name: disk_false
+  params: null
+disk_true:
+  formulae: 'print(''disk usage under threshold(70) : '', self.product.disk_space)'
+  name: disk_true
+  params: null
+memory_false:
+  formulae: 'print(''Memory usage NOT under threshold(60) : '', self.product.memory)'
+  name: memory_false
+  params: null
+memory_true:
+  formulae: 'print(''Memory usage under threshold(60) : '', self.product.memory)'
+  name: memory_true
   params: null
