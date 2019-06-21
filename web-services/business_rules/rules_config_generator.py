@@ -2,6 +2,12 @@
 import yaml
 
 use_cases = { 
+	#CPU_Performance begins
+	'CPU_Performance' : {
+	    'rule_list' : ['CPU_usage','memory','disk_space'],
+		'rules' : [ ('CPU_usage','memory'),'disk_space']
+	},
+
 	#case 1
 	'case1' : {
 		'rule_list' : ['rule1','rule2','rule3'],
@@ -35,6 +41,85 @@ use_cases = {
 }
 
 rules = { 
+	
+	# CPU_usage <= 50% and memory <=60% and disk_space < 70%
+	'CPU_usage' : {
+		"conditions" : { 			
+			'name' : ["CPU_usage"],
+			'operator': 'less_than',
+			'value' : 50
+		},
+		"actions_true" : [ 
+			{
+				'name' : "CPU_true",
+				'params' : None,
+				'multi_thread' : True
+			}
+		],
+		"actions_false": [
+			{ 
+				'name' : "CPU_false",
+				'params' : None,
+				'multi_thread' : True
+			}
+		],
+		"actions" : ["CPU_true","CPU_false"],
+		'multi_thread' : True,
+		'variables' : ['CPU_usage']
+	},
+
+	# CPU_usage <= 50% and memory <=60% and disk_space < 70%
+	'memory' : {
+		"conditions" : { 			
+			'name' : ["memory"],
+			'operator': 'less_than',
+			'value' : 60
+		},
+		"actions_true" : [ 
+			{
+				'name' : "memory_true",
+				'params' : None,
+				'multi_thread' : True
+			}
+		],
+		"actions_false": [
+			{ 
+				'name' : "memory_false",
+				'params' : None,
+				'multi_thread' : True
+			}
+		],
+		"actions" : ["memory_true","memory_false"],
+		'multi_thread' : True,
+		'variables' : ['free_mem','total_mem','memory']
+	},
+
+	# CPU_usage <= 50% and memory <=60% and disk_space < 70%
+	'disk_space' : {
+		"conditions" : { 			
+			'name' : ["disk_space"],
+			'operator': 'less_than',
+			'value' : 70
+		},
+		"actions_true" : [ 
+			{
+				'name' : "disk_true",
+			    'params' : None,
+				'multi_thread' : True
+			}
+		],
+		"actions_false": [
+			{ 
+				'name' : "disk_false",
+			    'params' : None,
+				'multi_thread' : True
+			}
+		],
+		"actions" : ["disk_true","disk_false"],
+		'multi_thread' : True,
+		'variables' : ['disk_space']
+	},
+
 	#(expected == actual and expected < 100) or actual > expected or correct < 10
     'rule1' : { 
 	    "conditions" : {
@@ -175,6 +260,97 @@ rules = {
 }
 
 variables = {
+	'free_mem' : { #CPU numeric
+	    'name' : "free_mem",
+		'field' : "numeric_rule_variable",
+		'label' : 'None',
+		'options' : 'None',
+		'formulae' : 'self.product.free_mem',
+		'input_method' : {
+			'method' : 'SSH',
+	        'host_name' : '10.137.89.13',
+	        'user_name' : 'ubuntu',
+	        'password' : None,
+	        'key_filename' : 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem',
+	        "command" : "cat /proc/meminfo | grep MemAvailable",
+	        'evaluation' : 'int',
+	        'start' : ':',
+	        'end' : 'kB',
+       },
+       'multi_thread' : False
+	},
+
+	'total_mem' : { #CPU numeric
+	    'name' : "total_mem",
+		'field' : "numeric_rule_variable",
+		'label' : 'None',
+		'options' : 'None',
+		'formulae' : 'self.product.total_mem',
+		'input_method' : {
+			'method' : 'SSH',
+	        'host_name' : '10.137.89.13',
+	        'user_name' : 'ubuntu',
+	        'password' : None,
+	        'key_filename' : 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem',
+	        "command" : "cat /proc/meminfo | grep MemTotal",
+	        'evaluation' : 'int',
+	        'start' : ':',
+	        'end' : 'kB',
+       },
+       'multi_thread' : False
+	},
+
+	'memory' : { #CPU numeric
+	    'name' : "memory",
+		'field' : "numeric_rule_variable",
+		'label' : 'None',
+		'options' : 'None',
+		'formulae' : 'self.product.memory = 100 * self.product.free_mem / self.product.total_mem',
+		'input_method' : {
+			'method' : 'data_bus'
+       },
+       'multi_thread' : False
+	},
+
+	'CPU_usage' : { #actual numeric
+	    'name' : "CPU_usage",
+		'field' : "numeric_rule_variable",
+		'label' : 'None',
+		'options' : 'None',
+		'formulae' : 'self.product.CPU_usage',
+		'input_method' : {
+			'method' : 'API',
+			'request' : 'get',
+            'url' : 'https://ce979fb9-c240-4259-bf6a-6d9de424e291.mock.pstmn.io/get',
+            'params' : {},
+            "command" : 'response.json()["actual"]',
+            'evaluation' : 'int',
+            'start' : None,
+	        'end' : None
+       },
+       'multi_thread' : True
+	},
+
+	'disk_space' : { #incorrect numeric
+	    'name' : "disk_space",
+		'field' : "numeric_rule_variable",
+		'label' : 'None',
+		'options' : 'None',
+		'formulae' : 'self.product.disk_space',
+		'input_method' : {
+			'method' : 'API',
+			'request' : 'post',
+            'url' : 'https://50e3b433-59fc-4582-80f2-3d006f1ab57d.mock.pstmn.io/post',
+            'params' : {},
+			'data' : { "method" : "POST", "value" : 13},
+            "command" : 'response.json()["incorrect"]',
+            'evaluation' : 'int',
+            'start' : None,
+	        'end' : None
+       },
+       'multi_thread' : True
+	},
+
 	'actual' : { #actual numeric
 	    'name' : "actual",
 		'field' : "numeric_rule_variable",
@@ -265,9 +441,36 @@ actions = {
 	    'name' : 'condition_fail',
 		'params' : None,
 		'formulae' : "print('NOT all expected access points are present')",
-	}
-	"change_correct" : {
-		'name' : 'change_correct',
+	},
+	"CPU_true" : { 
+		'name' : 'CPU_true',
+		'params' : None,
+		'formulae' : "print('CPU usage under threshold(50) : ', self.product.CPU_usage)",
+	},
+	"CPU_false" :{
+	    'name' : 'CPU_false',
+		'params' : None,
+		'formulae' : "print('CPU usage NOT under threshold(50): ', self.product.CPU_usage)",
+	},
+	"memory_true" : { 
+		'name' : 'memory_true',
+		'params' : None,
+		'formulae' : "print('Memory usage under threshold(60) : ', self.product.memory)",
+	},
+	"memory_false" :{
+	    'name' : 'memory_false',
+		'params' : None,
+		'formulae' : "print('Memory usage NOT under threshold(60) : ', self.product.memory)",
+	},
+	"disk_true" : { 
+		'name' : 'disk_true',
+		'params' : None,
+		'formulae' : "print('disk usage under threshold(70) : ', self.product.disk_space)",
+	},
+	"disk_false" :{
+	    'name' : 'disk_false',
+		'params' : None,
+		'formulae' : "print('disk usage NOT under threshod(70) : ', self.product.disk_space)",
 	}
 }
 

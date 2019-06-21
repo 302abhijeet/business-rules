@@ -37,7 +37,7 @@ class Collector:
 				thread.start()
 				threads.append(thread)
 			else :
-				_get_value(var)
+				self._get_value(var)
 
 		for thread in threads :
 			thread.join()

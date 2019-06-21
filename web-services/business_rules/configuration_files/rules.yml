@@ -1,3 +1,65 @@
+CPU_usage:
+  actions:
+  - CPU_true
+  - CPU_false
+  actions_false:
+  - multi_thread: true
+    name: CPU_false
+    params: null
+  actions_true:
+  - multi_thread: true
+    name: CPU_true
+    params: null
+  conditions:
+    name:
+    - CPU_usage
+    operator: less_than
+    value: 50
+  multi_thread: true
+  variables:
+  - CPU_usage
+disk_space:
+  actions:
+  - disk_true
+  - disk_false
+  actions_false:
+  - multi_thread: true
+    name: disk_false
+    params: null
+  actions_true:
+  - multi_thread: true
+    name: disk_true
+    params: null
+  conditions:
+    name:
+    - disk_space
+    operator: less_than
+    value: 70
+  multi_thread: true
+  variables:
+  - disk_space
+memory:
+  actions:
+  - memory_true
+  - memory_false
+  actions_false:
+  - multi_thread: true
+    name: memory_false
+    params: null
+  actions_true:
+  - multi_thread: true
+    name: memory_true
+    params: null
+  conditions:
+    name:
+    - memory
+    operator: less_than
+    value: 60
+  multi_thread: true
+  variables:
+  - free_mem
+  - total_mem
+  - memory
 rule1:
   actions:
   - condition_pass

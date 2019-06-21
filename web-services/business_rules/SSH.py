@@ -15,7 +15,8 @@ def _get_value(var = []) :
 		raise Exception(ex)
 	else :
 		if var['input_method']['start'] or var['input_method']['end'] :
-			out = stdout.readlines()[var["input_method"]['start']:var["input_method"]['end']]
+			out = stdout.readlines()[0]
+			out = out[out.index(var["input_method"]['start']) +1:out.index(var["input_method"]['end'])]
 		else :
 			out = stdout.readlines()[0]
 

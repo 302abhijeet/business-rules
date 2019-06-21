@@ -96,13 +96,13 @@ def _run_API(case = "case2",run_rule = None,parameter_variables = {}) :
 
     #import use cases,rules,variables and actions
     with open("./business_rules/configuration_files/use_cases.yml", 'r') as f:
-        use_cases = yaml.load(f)
+        use_cases = yaml.load(f, Loader=yaml.FullLoader)
     with open("./business_rules/configuration_files/rules.yml", 'r') as f:
-        rules = yaml.load(f)
+        rules = yaml.load(f, Loader=yaml.FullLoader)
     with open("./business_rules/configuration_files/variables.yml", 'r') as f:
-        variables = yaml.load( f)
+        variables = yaml.load( f, Loader=yaml.FullLoader)
     with open("./business_rules/configuration_files/actions.yml", 'r') as f:
-        actions = yaml.load( f)
+        actions = yaml.load( f, Loader=yaml.FullLoader)
     if case :
         case = use_cases[case]
 
@@ -146,9 +146,9 @@ def _run_API(case = "case2",run_rule = None,parameter_variables = {}) :
 
         for var in variables_list :
             if var['options'] == 'None' :
-                exec("@" + var['field'] + "(" + var['label'] + ")" + """\ndef """ + var['name'] + """(self): \n\treturn """ + var['formulae'])
+                exec("@" + var['field'] + "(" + var['label'] + ")" + """\ndef """ + var['name'] + """(self): \n\t""" + var['formulae'] + """\n\treturn self.product.""" + var['name'])
             else :
-                exec("@" + var['field'] + "(" + var['label'] + "," + var['options'] + """)\ndef """ + var['name'] + """(self):\n\treturn """ + var['formulae'])
+                exec("@" + var['field'] + "(" + var['label'] + "," + var['options'] + """)\ndef """ + var['name'] + """(self):\n\t""" + var['formulae'] + """\n\treturn self.product.""" + var['name'])
 
 
 

@@ -16,7 +16,7 @@ server = Flask(__name__)
 
 def check_valid_data(data_given):
         with open('./business_rules/configuration_files/variables.yml') as f:
-                variables = yaml.load(f)
+                variables = yaml.load(f, Loader=yaml.FullLoader)
         to_be_removed = []
         for d in data_given:
                 if d not in variables:
