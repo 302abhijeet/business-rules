@@ -32,7 +32,6 @@ class Collector:
 		for var in variables :
 
 			if var['multi_thread'] :
-				print(var['name'] + "in multi-thread")
 				thread = threading.Thread(target = self._get_value, args = (var,parameter_variables,))
 				thread.start()
 				threads.append(thread)

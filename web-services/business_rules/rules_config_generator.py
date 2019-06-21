@@ -435,42 +435,42 @@ actions = {
 	"condition_pass" : { 
 		'name' : 'condition_pass',
 		'params' : None,
-		'formulae' : "print('All expected access points are present')",
+		'formulae' : "return {'msg' : 'All xpected access points are present'}",
 	},
 	"condition_fail" :{
 	    'name' : 'condition_fail',
 		'params' : None,
-		'formulae' : "print('NOT all expected access points are present')",
+		'formulae' : "return {'msg' : 'NOT all expected access points are present'}",
 	},
 	"CPU_true" : { 
 		'name' : 'CPU_true',
 		'params' : None,
-		'formulae' : "print('CPU usage under threshold(50) : ', self.product.CPU_usage)",
+		'formulae' : "return {'msg' : 'CPU usage under threshold(50) : '+ str(self.product.CPU_usage)}",
 	},
 	"CPU_false" :{
 	    'name' : 'CPU_false',
 		'params' : None,
-		'formulae' : "print('CPU usage NOT under threshold(50): ', self.product.CPU_usage)",
+		'formulae' : "return {'msg' : 'CPU usage NOT under threshold(50): ' +  str(self.product.CPU_usage)}",
 	},
 	"memory_true" : { 
 		'name' : 'memory_true',
 		'params' : None,
-		'formulae' : "print('Memory usage under threshold(60) : ', self.product.memory)",
+		'formulae' : "return {'msg' : 'Memory usage under threshold(60) : '+ str(self.product.memory)}",
 	},
 	"memory_false" :{
 	    'name' : 'memory_false',
 		'params' : None,
-		'formulae' : "print('Memory usage NOT under threshold(60) : ', self.product.memory)",
+		'formulae' : "return {'msg' : 'Memory usage NOT under threshold(60) : '+ str(self.product.memory)}",
 	},
 	"disk_true" : { 
 		'name' : 'disk_true',
 		'params' : None,
-		'formulae' : "print('disk usage under threshold(70) : ', self.product.disk_space)",
+		'formulae' : "return {'msg' : 'disk usage under threshold(70) : '+  str(self.product.disk_space)}",
 	},
 	"disk_false" :{
 	    'name' : 'disk_false',
 		'params' : None,
-		'formulae' : "print('disk usage NOT under threshod(70) : ', self.product.disk_space)",
+		'formulae' : "return {'msg' : 'disk usage NOT under threshod(70) : '+ str(self.product.disk_space)}",
 	}
 }
 

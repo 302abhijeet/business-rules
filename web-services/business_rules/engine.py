@@ -1,4 +1,5 @@
 from business_rules.fields import FIELD_NO_INPUT
+import business_rules.API as API
 import threading
 
 def run_all(rule_list,
@@ -119,4 +120,4 @@ def _run_action(action, defined_actions) :
                 .format(method_name, defined_actions.__class__.__name__))
     params = action.get('params') or {}
     method = getattr(defined_actions, method_name, fallback)
-    method(**params)
+    API.log.append(method(**params))

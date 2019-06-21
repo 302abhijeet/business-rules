@@ -9,8 +9,12 @@ import yaml
 import business_rules.collector as collector
 import threading
 
+log = []
+
 def _run_API(case = "",run_rule = None,parameter_variables = {}) :
-    
+
+    global log
+    log = []
     def run_rules_tuple(tuples) :
         passed = True
 
@@ -103,6 +107,8 @@ def _run_API(case = "",run_rule = None,parameter_variables = {}) :
 
 
     #import use cases,rules,variables and actions
+    with open("./business_rules/log/log.txt",'w') as f:
+        f.write("")
     with open("./business_rules/configuration_files/use_cases.yml", 'r') as f:
         use_cases = yaml.load(f, Loader=yaml.FullLoader)
     with open("./business_rules/configuration_files/rules.yml", 'r') as f:
@@ -111,10 +117,13 @@ def _run_API(case = "",run_rule = None,parameter_variables = {}) :
         variables = yaml.load( f, Loader=yaml.FullLoader)
     with open("./business_rules/configuration_files/actions.yml", 'r') as f:
         actions = yaml.load( f, Loader=yaml.FullLoader)
+
     if case and case in use_cases:
         case = use_cases[case]
     elif case:
         raise Exception("Case not found : " + case)
+    if run_rule in rules:
+        raise Exception ("Rule not found: " + rule)
 
 
 
@@ -216,6 +225,8 @@ def _run_API(case = "",run_rule = None,parameter_variables = {}) :
     except Exception as e:
         print("Couldn't Run Rules Successfully")
         raise e
+
+    return log
 
 
 
