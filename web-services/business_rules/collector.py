@@ -39,10 +39,16 @@ class Collector:
 		
 		threads = []			
 		for source in parameter_dataSource:
-			print(source["method"])
-			thread = threading.Thread(target = self._get_source, args = (source,source_variables,))
-			thread.start()
-			threads.append(thread)
+			if source["multi_thread"]:
+				thread = threading.Thread(target = self._get_source, args = (source,source_variables,))
+				thread.start()
+				threads.append(thread)
+			else:
+				if threads:
+					for thread in threads:
+						thread.join()
+					threads = []
+				self._get_source(source,source_variables)
 		
 		for var in variables :
 
@@ -54,7 +60,7 @@ class Collector:
 				if threads:
 					for thread in threads :
 						thread.join()
-				threads = []
+					threads = []
 				self._get_value(var)
 		for thread in threads:
 			thread.join()

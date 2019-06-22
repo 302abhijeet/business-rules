@@ -12,32 +12,35 @@ import threading
 log = []
 
 """
-dictionary format for SSH or API source input
-parameter_dataSource = {
-    'SSH' : {
-        'host_name' : '10.137.89.13',
-        'user_name' : 'ubuntu',
-        'password' : None,
-        'key_filename' : 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem',
-        'variables' : ["free_mem","total_mem"],
-        'multi_thread' : True    
-    },
-    'API' : {
-        'request' : 'get',
-        'url' : 'https://ce979fb9-c240-4259-bf6a-6d9de424e291.mock.pstmn.io/get',
-        'params' : {},
-        'variables' : ["CPU_usage"],
-        'multi_thread' : True   
-    },
-    'API' : {
-        'request' : 'post',
-        'url' : 'https://50e3b433-59fc-4582-80f2-3d006f1ab57d.mock.pstmn.io/post',
-        'params' : {},
-        'variables' : ["disk_space"],
-        'multi_thread' : True   
-    },
-    'variables' : ["free_mem","total_mem","CPU_usage","disk_space"]
-}
+#have to delete later
+    parameter_dataSource = [
+        {
+            'method' : 'SSH',
+            'host_name' : '10.137.89.13',
+            'user_name' : 'ubuntu',
+            'password' : None,
+            'key_filename' : 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem',
+            'variables' : ["free_mem","total_mem"],
+            'multi_thread' : True    
+        },
+        {
+            'method' : "API",
+            'request' : 'get',
+            'url' : 'https://ce979fb9-c240-4259-bf6a-6d9de424e291.mock.pstmn.io/get',
+            'params' : {},
+            'variables' : ["CPU_usage"],
+            'multi_thread' : True   
+        },
+        {
+            'method' : "API",
+            'request' : 'post',
+            'url' : 'https://50e3b433-59fc-4582-80f2-3d006f1ab57d.mock.pstmn.io/post',
+            'params' : {},
+            'data' : { "method" : "POST", "value" : 13},
+            'variables' : ["disk_space"],
+            'multi_thread' : True   
+        }
+    ]
 """
 
 def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSource = {}) :

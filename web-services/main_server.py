@@ -32,9 +32,9 @@ def runrule():
        
             
 #Server route to run use cases
-@server.route('/runusecase',methods = ["GET"])
+@server.route('/runusecase',methods = ["POST"])
 def runusecase():
-    if request.method == 'GET':
+    if request.method == 'POST':
         #get the optional variable values as arguments
         data_given = request.args.to_dict()
         #API function to run the use cases
