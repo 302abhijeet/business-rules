@@ -107,8 +107,6 @@ def _run_API(case = "",run_rule = None,parameter_variables = {}) :
 
 
     #import use cases,rules,variables and actions
-    with open("./business_rules/log/log.txt",'w') as f:
-        f.write("")
     with open("./business_rules/configuration_files/use_cases.yml", 'r') as f:
         use_cases = yaml.load(f, Loader=yaml.FullLoader)
     with open("./business_rules/configuration_files/rules.yml", 'r') as f:
