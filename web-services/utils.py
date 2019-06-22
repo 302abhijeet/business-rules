@@ -27,3 +27,18 @@ def check_valid_usecase(ucname):
     if ucname not in uc_list:
         return False
     return True
+
+#to check and validate parameter data
+def checkValidatePD(data):
+        data =  eval(data)
+        type_allowed = ['API','SSH','variables','data_base','derived']
+        not_allowed = []
+        if not data or not data['variables']:
+                return {}
+        for d in data:
+                if d not in type_allowed:
+                        not_allowed.append(d)
+        for d in not_allowed:
+                del data[d]
+
+        return data

@@ -10,9 +10,9 @@ dirpath = './business_rules/configuration_files/'
 
 
 #Server route to run rules
-@server.route('/runrule',methods=['GET'])
+@server.route('/runrule',methods=['POST'])
 def runrule():
-    if request.method == 'GET':
+    if request.method == 'POST':
         data_given = request.args.to_dict()
         if 'rule' not in data_given:
                 return jsonify({'msg':'please specify a rule'})
@@ -22,9 +22,12 @@ def runrule():
             return jsonify({'msg':'Rule does not exist'})
         del data_given['rule']
         check_valid_data(data_given)
+        #check if any data is in body or not
+        parameter_data = checkValidatePD(request.get_data())
+        
         #API function to run the rules
         #this function returns a list of messages
-        data = API._run_API(run_rule=rulename,case=None,parameter_variables=data_given)
+        data = API._run_API(run_rule=rulename,case=None,parameter_variables=data_given,parameter_dataSource=parameter_data)
         return jsonify({'msg':'run successful','data':data})
        
             
@@ -46,8 +49,12 @@ def runusecase():
 
         del data_given['use_case']
         check_valid_data(data_given)
+
+        parameter_data = checkValidatePD(request.get_data())
+
+
         #this function returns a list of messages
-        data = API._run_API(run_rule=None,case=ucname,parameter_variables=data_given)
+        data = API._run_API(run_rule=None,case=ucname,parameter_variables=data_given,parameter_dataSource=parameter_data)
         return jsonify({'msg':'run successful','data':data})
 
 
