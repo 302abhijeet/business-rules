@@ -7,15 +7,15 @@ class Collector:
 	def _init_source_variables(self,variables,result):
 		for var in result:
 			var = variables[var]
-			exec("self." + var['name'] + " = " + var['input_method']['evaluation'] + '(result[var])')
+			exec("self." + var['name'] + " = " + var['input_method']['evaluation'] + '(result[var["name"]])')
 
-	def _get_source(self,method,source,variables) :
-		if method == "SSH":
+	def _get_source(self,source,variables) :
+		if source['method'] == "SSH":
 			result = SSH._get_file(source,variables)
-		elif method == "API":
+		elif source['method'] == "API":
 			result = collector_API._get_file(source,variables) 
 		else :
-			raise Exception("parameter_source Data not found in methods: " + source)
+			raise Exception("parameter_source Data not found in methods: ")
 		self._init_source_variables(variables,result)
 
 
@@ -35,11 +35,12 @@ class Collector:
 		exec("self." + var['name'] + " = " + var['input_method']['evaluation'] + '(result)')
 
 
-	def __init__(self, variables,parameter_variables = {},parameter_dataSource = {},source_variables = {}) :
+	def __init__(self, variables,parameter_variables = {},parameter_dataSource = [],source_variables = {}) :
 		
 		threads = []			
 		for source in parameter_dataSource:
-			thread = threading.Thread(target = self._get_source, args = (source,parameter_dataSource[source],parameter_variables,))
+			print(source["method"])
+			thread = threading.Thread(target = self._get_source, args = (source,source_variables,))
 			thread.start()
 			threads.append(thread)
 		

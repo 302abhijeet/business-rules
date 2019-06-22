@@ -22,10 +22,11 @@ def _get_variable_output(var,response) :
 
 
 def _get_file(source,variables):
-	if var["input_method"]['request'] == 'get':
-		response = requests.get(var['input_method']['url'], params = var['input_method']['params'])
-	elif var["input_method"]['request'] == 'post':
-		response = requests.post(var['input_method']['url'], params = var['input_method']['params'],data = var['input_method']['data'])
+	result = {}
+	if source['request'] == 'get':
+		response = requests.get(source['url'], params = source['params'])
+	elif source['request'] == 'post':
+		response = requests.post(source['url'], params = source['params'],data = source['data'])
 	for var in source['variables']:
 		result[var] = _get_variable_output(variables[var],response)
 	return result

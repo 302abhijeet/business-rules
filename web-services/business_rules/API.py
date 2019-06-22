@@ -41,7 +41,6 @@ parameter_dataSource = {
 """
 
 def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSource = {}) :
-
     global log
     log = []
     def run_rules_tuple(tuples) :
@@ -171,12 +170,15 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
 
     #import prodcut variables from UI
     variables_list = []
+    source_variables_list = []
+    for source in parameter_dataSource:
+        source_variables_list.extend(source['variables'])
     source_variables = {}
     if run_rule :
         for var in rules[run_rule]['variables']:
             if var not in variables :
                 raise Exception("Rule Variable not defined : " + var)
-            if var in parameter_dataSource['variables']:
+            if var in source_variables_list:
                 source_variables[var] = variables[var]
             else:
                 variables_list.append(variables[var])
@@ -185,12 +187,15 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
             for var in rules[rule]['variables'] :
                 if variables[var] in variables_list:
                     continue
-                if not var in variables :
-                    raise Exception("Rule Variable not defined : " + var)
-                variables_list.append(variables[var])
+                if var in source_variables_list:
+                    source_variables[var] = variables[var]
+                else:
+                    variables_list.append(variables[var])
     #populate date from case variables
     product = collector.Collector(variables_list,parameter_variables,parameter_dataSource,source_variables)
 
+    for var in source_variables:
+        variables_list.append(source_variables[var])
 
     #create ruleVariables
     class ProductVariables(BaseVariables):
