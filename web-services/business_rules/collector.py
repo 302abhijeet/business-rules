@@ -1,7 +1,7 @@
 #collector for collecting and populating the data
-# import business_rules.SSH as SSH
-# import business_rules.collector_API as collector_API
-# import business_rules.data_base as data_base
+import business_rules.SSH as SSH
+import business_rules.collector_API as collector_API
+import business_rules.data_base as data_base
 import threading
 class Collector:
 	def _get_value(self,var,parameter_variables= None) :
