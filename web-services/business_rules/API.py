@@ -122,7 +122,7 @@ def _run_API(case = "",run_rule = None,parameter_variables = {}) :
         case = use_cases[case]
     elif case:
         raise Exception("Case not found : " + case)
-    if run_rule in rules:
+    if run_rule not in rules:
         raise Exception ("Rule not found: " + rule)
 
 

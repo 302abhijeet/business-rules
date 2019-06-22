@@ -23,9 +23,9 @@ def runrule():
         del data_given['rule']
         check_valid_data(data_given)
         #API function to run the rules
-        
-        API._run_API(run_rule=rulename,case=None,parameter_variables=data_given)
-        return jsonify({'msg':'run successful'})
+        #this function returns a list of messages
+        data = API._run_API(run_rule=rulename,case=None,parameter_variables=data_given)
+        return jsonify({'msg':'run successful','data':data})
        
             
 #Server route to run use cases
@@ -46,9 +46,9 @@ def runusecase():
 
         del data_given['use_case']
         check_valid_data(data_given)
-        
-        API._run_API(run_rule=None,case=ucname,parameter_variables=data_given)
-        return jsonify({'msg':'run successful'})
+        #this function returns a list of messages
+        data = API._run_API(run_rule=None,case=ucname,parameter_variables=data_given)
+        return jsonify({'msg':'run successful','data':data})
 
 
 #Server route to add data
@@ -128,4 +128,4 @@ def internal_error(error):
 
 
 if __name__ == "__main__":
-    server.run(port = 5000,debug=False)
+    server.run(port = 5000,debug=True)
