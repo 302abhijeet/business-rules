@@ -11,7 +11,36 @@ import threading
 
 log = []
 
-def _run_API(case = "",run_rule = None,parameter_variables = {}) :
+"""
+dictionary format for SSH or API source input
+parameter_dataSource = {
+    'SSH' : {
+        'host_name' : '10.137.89.13',
+        'user_name' : 'ubuntu',
+        'password' : None,
+        'key_filename' : 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem',
+        'variables' : ["free_mem","total_mem"],
+        'multi_thread' : True    
+    },
+    'API' : {
+        'request' : 'get',
+        'url' : 'https://ce979fb9-c240-4259-bf6a-6d9de424e291.mock.pstmn.io/get',
+        'params' : {},
+        'variables' : ["CPU_usage"],
+        'multi_thread' : True   
+    },
+    'API' : {
+        'request' : 'post',
+        'url' : 'https://50e3b433-59fc-4582-80f2-3d006f1ab57d.mock.pstmn.io/post',
+        'params' : {},
+        'variables' : ["disk_space"],
+        'multi_thread' : True   
+    },
+    'variables' : ["free_mem","total_mem","CPU_usage","disk_space"]
+}
+"""
+
+def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSource = {}) :
 
     global log
     log = []
@@ -107,8 +136,6 @@ def _run_API(case = "",run_rule = None,parameter_variables = {}) :
 
 
     #import use cases,rules,variables and actions
-    with open("./business_rules/log/log.txt",'w') as f:
-        f.write("")
     with open("./business_rules/configuration_files/use_cases.yml", 'r') as f:
         use_cases = yaml.load(f, Loader=yaml.FullLoader)
     with open("./business_rules/configuration_files/rules.yml", 'r') as f:
@@ -122,8 +149,8 @@ def _run_API(case = "",run_rule = None,parameter_variables = {}) :
         case = use_cases[case]
     elif case:
         raise Exception("Case not found : " + case)
-    if run_rule not in rules:
-        raise Exception ("Rule not found: " + rule)
+    if run_rule and run_rule not in rules:
+        raise Exception ("Rule not found: " + run_rule)
 
 
 
@@ -144,11 +171,15 @@ def _run_API(case = "",run_rule = None,parameter_variables = {}) :
 
     #import prodcut variables from UI
     variables_list = []
+    source_variables = {}
     if run_rule :
-        for var in rules[run_rule]['variables'] :
-            if not var in variables :
+        for var in rules[run_rule]['variables']:
+            if var not in variables :
                 raise Exception("Rule Variable not defined : " + var)
-            variables_list.append(variables[var])
+            if var in parameter_dataSource['variables']:
+                source_variables[var] = variables[var]
+            else:
+                variables_list.append(variables[var])
     else :
         for rule in case['rule_list'] :
             for var in rules[rule]['variables'] :
@@ -158,7 +189,7 @@ def _run_API(case = "",run_rule = None,parameter_variables = {}) :
                     raise Exception("Rule Variable not defined : " + var)
                 variables_list.append(variables[var])
     #populate date from case variables
-    product = collector.Collector(variables_list,parameter_variables)
+    product = collector.Collector(variables_list,parameter_variables,parameter_dataSource,source_variables)
 
 
     #create ruleVariables
