@@ -43,7 +43,7 @@ log = []
     ]
 """
 
-def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSource = {}) :
+def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSource = []) :
     global log
     log = []
     def run_rules_tuple(tuples) :

@@ -31,14 +31,10 @@ def check_valid_usecase(ucname):
 #to check and validate parameter data
 def checkValidatePD(data):
         data =  eval(data)
-        type_allowed = ['API','SSH','variables','data_base','derived']
-        not_allowed = []
-        if not data or not data['variables']:
-                return {}
+        type_allowed = ['API','SSH','data_base','derived']
+        if not data:
+                return []
         for d in data:
-                if d not in type_allowed:
-                        not_allowed.append(d)
-        for d in not_allowed:
-                del data[d]
-
+                if d['method'] not in type_allowed:
+                        data.remove(d)
         return data

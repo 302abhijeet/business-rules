@@ -51,8 +51,7 @@ def runusecase():
         check_valid_data(data_given)
 
         parameter_data = checkValidatePD(request.get_data())
-
-
+        
         #this function returns a list of messages
         data = API._run_API(run_rule=None,case=ucname,parameter_variables=data_given,parameter_dataSource=parameter_data)
         return jsonify({'msg':'run successful','data':data})
