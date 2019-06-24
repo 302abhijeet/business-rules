@@ -30,10 +30,12 @@ def check_valid_usecase(ucname):
 
 #to check and validate parameter data
 def checkValidatePD(data):
-        data =  eval(data)
-        type_allowed = ['API','SSH','data_base','derived']
         if not data:
                 return []
+        
+        data =  eval(data)
+        type_allowed = ['API','SSH','data_base','derived']
+        
         for d in data:
                 if d['method'] not in type_allowed:
                         data.remove(d)

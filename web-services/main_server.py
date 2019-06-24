@@ -1,5 +1,6 @@
 import business_rules.API as API
 from filehandler import *
+from werkzeug.exceptions import BadRequest
 from utils import *
 from flask import Flask,request,jsonify,Response
 
@@ -15,11 +16,11 @@ def runrule():
     if request.method == 'POST':
         data_given = request.args.to_dict()
         if 'rule' not in data_given:
-                return jsonify({'msg':'please specify a rule'})
+                return BadRequest('please specify a rule')
         rulename = data_given['rule']
         flag = check_valid_rule(rulename)
         if not flag:
-            return jsonify({'msg':'Rule does not exist'})
+            return BadRequest('Rule does not exist')
         del data_given['rule']
         check_valid_data(data_given)
         #check if any data is in body or not
@@ -28,7 +29,7 @@ def runrule():
         #API function to run the rules
         #this function returns a list of messages
         data = API._run_API(run_rule=rulename,case=None,parameter_variables=data_given,parameter_dataSource=parameter_data)
-        return jsonify({'msg':'run successful','data':data})
+        return jsonify({'run_msg':'run successful','data':data})
        
             
 #Server route to run use cases
@@ -37,14 +38,12 @@ def runusecase():
     if request.method == 'POST':
         #get the optional variable values as arguments
         data_given = request.args.to_dict()
-        #API function to run the use cases
-        data_given = request.args.to_dict()
         if 'use_case' not in data_given:
-                return jsonify({'msg':'please specify a use case'})
+                return BadRequest('Error! please specify a use case')
         ucname = data_given['use_case']
         flag = check_valid_usecase(ucname)
         if not flag:
-            return jsonify({'msg':'Use case does not exist'})
+            return BadRequest('Use case does not exist')
 
 
         del data_given['use_case']
@@ -54,7 +53,7 @@ def runusecase():
         
         #this function returns a list of messages
         data = API._run_API(run_rule=None,case=ucname,parameter_variables=data_given,parameter_dataSource=parameter_data)
-        return jsonify({'msg':'run successful','data':data})
+        return jsonify({'run_msg':'run successful','data':data})
 
 
 #Server route to add data
@@ -64,7 +63,7 @@ def addrule(ty):
         
         filepath = updateFilePath(dirpath,ty) 
         if filepath == False:
-                return jsonify({'msg':'Wrong type'})
+                return BadRequest('Wrong type')
         
 
         rule = request.get_data()
@@ -74,7 +73,7 @@ def addrule(ty):
         
                 appendData(filepath,rule)
 
-        return jsonify({'msg':'file updated'})
+        return jsonify({'msg':'Data added'})
 
 #Server route to delete data
 @server.route('/del/<ty>',methods = ['DELETE'])
@@ -83,11 +82,11 @@ def delrule(ty):
 
         filepath = updateFilePath(dirpath,ty) 
         if filepath == False:
-                return jsonify({'msg':'Wrong type'})
+                return BadRequest('Wrong type')
 
         id = request.args['id']
         flag = deleteData(filepath,id)
-        message = 'file updated' if flag is True else 'error'
+        message = 'Data deleted' if flag is True else 'Error in deletion'
         return jsonify({'msg':message})
 
 #Server route to modify data
@@ -97,14 +96,14 @@ def modifyrule(ty):
 
         filepath = updateFilePath(dirpath,ty) 
         if filepath == False:
-                return jsonify({'msg':'Wrong type'})
+                return BadRequest('Wrong type')
 
         flag =False
         rule = request.get_data()
         if rule!=None:
                 rule=eval(rule)
                 flag = updateRule(filepath,rule)
-        msg = 'Rule updated' if flag else 'Rule with specified id not found'
+        msg = 'Data updated' if flag else 'Data with specified id not found'
     return jsonify({'msg':msg})
 
 #Server route to get data
@@ -114,7 +113,7 @@ def getrule(ty):
 
         filepath = updateFilePath(dirpath,ty) 
         if filepath == False:
-                return jsonify({'msg':'Wrong type'})
+                return BadRequest('Wrong type')
 
         id = request.args['id']
         if id == 'all':
@@ -122,7 +121,7 @@ def getrule(ty):
         else:
             data = getSpecificRule(filepath,id)
 
-        message = 'data found' if data != False else 'data not found'
+        message = 'Data found' if data != False else 'data not found'
         return jsonify({'msg':message,'data':data})
 
 
