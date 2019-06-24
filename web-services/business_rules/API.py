@@ -174,6 +174,7 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
     #import prodcut variables from UI
     variables_list = []
     source_variables_list = []
+    extra_variables = []
     for source in parameter_dataSource:
         source_variables_list.extend(source['variables'])
     source_variables = {}
@@ -194,6 +195,12 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
                     source_variables[var] = variables[var]
                 else:
                     variables_list.append(variables[var])
+    for var in source_variables_list:
+        if var not in source_variables:
+            extra_variables.append(var)
+            source_variables[var] = variables[var]
+    if extra_variables:
+        log.append({"Extra Variables given :" : extra_variables})
     #populate date from case variables
     product = collector.Collector(variables_list,parameter_variables,parameter_dataSource,source_variables)
 
