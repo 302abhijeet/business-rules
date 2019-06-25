@@ -47,7 +47,7 @@ disk_space:
     - disk_space
     operator: less_than
     value: 70
-  multi_thread: true
+  multi_thread: false
   variables:
   - disk_space
 memory:

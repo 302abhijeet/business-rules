@@ -142,7 +142,7 @@ rules = {
 			}
 		],
 		"actions" : ["CPU_true","CPU_false"],
-		'multi_thread' : True,
+		'multi_thread' : False,
 		'variables' : ['disk_space']
 	},
 
