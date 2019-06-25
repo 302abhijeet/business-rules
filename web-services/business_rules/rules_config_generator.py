@@ -78,14 +78,14 @@ rules = {
 		"actions_true" : [ 
 			{
 				'name' : "CPU_true",
-				'params' : {'name' : 'CPU Usage'},
+				'params' : {'name' : 'CPU Usage','threshold': 50,'var':'CPU_usage'},
 				'multi_thread' : True
 			}
 		],
 		"actions_false": [
 			{ 
 				'name' : "CPU_false",
-				'params' : {'name' : 'CPU Usage'},
+				'params' : {'name' : 'CPU Usage','threshold': 50,'var':'CPU_usage'},
 				'multi_thread' : True
 			}
 		],
@@ -104,14 +104,14 @@ rules = {
 		"actions_true" : [ 
 			{
 				'name' : "CPU_true",
-				'params' : {'name' : 'memory usage'},
+				'params' : {'name' : 'memory usage','threshold': 60,'var':'memory'},
 				'multi_thread' : True
 			}
 		],
 		"actions_false": [
 			{ 
 				'name' : "CPU_false",
-				'params' : {'name' : 'memory usage'},
+				'params' : {'name' : 'memory usage','threshold': 60,'var':'memory'},
 				'multi_thread' : True
 			}
 		],
@@ -130,14 +130,14 @@ rules = {
 		"actions_true" : [ 
 			{
 				'name' : "CPU_true",
-				'params' : {'name' : 'Disk Usage'},
+				'params' : {'name' : 'Disk Usage','threshold': 70,'var':'disk_space'},
 				'multi_thread' : True
 			}
 		],
 		"actions_false": [
 			{ 
 				'name' : "CPU_false",
-				'params' : {'name' : 'Disk Usage'},
+				'params' : {'name' : 'Disk Usage','threshold': 70,'var':'disk_space'},
 				'multi_thread' : True
 			}
 		],
@@ -470,14 +470,15 @@ actions = {
 	},
 	"CPU_true" : { 
 		'name' : 'CPU_true',
-		'params' : {'name' : FIELD_TEXT},
-		'formulae' : "return {name : name + ' under threshold(50) : '+ str(self.product.CPU_usage)}",
+		'params' : {'name' : FIELD_TEXT,"threshold" : FIELD_NUMERIC,'var': FIELD_TEXT},
+		'formulae' : "l=locals()\n\texec('var = self.product.' + var,globals(),l)\n\tvar = l['var']\n\treturn {name : name + ' under threshold(' + str(threshold) +') : '+ str(var)}",
 	},
 	"CPU_false" :{
 	    'name' : 'CPU_false',
-		'params' :{'name' : FIELD_TEXT},
-		'formulae' : "return {name : name + ' NOT under threshold(50): ' +  str(self.product.CPU_usage)}",
-	}
+		'params' :{'name' : FIELD_TEXT,"threshold" : FIELD_NUMERIC,'var': FIELD_TEXT},
+		'formulae' : "l=locals()\n\texec('var = self.product.' + var,globals(),l)\n\tvar = l['var']\n\treturn {name : name + ' NOT under threshold(' + str(threshold) +'): ' +  str(var)}",
+	},
+
 }
 
 

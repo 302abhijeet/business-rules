@@ -7,11 +7,15 @@ CPU_usage:
     name: CPU_false
     params:
       name: CPU Usage
+      threshold: 50
+      var: CPU_usage
   actions_true:
   - multi_thread: true
     name: CPU_true
     params:
       name: CPU Usage
+      threshold: 50
+      var: CPU_usage
   conditions:
     name:
     - CPU_usage
@@ -29,11 +33,15 @@ disk_space:
     name: CPU_false
     params:
       name: Disk Usage
+      threshold: 70
+      var: disk_space
   actions_true:
   - multi_thread: true
     name: CPU_true
     params:
       name: Disk Usage
+      threshold: 70
+      var: disk_space
   conditions:
     name:
     - disk_space
@@ -51,11 +59,15 @@ memory:
     name: CPU_false
     params:
       name: memory usage
+      threshold: 60
+      var: memory
   actions_true:
   - multi_thread: true
     name: CPU_true
     params:
       name: memory usage
+      threshold: 60
+      var: memory
   conditions:
     name:
     - memory
