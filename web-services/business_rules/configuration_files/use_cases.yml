@@ -1,4 +1,4 @@
-CPU_Performance:
+CPU_Asynchronous:
   rule_list:
   - CPU_usage
   - memory
@@ -6,7 +6,41 @@ CPU_Performance:
   rules:
   - !!python/tuple
     - CPU_usage
+    - - memory
+      - disk_space
+CPU_Conditional:
+  rule_list:
+  - CPU_usage
+  - memory
+  - disk_space
+  - rule1
+  - rule2
+  - rule3
+  rules:
+  - all:
+    - CPU_usage
     - memory
+    - disk_space
+    else:
+    - rule2
+    then: null
+  - any:
+      2:
+      - CPU_usage
+      - memory
+      - disk_space
+    else:
+    - rule1
+    then:
+    - rule3
+CPU_Performance:
+  rule_list:
+  - CPU_usage
+  - memory
+  - disk_space
+  rules:
+  - CPU_usage
+  - memory
   - disk_space
 case1:
   rule_list:

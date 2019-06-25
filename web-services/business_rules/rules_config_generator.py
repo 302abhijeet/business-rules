@@ -1,11 +1,37 @@
 #configuration file for the API
 import yaml
+from fields import *
 
 use_cases = { 
-	#CPU_Performance begins
+	#CPU_Performance
 	'CPU_Performance' : {
 	    'rule_list' : ['CPU_usage','memory','disk_space'],
-		'rules' : [ ('CPU_usage','memory'),'disk_space']
+		'rules' : [ 'CPU_usage','memory','disk_space']
+	},
+
+	#CPU conditional
+	'CPU_Conditional' : {
+		'rule_list' : ['CPU_usage','memory','disk_space','rule1','rule2','rule3'],
+		'rules' : [
+			{
+				'all' : ['CPU_usage','memory','disk_space'],
+				'then' : None,
+				'else' : ['rule2']
+			},
+			{
+				'any' : {
+					2 :  ['CPU_usage','memory','disk_space']
+				},
+				'then' : ['rule3'],
+				'else' : ['rule1']
+			}
+		]
+	},
+
+	#CPU asynchronous
+	'CPU_Asynchronous' : {
+		'rule_list' : ['CPU_usage','memory','disk_space'],
+		'rules' : [ ('CPU_usage',['memory','disk_space'])]
 	},
 
 	#case 1
@@ -27,7 +53,7 @@ use_cases = {
 	    ]
 	},
  
-	#case 2 begins
+	#case 2 
 	'case2' : {
 	    'rule_list' : ['rule1','rule2','rule3'],
 		'rules' : [ ('rule1',['rule2','rule3'])]
@@ -42,7 +68,7 @@ use_cases = {
 
 rules = { 
 	
-	# CPU_usage <= 50% and memory <=60% and disk_space < 70%
+	# CPU_usage <= 50% 
 	'CPU_usage' : {
 		"conditions" : { 			
 			'name' : ["CPU_usage"],
@@ -52,14 +78,14 @@ rules = {
 		"actions_true" : [ 
 			{
 				'name' : "CPU_true",
-				'params' : None,
+				'params' : {'name' : 'CPU Usage'},
 				'multi_thread' : True
 			}
 		],
 		"actions_false": [
 			{ 
 				'name' : "CPU_false",
-				'params' : None,
+				'params' : {'name' : 'CPU Usage'},
 				'multi_thread' : True
 			}
 		],
@@ -68,7 +94,7 @@ rules = {
 		'variables' : ['CPU_usage']
 	},
 
-	# CPU_usage <= 50% and memory <=60% and disk_space < 70%
+	# memory <=60%
 	'memory' : {
 		"conditions" : { 			
 			'name' : ["memory"],
@@ -77,24 +103,24 @@ rules = {
 		},
 		"actions_true" : [ 
 			{
-				'name' : "memory_true",
-				'params' : None,
+				'name' : "CPU_true",
+				'params' : {'name' : 'memory usage'},
 				'multi_thread' : True
 			}
 		],
 		"actions_false": [
 			{ 
-				'name' : "memory_false",
-				'params' : None,
+				'name' : "CPU_false",
+				'params' : {'name' : 'memory usage'},
 				'multi_thread' : True
 			}
 		],
-		"actions" : ["memory_true","memory_false"],
+		"actions" : ["CPU_true","CPU_false"],
 		'multi_thread' : True,
 		'variables' : ['free_mem','total_mem','memory']
 	},
 
-	# CPU_usage <= 50% and memory <=60% and disk_space < 70%
+	# disk_space < 70%
 	'disk_space' : {
 		"conditions" : { 			
 			'name' : ["disk_space"],
@@ -103,19 +129,19 @@ rules = {
 		},
 		"actions_true" : [ 
 			{
-				'name' : "disk_true",
-			    'params' : None,
+				'name' : "CPU_true",
+				'params' : {'name' : 'Disk Usage'},
 				'multi_thread' : True
 			}
 		],
 		"actions_false": [
 			{ 
-				'name' : "disk_false",
-			    'params' : None,
+				'name' : "CPU_false",
+				'params' : {'name' : 'Disk Usage'},
 				'multi_thread' : True
 			}
 		],
-		"actions" : ["disk_true","disk_false"],
+		"actions" : ["CPU_true","CPU_false"],
 		'multi_thread' : True,
 		'variables' : ['disk_space']
 	},
@@ -153,14 +179,14 @@ rules = {
 		"actions_true" : [ 
 			{
 				'name' : "condition_pass",
-			    'params' : None,
+			    'params' : {'name' : "Rule1"},
 				'multi_thread' : True
 			}
 		],
 		"actions_false": [
 			{ 
 				'name' : "condition_fail",
-			    'params' : None,
+			    'params' : {'name' : "Rule1"},
 				'multi_thread' : True
 			}
 		],
@@ -202,14 +228,14 @@ rules = {
 		"actions_true" : [ 
 			{
 				'name' : "condition_pass",
-			    'params' : None,
+			    'params' : {'name' : "Rule2"},
 				'multi_thread' : True
 			}
 		],
 		"actions_false": [ 
 			{
 				'name' : "condition_fail",
-			    'params' : None,
+			    'params' : {'name' : "Rule2"},
 				'multi_thread' : True
 			}
 		],
@@ -242,14 +268,14 @@ rules = {
 		"actions_true" : [ 
 			{
 				'name' : "condition_pass",
-			    'params' : None,
+			    'params' : {'name' : "Rule3"},
 				'multi_thread' : True
 			}
 		],
 		"actions_false": [
 			{
 				'name' : "condition_fail",
-			    'params' : None,
+			    'params' : {'name' : "Rule3"},
 				'multi_thread' : True
 			}
 		],
@@ -260,7 +286,7 @@ rules = {
 }
 
 variables = {
-	'free_mem' : { #CPU numeric
+	'free_mem' : { #numeric
 	    'name' : "free_mem",
 		'field' : "numeric_rule_variable",
 		'label' : 'None',
@@ -272,7 +298,7 @@ variables = {
 	        'user_name' : 'ubuntu',
 	        'password' : None,
 	        'key_filename' : 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem',
-	        "command" : "cat /proc/meminfo | grep MemAvailable",
+	        "command" : "cat /proc/meminfo | grep MemFree",
 	        'evaluation' : 'int',
 	        'start' : ':',
 	        'end' : 'kB',
@@ -280,7 +306,7 @@ variables = {
        'multi_thread' : False
 	},
 
-	'total_mem' : { #CPU numeric
+	'total_mem' : { #numeric
 	    'name' : "total_mem",
 		'field' : "numeric_rule_variable",
 		'label' : 'None',
@@ -300,19 +326,19 @@ variables = {
        'multi_thread' : False
 	},
 
-	'memory' : { #CPU numeric
+	'memory' : { #numeric
 	    'name' : "memory",
 		'field' : "numeric_rule_variable",
 		'label' : 'None',
 		'options' : 'None',
-		'formulae' : 'self.product.memory = 100 * self.product.free_mem / self.product.total_mem',
+		'formulae' : 'self.product.memory = 100 - 100 * self.product.free_mem / self.product.total_mem',
 		'input_method' : {
 			'method' : 'derived'
        },
        'multi_thread' : False
 	},
 
-	'CPU_usage' : { #actual numeric
+	'CPU_usage' : { #numeric
 	    'name' : "CPU_usage",
 		'field' : "numeric_rule_variable",
 		'label' : 'None',
@@ -331,7 +357,7 @@ variables = {
        'multi_thread' : True
 	},
 
-	'disk_space' : { #incorrect numeric
+	'disk_space' : { #numeric
 	    'name' : "disk_space",
 		'field' : "numeric_rule_variable",
 		'label' : 'None',
@@ -434,43 +460,23 @@ variables = {
 actions = {
 	"condition_pass" : { 
 		'name' : 'condition_pass',
-		'params' : None,
-		'formulae' : "return {'msg' : 'All xpected access points are present'}",
+		'params' : {'name' : FIELD_TEXT},
+		'formulae' : "return {name : 'All xpected access points are present'}",
 	},
 	"condition_fail" :{
 	    'name' : 'condition_fail',
-		'params' : None,
-		'formulae' : "return {'msg' : 'NOT all expected access points are present'}",
+		'params' : {'name' : FIELD_TEXT},
+		'formulae' : "return {name : 'NOT all expected access points are present'}",
 	},
 	"CPU_true" : { 
 		'name' : 'CPU_true',
-		'params' : None,
-		'formulae' : "return {'msg' : 'CPU usage under threshold(50) : '+ str(self.product.CPU_usage)}",
+		'params' : {'name' : FIELD_TEXT},
+		'formulae' : "return {name : name + ' under threshold(50) : '+ str(self.product.CPU_usage)}",
 	},
 	"CPU_false" :{
 	    'name' : 'CPU_false',
-		'params' : None,
-		'formulae' : "return {'msg' : 'CPU usage NOT under threshold(50): ' +  str(self.product.CPU_usage)}",
-	},
-	"memory_true" : { 
-		'name' : 'memory_true',
-		'params' : None,
-		'formulae' : "return {'msg' : 'Memory usage under threshold(60) : '+ str(self.product.memory)}",
-	},
-	"memory_false" :{
-	    'name' : 'memory_false',
-		'params' : None,
-		'formulae' : "return {'msg' : 'Memory usage NOT under threshold(60) : '+ str(self.product.memory)}",
-	},
-	"disk_true" : { 
-		'name' : 'disk_true',
-		'params' : None,
-		'formulae' : "return {'msg' : 'disk usage under threshold(70) : '+  str(self.product.disk_space)}",
-	},
-	"disk_false" :{
-	    'name' : 'disk_false',
-		'params' : None,
-		'formulae' : "return {'msg' : 'disk usage NOT under threshod(70) : '+ str(self.product.disk_space)}",
+		'params' :{'name' : FIELD_TEXT},
+		'formulae' : "return {name : name + ' NOT under threshold(50): ' +  str(self.product.CPU_usage)}",
 	}
 }
 

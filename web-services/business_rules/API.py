@@ -254,7 +254,7 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
                 if act['params'] :
                     for args in act['params'] :
                         li.append(args)
-                args = "(self" + ','.join(li) + ")"
+                args = "(self," + ','.join(li) + ")"
                 exec("@rule_action(params = act['params'])\n" "def " + act['name'] + args + """ :\n\t""" + act["formulae"])
         except Exception as e:
             print("Product Actions couldn't be declared")

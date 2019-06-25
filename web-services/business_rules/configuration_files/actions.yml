@@ -1,32 +1,20 @@
 CPU_false:
-  formulae: 'return {''msg'' : ''CPU usage NOT under threshold(50): '' +  str(self.product.CPU_usage)}'
+  formulae: 'return {name : name + '' NOT under threshold(50): '' +  str(self.product.CPU_usage)}'
   name: CPU_false
-  params: null
+  params:
+    name: text
 CPU_true:
-  formulae: 'return {''msg'' : ''CPU usage under threshold(50) : ''+ str(self.product.CPU_usage)}'
+  formulae: 'return {name : name + '' under threshold(50) : ''+ str(self.product.CPU_usage)}'
   name: CPU_true
-  params: null
+  params:
+    name: text
 condition_fail:
-  formulae: 'return {''msg'' : ''NOT all expected access points are present''}'
+  formulae: 'return {name : ''NOT all expected access points are present''}'
   name: condition_fail
-  params: null
+  params:
+    name: text
 condition_pass:
-  formulae: 'return {''msg'' : ''All xpected access points are present''}'
+  formulae: 'return {name : ''All xpected access points are present''}'
   name: condition_pass
-  params: null
-disk_false:
-  formulae: 'return {''msg'' : ''disk usage NOT under threshod(70) : ''+ str(self.product.disk_space)}'
-  name: disk_false
-  params: null
-disk_true:
-  formulae: 'return {''msg'' : ''disk usage under threshold(70) : ''+  str(self.product.disk_space)}'
-  name: disk_true
-  params: null
-memory_false:
-  formulae: 'return {''msg'' : ''Memory usage NOT under threshold(60) : ''+ str(self.product.memory)}'
-  name: memory_false
-  params: null
-memory_true:
-  formulae: 'return {''msg'' : ''Memory usage under threshold(60) : ''+ str(self.product.memory)}'
-  name: memory_true
-  params: null
+  params:
+    name: text

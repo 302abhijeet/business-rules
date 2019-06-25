@@ -1,6 +1,6 @@
 import inspect
 
-import business_rules.fields
+import business_rules.fields as fields
 from business_rules.utils import fn_name_to_pretty_label
 
 

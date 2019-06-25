@@ -89,7 +89,7 @@ free_mem:
   field: numeric_rule_variable
   formulae: self.product.free_mem
   input_method:
-    command: cat /proc/meminfo | grep MemAvailable
+    command: cat /proc/meminfo | grep MemFree
     end: kB
     evaluation: int
     host_name: 10.137.89.13
@@ -123,7 +123,7 @@ incorrect:
   options: None
 memory:
   field: numeric_rule_variable
-  formulae: self.product.memory = 100 * self.product.free_mem / self.product.total_mem
+  formulae: self.product.memory = 100 - 100 * self.product.free_mem / self.product.total_mem
   input_method:
     method: derived
   label: None

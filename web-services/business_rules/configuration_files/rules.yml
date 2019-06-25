@@ -5,11 +5,13 @@ CPU_usage:
   actions_false:
   - multi_thread: true
     name: CPU_false
-    params: null
+    params:
+      name: CPU Usage
   actions_true:
   - multi_thread: true
     name: CPU_true
-    params: null
+    params:
+      name: CPU Usage
   conditions:
     name:
     - CPU_usage
@@ -20,16 +22,18 @@ CPU_usage:
   - CPU_usage
 disk_space:
   actions:
-  - disk_true
-  - disk_false
+  - CPU_true
+  - CPU_false
   actions_false:
   - multi_thread: true
-    name: disk_false
-    params: null
+    name: CPU_false
+    params:
+      name: Disk Usage
   actions_true:
   - multi_thread: true
-    name: disk_true
-    params: null
+    name: CPU_true
+    params:
+      name: Disk Usage
   conditions:
     name:
     - disk_space
@@ -40,16 +44,18 @@ disk_space:
   - disk_space
 memory:
   actions:
-  - memory_true
-  - memory_false
+  - CPU_true
+  - CPU_false
   actions_false:
   - multi_thread: true
-    name: memory_false
-    params: null
+    name: CPU_false
+    params:
+      name: memory usage
   actions_true:
   - multi_thread: true
-    name: memory_true
-    params: null
+    name: CPU_true
+    params:
+      name: memory usage
   conditions:
     name:
     - memory
@@ -67,11 +73,13 @@ rule1:
   actions_false:
   - multi_thread: true
     name: condition_fail
-    params: null
+    params:
+      name: Rule1
   actions_true:
   - multi_thread: true
     name: condition_pass
-    params: null
+    params:
+      name: Rule1
   conditions:
     any:
     - all:
@@ -105,11 +113,13 @@ rule2:
   actions_false:
   - multi_thread: true
     name: condition_fail
-    params: null
+    params:
+      name: Rule2
   actions_true:
   - multi_thread: true
     name: condition_pass
-    params: null
+    params:
+      name: Rule2
   conditions:
     any:
     - all:
@@ -143,11 +153,13 @@ rule3:
   actions_false:
   - multi_thread: true
     name: condition_fail
-    params: null
+    params:
+      name: Rule3
   actions_true:
   - multi_thread: true
     name: condition_pass
-    params: null
+    params:
+      name: Rule3
   conditions:
     any:
     - name:
