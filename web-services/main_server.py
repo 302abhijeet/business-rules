@@ -189,11 +189,15 @@ def getrule(ty):
 @server.errorhandler(500)
 def internal_error(error):
     print(error)
-    return Response(status = 500)
+    return Response(status = 500,response=json.dump({'Error':'Internal server error'}))
 
 @server.errorhandler(405)
 def bad_method(error):
-        return Response(status=405)
+        return Response(status=405,response=json.dump({'Error':'Method not allowed'}))
+
+@server.errorhandler(404)
+def not_found(error):
+        return Response(status=404,response=json.dumps({'Error':'Route not found'}))
 
 if __name__ == "__main__":
     server.run(port = 5000,debug=True)
