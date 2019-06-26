@@ -28,6 +28,7 @@ def run(rule, defined_variables, defined_actions):
         return False
 
 
+
 def check_conditions_recursively(conditions, defined_variables):
     keys = list(conditions.keys())
     if keys == ['all']:
@@ -114,10 +115,16 @@ def do_actions(actions, defined_actions):
         
 
 def _run_action(action, defined_actions) :
-    method_name = action['name']
-    def fallback(*args, **kwargs):
-        raise AssertionError("Action {0} is not defined in class {1}"\
-                .format(method_name, defined_actions.__class__.__name__))
-    params = action.get('params') or {}
-    method = getattr(defined_actions, method_name, fallback)
-    API.log.append(method(**params))
+    try :
+        method_name = action['name']
+        def fallback(*args, **kwargs):
+            raise AssertionError("Action {0} is not defined in class {1}"\
+                    .format(method_name, defined_actions.__class__.__name__))
+        params = action.get('params') or {}
+        method = getattr(defined_actions, method_name, fallback)
+        API.log.append(method(**params))
+    except Exception as e:
+        API.log.append({
+            "Error" : "Action: " + action['name'] + " Cannot be run on engine!",
+            "Exception" : str(e)
+        })

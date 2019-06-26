@@ -6,10 +6,11 @@ from business_rules.actions import *
 from business_rules.best_case import *
 import weakref
 import yaml
-import business_rules.collector as collector
 import threading
 
 log = []
+
+import business_rules.collector as collector
 
 """
 #have to delete later
@@ -65,6 +66,7 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
                                 "Error" : "Rule: " + rule + "Cannot be run on engine!",
                                 "Exception" : str(e)
                             })
+                            passed = False
                     else:
                         log.append({"Error" : "The (" + rule + ") rule cannot be multi threaded"})
                         passed = False
@@ -115,6 +117,7 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
                         "Error" : "Rule: " + rule + " couldn't be run on engine!",
                         "Exception": str(e)
                     })
+                    all_pass = False
 
 
             elif type(rule) == type(dict()):
@@ -246,7 +249,11 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
         log.append({"Extra Variables given :" : extra_variables})
     #populate date from case variables
     product = collector.Collector(variables_list,parameter_variables,parameter_dataSource,source_variables)
-
+    for var in collector.kill_variable:
+        for rule in case["rule_list"]:
+            if var in rules[rule]['variables']:
+                kill_rule.append(rule)
+                
     for var in source_variables:
         variables_list.append(source_variables[var])
 
@@ -322,9 +329,14 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
                     raise e
                 for rule in case['rule_list']:
                     if act['name'] in rules[rule]['actions']:
-                        kill_rule.append(rule)
+                        for act_true in rules[rule]['actions_true']:
+                            if act['name'] == act_true['name']:
+                                rules[rule]['actions_true'].remove(act_true)
+                        for act_false in rules[rule]['actions_false']:
+                            if act['name'] == act_false['name']:
+                                rules[rule]['actions_false'].remove(act_false)
                         log.append({
-                            "Error": "Product Action: "+act['name']+" couldn't be declared hence rule: "+rule+"will not run and return false output",
+                            "Error": "Product Action: "+act['name']+" couldn't be declared hence rule: "+rule+" will not run that action!",
                             "Exception": str(e)
                         })
 
@@ -341,7 +353,6 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
             "Error " : "Couldn't run rules in engine",
             "Exception" : str(e)
         })
-        raise e
 
     return log
 

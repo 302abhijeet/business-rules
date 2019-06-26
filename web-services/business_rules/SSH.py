@@ -21,15 +21,17 @@ def _get_variable_output(var,ssh_client) :
 			else :
 				out = out[out.index(var["input_method"]['start']) +1:out.index(var["input_method"]['end'])]
 		except Exception as e:
-			print(var['name'] + " Error in SSH splitting of variable: ")
-			raise e
+			raise Exception(var['name'] + " Error in SSH splitting of variable: " + str(e))
 	else :
 		out = stdout.readlines()[0]
 	return out
 
 
 def _get_file(source, variables):
-	ssh_client = _start_connection(source)
+	try:
+		ssh_client = _start_connection(source)
+	except Exception as e:
+		raise Exception("Couldn't connect to SSH host\n"+str(e))
 	result = {}
 	for var in source['variables']:
 		result[var] = _get_variable_output(variables[var],ssh_client)
@@ -37,7 +39,10 @@ def _get_file(source, variables):
 
 
 def _get_value(var) :
-	ssh_client = _start_connection(var['input_method'])
+	try:
+		ssh_client = _start_connection(var['input_method'])
+	except Exception as e:
+		raise Exception("Couldn't connect to SSH host\n"+str(e))
 	return _get_variable_output(var,ssh_client)
 		
 		
