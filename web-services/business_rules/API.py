@@ -225,6 +225,8 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
                 raise Exception("Rule Variable not defined : " + var)
             variables_list.append(variables[var])
             if var in parameter_variables:
+                if var in source_variables_list:
+                    log.append({"Error": "Variable: "+var+" decalred n parameters as well as given a source by user!"})
                 continue
             if var not in source_variables_list:
                 if "DataSource" in variables[var]["input_method"]:
@@ -264,7 +266,8 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
         log.append({"Extra Variables given :" : extra_variables})
 
     for source in DataSource:
-        parameter_dataSource.append(DataSource[source])
+        if DataSource[source]["variables"] :
+            parameter_dataSource.append(DataSource[source])
     #populate data from case variables
     product = collector.Collector(parameter_variables,parameter_dataSource,variables)
 
