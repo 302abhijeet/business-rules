@@ -273,6 +273,8 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
 
     #For killing rules whose variables couldn't be fetched
     for var in collector.kill_variable:
+        if run_rule:
+            raise Exception["Rule cannot run bacause variable: "+var+" not defined!"]
         for rule in case["rule_list"]:
             if var in rules[rule]['variables']:
                 log.append({"Error" : "Rule: "+rule+" will not run because variable: "+var+" couldn't be fetched!"})
