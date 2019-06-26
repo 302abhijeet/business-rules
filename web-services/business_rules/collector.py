@@ -34,7 +34,7 @@ class Collector:
 			self._init_source_variables(variables,result)
 		except Exception as e:
 			API.log.append({
-				"Error": "Unable to declare source host: "+source["method"]+"! Rules with variables in source will not run",
+				"Error": "Unable to declare source host: "+source["method"]+"! Rules with variables in source will not run: "+ str(source["variables"]),
 				"Exception":str(e)
 			})
 			for var in source['variables']:
@@ -42,7 +42,8 @@ class Collector:
 
 
 	def __init__(self,parameter_variables = {},parameter_dataSource = [],variables = {}) :
-		
+		global kill_variable
+		kill_variable = []
 		threads = []			
 		for source in parameter_dataSource:
 			if source["multi_thread"]:

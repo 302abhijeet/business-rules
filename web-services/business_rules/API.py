@@ -223,11 +223,12 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
             if var not in variables :
                 log.append({"Error" : "Rule Variable not defined : " + var})
                 raise Exception("Rule Variable not defined : " + var)
+            variables_list.append(variables[var])
             if var in parameter_variables:
                 continue
-            variables_list.append(variables[var])
             if var not in source_variables_list:
-                DataSource[variables[var]["input_method"]["DataSource"]]["variables"].append(var)
+                if "DataSource" in variables[var]["input_method"]:
+                    DataSource[variables[var]["input_method"]["DataSource"]]["variables"].append(var)
             else :
                 source_variables_list.remove(var)
     else :
@@ -240,11 +241,13 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
                     log.append({"Error" : var + " variable not declared hence rule ("+rule+") cannot run"})
                     kill_rule.append(rule)
                     break
-                if var in parameter_variables:
-                    continue
                 if variables[var] in variables_list:
                     continue
                 variables_list.append(variables[var])
+                if var in parameter_variables:
+                    if var in source_variables_list:
+                        log.append({"Error": "Variable: "+var+" decalred n parameters as well as given a source by user!"})
+                    continue
                 if var not in source_variables_list:
                     if "DataSource" in variables[var]["input_method"]:
                         DataSource[variables[var]["input_method"]["DataSource"]]["variables"].append(var)
@@ -269,6 +272,7 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
     for var in collector.kill_variable:
         for rule in case["rule_list"]:
             if var in rules[rule]['variables']:
+                log.append({"Error" : "Rule: "+rule+" will not run because variable: "+var+" couldn't be fetched!"})
                 kill_rule.append(rule)
                 
 
