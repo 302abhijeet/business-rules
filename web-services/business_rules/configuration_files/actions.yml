@@ -1,7 +1,7 @@
 CPU_false:
-  formulae: "l=locals()\n\texec('var = self.product.' + var,globals(),l)\n\tvar =\
-    \ l['var']\n\treturn {name : name + ' NOT under threshold(' + str(threshold) +'):\
-    \ ' +  str(var)}"
+  formulae: "ifll=locals()\n\texec('var = self.product.' + var,globals(),l)\n\tvar\
+    \ = l['var']\n\treturn {name : name + ' NOT under threshold(' + str(threshold)\
+    \ +'): ' +  str(var)}"
   name: CPU_false
   params:
     name: text

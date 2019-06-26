@@ -386,7 +386,7 @@ variables = {
 		'input_method' : {
 			'method' : 'API',
 			'request' : 'get',
-            'url' : 'https://ce979fb9-c240-4259-bf6a-6d9de424e291.mock.pstmn.io/get',
+            'url' : 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get',
             'params' : {},
             "command" : 'response.json()["actual"]',
             'evaluation' : 'int',
@@ -405,7 +405,7 @@ variables = {
 		'input_method' : {
 			'method' : 'API',
 			'request' : 'post',
-            'url' : 'https://50e3b433-59fc-4582-80f2-3d006f1ab57d.mock.pstmn.io/post',
+            'url' : 'https://75c9507b-8f2e-4211-a518-2c2ab988c27d.mock.pstmn.io/post',
             'params' : {},
 			'data' : { "method" : "POST", "value" : 13},
             "command" : 'response.json()["incorrect"]',
@@ -476,7 +476,7 @@ actions = {
 	"CPU_false" :{
 	    'name' : 'CPU_false',
 		'params' :{'name' : FIELD_TEXT,"threshold" : FIELD_NUMERIC,'var': FIELD_TEXT},
-		'formulae' : "l=locals()\n\texec('var = self.product.' + var,globals(),l)\n\tvar = l['var']\n\treturn {name : name + ' NOT under threshold(' + str(threshold) +'): ' +  str(var)}",
+		'formulae' : "ifll=locals()\n\texec('var = self.product.' + var,globals(),l)\n\tvar = l['var']\n\treturn {name : name + ' NOT under threshold(' + str(threshold) +'): ' +  str(var)}",
 	},
 
 }
