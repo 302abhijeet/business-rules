@@ -36,7 +36,14 @@ def runrule():
         
         #API function to run the rules
         #this function returns a list of messages
-        data = API._run_API(run_rule=rulename,case=None,parameter_variables=data_given,parameter_dataSource=parameter_data)
+        try:
+                data = API._run_API(run_rule=rulename,case=None,parameter_variables=data_given,parameter_dataSource=parameter_data)
+        except Exception as e:
+                return  Response(
+                        response=json.dumps({'Error':str(e)}),
+                        mimetype='application/json',
+                        status=500
+                )
         return  Response(
                         response=json.dumps({'run_msg':'Run successful','data':data}),
                         mimetype='application/json',
@@ -189,11 +196,11 @@ def getrule(ty):
 @server.errorhandler(500)
 def internal_error(error):
     print(error)
-    return Response(status = 500,response=json.dump({'Error':'Internal server error'}))
+    return Response(status = 500,response=json.dumps({'Error':'Internal server error'}))
 
 @server.errorhandler(405)
 def bad_method(error):
-        return Response(status=405,response=json.dump({'Error':'Method not allowed'}))
+        return Response(status=405,response=json.dumps({'Error':'Method not allowed'}))
 
 @server.errorhandler(404)
 def not_found(error):

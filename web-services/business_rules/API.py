@@ -221,8 +221,8 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
     if run_rule :
         for var in rules[run_rule]['variables']:
             if var not in variables :
-                log.append({"Error" : "Rule Variable not defined : " + var})
-                raise Exception("Rule Variable not defined : " + var)
+                log.append({"Error" : "Rule Variable not defined : " + var+"! Rule cannot run!"})
+                raise Exception(log)
             variables_list.append(variables[var])
             if var in parameter_variables:
                 if var in source_variables_list:
@@ -236,8 +236,8 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
     else :
         for rule in case['rule_list'] :
             if rule not in rules:
-                log.append({"Error" : "Rule not defined : " + var})
-                raise Exception("Rule not defined : " + rule)
+                log.append({"Error" : "Rule not defined : " + rule+"! Case cannot run!"})
+                raise Exception(log)
             for var in rules[rule]['variables'] :
                 if var not in variables:
                     log.append({"Error" : var + " variable not declared hence rule ("+rule+") cannot run"})
@@ -274,7 +274,8 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
     #For killing rules whose variables couldn't be fetched
     for var in collector.kill_variable:
         if run_rule:
-            raise Exception["Rule cannot run bacause variable: "+var+" not defined!"]
+            log.append({"Error" : "Rule cannot run bacause variable: "+var+" not defined!"})
+            raise Exception(log)
         for rule in case["rule_list"]:
             if var in rules[rule]['variables']:
                 log.append({"Error" : "Rule: "+rule+" will not run because variable: "+var+" couldn't be fetched!"})
@@ -316,7 +317,7 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
         for act in rules[run_rule]['actions'] :
             if not act in actions :
                 log.append("Cannot run rule:" + run_rule + 'because action: ' + act)
-                raise Exception("Rule Action not defined : " + act)
+                raise Exception(log)
             actions_list.append(actions[act])
     else :
         for rule in case['rule_list'] :
