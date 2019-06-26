@@ -1,17 +1,19 @@
 #Database module
 
 import mysql.connector
-def _get_value(var = []) :
+def _start_connection(source):
 	try:
 		mydb = mysql.connector.connect(
-				host=var['input_method']['host_name'],
-				user=var['input_method']['user_name'],
-				passwd=var['input_method']['password'],
-				database=var['input_method']['data_base']
-					)
+			host=source['host_name'],
+			user=source['user_name'],
+			passwd=source['password'],
+			database=source['data_base']
+				)
+		return mydb
 	except Exception as e:
 		raise Exception("Couldn't connect to database host\n"+str(e))
-	
+
+def _get_variable_output(var,mydb):
 	command = var['input_method']['command'].split("\n")
 	mycursor = mydb.cursor()
 	try:
@@ -33,5 +35,11 @@ def _get_value(var = []) :
 				out = out[0]
 		else :
 			out = result
-
 	return out
+
+def _get_file(source,variables):
+	mydb = _start_connection(source)
+	result = {}
+	for var in source['variables']:
+		result[var] = _get_variable_output(variables[var],mydb)
+	return result

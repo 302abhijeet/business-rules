@@ -33,17 +33,5 @@ def _get_file(source,variables):
 	for var in source['variables']:
 		result[var] = _get_variable_output(variables[var],response)
 	return result
-
-def _get_value(var = []):
-	try :
-		if var["input_method"]['request'] == 'get':
-			response = requests.get(var['input_method']['url'], params = var['input_method']['params'])
-		elif var["input_method"]['request'] == 'post':
-			response = requests.post(var['input_method']['url'], params = var['input_method']['params'],data = var['input_method']['data'])
-		else:
-			raise Exception("request method not defined: "+ source['request'])
-	except Exception as e:
-		raise Exception("API Source unable to connect\n"+str(e))
-	return _get_variable_output(var,response)
 		
 	

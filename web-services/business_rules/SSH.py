@@ -36,13 +36,5 @@ def _get_file(source, variables):
 	for var in source['variables']:
 		result[var] = _get_variable_output(variables[var],ssh_client)
 	return result
-
-
-def _get_value(var) :
-	try:
-		ssh_client = _start_connection(var['input_method'])
-	except Exception as e:
-		raise Exception("Couldn't connect to SSH host\n"+str(e))
-	return _get_variable_output(var,ssh_client)
 		
 		

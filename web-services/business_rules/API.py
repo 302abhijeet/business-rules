@@ -171,6 +171,8 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
         variables = yaml.load( f, Loader=yaml.FullLoader)
     with open("./business_rules/configuration_files/actions.yml", 'r') as f:
         actions = yaml.load( f, Loader=yaml.FullLoader)
+    with open("./business_rules/configuration_files/DataSource.yml", 'r') as f:
+        DataSource = yaml.load( f, Loader=yaml.FullLoader)
 
     if case and case in use_cases:
         case = use_cases[case]
@@ -204,6 +206,7 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
     source_variables_list = []
     extra_variables = []
     variable_source = {}
+    #To make a list of source variables and check for duplication
     for source in parameter_dataSource:
         var_set = set(source['variables'])
         if var_set.intersection(source_variables_list) :
@@ -213,16 +216,20 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
         source_variables_list.extend(var_set)
         for var in var_set:
             variable_source[var] = source
-    source_variables = {}
+
+    #Prepare list of variable needed for rules
     if run_rule :
         for var in rules[run_rule]['variables']:
             if var not in variables :
                 log.append({"Error" : "Rule Variable not defined : " + var})
                 raise Exception("Rule Variable not defined : " + var)
-            if var in source_variables_list:
-                source_variables[var] = variables[var]
-            else:
-                variables_list.append(variables[var])
+            if var in parameter_variables:
+                continue
+            variables_list.append(variables[var])
+            if var not in source_variables_list:
+                DataSource[variables[var]["input_method"]["DataSource"]]["variables"].append(var)
+            else :
+                source_variables_list.remove(var)
     else :
         for rule in case['rule_list'] :
             if rule not in rules:
@@ -233,29 +240,37 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
                     log.append({"Error" : var + " variable not declared hence rule ("+rule+") cannot run"})
                     kill_rule.append(rule)
                     break
+                if var in parameter_variables:
+                    continue
                 if variables[var] in variables_list:
                     continue
-                if var in source_variables_list:
-                    source_variables[var] = variables[var]
-                else:
-                    variables_list.append(variables[var])
-    for var in variable_source:
-        if var not in source_variables:
-            extra_variables.append(var)
-            variable_source[var]['variables'].remove(var)
-            if not variable_source[var]['variables'] :
-                parameter_dataSource.remove(variable_source[var])
+                variables_list.append(variables[var])
+                if var not in source_variables_list:
+                    if "DataSource" in variables[var]["input_method"]:
+                        DataSource[variables[var]["input_method"]["DataSource"]]["variables"].append(var)
+                else :
+                    source_variables_list.remove(var)
+
+    #To check for extra variables in parameter_Sources
+    for var in source_variables_list:
+        extra_variables.append(var)
+        variable_source[var]['variables'].remove(var)
+        if not variable_source[var]['variables'] :
+            parameter_dataSource.remove(variable_source[var])
     if extra_variables:
         log.append({"Extra Variables given :" : extra_variables})
-    #populate date from case variables
-    product = collector.Collector(variables_list,parameter_variables,parameter_dataSource,source_variables)
+
+    for source in DataSource:
+        parameter_dataSource.append(DataSource[source])
+    #populate data from case variables
+    product = collector.Collector(parameter_variables,parameter_dataSource,variables)
+
+    #For killing rules whose variables couldn't be fetched
     for var in collector.kill_variable:
         for rule in case["rule_list"]:
             if var in rules[rule]['variables']:
                 kill_rule.append(rule)
                 
-    for var in source_variables:
-        variables_list.append(source_variables[var])
 
     #create ruleVariables
     class ProductVariables(BaseVariables):

@@ -2,14 +2,11 @@ CPU_usage:
   field: numeric_rule_variable
   formulae: self.product.CPU_usage
   input_method:
+    DataSource: API_getPostman
     command: response.json()["actual"]
     end: null
     evaluation: int
-    method: API
-    params: {}
-    request: get
     start: null
-    url: https://ce979fb9-c240-4259-bf6a-6d9de424e291.mock.pstmn.io/get
   label: None
   multi_thread: true
   name: CPU_usage
@@ -18,14 +15,11 @@ actual:
   field: numeric_rule_variable
   formulae: self.product.actual
   input_method:
+    DataSource: API_getPostman
     command: response.json()["actual"]
     end: null
     evaluation: int
-    method: API
-    params: {}
-    request: get
     start: null
-    url: https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get
   label: None
   multi_thread: true
   name: actual
@@ -34,15 +28,11 @@ correct:
   field: numeric_rule_variable
   formulae: self.product.correct
   input_method:
+    DataSource: database_sqlRuleEngine
     command: select correct from rule where correct order by correct limit 1
-    data_base: rules_engine
     end: null
     evaluation: int
-    host_name: localhost
-    method: data_base
-    password: Perfacio1
     start: null
-    user_name: root
   label: None
   multi_thread: true
   name: correct
@@ -51,17 +41,11 @@ disk_space:
   field: numeric_rule_variable
   formulae: self.product.disk_space
   input_method:
+    DataSource: API_postPostman
     command: response.json()["incorrect"]
-    data:
-      method: POST
-      value: 13
     end: null
     evaluation: int
-    method: API
-    params: {}
-    request: post
     start: null
-    url: https://50e3b433-59fc-4582-80f2-3d006f1ab57d.mock.pstmn.io/post
   label: None
   multi_thread: true
   name: disk_space
@@ -70,17 +54,13 @@ expected:
   field: numeric_rule_variable
   formulae: self.product.expected
   input_method:
+    DataSource: SSH_awsIntern
     command: 'cd abhijeet
 
       cat expected.txt'
     end: null
     evaluation: int
-    host_name: 10.137.89.13
-    key_filename: C:\Users\axsingh\Documents\Rules-engine.pem
-    method: SSH
-    password: null
     start: null
-    user_name: ubuntu
   label: None
   multi_thread: true
   name: expected
@@ -89,15 +69,11 @@ free_mem:
   field: numeric_rule_variable
   formulae: self.product.free_mem
   input_method:
+    DataSource: SSH_awsIntern
     command: cat /proc/meminfo | grep MemFree
     end: kB
     evaluation: int
-    host_name: 10.137.89.13
-    key_filename: C:\Users\axsingh\Documents\Rules-engine.pem
-    method: SSH
-    password: null
     start: ':'
-    user_name: ubuntu
   label: None
   multi_thread: false
   name: free_mem
@@ -106,17 +82,11 @@ incorrect:
   field: numeric_rule_variable
   formulae: self.product.incorrect
   input_method:
+    DataSource: API_postPostman
     command: response.json()["incorrect"]
-    data:
-      method: POST
-      value: 13
     end: null
     evaluation: int
-    method: API
-    params: {}
-    request: post
     start: null
-    url: https://75c9507b-8f2e-4211-a518-2c2ab988c27d.mock.pstmn.io/post
   label: None
   multi_thread: true
   name: incorrect
@@ -134,15 +104,11 @@ total_mem:
   field: numeric_rule_variable
   formulae: self.product.total_mem
   input_method:
+    DataSource: SSH_awsIntern
     command: cat /proc/meminfo | grep MemTotal
     end: kB
     evaluation: int
-    host_name: 10.137.89.13
-    key_filename: C:\Users\axsingh\Documents\Rules-engine.pem
-    method: SSH
-    password: null
     start: ':'
-    user_name: ubuntu
   label: None
   multi_thread: false
   name: total_mem

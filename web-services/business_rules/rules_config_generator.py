@@ -293,11 +293,7 @@ variables = {
 		'options' : 'None',
 		'formulae' : 'self.product.free_mem',
 		'input_method' : {
-			'method' : 'SSH',
-	        'host_name' : '10.137.89.13',
-	        'user_name' : 'ubuntu',
-	        'password' : None,
-	        'key_filename' : 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem',
+			"DataSource" : "SSH_awsIntern",
 	        "command" : "cat /proc/meminfo | grep MemFree",
 	        'evaluation' : 'int',
 	        'start' : ':',
@@ -313,11 +309,7 @@ variables = {
 		'options' : 'None',
 		'formulae' : 'self.product.total_mem',
 		'input_method' : {
-			'method' : 'SSH',
-	        'host_name' : '10.137.89.13',
-	        'user_name' : 'ubuntu',
-	        'password' : None,
-	        'key_filename' : 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem',
+			"DataSource" : "SSH_awsIntern",
 	        "command" : "cat /proc/meminfo | grep MemTotal",
 	        'evaluation' : 'int',
 	        'start' : ':',
@@ -334,8 +326,8 @@ variables = {
 		'formulae' : 'self.product.memory = 100 - 100 * self.product.free_mem / self.product.total_mem',
 		'input_method' : {
 			'method' : 'derived'
-       },
-       'multi_thread' : False
+        },
+        'multi_thread' : False
 	},
 
 	'CPU_usage' : { #numeric
@@ -345,10 +337,7 @@ variables = {
 		'options' : 'None',
 		'formulae' : 'self.product.CPU_usage',
 		'input_method' : {
-			'method' : 'API',
-			'request' : 'get',
-            'url' : 'https://ce979fb9-c240-4259-bf6a-6d9de424e291.mock.pstmn.io/get',
-            'params' : {},
+			"DataSource" : "API_getPostman",
             "command" : 'response.json()["actual"]',
             'evaluation' : 'int',
             'start' : None,
@@ -364,11 +353,7 @@ variables = {
 		'options' : 'None',
 		'formulae' : 'self.product.disk_space',
 		'input_method' : {
-			'method' : 'API',
-			'request' : 'post',
-            'url' : 'https://50e3b433-59fc-4582-80f2-3d006f1ab57d.mock.pstmn.io/post',
-            'params' : {},
-			'data' : { "method" : "POST", "value" : 13},
+			"DataSource" : "API_postPostman",
             "command" : 'response.json()["incorrect"]',
             'evaluation' : 'int',
             'start' : None,
@@ -384,10 +369,7 @@ variables = {
 		'options' : 'None',
 		'formulae' : 'self.product.actual',
 		'input_method' : {
-			'method' : 'API',
-			'request' : 'get',
-            'url' : 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get',
-            'params' : {},
+			"DataSource" : "API_getPostman",
             "command" : 'response.json()["actual"]',
             'evaluation' : 'int',
             'start' : None,
@@ -403,11 +385,7 @@ variables = {
 		'options' : 'None',
 		'formulae' : 'self.product.incorrect',
 		'input_method' : {
-			'method' : 'API',
-			'request' : 'post',
-            'url' : 'https://75c9507b-8f2e-4211-a518-2c2ab988c27d.mock.pstmn.io/post',
-            'params' : {},
-			'data' : { "method" : "POST", "value" : 13},
+			"DataSource" : "API_postPostman",
             "command" : 'response.json()["incorrect"]',
             'evaluation' : 'int',
             'start' : None,
@@ -423,11 +401,7 @@ variables = {
 	    'options' : 'None',
 	    'formulae' : 'self.product.expected',
 	    'input_method' : {
-		    'method' : 'SSH',
-	        'host_name' : '10.137.89.13',
-	        'user_name' : 'ubuntu',
-	        'password' : None,
-	        'key_filename' : 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem',
+			"DataSource" : "SSH_awsIntern",
 	        "command" : """cd abhijeet\ncat expected.txt""",
 	        'evaluation' : 'int',
 	        'start' : None,
@@ -443,11 +417,7 @@ variables = {
 		 'options' : 'None',
 		 'formulae' : 'self.product.correct',
 		 'input_method' : {
-			'method' : 'data_base',
-		    'host_name' : 'localhost',
-		    'user_name' : 'root',
-		    'password' : 'Perfacio1',
-		    'data_base' : 'rules_engine',
+			"DataSource" : "database_sqlRuleEngine",
 		    "command" : 'select correct from rule where correct order by correct limit 1',
 		    'evaluation' : 'int',
 		    'start' : None,
@@ -476,9 +446,46 @@ actions = {
 	"CPU_false" :{
 	    'name' : 'CPU_false',
 		'params' :{'name' : FIELD_TEXT,"threshold" : FIELD_NUMERIC,'var': FIELD_TEXT},
-		'formulae' : "ifll=locals()\n\texec('var = self.product.' + var,globals(),l)\n\tvar = l['var']\n\treturn {name : name + ' NOT under threshold(' + str(threshold) +'): ' +  str(var)}",
+		'formulae' : "l=locals()\n\texec('var = self.product.' + var,globals(),l)\n\tvar = l['var']\n\treturn {name : name + ' NOT under threshold(' + str(threshold) +'): ' +  str(var)}",
 	},
+}
 
+DataSource = {
+	"SSH_awsIntern" : {
+		'method' : 'SSH',
+		'host_name' : '10.137.89.13',
+		'user_name' : 'ubuntu',
+		'password' : None,
+		'key_filename' : 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem',
+		'variables' : [],
+		'multi_thread' : True
+	},
+	"API_getPostman" : {
+		'method' : 'API',
+		'request' : 'get',
+		'url' : 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get',
+		'params' : {},
+		'variables' : [],
+		'multi_thread' : True
+	},
+	"API_postPostman" : {
+		'method' : 'API',
+		'request' : 'post',
+		'url' : 'https://75c9507b-8f2e-4211-a518-2c2ab988c27d.mock.pstmn.io/post',
+		'params' : {},
+		'data' : { "method" : "POST", "value" : 13},
+		'variables' : [],
+		'multi_thread' : True
+	},
+	"database_sqlRuleEngine" : {
+		'method' : 'data_base',
+		'host_name' : 'localhost',
+		'user_name' : 'root',
+		'password' : 'Perfacio1',
+		'data_base' : 'rules_engine',
+		'variables' : [],
+		'multi_thread' : True
+	}
 }
 
 
@@ -490,6 +497,8 @@ with open("./configuration_files/variables.yml", 'w') as f:
     yaml.dump(variables, f)
 with open("./configuration_files/actions.yml", 'w') as f:
     yaml.dump(actions, f)
+with open("./configuration_files/DataSource.yml", 'w') as f:
+    yaml.dump(DataSource, f)
 
 
 """
