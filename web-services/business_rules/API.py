@@ -96,7 +96,7 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
 
 
 
-    def run_rules_list(lists,pass_param = None) :
+    def run_rules_list(lists,pass_param = None,stop_on_first_success = False, stop_on_first_failure = False) :
         passed = 0
         all_pass = True
         if not lists :
@@ -110,8 +110,12 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
                 try:
                     if run(rule = rules[rule],defined_variables = ProductVariables(product),defined_actions = ProductActions(product)) :
                         passed += 1
+                        if stop_on_first_success:
+                            return all_pass
                     else :
                         all_pass = False
+                        if stop_on_first_failure:
+                            return all_pass
                 except Exception as e:
                     log.append({
                         "Error" : "Rule: " + rule + " couldn't be run on engine!",
@@ -123,14 +127,22 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
             elif type(rule) == type(dict()):
                 if run_rules_dict(rule) :
                     passed += 1
+                    if stop_on_first_success:
+                        return all_pass
                 else :
                     all_pass = False
+                    if stop_on_first_failure:
+                        return all_pass
 
             elif type(rule) == type(tuple()):
                 if run_rules_tuple(rule) :
                     passed += 1
+                    if stop_on_first_success:
+                        return all_pass
                 else :
                     all_pass = False
+                    if stop_on_first_failure:
+                        return all_pass
 
             else :
                 log.append({"Error" : "Incorrect rule order in rule: " + rule})
@@ -150,7 +162,7 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
             else :
                 return run_rules_list(dicts['else'])
         elif 'any' in dicts:
-            if run_rules_list(dicts['any'][list(dicts['any'].keys())[0]],list(dicts['any'].keys())[0]):
+            if run_rules_list(dicts['any'][list(dicts['any'].keys())[0]],pass_param = list(dicts['any'].keys())[0]):
                 return run_rules_list(dicts['then'])
             else :
                 return run_rules_list(dicts['else'])
@@ -316,16 +328,21 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
     if run_rule :
         for act in rules[run_rule]['actions'] :
             if not act in actions :
-                log.append("Cannot run rule:" + run_rule + 'because action: ' + act)
-                raise Exception(log)
+                log.append({"Error": "Action: "+act+" not defined in actions hence rule: "+run_rule+" will not run that action!"})
             actions_list.append(actions[act])
     else :
+        for act in case["actions"]:
+            if not act in actions :
+                log.append({"Error" : "Action: "+act+" not defined in actions hence case will not run that action!"})
+                continue
+            if actions[act] in actions_list:
+                continue
+            actions_list.append(actions[act])
         for rule in case['rule_list'] :
             for act in rules[rule]['actions'] :
                 if not act in actions :
-                    log.append({"Error" : "Cannot run rule:" + rule + 'because action: ' + act})
-                    kill_rule.append(rule)
-                    break
+                    log.append({"Error" : "Action: "+act+" not defined in actions hence rule: "+rule+" will not run that action!"})
+                    continue
                 if actions[act] in actions_list:
                     continue
                 actions_list.append(actions[act])
@@ -342,16 +359,15 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
                 li = []
                 if act['params'] :
                     for args in act['params'] :
-                        li.append(args)
+                        li.append(args+"=None")
                 args = "(self," + ','.join(li) + ")"
                 exec("@rule_action(params = act['params'])\n" "def " + act['name'] + args + """ :\n\t""" + act["formulae"])
             except Exception as e:
                 if run_rule:
                     log.append({
-                        "Error" : "Product Action: " + act['name'] + " could not be defined hence rule:" + run_rule + " cannot run!",
+                        "Error" : "Product Action: " + act['name'] + " could not be defined hence rule:" + run_rule + " will not run that actoin!",
                         "Exception" : e
                     })
-                    raise e
                 for rule in case['rule_list']:
                     if act['name'] in rules[rule]['actions']:
                         for act_true in rules[rule]['actions_true']:
@@ -372,7 +388,10 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
         if run_rule:
             run(rule = rules[run_rule], defined_variables = ProductVariables(product), defined_actions = ProductActions(product))
         else :
-            run_rules_list(case['rules'])
+            if run_rules_list(case['rules'],stop_on_first_success=case["stop_on_first_success"],stop_on_first_failure = case["stop_on_first_failure"]) :
+                do_actions(case["actions_true"], defined_actions = ProductActions(product))
+            else :
+                do_actions(case["actions_false"], defined_actions = ProductActions(product))
     except Exception as e:
         log.append({
             "Error " : "Couldn't run rules in engine",

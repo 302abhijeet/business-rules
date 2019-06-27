@@ -3,10 +3,50 @@ import yaml
 from fields import *
 
 use_cases = { 
+	#restraunt locator
+	'restraunt' : {
+		'rule_list' : ['distance_check','cost_check'],
+		'rules' : ['distance_check','cost_check'],
+		'stop_on_first_success' : False,
+		'stop_on_first_failure' : True,
+		"actions_true" : [
+			{
+				'name' : "condition_pass",
+				'params' : {'name' : 'restraunt_case','msg' : 'Restraunt meets all requirements!'},
+				'multi_thread' : True
+			}
+		],
+		"actions_false" : [
+			{
+				'name' : "condition_fail",
+				'params' : {'name' : 'restraunt_case','msg' : 'Restraunt does NOT meet all requirements!'},
+				'multi_thread' : True
+			}
+		],
+		'actions' : ['condition_pass','condition_fail']
+	},
+
 	#CPU_Performance
 	'CPU_Performance' : {
 	    'rule_list' : ['CPU_usage','memory','disk_space'],
-		'rules' : [ 'CPU_usage','memory','disk_space']
+		'rules' : [ 'CPU_usage','memory','disk_space'],
+		'stop_on_first_success' : False,
+		'stop_on_first_failure' : False,
+		"actions_true" : [
+			{
+				'name' : "condition_pass",
+				'params' : {'name' : 'CPU_case','msg' : 'CPU meets all requirements!'},
+				'multi_thread' : True
+			}
+		],
+		"actions_false" : [
+			{
+				'name' : "condition_fail",
+				'params' : {'name' : 'CPU_case','msg' : 'CPU does NOT meet all requirements!'},
+				'multi_thread' : True
+			}
+		],
+		'actions' : ['condition_pass','condition_fail']
 	},
 
 	#CPU conditional
@@ -25,13 +65,47 @@ use_cases = {
 				'then' : ['rule3'],
 				'else' : ['rule1']
 			}
-		]
+		],
+		'stop_on_first_success' : False,
+		'stop_on_first_failure' : False,
+		"actions_true" : [
+			{
+				'name' : "condition_pass",
+				'params' : {'name' : 'CPU_case','msg' : 'CPU meets all requirements!'},
+				'multi_thread' : True
+			}
+		],
+		"actions_false" : [
+			{
+				'name' : "condition_fail",
+				'params' : {'name' : 'CPU_case','msg' : 'CPU does NOT meet all requirements!'},
+				'multi_thread' : True
+			}
+		],
+		'actions' : ['condition_pass','condition_fail']
 	},
 
 	#CPU asynchronous
 	'CPU_Asynchronous' : {
 		'rule_list' : ['CPU_usage','memory','disk_space'],
-		'rules' : [ ('CPU_usage',['memory','disk_space'])]
+		'rules' : [ ('CPU_usage',['memory','disk_space'])],
+		'stop_on_first_success' : False,
+		'stop_on_first_failure' : False,
+		"actions_true" : [
+			{
+				'name' : "condition_pass",
+				'params' : {'name' : 'CPU_case','msg' : 'CPU meets all requirements!'},
+				'multi_thread' : True
+			}
+		],
+		"actions_false" : [
+			{
+				'name' : "condition_fail",
+				'params' : {'name' : 'CPU_case','msg' : 'CPU does NOT meet all requirements!'},
+				'multi_thread' : True
+			}
+		],
+		'actions' : ['condition_pass','condition_fail']
 	},
 
 	#case 1
@@ -50,24 +124,124 @@ use_cases = {
 	            'then': ['rule3','rule2'],
 	            'else': None
 	        } 
-	    ]
+	    ],
+		'stop_on_first_success' : False,
+		'stop_on_first_failure' : False,
+		"actions_true" : [
+			{
+				'name' : "condition_pass",
+				'params' : {'name' : 'case1','msg' : 'Meets all requirements!'},
+				'multi_thread' : True
+			}
+		],
+		"actions_false" : [
+			{
+				'name' : "condition_fail",
+				'params' : {'name' : 'case1','msg' : 'Does NOT meet all requirements!'},
+				'multi_thread' : True
+			}
+		],
+		'actions' : ['condition_pass','condition_fail']
 	},
  
 	#case 2 
 	'case2' : {
 	    'rule_list' : ['rule1','rule2','rule3'],
-		'rules' : [ ('rule1',['rule2','rule3'])]
+		'rules' : [ ('rule1',['rule2','rule3'])],
+		'stop_on_first_success' : False,
+		'stop_on_first_failure' : False,
+		"actions_true" : [
+			{
+				'name' : "condition_pass",
+				'params' : {'name' : 'case2','msg' : 'Meets all requirements!'},
+				'multi_thread' : True
+			}
+		],
+		"actions_false" : [
+			{
+				'name' : "condition_fail",
+				'params' : {'name' : 'case2','msg' : 'Does NOT meet all requirements!'},
+				'multi_thread' : True
+			}
+		],
+		'actions' : ['condition_pass','condition_fail']
 	},
     
     #new case
 	'case3' : {
 		'rule_list' : ['rule1','rule2','rule3'],
-		'rules' : ['rule1','rule2','rule3']
+		'rules' : ['rule1','rule2','rule3'],
+		'stop_on_first_success' : False,
+		'stop_on_first_failure' : False,
+		"actions_true" : [
+			{
+				'name' : "condition_pass",
+				'params' : {'name' : 'case3','msg' : 'Meets all requirements!'},
+				'multi_thread' : True
+			}
+		],
+		"actions_false" : [
+			{
+				'name' : "condition_fail",
+				'params' : {'name' : 'case3','msg' : 'Does NOT meet all requirements!'},
+				'multi_thread' : True
+			}
+		],
+		'actions' : ['condition_pass','condition_fail']
 	}
 }
-
 rules = { 
+	# distance < dist_limit
+	'distance_check' : {
+		"conditions" : {
+			'name' : ["distance","dist_limit"],
+			'operator' : 'less_than',
+			'value' : None
+		},
+		"actions_true" : [ 
+			{
+				'name' : "Threshold_true",
+				'params' : {'name' : 'distance_check','threshold': 'self.product.dist_limit','var':'distance'},
+				'multi_thread' : True
+			}
+		],
+		"actions_false": [
+			{ 
+				'name' : "Threshold_false",
+				'params' : {'name' : 'distance_check','threshold': 'self.product.dist_limit','var':'distance'},
+				'multi_thread' : True
+			}
+		],
+		'actions' : ['Threshold_true','Threshold_false'],
+		'variables' : ['distance','dist_limit'],
+		'multi_thread' : True
+	},
 	
+	# cost < cost_limit
+	'cost_check' : {
+		"conditions" : {
+			'name' : ["cost","cost_limit"],
+			'operator' : 'less_than',
+			'value' : None
+		},
+		"actions_true" : [ 
+			{
+				'name' : "Threshold_true",
+				'params' : {'name' : 'cost_check','threshold': 'self.product.cost_limit','var':'cost'},
+				'multi_thread' : True
+			}
+		],
+		"actions_false": [
+			{ 
+				'name' : "Threshold_false",
+				'params' : {'name' : 'cost_check','threshold': 'self.product.cost_limit','var':'cost'},
+				'multi_thread' : True
+			}
+		],
+		'actions' : ['Threshold_true','Threshold_false'],
+		'variables' : ['cost','cost_limit'],
+		'multi_thread' : True
+	},
 	# CPU_usage <= 50% 
 	'CPU_usage' : {
 		"conditions" : { 			
@@ -77,19 +251,19 @@ rules = {
 		},
 		"actions_true" : [ 
 			{
-				'name' : "CPU_true",
-				'params' : {'name' : 'CPU Usage','threshold': 50,'var':'CPU_usage'},
+				'name' : "Threshold_true",
+				'params' : {'name' : 'CPU Usage','threshold': '50','var':'CPU_usage'},
 				'multi_thread' : True
 			}
 		],
 		"actions_false": [
 			{ 
-				'name' : "CPU_false",
-				'params' : {'name' : 'CPU Usage','threshold': 50,'var':'CPU_usage'},
+				'name' : "Threshold_false",
+				'params' : {'name' : 'CPU Usage','threshold': '50','var':'CPU_usage'},
 				'multi_thread' : True
 			}
 		],
-		"actions" : ["CPU_true","CPU_false"],
+		"actions" : ["Threshold_true","Threshold_false"],
 		'multi_thread' : True,
 		'variables' : ['CPU_usage']
 	},
@@ -103,19 +277,19 @@ rules = {
 		},
 		"actions_true" : [ 
 			{
-				'name' : "CPU_true",
-				'params' : {'name' : 'memory usage','threshold': 60,'var':'memory'},
+				'name' : "Threshold_true",
+				'params' : {'name' : 'memory usage','threshold': '60','var':'memory'},
 				'multi_thread' : True
 			}
 		],
 		"actions_false": [
 			{ 
-				'name' : "CPU_false",
-				'params' : {'name' : 'memory usage','threshold': 60,'var':'memory'},
+				'name' : "Threshold_false",
+				'params' : {'name' : 'memory usage','threshold': '60','var':'memory'},
 				'multi_thread' : True
 			}
 		],
-		"actions" : ["CPU_true","CPU_false"],
+		"actions" : ["Threshold_true","Threshold_false"],
 		'multi_thread' : True,
 		'variables' : ['free_mem','total_mem','memory']
 	},
@@ -129,19 +303,19 @@ rules = {
 		},
 		"actions_true" : [ 
 			{
-				'name' : "CPU_true",
-				'params' : {'name' : 'Disk Usage','threshold': 70,'var':'disk_space'},
+				'name' : "Threshold_true",
+				'params' : {'name' : 'Disk Usage','threshold': '70','var':'disk_space'},
 				'multi_thread' : True
 			}
 		],
 		"actions_false": [
 			{ 
-				'name' : "CPU_false",
-				'params' : {'name' : 'Disk Usage','threshold': 70,'var':'disk_space'},
+				'name' : "Threshold_false",
+				'params' : {'name' : 'Disk Usage','threshold': '70','var':'disk_space'},
 				'multi_thread' : True
 			}
 		],
-		"actions" : ["CPU_true","CPU_false"],
+		"actions" : ["Threshold_true","Threshold_false"],
 		'multi_thread' : False,
 		'variables' : ['disk_space']
 	},
@@ -286,6 +460,70 @@ rules = {
 }
 
 variables = {
+	'distance' : {
+		'name' : "distance",
+		'field' : "numeric_rule_variable",
+		'label' : 'None',
+		'options' : 'None',
+		'formulae' : 'self.product.distance',
+		'input_method' : {
+			"DataSource" : "API_getPostman",
+            "command" : 'response.json()["actual"]',
+            'evaluation' : 'int',
+            'start' : None,
+	        'end' : None
+       },
+       'multi_thread' : True
+	},
+
+	'dist_limit' : {
+		'name' : "dist_limit",
+		'field' : "numeric_rule_variable",
+		'label' : 'None',
+		'options' : 'None',
+		'formulae' : 'self.product.dist_limit',
+		'input_method' : {
+			"DataSource" : "API_getPostman",
+            "command" : 'response.json()["actual"]',
+            'evaluation' : 'int',
+            'start' : None,
+	        'end' : None
+       },
+       'multi_thread' : True
+	},
+
+	'cost' : {
+		'name' : "cost",
+		'field' : "numeric_rule_variable",
+		'label' : 'None',
+		'options' : 'None',
+		'formulae' : 'self.product.cost',
+		'input_method' : {
+			"DataSource" : "API_getPostman",
+            "command" : 'response.json()["actual"]',
+            'evaluation' : 'int',
+            'start' : None,
+	        'end' : None
+       },
+       'multi_thread' : True
+	},
+
+	'cost_limit' : {
+		'name' : "cost_limit",
+		'field' : "numeric_rule_variable",
+		'label' : 'None',
+		'options' : 'None',
+		'formulae' : 'self.product.cost_limit',
+		'input_method' : {
+			"DataSource" : "API_getPostman",
+            "command" : 'response.json()["actual"]',
+            'evaluation' : 'int',
+            'start' : None,
+	        'end' : None
+       },
+       'multi_thread' : True
+	},
+
 	'free_mem' : { #numeric
 	    'name' : "free_mem",
 		'field' : "numeric_rule_variable",
@@ -430,23 +668,23 @@ variables = {
 actions = {
 	"condition_pass" : { 
 		'name' : 'condition_pass',
-		'params' : {'name' : FIELD_TEXT},
-		'formulae' : "return {name : 'All xpected access points are present'}",
+		'params' : {'name' : FIELD_TEXT, 'msg' : FIELD_TEXT},
+		'formulae' : "return {name : 'All conditions were met succesfully!', 'msg' : msg}",
 	},
 	"condition_fail" :{
 	    'name' : 'condition_fail',
-		'params' : {'name' : FIELD_TEXT},
-		'formulae' : "return {name : 'NOT all expected access points are present'}",
+		'params' : {'name' : FIELD_TEXT, 'msg' : FIELD_TEXT},
+		'formulae' : "return {name : 'NOT all conditions were met!', 'msg' : msg}",
 	},
-	"CPU_true" : { 
-		'name' : 'CPU_true',
-		'params' : {'name' : FIELD_TEXT,"threshold" : FIELD_NUMERIC,'var': FIELD_TEXT},
-		'formulae' : "l=locals()\n\texec('var = self.product.' + var,globals(),l)\n\tvar = l['var']\n\treturn {name : name + ' under threshold(' + str(threshold) +') : '+ str(var)}",
+	"Threshold_true" : { 
+		'name' : 'Threshold_true',
+		'params' : {'name' : FIELD_TEXT,"threshold" : FIELD_TEXT,'var': FIELD_TEXT},
+		'formulae' : "l=locals()\n\texec('var,t = self.product.' + var+','+threshold,globals(),l)\n\tt,var=l['t'],l['var']\n\treturn {name : name + ' under threshold(' + str(t) +') : '+ str(var)}",
 	},
-	"CPU_false" :{
-	    'name' : 'CPU_false',
-		'params' :{'name' : FIELD_TEXT,"threshold" : FIELD_NUMERIC,'var': FIELD_TEXT},
-		'formulae' : "l=locals()\n\texec('var = self.product.' + var,globals(),l)\n\tvar = l['var']\n\treturn {name : name + ' NOT under threshold(' + str(threshold) +'): ' +  str(var)}",
+	"Threshold_false" :{
+	    'name' : 'Threshold_false',
+		'params' :{'name' : FIELD_TEXT,"threshold" : FIELD_TEXT,'var': FIELD_TEXT},
+		'formulae' : "l=locals()\n\texec('var,threshold = self.product.' + var+','+threshold,globals(),l)\n\tthreshold,var =l['threshold'],l['var']\n\treturn {name : name + ' NOT under threshold(' + str(threshold) +'): ' +  str(var)}",
 	},
 }
 

@@ -1,28 +1,30 @@
-CPU_false:
-  formulae: "l=locals()\n\texec('var = self.product.' + var,globals(),l)\n\tvar =\
-    \ l['var']\n\treturn {name : name + ' NOT under threshold(' + str(threshold) +'):\
-    \ ' +  str(var)}"
-  name: CPU_false
+Threshold_false:
+  formulae: "l=locals()\n\texec('var,threshold = self.product.' + var+','+threshold,globals(),l)\n\
+    \tthreshold,var =l['threshold'],l['var']\n\treturn {name : name + ' NOT under\
+    \ threshold(' + str(threshold) +'): ' +  str(var)}"
+  name: Threshold_false
   params:
     name: text
-    threshold: numeric
+    threshold: text
     var: text
-CPU_true:
-  formulae: "l=locals()\n\texec('var = self.product.' + var,globals(),l)\n\tvar =\
-    \ l['var']\n\treturn {name : name + ' under threshold(' + str(threshold) +') :\
-    \ '+ str(var)}"
-  name: CPU_true
+Threshold_true:
+  formulae: "l=locals()\n\texec('var,t = self.product.' + var+','+threshold,globals(),l)\n\
+    \tt,var=l['t'],l['var']\n\treturn {name : name + ' under threshold(' + str(t)\
+    \ +') : '+ str(var)}"
+  name: Threshold_true
   params:
     name: text
-    threshold: numeric
+    threshold: text
     var: text
 condition_fail:
-  formulae: 'return {name : ''NOT all expected access points are present''}'
+  formulae: 'return {name : ''NOT all conditions were met!'', ''msg'' : msg}'
   name: condition_fail
   params:
+    msg: text
     name: text
 condition_pass:
-  formulae: 'return {name : ''All xpected access points are present''}'
+  formulae: 'return {name : ''All conditions were met succesfully!'', ''msg'' : msg}'
   name: condition_pass
   params:
+    msg: text
     name: text

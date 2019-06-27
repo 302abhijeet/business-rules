@@ -37,6 +37,32 @@ correct:
   multi_thread: true
   name: correct
   options: None
+cost:
+  field: numeric_rule_variable
+  formulae: self.product.cost
+  input_method:
+    DataSource: API_getPostman
+    command: response.json()["actual"]
+    end: null
+    evaluation: int
+    start: null
+  label: None
+  multi_thread: true
+  name: cost
+  options: None
+cost_limit:
+  field: numeric_rule_variable
+  formulae: self.product.cost_limit
+  input_method:
+    DataSource: API_getPostman
+    command: response.json()["actual"]
+    end: null
+    evaluation: int
+    start: null
+  label: None
+  multi_thread: true
+  name: cost_limit
+  options: None
 disk_space:
   field: numeric_rule_variable
   formulae: self.product.disk_space
@@ -49,6 +75,32 @@ disk_space:
   label: None
   multi_thread: true
   name: disk_space
+  options: None
+dist_limit:
+  field: numeric_rule_variable
+  formulae: self.product.dist_limit
+  input_method:
+    DataSource: API_getPostman
+    command: response.json()["actual"]
+    end: null
+    evaluation: int
+    start: null
+  label: None
+  multi_thread: true
+  name: dist_limit
+  options: None
+distance:
+  field: numeric_rule_variable
+  formulae: self.product.distance
+  input_method:
+    DataSource: API_getPostman
+    command: response.json()["actual"]
+    end: null
+    evaluation: int
+    start: null
+  label: None
+  multi_thread: true
+  name: distance
   options: None
 expected:
   field: numeric_rule_variable

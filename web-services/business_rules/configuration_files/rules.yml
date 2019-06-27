@@ -1,20 +1,20 @@
 CPU_usage:
   actions:
-  - CPU_true
-  - CPU_false
+  - Threshold_true
+  - Threshold_false
   actions_false:
   - multi_thread: true
-    name: CPU_false
+    name: Threshold_false
     params:
       name: CPU Usage
-      threshold: 50
+      threshold: '50'
       var: CPU_usage
   actions_true:
   - multi_thread: true
-    name: CPU_true
+    name: Threshold_true
     params:
       name: CPU Usage
-      threshold: 50
+      threshold: '50'
       var: CPU_usage
   conditions:
     name:
@@ -24,23 +24,51 @@ CPU_usage:
   multi_thread: true
   variables:
   - CPU_usage
-disk_space:
+cost_check:
   actions:
-  - CPU_true
-  - CPU_false
+  - Threshold_true
+  - Threshold_false
   actions_false:
   - multi_thread: true
-    name: CPU_false
+    name: Threshold_false
+    params:
+      name: cost_check
+      threshold: self.product.cost_limit
+      var: cost
+  actions_true:
+  - multi_thread: true
+    name: Threshold_true
+    params:
+      name: cost_check
+      threshold: self.product.cost_limit
+      var: cost
+  conditions:
+    name:
+    - cost
+    - cost_limit
+    operator: less_than
+    value: null
+  multi_thread: true
+  variables:
+  - cost
+  - cost_limit
+disk_space:
+  actions:
+  - Threshold_true
+  - Threshold_false
+  actions_false:
+  - multi_thread: true
+    name: Threshold_false
     params:
       name: Disk Usage
-      threshold: 70
+      threshold: '70'
       var: disk_space
   actions_true:
   - multi_thread: true
-    name: CPU_true
+    name: Threshold_true
     params:
       name: Disk Usage
-      threshold: 70
+      threshold: '70'
       var: disk_space
   conditions:
     name:
@@ -50,23 +78,51 @@ disk_space:
   multi_thread: false
   variables:
   - disk_space
-memory:
+distance_check:
   actions:
-  - CPU_true
-  - CPU_false
+  - Threshold_true
+  - Threshold_false
   actions_false:
   - multi_thread: true
-    name: CPU_false
+    name: Threshold_false
+    params:
+      name: distance_check
+      threshold: self.product.dist_limit
+      var: distance
+  actions_true:
+  - multi_thread: true
+    name: Threshold_true
+    params:
+      name: distance_check
+      threshold: self.product.dist_limit
+      var: distance
+  conditions:
+    name:
+    - distance
+    - dist_limit
+    operator: less_than
+    value: null
+  multi_thread: true
+  variables:
+  - distance
+  - dist_limit
+memory:
+  actions:
+  - Threshold_true
+  - Threshold_false
+  actions_false:
+  - multi_thread: true
+    name: Threshold_false
     params:
       name: memory usage
-      threshold: 60
+      threshold: '60'
       var: memory
   actions_true:
   - multi_thread: true
-    name: CPU_true
+    name: Threshold_true
     params:
       name: memory usage
-      threshold: 60
+      threshold: '60'
       var: memory
   conditions:
     name:
