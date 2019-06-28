@@ -41,5 +41,8 @@ def _get_file(source,variables):
 	mydb = _start_connection(source)
 	result = {}
 	for var in source['variables']:
-		result[var] = _get_variable_output(variables[var],mydb)
+		try: 
+			result[var] = _get_variable_output(variables[var],mydb)
+		except Exception as e:
+			result[var] = e
 	return result

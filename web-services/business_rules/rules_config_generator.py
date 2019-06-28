@@ -467,8 +467,8 @@ variables = {
 		'options' : 'None',
 		'formulae' : 'self.product.distance',
 		'input_method' : {
-			"DataSource" : "API_getPostman",
-            "command" : 'response.json()["actual"]',
+			"DataSource" : "API_mapQuest",
+            "command" : 'response.json()["distance"][1]',
             'evaluation' : 'int',
             'start' : None,
 	        'end' : None
@@ -499,8 +499,8 @@ variables = {
 		'options' : 'None',
 		'formulae' : 'self.product.cost',
 		'input_method' : {
-			"DataSource" : "API_getPostman",
-            "command" : 'response.json()["actual"]',
+			"DataSource" : "API_mapQuest",
+            "command" : 'response.json()["time"][1]',
             'evaluation' : 'int',
             'start' : None,
 	        'end' : None
@@ -712,6 +712,15 @@ DataSource = {
 		'url' : 'https://75c9507b-8f2e-4211-a518-2c2ab988c27d.mock.pstmn.io/post',
 		'params' : {},
 		'data' : { "method" : "POST", "value" : 13},
+		'variables' : [],
+		'multi_thread' : True
+	},
+	"API_mapQuest" : {
+		'method' : 'API',
+		'request' : 'post',
+		'url' : 'http://www.mapquestapi.com/directions/v2/routematrix?key=1XpKHYmtfjhVKQhYAfpTfbjP8pz0d7Q4',
+		'params' : {},
+		'data' : {"locations": ["Denver, CO","Westminster, CO"]},
 		'variables' : [],
 		'multi_thread' : True
 	},

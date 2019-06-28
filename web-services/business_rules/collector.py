@@ -11,9 +11,13 @@ class Collector:
 	def _init_source_variables(self,variables,result):
 		for var in result:
 			try:
-				var = variables[var]			
+				if type(result[var]) == type(Exception()):
+					print("In result var")
+					raise result[var]	
+				var = variables[var]		
 				exec("self." + var['name'] + " = " + var['input_method']['evaluation'] + '(result[var["name"]])')
 			except Exception as e:
+				var = variables[var]
 				API.log.append({
 					"Error":"Unable to init variable: "+var['name']+"! Rules with variable will not run!",
 					"Exception" : str(e)
@@ -33,6 +37,7 @@ class Collector:
 				raise Exception("source method: "+source['method']+" not found variables will not run!")
 			self._init_source_variables(variables,result)
 		except Exception as e:
+			print("why here")
 			API.log.append({
 				"Error": "Unable to declare source host: "+source["method"]+"! Rules with variables in source will not run: "+ str(source["variables"]),
 				"Exception":str(e)

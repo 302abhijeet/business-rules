@@ -41,8 +41,8 @@ cost:
   field: numeric_rule_variable
   formulae: self.product.cost
   input_method:
-    DataSource: API_getPostman
-    command: response.json()["actual"]
+    DataSource: API_mapQuest
+    command: response.json()["time"][1]
     end: null
     evaluation: int
     start: null
@@ -93,8 +93,8 @@ distance:
   field: numeric_rule_variable
   formulae: self.product.distance
   input_method:
-    DataSource: API_getPostman
-    command: response.json()["actual"]
+    DataSource: API_mapQuest
+    command: response.json()["distance"][1]
     end: null
     evaluation: int
     start: null

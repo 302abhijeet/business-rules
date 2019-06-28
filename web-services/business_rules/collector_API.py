@@ -1,6 +1,7 @@
 #API module
 
 import requests
+import json
 def _get_variable_output(var,response) :
 	if not response :
 		raise Exception("invalid request to API! Faulty response!\n" + str(response))
@@ -25,13 +26,16 @@ def _get_file(source,variables):
 		if source['request'] == 'get':
 			response = requests.get(source['url'], params = source['params'])
 		elif source['request'] == 'post':
-			response = requests.post(source['url'], params = source['params'],data = source['data'])
+			response = requests.post(source['url'], params = source['params'],data = json.dumps(source['data']))
 		else:
 			raise Exception("request method not defined: "+ source['request'])
 	except Exception as e:
 		raise Exception("API Source unable to connect\n"+str(e))
 	for var in source['variables']:
-		result[var] = _get_variable_output(variables[var],response)
+		try:
+			result[var] = _get_variable_output(variables[var],response)
+		except Exception as e:
+			result[var] = e
 	return result
 		
 	

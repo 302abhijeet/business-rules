@@ -5,6 +5,17 @@ API_getPostman:
   request: get
   url: https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get
   variables: []
+API_mapQuest:
+  data:
+    locations:
+    - Denver, CO
+    - Westminster, CO
+  method: API
+  multi_thread: true
+  params: {}
+  request: post
+  url: http://www.mapquestapi.com/directions/v2/routematrix?key=1XpKHYmtfjhVKQhYAfpTfbjP8pz0d7Q4
+  variables: []
 API_postPostman:
   data:
     method: POST
