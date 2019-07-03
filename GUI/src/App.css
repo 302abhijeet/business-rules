@@ -3,3 +3,28 @@
   margin: 0%;
   padding: 0%;
 }
+
+/* CSS for the Navigation Bar*/
+.Navigation{
+  font-weight: bolder;
+
+  background-color: burlywood;
+  padding: 1%;
+}
+
+.Navigation a:link, a:visited{
+  color:white;
+  margin: 1%;
+  border-right: 1px solid black;
+  text-decoration: none;
+  padding:1%;
+}
+
+.Navigation a:hover{
+  color:black;
+}
+
+.Navigation span{
+  position: absolute;
+  left: 90%;
+}
