@@ -75,6 +75,8 @@ def updateFilePath(filepath,ty):
         filepath += 'variables.yml'
     elif ty == 'action':
         filepath += 'actions.yml'
+    elif ty == 'datasource':
+        filepath+= 'DataSource.yml'
     else:
         return False
     return filepath
