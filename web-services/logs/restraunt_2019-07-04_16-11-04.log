@@ -1,0 +1,49 @@
+2019-07-04 16:11:04,344 INFO Starting _run_API
+2019-07-04 16:11:04,344 INFO Importing use_cases.yml
+2019-07-04 16:11:04,388 INFO Importing rules.yml
+2019-07-04 16:11:04,432 INFO Importing variables.yml
+2019-07-04 16:11:04,468 INFO Importing actions.yml
+2019-07-04 16:11:04,477 INFO Importing DataSource.yml
+2019-07-04 16:11:04,489 INFO Use_case created
+2019-07-04 16:11:04,489 INFO source_variable_list made :[]
+2019-07-04 16:11:04,489 INFO Adding rule: distance_check variables
+2019-07-04 16:11:04,489 INFO Adding variable: distance 
+2019-07-04 16:11:04,489 INFO Adding variable: dist_limit 
+2019-07-04 16:11:04,492 INFO Adding rule: cost_check variables
+2019-07-04 16:11:04,492 INFO Adding variable: cost 
+2019-07-04 16:11:04,492 INFO Adding variable: cost_limit 
+2019-07-04 16:11:04,492 INFO Addin data source: API_getPostman to be populated!
+2019-07-04 16:11:04,492 INFO Addin data source: API_mapQuest to be populated!
+2019-07-04 16:11:04,492 INFO starting collector module
+2019-07-04 16:11:04,493 INFO Getting data source: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['dist_limit', 'cost_limit']} variables!
+2019-07-04 16:11:04,493 INFO Starting thread: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['dist_limit', 'cost_limit']}
+2019-07-04 16:11:04,493 INFO Getting data source: {'data': {'locations': ['Denver, CO', 'Westminster, CO']}, 'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'post', 'url': 'http://www.mapquestapi.com/directions/v2/routematrix?key=1XpKHYmtfjhVKQhYAfpTfbjP8pz0d7Q4', 'variables': ['distance', 'cost']} variables!
+2019-07-04 16:11:04,493 INFO Starting thread: {'data': {'locations': ['Denver, CO', 'Westminster, CO']}, 'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'post', 'url': 'http://www.mapquestapi.com/directions/v2/routematrix?key=1XpKHYmtfjhVKQhYAfpTfbjP8pz0d7Q4', 'variables': ['distance', 'cost']}
+2019-07-04 16:11:05,270 INFO Source: {'data': {'locations': ['Denver, CO', 'Westminster, CO']}, 'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'post', 'url': 'http://www.mapquestapi.com/directions/v2/routematrix?key=1XpKHYmtfjhVKQhYAfpTfbjP8pz0d7Q4', 'variables': ['distance', 'cost']} fetched variables: {'distance': 13.783, 'cost': 1142}
+2019-07-04 16:11:05,270 INFO Variable: distance has been created!Value: 13.783!Source: {'data': {'locations': ['Denver, CO', 'Westminster, CO']}, 'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'post', 'url': 'http://www.mapquestapi.com/directions/v2/routematrix?key=1XpKHYmtfjhVKQhYAfpTfbjP8pz0d7Q4', 'variables': ['distance', 'cost']}
+2019-07-04 16:11:05,270 INFO Variable: cost has been created!Value: 1142!Source: {'data': {'locations': ['Denver, CO', 'Westminster, CO']}, 'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'post', 'url': 'http://www.mapquestapi.com/directions/v2/routematrix?key=1XpKHYmtfjhVKQhYAfpTfbjP8pz0d7Q4', 'variables': ['distance', 'cost']}
+2019-07-04 16:11:05,666 INFO Source: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['dist_limit', 'cost_limit']} fetched variables: {'dist_limit': 78, 'cost_limit': 78}
+2019-07-04 16:11:05,666 INFO Variable: dist_limit has been created!Value: 78!Source: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['dist_limit', 'cost_limit']}
+2019-07-04 16:11:05,667 INFO Variable: cost_limit has been created!Value: 78!Source: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['dist_limit', 'cost_limit']}
+2019-07-04 16:11:05,667 INFO variables input taken from collector!
+2019-07-04 16:11:05,667 INFO Product Vriable: distance has been created!
+2019-07-04 16:11:05,667 INFO Product Vriable: dist_limit has been created!
+2019-07-04 16:11:05,667 INFO Product Vriable: cost has been created!
+2019-07-04 16:11:05,667 INFO Product Vriable: cost_limit has been created!
+2019-07-04 16:11:05,668 INFO Adding action : condition_pass to list!
+2019-07-04 16:11:05,668 INFO Adding action : condition_fail to list!
+2019-07-04 16:11:05,668 INFO Adding action : Threshold_true to list!
+2019-07-04 16:11:05,668 INFO Adding action : Threshold_false to list!
+2019-07-04 16:11:05,668 INFO Adding action : Threshold_true to list!
+2019-07-04 16:11:05,668 INFO Action : Threshold_true already in list!
+2019-07-04 16:11:05,668 INFO Adding action : Threshold_false to list!
+2019-07-04 16:11:05,668 INFO Action : Threshold_false already in list!
+2019-07-04 16:11:05,668 INFO Creater Product action : condition_pass successfully!
+2019-07-04 16:11:05,669 INFO Creater Product action : condition_fail successfully!
+2019-07-04 16:11:05,669 INFO Creater Product action : Threshold_true successfully!
+2019-07-04 16:11:05,669 INFO Creater Product action : Threshold_false successfully!
+2019-07-04 16:11:05,669 INFO Starting action: Threshold_true
+2019-07-04 16:11:05,670 INFO Rule: distance_check returned true
+2019-07-04 16:11:05,670 INFO Starting action: Threshold_false
+2019-07-04 16:11:05,670 INFO Rule: cost_check returned false
+2019-07-04 16:11:05,670 INFO Starting action: condition_fail

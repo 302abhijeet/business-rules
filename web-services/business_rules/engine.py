@@ -1,5 +1,6 @@
 from business_rules.fields import FIELD_NO_INPUT
 import business_rules.API as API
+import xml.etree.ElementTree as ET
 import threading
 
 def run_all(rule_list,
@@ -104,6 +105,7 @@ def _do_operator_comparison(operator_type, operator_name, comparison_value):
 def do_actions(actions, defined_actions):
     threads = []
     for action in actions:
+        API.logger.info("Starting action: {}".format(action['name']))
         if action['multi_thread'] :
             thread = threading.Thread(target = _run_action, args = (action,defined_actions,))
             thread.start()
@@ -122,9 +124,7 @@ def _run_action(action, defined_actions) :
                     .format(method_name, defined_actions.__class__.__name__))
         params = action.get('params') or {}
         method = getattr(defined_actions, method_name, fallback)
-        API.log.append(method(**params))
+        API.output.append(method(**params))
     except Exception as e:
-        API.log.append({
-            "Error" : "Action: " + action['name'] + " Cannot be run on engine!",
-            "Exception" : str(e)
-        })
+        API.logger.info("Action: " + action['name'] + " Cannot be run on engine!Errror: {}".format(e))
+        ET.SubElement(API.root[0],"RuntimeError").text = "Action: " + action['name'] + " Cannot be run on engine!Errror: {}".format(e)

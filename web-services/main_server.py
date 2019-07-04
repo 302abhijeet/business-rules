@@ -37,15 +37,15 @@ def runrule():
         #API function to run the rules
         #this function returns a list of messages
         try:
-                data = API._run_API(run_rule=rulename,case=None,parameter_variables=data_given,parameter_dataSource=parameter_data)
+                data,report = API._run_API(run_rule=rulename,case=None,parameter_variables=data_given,parameter_dataSource=parameter_data)
         except Exception as e:
                 return  Response(
-                        response=json.dumps({'Error':str(e)}),
+                        response=json.dumps({'report': str(e)}),
                         mimetype='application/json',
                         status=500
                 )
         return  Response(
-                        response=json.dumps({'run_msg':'Run successful','data':data}),
+                        response=json.dumps({'run_msg':'Run successful','data':data,'report':report}),
                         mimetype='application/json',
                         status=200
                 )
@@ -79,9 +79,13 @@ def runusecase():
         parameter_data = checkValidatePD(request.get_data())
         
         #this function returns a list of messages
-        data = API._run_API(run_rule=None,case=ucname,parameter_variables=data_given,parameter_dataSource=parameter_data)
+        try:
+            data,report = API._run_API(run_rule=None,case=ucname,parameter_variables=data_given,parameter_dataSource=parameter_data)
+        except Exception as e:
+            data = None
+            report = str(e)
         return Response(
-                        response=json.dumps({'run_msg':'run successful','data':data}),
+                        response=json.dumps({'run_msg':'run successful','data':data,'report':report}),
                         mimetype='application/json',
                         status=200
                 )

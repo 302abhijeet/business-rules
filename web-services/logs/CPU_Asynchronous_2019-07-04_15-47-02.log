@@ -1,0 +1,173 @@
+2019-07-04 15:47:02,388 INFO Starting _run_API
+2019-07-04 15:47:02,388 INFO Importing use_cases.yml
+2019-07-04 15:47:02,440 INFO Importing rules.yml
+2019-07-04 15:47:02,489 INFO Importing variables.yml
+2019-07-04 15:47:02,524 INFO Importing actions.yml
+2019-07-04 15:47:02,533 INFO Importing DataSource.yml
+2019-07-04 15:47:02,546 INFO Use_case created
+2019-07-04 15:47:02,547 INFO source_variable_list made :[]
+2019-07-04 15:47:02,547 INFO Adding rule: CPU_usage variables
+2019-07-04 15:47:02,547 INFO Adding variable: CPU_usage 
+2019-07-04 15:47:02,547 INFO Adding rule: memory variables
+2019-07-04 15:47:02,550 INFO Adding variable: free_mem 
+2019-07-04 15:47:02,550 INFO Adding variable: total_mem 
+2019-07-04 15:47:02,550 INFO Adding variable: memory 
+2019-07-04 15:47:02,550 INFO Adding rule: disk_space variables
+2019-07-04 15:47:02,551 INFO Adding variable: disk_space 
+2019-07-04 15:47:02,551 INFO Addin data source: API_getPostman to be populated!
+2019-07-04 15:47:02,551 INFO Addin data source: API_postPostman to be populated!
+2019-07-04 15:47:02,551 INFO Addin data source: SSH_awsIntern to be populated!
+2019-07-04 15:47:02,551 INFO starting collector module
+2019-07-04 15:47:02,551 INFO Getting data source: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['CPU_usage']} variables!
+2019-07-04 15:47:02,552 INFO Starting thread: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['CPU_usage']}
+2019-07-04 15:47:02,554 INFO Getting data source: {'data': {'method': 'POST', 'value': 13}, 'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'post', 'url': 'https://75c9507b-8f2e-4211-a518-2c2ab988c27d.mock.pstmn.io/post', 'variables': ['disk_space']} variables!
+2019-07-04 15:47:02,554 INFO Starting thread: {'data': {'method': 'POST', 'value': 13}, 'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'post', 'url': 'https://75c9507b-8f2e-4211-a518-2c2ab988c27d.mock.pstmn.io/post', 'variables': ['disk_space']}
+2019-07-04 15:47:02,562 INFO Getting data source: {'host_name': '10.137.89.13', 'key_filename': 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem', 'method': 'SSH', 'multi_thread': True, 'password': None, 'user_name': 'ubuntu', 'variables': ['free_mem', 'total_mem']} variables!
+2019-07-04 15:47:02,563 INFO Starting thread: {'host_name': '10.137.89.13', 'key_filename': 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem', 'method': 'SSH', 'multi_thread': True, 'password': None, 'user_name': 'ubuntu', 'variables': ['free_mem', 'total_mem']}
+2019-07-04 15:47:03,118 INFO Connected (version 2.0, client OpenSSH_7.2p2)
+2019-07-04 15:47:03,940 INFO Source: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['CPU_usage']} fetched variables: {'CPU_usage': 78}
+2019-07-04 15:47:03,940 INFO Variable: CPU_usage has been created!Value: 78!Source: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['CPU_usage']}
+2019-07-04 15:47:03,940 INFO Source: {'data': {'method': 'POST', 'value': 13}, 'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'post', 'url': 'https://75c9507b-8f2e-4211-a518-2c2ab988c27d.mock.pstmn.io/post', 'variables': ['disk_space']} fetched variables: {'disk_space': 33}
+2019-07-04 15:47:03,940 INFO Variable: disk_space has been created!Value: 33!Source: {'data': {'method': 'POST', 'value': 13}, 'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'post', 'url': 'https://75c9507b-8f2e-4211-a518-2c2ab988c27d.mock.pstmn.io/post', 'variables': ['disk_space']}
+2019-07-04 15:47:04,563 INFO Authentication (publickey) successful!
+2019-07-04 15:47:06,298 INFO Source: {'host_name': '10.137.89.13', 'key_filename': 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem', 'method': 'SSH', 'multi_thread': True, 'password': None, 'user_name': 'ubuntu', 'variables': ['free_mem', 'total_mem']} fetched variables: {'free_mem': '         1410400 ', 'total_mem': '        4044880 '}
+2019-07-04 15:47:06,299 INFO Variable: free_mem has been created!Value:          1410400 !Source: {'host_name': '10.137.89.13', 'key_filename': 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem', 'method': 'SSH', 'multi_thread': True, 'password': None, 'user_name': 'ubuntu', 'variables': ['free_mem', 'total_mem']}
+2019-07-04 15:47:06,299 INFO Variable: total_mem has been created!Value:         4044880 !Source: {'host_name': '10.137.89.13', 'key_filename': 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem', 'method': 'SSH', 'multi_thread': True, 'password': None, 'user_name': 'ubuntu', 'variables': ['free_mem', 'total_mem']}
+2019-07-04 15:47:06,299 INFO variables input taken from collector!
+2019-07-04 15:47:06,299 INFO Product Vriable: CPU_usage has been created!
+2019-07-04 15:47:06,299 INFO Product Vriable: free_mem has been created!
+2019-07-04 15:47:06,299 INFO Product Vriable: total_mem has been created!
+2019-07-04 15:47:06,300 INFO Product Vriable: memory has been created!
+2019-07-04 15:47:06,300 INFO Product Vriable: disk_space has been created!
+2019-07-04 15:47:06,300 INFO Adding action : condition_pass to list!
+2019-07-04 15:47:06,300 INFO Adding action : condition_fail to list!
+2019-07-04 15:47:06,300 INFO Adding action : Threshold_true to list!
+2019-07-04 15:47:06,300 INFO Adding action : Threshold_false to list!
+2019-07-04 15:47:06,300 INFO Adding action : Threshold_true to list!
+2019-07-04 15:47:06,300 INFO Action : Threshold_true already in list!
+2019-07-04 15:47:06,300 INFO Adding action : Threshold_false to list!
+2019-07-04 15:47:06,300 INFO Action : Threshold_false already in list!
+2019-07-04 15:47:06,300 INFO Adding action : Threshold_true to list!
+2019-07-04 15:47:06,301 INFO Action : Threshold_true already in list!
+2019-07-04 15:47:06,301 INFO Adding action : Threshold_false to list!
+2019-07-04 15:47:06,301 INFO Action : Threshold_false already in list!
+2019-07-04 15:47:06,301 INFO Creater Product action : condition_pass successfully!
+2019-07-04 15:47:06,301 INFO Creater Product action : condition_fail successfully!
+2019-07-04 15:47:06,302 INFO Creater Product action : Threshold_true successfully!
+2019-07-04 15:47:06,302 INFO Creater Product action : Threshold_false successfully!
+2019-07-04 15:47:06,302 INFO Starting action: Threshold_false
+2019-07-04 15:47:06,302 INFO Started thread: CPU_usage for rule: CPU_usage!
+2019-07-04 15:47:06,303 INFO Rule: CPU_usage returned false
+2019-07-04 15:47:06,303 INFO Starting action: Threshold_false
+2019-07-04 15:47:06,303 INFO Started thread: ['memory', 'disk_space'] for rule: ['memory', 'disk_space']!
+2019-07-04 15:47:06,304 INFO Joined thread: CPU_usage!
+2019-07-04 15:47:06,304 INFO Rule: memory returned false
+2019-07-04 15:47:06,304 INFO Starting action: Threshold_true
+2019-07-04 15:47:06,305 INFO Rule: disk_space returned true
+2019-07-04 15:47:06,305 INFO List: ['memory', 'disk_space'] has returned False
+2019-07-04 15:47:06,305 INFO Joined thread: ['memory', 'disk_space']!
+2019-07-04 15:47:06,305 INFO Rule multithread: ('CPU_usage', ['memory', 'disk_space']) returned false!
+2019-07-04 15:47:06,305 INFO List: [('CPU_usage', ['memory', 'disk_space'])] has returned False
+2019-07-04 15:47:06,305 INFO Starting action: condition_fail
+2019-07-04 15:47:06,311 INFO 127.0.0.1 - - [04/Jul/2019 15:47:06] "POST /runusecase?use_case=CPU_Asynchronous HTTP/1.1" 200 -
+2019-07-04 15:47:20,302 INFO Starting _run_API
+2019-07-04 15:47:20,302 INFO Importing use_cases.yml
+2019-07-04 15:47:20,353 INFO Importing rules.yml
+2019-07-04 15:47:20,391 INFO Importing variables.yml
+2019-07-04 15:47:20,419 INFO Importing actions.yml
+2019-07-04 15:47:20,426 INFO Importing DataSource.yml
+2019-07-04 15:47:20,433 INFO Use_case created
+2019-07-04 15:47:20,434 INFO source_variable_list made :[]
+2019-07-04 15:47:20,434 INFO Adding rule: distance_check variables
+2019-07-04 15:47:20,434 INFO Adding variable: distance 
+2019-07-04 15:47:20,434 INFO Adding variable: dist_limit 
+2019-07-04 15:47:20,434 INFO Adding rule: cost_check variables
+2019-07-04 15:47:20,434 INFO Adding variable: cost 
+2019-07-04 15:47:20,434 INFO Adding variable: cost_limit 
+2019-07-04 15:47:20,434 INFO Addin data source: API_getPostman to be populated!
+2019-07-04 15:47:20,434 INFO Addin data source: API_mapQuest to be populated!
+2019-07-04 15:47:20,434 INFO starting collector module
+2019-07-04 15:47:20,434 INFO Getting data source: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['dist_limit', 'cost_limit']} variables!
+2019-07-04 15:47:20,434 INFO Starting thread: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['dist_limit', 'cost_limit']}
+2019-07-04 15:47:20,435 INFO Getting data source: {'data': {'locations': ['Denver, CO', 'Westminster, CO']}, 'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'post', 'url': 'http://www.mapquestapi.com/directions/v2/routematrix?key=1XpKHYmtfjhVKQhYAfpTfbjP8pz0d7Q4', 'variables': ['distance', 'cost']} variables!
+2019-07-04 15:47:20,435 INFO Starting thread: {'data': {'locations': ['Denver, CO', 'Westminster, CO']}, 'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'post', 'url': 'http://www.mapquestapi.com/directions/v2/routematrix?key=1XpKHYmtfjhVKQhYAfpTfbjP8pz0d7Q4', 'variables': ['distance', 'cost']}
+2019-07-04 15:47:21,526 INFO Source: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['dist_limit', 'cost_limit']} fetched variables: {'dist_limit': 78, 'cost_limit': 78}
+2019-07-04 15:47:21,526 INFO Variable: dist_limit has been created!Value: 78!Source: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['dist_limit', 'cost_limit']}
+2019-07-04 15:47:21,526 INFO Variable: cost_limit has been created!Value: 78!Source: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['dist_limit', 'cost_limit']}
+2019-07-04 15:47:21,815 INFO Source: {'data': {'locations': ['Denver, CO', 'Westminster, CO']}, 'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'post', 'url': 'http://www.mapquestapi.com/directions/v2/routematrix?key=1XpKHYmtfjhVKQhYAfpTfbjP8pz0d7Q4', 'variables': ['distance', 'cost']} fetched variables: {'distance': 13.783, 'cost': 1142}
+2019-07-04 15:47:21,815 INFO Variable: distance has been created!Value: 13.783!Source: {'data': {'locations': ['Denver, CO', 'Westminster, CO']}, 'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'post', 'url': 'http://www.mapquestapi.com/directions/v2/routematrix?key=1XpKHYmtfjhVKQhYAfpTfbjP8pz0d7Q4', 'variables': ['distance', 'cost']}
+2019-07-04 15:47:21,816 INFO Variable: cost has been created!Value: 1142!Source: {'data': {'locations': ['Denver, CO', 'Westminster, CO']}, 'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'post', 'url': 'http://www.mapquestapi.com/directions/v2/routematrix?key=1XpKHYmtfjhVKQhYAfpTfbjP8pz0d7Q4', 'variables': ['distance', 'cost']}
+2019-07-04 15:47:21,816 INFO variables input taken from collector!
+2019-07-04 15:47:21,816 INFO Product Vriable: distance has been created!
+2019-07-04 15:47:21,816 INFO Product Vriable: dist_limit has been created!
+2019-07-04 15:47:21,816 INFO Product Vriable: cost has been created!
+2019-07-04 15:47:21,816 INFO Product Vriable: cost_limit has been created!
+2019-07-04 15:47:21,817 INFO Adding action : condition_pass to list!
+2019-07-04 15:47:21,817 INFO Adding action : condition_fail to list!
+2019-07-04 15:47:21,817 INFO Adding action : Threshold_true to list!
+2019-07-04 15:47:21,817 INFO Adding action : Threshold_false to list!
+2019-07-04 15:47:21,817 INFO Adding action : Threshold_true to list!
+2019-07-04 15:47:21,817 INFO Action : Threshold_true already in list!
+2019-07-04 15:47:21,817 INFO Adding action : Threshold_false to list!
+2019-07-04 15:47:21,817 INFO Action : Threshold_false already in list!
+2019-07-04 15:47:21,817 INFO Creater Product action : condition_pass successfully!
+2019-07-04 15:47:21,817 INFO Creater Product action : condition_fail successfully!
+2019-07-04 15:47:21,817 INFO Creater Product action : Threshold_true successfully!
+2019-07-04 15:47:21,818 INFO Creater Product action : Threshold_false successfully!
+2019-07-04 15:47:21,818 INFO Starting action: Threshold_true
+2019-07-04 15:47:21,818 INFO Rule: distance_check returned true
+2019-07-04 15:47:21,819 INFO Starting action: Threshold_false
+2019-07-04 15:47:21,819 INFO Rule: cost_check returned false
+2019-07-04 15:47:21,819 INFO Starting action: condition_fail
+2019-07-04 15:47:21,821 INFO 127.0.0.1 - - [04/Jul/2019 15:47:21] "POST /runusecase?use_case=restraunt HTTP/1.1" 200 -
+2019-07-04 15:48:13,796 INFO Starting _run_API
+2019-07-04 15:48:13,796 INFO Importing use_cases.yml
+2019-07-04 15:48:13,827 INFO Importing rules.yml
+2019-07-04 15:48:13,864 INFO Importing variables.yml
+2019-07-04 15:48:13,891 INFO Importing actions.yml
+2019-07-04 15:48:13,898 INFO Importing DataSource.yml
+2019-07-04 15:48:13,906 INFO Use_case created
+2019-07-04 15:48:13,906 INFO source_variable_list made :[]
+2019-07-04 15:48:13,906 INFO Adding rule: distance_check variables
+2019-07-04 15:48:13,906 INFO Adding variable: distance 
+2019-07-04 15:48:13,906 INFO Adding variable: dist_limit 
+2019-07-04 15:48:13,906 INFO Adding rule: cost_check variables
+2019-07-04 15:48:13,906 INFO Adding variable: cost 
+2019-07-04 15:48:13,906 INFO Adding variable: cost_limit 
+2019-07-04 15:48:13,906 INFO Addin data source: API_getPostman to be populated!
+2019-07-04 15:48:13,906 INFO Addin data source: API_mapQuest to be populated!
+2019-07-04 15:48:13,906 INFO starting collector module
+2019-07-04 15:48:13,906 INFO Getting data source: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['dist_limit', 'cost_limit']} variables!
+2019-07-04 15:48:13,906 INFO Starting thread: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['dist_limit', 'cost_limit']}
+2019-07-04 15:48:13,907 INFO Getting data source: {'data': {'locations': ['Denver, CO', 'Westminster, CO']}, 'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'post', 'url': 'http://www.mapquestapi.com/directions/v2/routematrix?key=1XpKHYmtfjhVKQhYAfpTfbjP8pz0d7Q4', 'variables': ['distance', 'cost']} variables!
+2019-07-04 15:48:13,907 INFO Starting thread: {'data': {'locations': ['Denver, CO', 'Westminster, CO']}, 'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'post', 'url': 'http://www.mapquestapi.com/directions/v2/routematrix?key=1XpKHYmtfjhVKQhYAfpTfbjP8pz0d7Q4', 'variables': ['distance', 'cost']}
+2019-07-04 15:48:14,979 INFO Source: {'data': {'locations': ['Denver, CO', 'Westminster, CO']}, 'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'post', 'url': 'http://www.mapquestapi.com/directions/v2/routematrix?key=1XpKHYmtfjhVKQhYAfpTfbjP8pz0d7Q4', 'variables': ['distance', 'cost']} fetched variables: {'distance': 13.783, 'cost': 1142}
+2019-07-04 15:48:14,979 INFO Variable: distance has been created!Value: 13.783!Source: {'data': {'locations': ['Denver, CO', 'Westminster, CO']}, 'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'post', 'url': 'http://www.mapquestapi.com/directions/v2/routematrix?key=1XpKHYmtfjhVKQhYAfpTfbjP8pz0d7Q4', 'variables': ['distance', 'cost']}
+2019-07-04 15:48:14,979 INFO Variable: cost has been created!Value: 1142!Source: {'data': {'locations': ['Denver, CO', 'Westminster, CO']}, 'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'post', 'url': 'http://www.mapquestapi.com/directions/v2/routematrix?key=1XpKHYmtfjhVKQhYAfpTfbjP8pz0d7Q4', 'variables': ['distance', 'cost']}
+2019-07-04 15:48:15,096 INFO Source: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['dist_limit', 'cost_limit']} fetched variables: {'dist_limit': 78, 'cost_limit': 78}
+2019-07-04 15:48:15,096 INFO Variable: dist_limit has been created!Value: 78!Source: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['dist_limit', 'cost_limit']}
+2019-07-04 15:48:15,096 INFO Variable: cost_limit has been created!Value: 78!Source: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['dist_limit', 'cost_limit']}
+2019-07-04 15:48:15,096 INFO variables input taken from collector!
+2019-07-04 15:48:15,096 INFO Product Vriable: distance has been created!
+2019-07-04 15:48:15,096 INFO Product Vriable: dist_limit has been created!
+2019-07-04 15:48:15,096 INFO Product Vriable: cost has been created!
+2019-07-04 15:48:15,096 INFO Product Vriable: cost_limit has been created!
+2019-07-04 15:48:15,096 INFO Adding action : condition_pass to list!
+2019-07-04 15:48:15,096 INFO Adding action : condition_fail to list!
+2019-07-04 15:48:15,096 INFO Adding action : Threshold_true to list!
+2019-07-04 15:48:15,096 INFO Adding action : Threshold_false to list!
+2019-07-04 15:48:15,096 INFO Adding action : Threshold_true to list!
+2019-07-04 15:48:15,096 INFO Action : Threshold_true already in list!
+2019-07-04 15:48:15,096 INFO Adding action : Threshold_false to list!
+2019-07-04 15:48:15,096 INFO Action : Threshold_false already in list!
+2019-07-04 15:48:15,096 INFO Creater Product action : condition_pass successfully!
+2019-07-04 15:48:15,096 INFO Creater Product action : condition_fail successfully!
+2019-07-04 15:48:15,096 INFO Creater Product action : Threshold_true successfully!
+2019-07-04 15:48:15,096 INFO Creater Product action : Threshold_false successfully!
+2019-07-04 15:48:15,096 INFO Starting action: Threshold_true
+2019-07-04 15:48:15,096 INFO Rule: distance_check returned true
+2019-07-04 15:48:15,096 INFO Starting action: Threshold_false
+2019-07-04 15:48:15,096 INFO Rule: cost_check returned false
+2019-07-04 15:48:15,096 INFO Starting action: condition_fail
+2019-07-04 15:48:15,096 INFO 127.0.0.1 - - [04/Jul/2019 15:48:15] "POST /runusecase?use_case=restraunt HTTP/1.1" 200 -
+2019-07-04 15:50:26,531 INFO  * Detected change in 'C:\\Users\\axsingh\\Documents\\business-rules\\web-services\\business_rules\\API.py', reloading
