@@ -3,9 +3,10 @@ import json
 from filehandler import *
 from utils import *
 from flask import Flask,request,jsonify,Response
+from flask_cors import CORS
 
 server = Flask(__name__)
-
+CORS(server)
 
 dirpath = './business_rules/configuration_files/'
 
