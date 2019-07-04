@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
-export class SideVar extends Component {
+export class SideDS extends Component {
     render() {
-        const  {variable,name} = this.props
+        const  {ds,name} = this.props
         
-       
+        
         return (
             <div >
                 <h5>{name}</h5><br/>            
@@ -13,4 +13,4 @@ export class SideVar extends Component {
     }
 }
 
-export default SideVar
+export default SideDS

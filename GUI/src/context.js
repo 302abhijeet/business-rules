@@ -10,7 +10,7 @@ export  class Provider extends Component {
         rules:[],
         variables:{},
         actions:[],
-        data_sources:[],
+        data_sources:{},
         use_cases:[]
 
     }
@@ -25,6 +25,16 @@ export  class Provider extends Component {
             })
             .catch(err => console.log(err))
         //set the response to be the state
+
+        axios.get('http://127.0.0.1:5000/get/datasource?id=all ')
+            .then(res => {
+                
+                this.setState({ data_sources: res.data.data})
+            })
+            .catch(err => console.log(err))
+
+
+
     }
 
     render() {
