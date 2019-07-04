@@ -7,7 +7,7 @@
 /* CSS for the Navigation Bar*/
 .Navigation{
   font-weight: bolder;
-
+  border-bottom: 2px solid black;
   background-color: burlywood;
   padding: 1%;
 }
@@ -27,4 +27,20 @@
 .Navigation span{
   position: absolute;
   left: 90%;
+}
+
+/* CSS for the side panels */
+.SidePanel{
+  padding: 2px;
+  float: right;
+  width:29%;
+  border-left: 2px solid black
+}
+
+.FormPanel{
+  float: left;
+  width: 70%;
+  padding:3px;
+
+
 }
