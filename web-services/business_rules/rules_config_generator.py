@@ -563,7 +563,8 @@ variables = {
 		'options' : 'None',
 		'formulae' : 'self.product.memory = 100 - 100 * self.product.free_mem / self.product.total_mem',
 		'input_method' : {
-			'method' : 'derived'
+			'method' : 'derived',
+            'variables' : ['free_mem','total_mem']
         },
         'multi_thread' : False
 	},

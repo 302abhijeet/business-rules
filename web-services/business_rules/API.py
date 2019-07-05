@@ -274,6 +274,7 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
 
     #import prodcut variables from UI
     variables_list = []
+    derived_variables = []
     source_variables_list = []
     extra_variables = []
     variable_source = {}
@@ -308,6 +309,8 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
             if var not in source_variables_list:
                 if "DataSource" in variables[var]["input_method"]:
                     DataSource[variables[var]["input_method"]["DataSource"]]["variables"].append(var)
+                else:
+                    derived_variables.append(var)
             else :
                 #to check for unused variables left in defined source variables 
                 source_variables_list.remove(var)
@@ -329,6 +332,8 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
                 if var not in source_variables_list:
                     if "DataSource" in variables[var]["input_method"]:
                         DataSource[variables[var]["input_method"]["DataSource"]]["variables"].append(var)
+                    else:
+                        derived_variables.append(var)
                 else :
                     #to check for unused variables left in defined source variables
                     source_variables_list.remove(var)
@@ -395,9 +400,12 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
                         kill_rule.append(rule)
                         logger.error("Product Variable: " + var['name'] + " could not be defined hence rule:" +rule+" cannot run and will return false!Error: {}".format(e))
                         ET.SubElement(error,"RuntimeError").text = str("Product Variable: " + var['name'] + " could not be defined hence rule:" + rule + "  cannot run and will return false!Error: {}".format(e))
-
-
-
+    #derived variables obtained now
+    try:
+        for var in derived_variables:
+            exec("logger.info('Variable: {} has been created!Value: {}!Source: Derived'.format(var,ProductVariables(product)."+var+"()))\nET.SubElement(collector.var_report,var, source = 'Derived').text = str(ProductVariables(product)."+var+"())")
+    except:
+        pass
     #import product actions from UI
     actions_list = []
     if run_rule :

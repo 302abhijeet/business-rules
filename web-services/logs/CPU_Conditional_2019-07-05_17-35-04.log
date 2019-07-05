@@ -1,0 +1,138 @@
+2019-07-05 17:35:04,003 INFO Starting _run_API
+2019-07-05 17:35:04,004 INFO Importing use_cases.yml
+2019-07-05 17:35:04,038 INFO Importing rules.yml
+2019-07-05 17:35:04,080 INFO Importing variables.yml
+2019-07-05 17:35:04,109 INFO Importing actions.yml
+2019-07-05 17:35:04,114 INFO Importing DataSource.yml
+2019-07-05 17:35:04,121 INFO Use_case created
+2019-07-05 17:35:04,122 INFO source_variable_list made :['total_mem', 'free_mem', 'CPU_usage', 'disk_space']
+2019-07-05 17:35:04,122 INFO Adding rule: CPU_usage variables
+2019-07-05 17:35:04,122 INFO Adding variable: CPU_usage 
+2019-07-05 17:35:04,124 INFO Adding rule: memory variables
+2019-07-05 17:35:04,125 INFO Adding variable: free_mem 
+2019-07-05 17:35:04,125 INFO Adding variable: total_mem 
+2019-07-05 17:35:04,125 INFO Adding variable: memory 
+2019-07-05 17:35:04,125 INFO Adding rule: disk_space variables
+2019-07-05 17:35:04,125 INFO Adding variable: disk_space 
+2019-07-05 17:35:04,125 INFO Adding rule: rule1 variables
+2019-07-05 17:35:04,125 INFO Adding variable: actual 
+2019-07-05 17:35:04,125 INFO Adding variable: expected 
+2019-07-05 17:35:04,125 INFO Adding variable: correct 
+2019-07-05 17:35:04,125 INFO Adding rule: rule2 variables
+2019-07-05 17:35:04,125 INFO Adding variable: actual 
+2019-07-05 17:35:04,126 INFO Variable: actual already in list
+2019-07-05 17:35:04,126 INFO Adding variable: expected 
+2019-07-05 17:35:04,126 INFO Variable: expected already in list
+2019-07-05 17:35:04,126 INFO Adding variable: correct 
+2019-07-05 17:35:04,126 INFO Variable: correct already in list
+2019-07-05 17:35:04,126 INFO Adding variable: incorrect 
+2019-07-05 17:35:04,126 INFO Adding rule: rule3 variables
+2019-07-05 17:35:04,126 INFO Adding variable: actual 
+2019-07-05 17:35:04,126 INFO Variable: actual already in list
+2019-07-05 17:35:04,126 INFO Adding variable: expected 
+2019-07-05 17:35:04,126 INFO Variable: expected already in list
+2019-07-05 17:35:04,126 INFO Adding variable: correct 
+2019-07-05 17:35:04,127 INFO Variable: correct already in list
+2019-07-05 17:35:04,127 INFO Addin data source: API_getPostman to be populated!
+2019-07-05 17:35:04,127 INFO Addin data source: API_postPostman to be populated!
+2019-07-05 17:35:04,127 INFO Addin data source: SSH_awsIntern to be populated!
+2019-07-05 17:35:04,127 INFO Addin data source: database_sqlRuleEngine to be populated!
+2019-07-05 17:35:04,127 INFO starting collector module
+2019-07-05 17:35:04,127 INFO Getting data source: {'method': 'SSH', 'host_name': '10.137.89.13', 'user_name': 'ubuntu', 'password': None, 'key_filename': 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem', 'variables': ['free_mem', 'total_mem'], 'multi_thread': True} variables!
+2019-07-05 17:35:04,127 INFO Starting thread: {'method': 'SSH', 'host_name': '10.137.89.13', 'user_name': 'ubuntu', 'password': None, 'key_filename': 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem', 'variables': ['free_mem', 'total_mem'], 'multi_thread': True}
+2019-07-05 17:35:04,128 INFO Getting data source: {'method': 'API', 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'params': {}, 'variables': ['CPU_usage'], 'multi_thread': True} variables!
+2019-07-05 17:35:04,128 INFO Starting thread: {'method': 'API', 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'params': {}, 'variables': ['CPU_usage'], 'multi_thread': True}
+2019-07-05 17:35:04,128 INFO Getting data source: {'method': 'API', 'request': 'post', 'url': 'https://75c9507b-8f2e-4211-a518-2c2ab988c27d.mock.pstmn.io/post', 'params': {}, 'data': {'method': 'POST', 'value': 13}, 'variables': ['disk_space'], 'multi_thread': True} variables!
+2019-07-05 17:35:04,129 INFO Starting thread: {'method': 'API', 'request': 'post', 'url': 'https://75c9507b-8f2e-4211-a518-2c2ab988c27d.mock.pstmn.io/post', 'params': {}, 'data': {'method': 'POST', 'value': 13}, 'variables': ['disk_space'], 'multi_thread': True}
+2019-07-05 17:35:04,131 INFO Getting data source: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['actual']} variables!
+2019-07-05 17:35:04,131 INFO Starting thread: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['actual']}
+2019-07-05 17:35:04,134 INFO Getting data source: {'data': {'method': 'POST', 'value': 13}, 'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'post', 'url': 'https://75c9507b-8f2e-4211-a518-2c2ab988c27d.mock.pstmn.io/post', 'variables': ['incorrect']} variables!
+2019-07-05 17:35:04,134 INFO Starting thread: {'data': {'method': 'POST', 'value': 13}, 'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'post', 'url': 'https://75c9507b-8f2e-4211-a518-2c2ab988c27d.mock.pstmn.io/post', 'variables': ['incorrect']}
+2019-07-05 17:35:04,136 INFO Getting data source: {'host_name': '10.137.89.13', 'key_filename': 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem', 'method': 'SSH', 'multi_thread': True, 'password': None, 'user_name': 'ubuntu', 'variables': ['expected']} variables!
+2019-07-05 17:35:04,136 INFO Starting thread: {'host_name': '10.137.89.13', 'key_filename': 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem', 'method': 'SSH', 'multi_thread': True, 'password': None, 'user_name': 'ubuntu', 'variables': ['expected']}
+2019-07-05 17:35:04,138 INFO Getting data source: {'data_base': 'rules_engine', 'host_name': 'localhost', 'method': 'data_base', 'multi_thread': True, 'password': 'Perfacio1', 'user_name': 'root', 'variables': ['correct']} variables!
+2019-07-05 17:35:04,138 INFO Starting thread: {'data_base': 'rules_engine', 'host_name': 'localhost', 'method': 'data_base', 'multi_thread': True, 'password': 'Perfacio1', 'user_name': 'root', 'variables': ['correct']}
+2019-07-05 17:35:04,344 INFO Source: {'data_base': 'rules_engine', 'host_name': 'localhost', 'method': 'data_base', 'multi_thread': True, 'password': 'Perfacio1', 'user_name': 'root', 'variables': ['correct']} fetched variables: {'correct': 5}
+2019-07-05 17:35:04,344 INFO Variable: correct has been created!Value: 5!Source: {'data_base': 'rules_engine', 'host_name': 'localhost', 'method': 'data_base', 'multi_thread': True, 'password': 'Perfacio1', 'user_name': 'root', 'variables': ['correct']}
+2019-07-05 17:35:04,677 INFO Connected (version 2.0, client OpenSSH_7.2p2)
+2019-07-05 17:35:04,802 INFO Connected (version 2.0, client OpenSSH_7.2p2)
+2019-07-05 17:35:05,236 INFO Source: {'method': 'API', 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'params': {}, 'variables': ['CPU_usage'], 'multi_thread': True} fetched variables: {'CPU_usage': 78}
+2019-07-05 17:35:05,236 INFO Variable: CPU_usage has been created!Value: 78!Source: {'method': 'API', 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'params': {}, 'variables': ['CPU_usage'], 'multi_thread': True}
+2019-07-05 17:35:05,458 INFO Source: {'method': 'API', 'request': 'post', 'url': 'https://75c9507b-8f2e-4211-a518-2c2ab988c27d.mock.pstmn.io/post', 'params': {}, 'data': {'method': 'POST', 'value': 13}, 'variables': ['disk_space'], 'multi_thread': True} fetched variables: {'disk_space': 33}
+2019-07-05 17:35:05,458 INFO Variable: disk_space has been created!Value: 33!Source: {'method': 'API', 'request': 'post', 'url': 'https://75c9507b-8f2e-4211-a518-2c2ab988c27d.mock.pstmn.io/post', 'params': {}, 'data': {'method': 'POST', 'value': 13}, 'variables': ['disk_space'], 'multi_thread': True}
+2019-07-05 17:35:05,486 INFO Source: {'data': {'method': 'POST', 'value': 13}, 'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'post', 'url': 'https://75c9507b-8f2e-4211-a518-2c2ab988c27d.mock.pstmn.io/post', 'variables': ['incorrect']} fetched variables: {'incorrect': 33}
+2019-07-05 17:35:05,488 INFO Source: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['actual']} fetched variables: {'actual': 78}
+2019-07-05 17:35:05,488 INFO Variable: incorrect has been created!Value: 33!Source: {'data': {'method': 'POST', 'value': 13}, 'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'post', 'url': 'https://75c9507b-8f2e-4211-a518-2c2ab988c27d.mock.pstmn.io/post', 'variables': ['incorrect']}
+2019-07-05 17:35:05,489 INFO Variable: actual has been created!Value: 78!Source: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['actual']}
+2019-07-05 17:35:06,133 INFO Authentication (publickey) successful!
+2019-07-05 17:35:06,249 INFO Authentication (publickey) successful!
+2019-07-05 17:35:07,743 INFO Source: {'host_name': '10.137.89.13', 'key_filename': 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem', 'method': 'SSH', 'multi_thread': True, 'password': None, 'user_name': 'ubuntu', 'variables': ['expected']} fetched variables: {'expected': '104\n'}
+2019-07-05 17:35:07,743 INFO Variable: expected has been created!Value: 104
+!Source: {'host_name': '10.137.89.13', 'key_filename': 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem', 'method': 'SSH', 'multi_thread': True, 'password': None, 'user_name': 'ubuntu', 'variables': ['expected']}
+2019-07-05 17:35:07,964 INFO Source: {'method': 'SSH', 'host_name': '10.137.89.13', 'user_name': 'ubuntu', 'password': None, 'key_filename': 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem', 'variables': ['free_mem', 'total_mem'], 'multi_thread': True} fetched variables: {'free_mem': '         1400096 ', 'total_mem': '        4044880 '}
+2019-07-05 17:35:07,965 INFO Variable: free_mem has been created!Value:          1400096 !Source: {'method': 'SSH', 'host_name': '10.137.89.13', 'user_name': 'ubuntu', 'password': None, 'key_filename': 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem', 'variables': ['free_mem', 'total_mem'], 'multi_thread': True}
+2019-07-05 17:35:07,965 INFO Variable: total_mem has been created!Value:         4044880 !Source: {'method': 'SSH', 'host_name': '10.137.89.13', 'user_name': 'ubuntu', 'password': None, 'key_filename': 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem', 'variables': ['free_mem', 'total_mem'], 'multi_thread': True}
+2019-07-05 17:35:07,965 INFO variables input taken from collector!
+2019-07-05 17:35:07,966 INFO Product Vriable: CPU_usage has been created!
+2019-07-05 17:35:07,968 INFO Product Vriable: free_mem has been created!
+2019-07-05 17:35:07,968 INFO Product Vriable: total_mem has been created!
+2019-07-05 17:35:07,969 INFO Product Vriable: memory has been created!
+2019-07-05 17:35:07,970 INFO Product Vriable: disk_space has been created!
+2019-07-05 17:35:07,971 INFO Product Vriable: actual has been created!
+2019-07-05 17:35:07,971 INFO Product Vriable: expected has been created!
+2019-07-05 17:35:07,971 INFO Product Vriable: correct has been created!
+2019-07-05 17:35:07,972 INFO Product Vriable: incorrect has been created!
+2019-07-05 17:35:07,972 INFO Adding action : condition_pass to list!
+2019-07-05 17:35:07,972 INFO Adding action : condition_fail to list!
+2019-07-05 17:35:07,972 INFO Adding action : Threshold_true to list!
+2019-07-05 17:35:07,972 INFO Adding action : Threshold_false to list!
+2019-07-05 17:35:07,972 INFO Adding action : Threshold_true to list!
+2019-07-05 17:35:07,972 INFO Action : Threshold_true already in list!
+2019-07-05 17:35:07,972 INFO Adding action : Threshold_false to list!
+2019-07-05 17:35:07,972 INFO Action : Threshold_false already in list!
+2019-07-05 17:35:07,972 INFO Adding action : Threshold_true to list!
+2019-07-05 17:35:07,972 INFO Action : Threshold_true already in list!
+2019-07-05 17:35:07,972 INFO Adding action : Threshold_false to list!
+2019-07-05 17:35:07,972 INFO Action : Threshold_false already in list!
+2019-07-05 17:35:07,972 INFO Adding action : condition_pass to list!
+2019-07-05 17:35:07,973 INFO Action : condition_pass already in list!
+2019-07-05 17:35:07,973 INFO Adding action : condition_fail to list!
+2019-07-05 17:35:07,973 INFO Action : condition_fail already in list!
+2019-07-05 17:35:07,973 INFO Adding action : condition_pass to list!
+2019-07-05 17:35:07,973 INFO Action : condition_pass already in list!
+2019-07-05 17:35:07,973 INFO Adding action : condition_fail to list!
+2019-07-05 17:35:07,973 INFO Action : condition_fail already in list!
+2019-07-05 17:35:07,973 INFO Adding action : condition_pass to list!
+2019-07-05 17:35:07,973 INFO Action : condition_pass already in list!
+2019-07-05 17:35:07,973 INFO Adding action : condition_fail to list!
+2019-07-05 17:35:07,973 INFO Action : condition_fail already in list!
+2019-07-05 17:35:07,973 INFO Creater Product action : condition_pass successfully!
+2019-07-05 17:35:07,973 INFO Creater Product action : condition_fail successfully!
+2019-07-05 17:35:07,974 INFO Creater Product action : Threshold_true successfully!
+2019-07-05 17:35:07,974 INFO Creater Product action : Threshold_false successfully!
+2019-07-05 17:35:07,974 INFO Starting action: Threshold_false
+2019-07-05 17:35:07,974 INFO Rule: CPU_usage returned false
+2019-07-05 17:35:07,975 INFO Starting action: Threshold_false
+2019-07-05 17:35:07,975 INFO Rule: memory returned false
+2019-07-05 17:35:07,975 INFO Starting action: Threshold_true
+2019-07-05 17:35:07,976 INFO Rule: disk_space returned true
+2019-07-05 17:35:07,976 INFO List: ['CPU_usage', 'memory', 'disk_space'] has returned False
+2019-07-05 17:35:07,976 INFO All conditions were NOT satisfied: ['CPU_usage', 'memory', 'disk_space']!Running all else rules: ['rule2']
+2019-07-05 17:35:07,976 INFO Starting action: condition_fail
+2019-07-05 17:35:07,977 INFO Rule: rule2 returned false
+2019-07-05 17:35:07,977 INFO List: ['rule2'] has returned False
+2019-07-05 17:35:07,977 INFO Rule conditional: {'all': ['CPU_usage', 'memory', 'disk_space'], 'else': ['rule2'], 'then': None} returned false!
+2019-07-05 17:35:07,977 INFO Starting action: Threshold_false
+2019-07-05 17:35:07,977 INFO Rule: CPU_usage returned false
+2019-07-05 17:35:07,978 INFO Starting action: Threshold_false
+2019-07-05 17:35:07,978 INFO Rule: memory returned false
+2019-07-05 17:35:07,978 INFO Starting action: Threshold_true
+2019-07-05 17:35:07,979 INFO Rule: disk_space returned true
+2019-07-05 17:35:07,979 INFO List: ['CPU_usage', 'memory', 'disk_space'] has returned False
+2019-07-05 17:35:07,979 INFO Any condition was satisfied: {2: ['CPU_usage', 'memory', 'disk_space']}!Running all else rules: ['rule1']
+2019-07-05 17:35:07,979 INFO Starting action: condition_pass
+2019-07-05 17:35:07,982 INFO Rule: rule1 returned true
+2019-07-05 17:35:07,982 INFO List: ['rule1'] has returned True
+2019-07-05 17:35:07,982 INFO Rule conditional: {'any': {2: ['CPU_usage', 'memory', 'disk_space']}, 'else': ['rule1'], 'then': ['rule3']} returned true!
+2019-07-05 17:35:07,983 INFO List: [{'all': ['CPU_usage', 'memory', 'disk_space'], 'else': ['rule2'], 'then': None}, {'any': {2: ['CPU_usage', 'memory', 'disk_space']}, 'else': ['rule1'], 'then': ['rule3']}] has returned False
+2019-07-05 17:35:07,983 INFO Starting action: condition_fail
