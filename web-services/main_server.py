@@ -37,14 +37,17 @@ def runrule():
         #API function to run the rules
         #this function returns a list of messages
         try:
-                data = API._run_API(run_rule=rulename,case=None,parameter_variables=data_given,parameter_dataSource=parameter_data)
+                data,file_path = API._run_API(run_rule=rulename,case=None,parameter_variables=data_given,parameter_dataSource=parameter_data)
         except Exception as e:
-            with open(str(e),'r') as f:
-                return  Response(
-                        response=json.dumps({'file':str(e)}),
-                        mimetype='application/json',
-                        status=500
-                )
+            try:
+                with open(str(e),'r') as f:
+                    return  Response(
+                            response=json.dumps({'file':str(e)}),
+                            mimetype='application/json',
+                            status=500
+                    )
+            except:
+                pass
             return  Response(
                     response=json.dumps({'file':str(e)}),
                     mimetype='application/json',
@@ -81,19 +84,22 @@ def runusecase():
 
         del data_given['use_case']
         check_valid_data(data_given)
-
+        
         parameter_data = checkValidatePD(request.get_data())
         
         #this function returns a list of messages
         try:
             data,file_path = API._run_API(run_rule=None,case=ucname,parameter_variables=data_given,parameter_dataSource=parameter_data)
         except Exception as e:
-            with open(str(e),'r') as f:
-                return  Response(
-                        response=json.dumps({'file':str(e)}),
-                        mimetype='application/json',
-                        status=500
-                    ) 
+            try:
+                with open(str(e),'r') as f:
+                    return  Response(
+                            response=json.dumps({'file':str(e)}),
+                            mimetype='application/json',
+                            status=500
+                        )
+            except:
+                pass 
             return  Response(
                         response=json.dumps({'Error':str(e)}),
                         mimetype='application/json',
