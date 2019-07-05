@@ -4,6 +4,12 @@ import FormDS from './FormDS';
 import SideDS from './SideDS';
 
 export class DataSource extends Component {
+
+    state = {
+        selected:null
+    }
+
+
     render() {
         return (
             <Consumer>
@@ -18,7 +24,7 @@ export class DataSource extends Component {
                             <div className='container-fluid'>
                             <div className='row'>
                                 <div className='col-9'>
-                                    <FormDS />
+                                    <FormDS selected = {this.state.selected} />
 
                                 </div>
                                 <div className='col'>

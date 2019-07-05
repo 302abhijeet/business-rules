@@ -7,11 +7,11 @@ const Context = React.createContext()
 export  class Provider extends Component {
     
     state = {
-        rules:[],
+        rules:{},
         variables:{},
-        actions:[],
+        actions:{},
         data_sources:{},
-        use_cases:[]
+        use_cases:{}
 
     }
     
@@ -24,7 +24,6 @@ export  class Provider extends Component {
                 this.setState({ variables: res.data.data})
             })
             .catch(err => console.log(err))
-        //set the response to be the state
 
         axios.get('http://127.0.0.1:5000/get/datasource?id=all ')
             .then(res => {
@@ -32,8 +31,27 @@ export  class Provider extends Component {
                 this.setState({ data_sources: res.data.data})
             })
             .catch(err => console.log(err))
+        
+        axios.get('http://127.0.0.1:5000/get/rule?id=all ')
+            .then(res => {
+                
+                this.setState({ rules: res.data.data})
+            })
+            .catch(err => console.log(err))
 
-
+        axios.get('http://127.0.0.1:5000/get/use_case?id=all ')
+            .then(res => {
+                
+                this.setState({ use_cases: res.data.data})
+            })
+            .catch(err => console.log(err))
+        
+        axios.get('http://127.0.0.1:5000/get/action?id=all ')
+            .then(res => {
+                
+                this.setState({ actions: res.data.data})
+            })
+            .catch(err => console.log(err))
 
     }
 
