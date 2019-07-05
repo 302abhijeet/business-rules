@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+	<Rules_engine>
+		<Errors/>
+		<Warning/>
+		<Rules_status>
+			<CPU_usage>Rule returned false!</CPU_usage>
+			<memory>Rule returned false!</memory>
+			<disk_space>Rule returned true!</disk_space>
+			<Dictionary>All conditions were NOT satisfied: ['CPU_usage', 'memory', 'disk_space']!Running all else rules: ['rule2']</Dictionary>
+			<rule2>Rule returned false!</rule2>
+			<CPU_usage>Rule returned false!</CPU_usage>
+			<memory>Rule returned false!</memory>
+			<disk_space>Rule returned true!</disk_space>
+			<Dictionary>Any condition was satisfied: {2: ['CPU_usage', 'memory', 'disk_space']}!Running all else rules: ['rule1']</Dictionary>
+			<rule1>Rule returned true!</rule1>
+		</Rules_status>
+		<Variables>
+			<correct source="{'data_base': 'rules_engine', 'host_name': 'localhost', 'method': 'data_base', 'multi_thread': True, 'password': 'Perfacio1', 'user_name': 'root', 'variables': ['correct']}">5</correct>
+			<CPU_usage source="{'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['CPU_usage', 'actual']}">78</CPU_usage>
+			<actual source="{'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['CPU_usage', 'actual']}">78</actual>
+			<disk_space source="{'data': {'method': 'POST', 'value': 13}, 'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'post', 'url': 'https://75c9507b-8f2e-4211-a518-2c2ab988c27d.mock.pstmn.io/post', 'variables': ['disk_space', 'incorrect']}">33</disk_space>
+			<incorrect source="{'data': {'method': 'POST', 'value': 13}, 'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'post', 'url': 'https://75c9507b-8f2e-4211-a518-2c2ab988c27d.mock.pstmn.io/post', 'variables': ['disk_space', 'incorrect']}">33</incorrect>
+			<free_mem source="{'host_name': '10.137.89.13', 'key_filename': 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem', 'method': 'SSH', 'multi_thread': True, 'password': None, 'user_name': 'ubuntu', 'variables': ['free_mem', 'total_mem', 'expected']}">         1408612 </free_mem>
+			<total_mem source="{'host_name': '10.137.89.13', 'key_filename': 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem', 'method': 'SSH', 'multi_thread': True, 'password': None, 'user_name': 'ubuntu', 'variables': ['free_mem', 'total_mem', 'expected']}">        4044880 </total_mem>
+			<expected source="{'host_name': '10.137.89.13', 'key_filename': 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem', 'method': 'SSH', 'multi_thread': True, 'password': None, 'user_name': 'ubuntu', 'variables': ['free_mem', 'total_mem', 'expected']}">104
+</expected>
+		</Variables>
+	</Rules_engine>

@@ -33,8 +33,8 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
     """
     global root 
     global logger
-    file_name = "./logs/"+(run_rule or case)+"_"+str(datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))+".log"
-    logging.basicConfig(filename=file_name,format='%(asctime)s %(levelname)s %(message)s',filemode='w')
+    file_name =(run_rule or case)+"_"+str(datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
+    logging.basicConfig(filename="./logs/"+file_name+".log",format='%(asctime)s %(levelname)s %(message)s',filemode='w')
     logger = logging.getLogger()
     logger.setLevel(20)
     root = ET.Element("Rules_engine")
@@ -45,6 +45,11 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
 
     global output
     output = []
+
+    def _write_to_xml(root):
+        with open("./reports/"+file_name+".xml",'w') as f:
+            parseString(ET.tostring(root)).writexml(f,indent="\t",addindent="\t",newl='\n')
+        return "./reports/"+file_name+".xml"
 
     def run_rules_tuple(tuples) :
         """run rules in tuples on different threads
@@ -243,11 +248,11 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
     elif case:
         logger.critical("Case not defined in config")
         ET.SubElement(error,'NameError').text = str("Case: " + case +" not defined in config!")
-        raise NameError(parseString(ET.tostring(root)).toprettyxml())
+        raise NameError(_write_to_xml(root))
     if run_rule and run_rule not in rules:
         logger.critical("Rule not defined in config")
         ET.SubElement(error,'NameError').text = str("Rule: " + case +" not defined in config!")
-        raise NameError(parseString(ET.tostring(root)).toprettyxml())
+        raise NameError(_write_to_xml(root))
 
 
 
@@ -354,7 +359,7 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
         if run_rule:
             logger.critical("Rule cannot run bacause variable: "+var+" not defined!")
             ET.SubElement(error,"RuntimeError").text = str("Rule cannot run bacause variable: "+var+" not defined!")
-            raise RuntimeError(parseString(ET.tostring(root)).toprettyxml())
+            raise RuntimeError(_write_to_xml(root))
         for rule in case["rule_list"]:
             if var in rules[rule]['variables']:
                 logger.error("Rule: "+rule+" will not run because variable: "+var+" couldn't be fetched!")
@@ -384,7 +389,7 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
                 if run_rule:
                     logger.error("Product Variable: " + var['name'] + " could not be defined hence rule:" + run_rule + " cannot run!Error: {}".format(e))
                     ET.SubElement(error,"RuntimeError").text = str("Product Variable: " + var['name'] + " could not be defined hence rule:" + run_rule + " cannot run!Error: {}".format(e))
-                    raise RuntimeError(parseString(ET.tostring(root)).toprettyxml())
+                    raise RuntimeError(_write_to_xml(root))
                 for rule in case['rule_list']:
                     if var['name'] in rules[rule]['variables']:
                         kill_rule.append(rule)
@@ -475,7 +480,8 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
     if logger.handlers:
         for handler in logger.handlers:
             logger.removeHandler(handler)
-    return output,parseString(ET.tostring(root)).toprettyxml()
+
+    return output,_write_to_xml(root)
 
 
 

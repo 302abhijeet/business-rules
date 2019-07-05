@@ -37,15 +37,21 @@ def runrule():
         #API function to run the rules
         #this function returns a list of messages
         try:
-                data,report = API._run_API(run_rule=rulename,case=None,parameter_variables=data_given,parameter_dataSource=parameter_data)
+                data = API._run_API(run_rule=rulename,case=None,parameter_variables=data_given,parameter_dataSource=parameter_data)
         except Exception as e:
+            with open(str(e),'r') as f:
                 return  Response(
-                        response=json.dumps({'report': str(e)}),
+                        response=json.dumps({'file':str(e)}),
                         mimetype='application/json',
                         status=500
                 )
+            return  Response(
+                    response=json.dumps({'file':str(e)}),
+                    mimetype='application/json',
+                    status=500
+            )
         return  Response(
-                        response=json.dumps({'run_msg':'Run successful','data':data,'report':report}),
+                        response=json.dumps({'run_msg':'Run successful','data':data,'file':file_path}),
                         mimetype='application/json',
                         status=200
                 )
@@ -80,12 +86,21 @@ def runusecase():
         
         #this function returns a list of messages
         try:
-            data,report = API._run_API(run_rule=None,case=ucname,parameter_variables=data_given,parameter_dataSource=parameter_data)
+            data,file_path = API._run_API(run_rule=None,case=ucname,parameter_variables=data_given,parameter_dataSource=parameter_data)
         except Exception as e:
-            data = None
-            report = str(e)
+            with open(str(e),'r') as f:
+                return  Response(
+                        response=json.dumps({'file':str(e)}),
+                        mimetype='application/json',
+                        status=500
+                    ) 
+            return  Response(
+                        response=json.dumps({'Error':str(e)}),
+                        mimetype='application/json',
+                        status=500
+                    ) 
         return Response(
-                        response=json.dumps({'run_msg':'run successful','data':data,'report':report}),
+                        response=json.dumps({'run_msg':'run successful','data':data,'file':file_path}),
                         mimetype='application/json',
                         status=200
                 )
