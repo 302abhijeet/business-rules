@@ -18,7 +18,7 @@ def _get_variable_output(var,response) :
         [type] -- [description]
     """
     if not response :
-        raise RuntimeError("invalid request to API! Faulty response!Error: {}".format(response))
+        raise RuntimeError("Invalid respose from API!Error: {}".format(response))
     try: 
         ldict = locals()
         exec("out = " + var['input_method']['command'],globals(),ldict)

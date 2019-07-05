@@ -1,0 +1,39 @@
+2019-07-04 18:57:07,844 INFO Starting _run_API
+2019-07-04 18:57:07,844 INFO Importing use_cases.yml
+2019-07-04 18:57:07,875 INFO Importing rules.yml
+2019-07-04 18:57:07,914 INFO Importing variables.yml
+2019-07-04 18:57:07,944 INFO Importing actions.yml
+2019-07-04 18:57:07,950 INFO Importing DataSource.yml
+2019-07-04 18:57:07,958 INFO source_variable_list made :[]
+2019-07-04 18:57:07,958 INFO adding variable: actual
+2019-07-04 18:57:07,958 INFO adding variable: expected
+2019-07-04 18:57:07,958 INFO adding variable: correct
+2019-07-04 18:57:07,958 INFO Addin data source: API_getPostman to be populated!
+2019-07-04 18:57:07,961 INFO Addin data source: SSH_awsIntern to be populated!
+2019-07-04 18:57:07,961 INFO Addin data source: database_sqlRuleEngine to be populated!
+2019-07-04 18:57:07,961 INFO starting collector module
+2019-07-04 18:57:07,961 INFO Getting data source: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['actual']} variables!
+2019-07-04 18:57:07,961 INFO Starting thread: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['actual']}
+2019-07-04 18:57:07,962 INFO Getting data source: {'host_name': '10.137.89.13', 'key_filename': 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem', 'method': 'SSH', 'multi_thread': True, 'password': None, 'user_name': 'ubuntu', 'variables': ['expected']} variables!
+2019-07-04 18:57:07,962 INFO Starting thread: {'host_name': '10.137.89.13', 'key_filename': 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem', 'method': 'SSH', 'multi_thread': True, 'password': None, 'user_name': 'ubuntu', 'variables': ['expected']}
+2019-07-04 18:57:07,964 INFO Getting data source: {'data_base': 'rules_engine', 'host_name': 'localhost', 'method': 'data_base', 'multi_thread': True, 'password': 'Perfacio1', 'user_name': 'root', 'variables': ['correct']} variables!
+2019-07-04 18:57:07,964 INFO Starting thread: {'data_base': 'rules_engine', 'host_name': 'localhost', 'method': 'data_base', 'multi_thread': True, 'password': 'Perfacio1', 'user_name': 'root', 'variables': ['correct']}
+2019-07-04 18:57:08,035 INFO Source: {'data_base': 'rules_engine', 'host_name': 'localhost', 'method': 'data_base', 'multi_thread': True, 'password': 'Perfacio1', 'user_name': 'root', 'variables': ['correct']} fetched variables: {'correct': 5}
+2019-07-04 18:57:08,035 INFO Variable: correct has been created!Value: 5!Source: {'data_base': 'rules_engine', 'host_name': 'localhost', 'method': 'data_base', 'multi_thread': True, 'password': 'Perfacio1', 'user_name': 'root', 'variables': ['correct']}
+2019-07-04 18:57:08,505 INFO Connected (version 2.0, client OpenSSH_7.2p2)
+2019-07-04 18:57:09,083 INFO Source: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['actual']} fetched variables: {'actual': 78}
+2019-07-04 18:57:09,083 INFO Variable: actual has been created!Value: 78!Source: {'method': 'API', 'multi_thread': True, 'params': {}, 'request': 'get', 'url': 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get', 'variables': ['actual']}
+2019-07-04 18:57:09,911 INFO Authentication (publickey) successful!
+2019-07-04 18:57:10,766 INFO Source: {'host_name': '10.137.89.13', 'key_filename': 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem', 'method': 'SSH', 'multi_thread': True, 'password': None, 'user_name': 'ubuntu', 'variables': ['expected']} fetched variables: {'expected': '104\n'}
+2019-07-04 18:57:10,766 INFO Variable: expected has been created!Value: 104
+!Source: {'host_name': '10.137.89.13', 'key_filename': 'C:\\Users\\axsingh\\Documents\\Rules-engine.pem', 'method': 'SSH', 'multi_thread': True, 'password': None, 'user_name': 'ubuntu', 'variables': ['expected']}
+2019-07-04 18:57:10,766 INFO variables input taken from collector!
+2019-07-04 18:57:10,767 INFO Product Vriable: actual has been created!
+2019-07-04 18:57:10,767 INFO Product Vriable: expected has been created!
+2019-07-04 18:57:10,767 INFO Product Vriable: correct has been created!
+2019-07-04 18:57:10,768 INFO Adding action : condition_pass to list!
+2019-07-04 18:57:10,768 INFO Adding action : condition_fail to list!
+2019-07-04 18:57:10,768 INFO Creater Product action : condition_pass successfully!
+2019-07-04 18:57:10,769 INFO Creater Product action : condition_fail successfully!
+2019-07-04 18:57:10,769 INFO Starting action: condition_pass
+2019-07-04 18:57:10,772 INFO Rule has retuned true!

@@ -1,0 +1,28 @@
+2019-07-04 18:57:53,221 INFO Starting _run_API
+2019-07-04 18:57:53,222 INFO Importing use_cases.yml
+2019-07-04 18:57:53,254 INFO Importing rules.yml
+2019-07-04 18:57:53,292 INFO Importing variables.yml
+2019-07-04 18:57:53,317 INFO Importing actions.yml
+2019-07-04 18:57:53,322 INFO Importing DataSource.yml
+2019-07-04 18:57:53,329 INFO source_variable_list made :[]
+2019-07-04 18:57:53,329 INFO adding variable: actual
+2019-07-04 18:57:53,329 INFO Variable: actual in parameter_variables
+2019-07-04 18:57:53,329 INFO adding variable: expected
+2019-07-04 18:57:53,329 INFO Variable: expected in parameter_variables
+2019-07-04 18:57:53,332 INFO adding variable: correct
+2019-07-04 18:57:53,332 INFO Variable: correct in parameter_variables
+2019-07-04 18:57:53,332 INFO starting collector module
+2019-07-04 18:57:53,332 INFO Variable: incorrect has been created!Value: 23!Source: Parameter_Variable
+2019-07-04 18:57:53,332 INFO Variable: actual has been created!Value: 140!Source: Parameter_Variable
+2019-07-04 18:57:53,332 INFO Variable: expected has been created!Value: 70!Source: Parameter_Variable
+2019-07-04 18:57:53,332 INFO Variable: correct has been created!Value: 708!Source: Parameter_Variable
+2019-07-04 18:57:53,332 INFO variables input taken from collector!
+2019-07-04 18:57:53,333 INFO Product Vriable: actual has been created!
+2019-07-04 18:57:53,333 INFO Product Vriable: expected has been created!
+2019-07-04 18:57:53,333 INFO Product Vriable: correct has been created!
+2019-07-04 18:57:53,333 INFO Adding action : condition_pass to list!
+2019-07-04 18:57:53,333 INFO Adding action : condition_fail to list!
+2019-07-04 18:57:53,333 INFO Creater Product action : condition_pass successfully!
+2019-07-04 18:57:53,333 INFO Creater Product action : condition_fail successfully!
+2019-07-04 18:57:53,333 INFO Starting action: condition_pass
+2019-07-04 18:57:53,334 INFO Rule has retuned true!

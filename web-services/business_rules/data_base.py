@@ -51,7 +51,7 @@ def _get_variable_output(var,mydb):
         try:
             out = result[var["input_method"]['start']:var["input_method"]['end']]
         except Exception as e:
-            raise RuntimeError("Error in SSH splitting of variable: "+var['name']+"!Error: {}".format(e))
+            raise RuntimeError("Error in splitting of variable: "+var['name']+"!Error: {}".format(e))
     else :
         if len(result) == 1 :
             out = result[0]
