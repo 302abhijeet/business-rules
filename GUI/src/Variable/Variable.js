@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 
-export default class Rule extends Component {
+export class Variable extends Component {
     render() {
         return (
             <div>
-                This is rule page
+                
             </div>
         )
     }
 }
+
+export default Variable

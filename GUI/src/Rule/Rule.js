@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 
-export class UseCase extends Component {
+export class Rule extends Component {
     render() {
         return (
             <div>
-                USe case
+                
             </div>
         )
     }
 }
 
-export default UseCase
+export default Rule

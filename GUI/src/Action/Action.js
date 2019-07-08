@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export class SideDS extends Component {
+export class Action extends Component {
     render() {
         return (
             <div>
@@ -10,4 +10,4 @@ export class SideDS extends Component {
     }
 }
 
-export default SideDS
+export default Action
