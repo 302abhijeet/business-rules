@@ -7,11 +7,11 @@ const Context = React.createContext()
 export  class Provider extends Component {
     
     state = {
-        rules:{},
-        variables:{},
-        actions:{},
-        data_sources:{},
-        use_cases:{}
+        rules:null,
+        variables:null,
+        actions:null,
+        data_sources:null,
+        use_cases:null
 
     }
     
