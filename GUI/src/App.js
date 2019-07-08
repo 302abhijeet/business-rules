@@ -1,44 +1,54 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 import {BrowserRouter,Switch,Route} from 'react-router-dom'
-//import './App.css';
-
-import Navbar from './layout/Navbar'
+import DataSource from './DataSource/DataSource'
+import Rule from './Rule/Rule'
+import Variable from './Variable/Variable'
+import Action from './Action/Action'
+import UseCase from './UseCase/UseCase'
+import Navigation from './Navigation'
 import {Provider} from './context'
 
-//Importing page elements
-import Rule from './rule-page/Rule'
-import UseCase from './uc-page/UseCase'
-import Action from './action-page/Action'
-import Variable from './var-page/Variable'
-import DataSource from './datas-page/DataSource'
-import Error from './Error'
-
-
 export class App extends Component {
-  
-  render(){
+  render() {
     return (
       <Provider>
       <BrowserRouter>
-        <React.Fragment>
-          <Navbar />
-          <Switch>
-            <Route exact path='/' component = {Rule} />
-            <Route exact path='/rule' component = {Rule} />
-            <Route exact path='/usecase' component = {UseCase} />
-            <Route exact path='/variable' component = {Variable} />
-            <Route exact path='/action' component = {Action} />
-            <Route exact path='/datasource' component = {DataSource} />
-            <Route component={Error}/>
-          </Switch>
-        </React.Fragment>
-      </BrowserRouter>
-      </Provider>
-    );
+      <Navigation />
+
+        <Switch>
+
+          
+          <Route path='/DataSource/:cat'  render = {
+            props => (
+              <DataSource cat = {props.match.params.cat} />
+            )
+          } />
+          <Route path='/Rule/:cat'  render = {
+            props => (
+              <Rule cat = {props.match.params.cat} />
+            )
+          } />
+          <Route path='/Variable/:cat'  render = {
+            props => (
+              <Variable cat = {props.match.params.cat} />
+            )
+          } />
+          <Route path='/Action/:cat'  render = {
+            props => (
+              <Action cat = {props.match.params.cat} />
+            )
+          } />
+          <Route path='/UseCase/:cat'  render = {
+            props => (
+              <UseCase cat = {props.match.params.cat} />
+            )
+          } />
+        </Switch>
+
+      </BrowserRouter></Provider>
+
+    )
   }
-  
 }
-
-
 
 export default App
