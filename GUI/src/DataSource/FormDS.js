@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import {Form,Row, Col,Button} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
-import { functionTypeParam } from '@babel/types';
 export class FormDS extends Component {
     
     state = {
@@ -17,31 +16,32 @@ export class FormDS extends Component {
         multi_thread:true
     }
     
-    // componentWillMount =()=>{
-    //     const {cat,data} = this.props
-    //         const {method,variables,multi_thread} = data[cat]
-    //         this.setState({
-    //                 name:cat,
-    //                 method,
-    //                 variables,
-    //                 multi_thread
-    //             })
-    //             if(method === 'API'){
-    //                 const {params,request,url} =data[cat]
-    //                 const dat = request==='post'?data[cat]['data']:null
-    //                 const info = {params,request,url,data:dat}
-    //                 this.setState({info})
-    //             }
-    //             else if(method ==='data_base'){
-    //                 const {host_name,user_name,password,data_base} = data[cat]
-    //                 const info = {host_name,user_name,password,data_base}
-    //                 this.setState({info})
-    //             }else if(method === 'SSH'){
-    //                 const {host_name,user_name,password,key_filename} = data[cat]
-    //                 const info = {host_name,user_name,password,key_filename}
-    //                 this.setState({info})
-    //             }
-    // }
+    componentWillMount =()=>{
+        const {cat,data} = this.props
+        if(cat !== 'add'){
+            const {method,variables,multi_thread} = data[cat]
+            this.setState({
+                    name:cat,
+                    method,
+                    variables,
+                    multi_thread
+                })
+                if(method === 'API'){
+                    const {params,request,url} =data[cat]
+                    const dat = request==='post'?data[cat]['data']:null
+                    const info = {params,request,url,data:dat}
+                    this.setState({info})
+                }
+                else if(method ==='data_base'){
+                    const {host_name,user_name,password,data_base} = data[cat]
+                    const info = {host_name,user_name,password,data_base}
+                    this.setState({info})
+                }else if(method === 'SSH'){
+                    const {host_name,user_name,password,key_filename} = data[cat]
+                    const info = {host_name,user_name,password,key_filename}
+                    this.setState({info})
+                }
+    }}
     componentWillReceiveProps= (nextProps)=>{
         
         if(nextProps!==this.props && nextProps.cat !== 'add'){
@@ -258,7 +258,7 @@ export class FormDSAPI extends Component {
         let displayData= ''
         const {params,data} = this.props.values
         if(this.props.values.request === 'post')
-            displayData =  ''
+            displayData =  <FormDSAPIhelper id='data' />
         return (
             <React.Fragment>
 
@@ -291,6 +291,32 @@ export class FormDSAPI extends Component {
         )
     }
 }
+
+
+export class FormDSAPIhelper extends Component {
+    state = {}
+    componentWillMount=()=>{
+        if(this.props.datas!=null || this.props.datas!==undefined){
+            this.setState({state:this.props.datas})
+        }
+    }
+    addNewData = ()=>{
+        //start here
+    }
+    render() {
+        const {id} =this.props
+        return (
+            <React.Fragment>
+                <Form.Group controlId={id}>
+                    <Form.Label><Button variant = 'outline-dark' onClick={this.addNewData}>Add new {id}</Button></Form.Label>
+                    
+                </Form.Group>
+            </React.Fragment>
+        )
+    }
+}
+
+
 
 
 
