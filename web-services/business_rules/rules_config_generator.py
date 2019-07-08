@@ -1,10 +1,11 @@
 #configuration file for the API
-import yaml
+from pymongo import MongoClient
 from fields import *
 
-use_cases = { 
+use_cases = [ 
 	#restraunt locator
-	'restraunt' : {
+	{
+        'name' : 'restraunt',
 		'rule_list' : ['distance_check','cost_check'],
 		'rules' : ['distance_check','cost_check'],
 		'stop_on_first_success' : False,
@@ -27,7 +28,8 @@ use_cases = {
 	},
 
 	#CPU_Performance
-	'CPU_Performance' : {
+	{
+        'name' : "CPU_Performance",
 	    'rule_list' : ['CPU_usage','memory','disk_space'],
 		'rules' : [ 'CPU_usage','memory','disk_space'],
 		'stop_on_first_success' : False,
@@ -50,7 +52,8 @@ use_cases = {
 	},
 
 	#CPU conditional
-	'CPU_Conditional' : {
+	{
+        'name' : "CPU_Conditional",
 		'rule_list' : ['CPU_usage','memory','disk_space','rule1','rule2','rule3'],
 		'rules' : [
 			{
@@ -60,7 +63,7 @@ use_cases = {
 			},
 			{
 				'any' : {
-					2 :  ['CPU_usage','memory','disk_space']
+					'2' :  ['CPU_usage','memory','disk_space']
 				},
 				'then' : ['rule3'],
 				'else' : ['rule1']
@@ -86,7 +89,8 @@ use_cases = {
 	},
 
 	#CPU asynchronous
-	'CPU_Asynchronous' : {
+	{
+        'name' : "CPU_Asynchronous",
 		'rule_list' : ['CPU_usage','memory','disk_space'],
 		'rules' : [ ('CPU_usage',['memory','disk_space'])],
 		'stop_on_first_success' : False,
@@ -109,7 +113,8 @@ use_cases = {
 	},
 
 	#case 1
-	'case1' : {
+	{
+        'name' : "case1",
 		'rule_list' : ['rule1','rule2','rule3'],
 	    'rules' : [
 		    {
@@ -119,7 +124,7 @@ use_cases = {
 	        },
 	        {
 		        'any': {
-			        1 :['rule1','rule2','rule3'] 
+			        '1' :['rule1','rule2','rule3'] 
 			    },
 	            'then': ['rule3','rule2'],
 	            'else': None
@@ -145,7 +150,8 @@ use_cases = {
 	},
  
 	#case 2 
-	'case2' : {
+	{
+        'name' : "case2",
 	    'rule_list' : ['rule1','rule2','rule3'],
 		'rules' : [ ('rule1',['rule2','rule3'])],
 		'stop_on_first_success' : False,
@@ -168,7 +174,8 @@ use_cases = {
 	},
     
     #new case
-	'case3' : {
+	{
+        'name' : "case3",
 		'rule_list' : ['rule1','rule2','rule3'],
 		'rules' : ['rule1','rule2','rule3'],
 		'stop_on_first_success' : False,
@@ -189,10 +196,11 @@ use_cases = {
 		],
 		'actions' : ['condition_pass','condition_fail']
 	}
-}
-rules = { 
+]
+rules = [
 	# distance < dist_limit
-	'distance_check' : {
+	{
+        'name' : "distance_check",
 		"conditions" : {
 			'name' : ["distance","dist_limit"],
 			'operator' : 'less_than',
@@ -218,7 +226,8 @@ rules = {
 	},
 	
 	# cost < cost_limit
-	'cost_check' : {
+	{
+        'name' : "cost_check",
 		"conditions" : {
 			'name' : ["cost","cost_limit"],
 			'operator' : 'less_than',
@@ -242,8 +251,10 @@ rules = {
 		'variables' : ['cost','cost_limit'],
 		'multi_thread' : True
 	},
-	# CPU_usage <= 50% 
-	'CPU_usage' : {
+	
+    # CPU_usage <= 50% 
+	{
+        'name' : "CPU_usage",
 		"conditions" : { 			
 			'name' : ["CPU_usage"],
 			'operator': 'less_than',
@@ -269,7 +280,8 @@ rules = {
 	},
 
 	# memory <=60%
-	'memory' : {
+	{
+        'name' : "memory",
 		"conditions" : { 			
 			'name' : ["memory"],
 			'operator': 'less_than',
@@ -295,7 +307,8 @@ rules = {
 	},
 
 	# disk_space < 70%
-	'disk_space' : {
+	{
+        'name' : "disk_space",
 		"conditions" : { 			
 			'name' : ["disk_space"],
 			'operator': 'less_than',
@@ -321,7 +334,8 @@ rules = {
 	},
 
 	#(expected == actual and expected < 100) or actual > expected or correct < 10
-    'rule1' : { 
+    { 
+        'name' : "rule1",
 	    "conditions" : {
 		    'any' : [ 
 			    { 
@@ -370,7 +384,8 @@ rules = {
      	},
 
 	#(expected < actual and actual <  50 and correct < 10) or incorrect = 23
-	'rule2' :{ 
+	{ 
+        'name' : "rule2",
 		"conditions" : { 
 			'any' : [
 				{
@@ -419,7 +434,8 @@ rules = {
 	},
 
     #(expected = 70 or actual < 100 or correct < 10)
-	'rule3' :{ 
+	{ 
+        'name' : "rule3",
 		"conditions" : { 
 			'any': [
 				{
@@ -457,10 +473,10 @@ rules = {
 	    "actions" : ["condition_pass","condition_fail"],
 		'multi_thread' : True
 	}
-}
+]
 
-variables = {
-	'distance' : {
+variables = [
+	{
 		'name' : "distance",
 		'field' : "numeric_rule_variable",
 		'label' : 'None',
@@ -476,7 +492,7 @@ variables = {
        'multi_thread' : True
 	},
 
-	'dist_limit' : {
+	{
 		'name' : "dist_limit",
 		'field' : "numeric_rule_variable",
 		'label' : 'None',
@@ -492,7 +508,7 @@ variables = {
        'multi_thread' : True
 	},
 
-	'cost' : {
+	{
 		'name' : "cost",
 		'field' : "numeric_rule_variable",
 		'label' : 'None',
@@ -508,7 +524,7 @@ variables = {
        'multi_thread' : True
 	},
 
-	'cost_limit' : {
+	{
 		'name' : "cost_limit",
 		'field' : "numeric_rule_variable",
 		'label' : 'None',
@@ -524,7 +540,7 @@ variables = {
        'multi_thread' : True
 	},
 
-	'free_mem' : { #numeric
+	{ #numeric
 	    'name' : "free_mem",
 		'field' : "numeric_rule_variable",
 		'label' : 'None',
@@ -540,7 +556,7 @@ variables = {
        'multi_thread' : False
 	},
 
-	'total_mem' : { #numeric
+	{ #numeric
 	    'name' : "total_mem",
 		'field' : "numeric_rule_variable",
 		'label' : 'None',
@@ -556,7 +572,7 @@ variables = {
        'multi_thread' : False
 	},
 
-	'memory' : { #numeric
+	{ #numeric
 	    'name' : "memory",
 		'field' : "numeric_rule_variable",
 		'label' : 'None',
@@ -569,7 +585,7 @@ variables = {
         'multi_thread' : False
 	},
 
-	'CPU_usage' : { #numeric
+	{ #numeric
 	    'name' : "CPU_usage",
 		'field' : "numeric_rule_variable",
 		'label' : 'None',
@@ -585,7 +601,7 @@ variables = {
        'multi_thread' : True
 	},
 
-	'disk_space' : { #numeric
+	{ #numeric
 	    'name' : "disk_space",
 		'field' : "numeric_rule_variable",
 		'label' : 'None',
@@ -601,7 +617,7 @@ variables = {
        'multi_thread' : True
 	},
 
-	'actual' : { #actual numeric
+	{ #actual numeric
 	    'name' : "actual",
 		'field' : "numeric_rule_variable",
 		'label' : 'None',
@@ -617,7 +633,7 @@ variables = {
        'multi_thread' : True
 	},
 
-	'incorrect' : { #incorrect numeric
+	{ #incorrect numeric
 	    'name' : "incorrect",
 		'field' : "numeric_rule_variable",
 		'label' : 'None',
@@ -633,7 +649,7 @@ variables = {
        'multi_thread' : True
 	},
 
-	'expected' : { #expected numeric
+	{ #expected numeric
 		'name' : "expected",
 	    'field' : "numeric_rule_variable",
 	    'label' : 'None',
@@ -649,7 +665,7 @@ variables = {
 	    'multi_thread' : True
 	},
 
-	'correct' : {#correct numeric
+	{#correct numeric
 		 'name' : "correct",
 		 'field' : "numeric_rule_variable",
 		 'label' : 'None',
@@ -664,33 +680,34 @@ variables = {
 	     },
 	     'multi_thread' : True
  	}
-}
+]
 
-actions = {
-	"condition_pass" : { 
+actions = [
+	{ 
 		'name' : 'condition_pass',
 		'params' : {'name' : FIELD_TEXT, 'msg' : FIELD_TEXT},
 		'formulae' : "return {name : 'All conditions were met succesfully!', 'msg' : msg}",
 	},
-	"condition_fail" :{
+	{
 	    'name' : 'condition_fail',
 		'params' : {'name' : FIELD_TEXT, 'msg' : FIELD_TEXT},
 		'formulae' : "return {name : 'NOT all conditions were met!', 'msg' : msg}",
 	},
-	"Threshold_true" : { 
+	{ 
 		'name' : 'Threshold_true',
 		'params' : {'name' : FIELD_TEXT,"threshold" : FIELD_TEXT,'var': FIELD_TEXT},
 		'formulae' : "l=locals()\n\texec('var,t = self.product.' + var+','+threshold,globals(),l)\n\tt,var=l['t'],l['var']\n\treturn {name : name + ' under threshold(' + str(t) +') : '+ str(var)}",
 	},
-	"Threshold_false" :{
+	{
 	    'name' : 'Threshold_false',
 		'params' :{'name' : FIELD_TEXT,"threshold" : FIELD_TEXT,'var': FIELD_TEXT},
 		'formulae' : "l=locals()\n\texec('var,threshold = self.product.' + var+','+threshold,globals(),l)\n\tthreshold,var =l['threshold'],l['var']\n\treturn {name : name + ' NOT under threshold(' + str(threshold) +'): ' +  str(var)}",
 	},
-}
+]
 
-DataSource = {
-	"SSH_awsIntern" : {
+DataSource = [
+	{
+        'name' : "SSH_awsIntern",
 		'method' : 'SSH',
 		'host_name' : '10.137.89.13',
 		'user_name' : 'ubuntu',
@@ -699,7 +716,8 @@ DataSource = {
 		'variables' : [],
 		'multi_thread' : True
 	},
-	"API_getPostman" : {
+	{
+        'name' : "API_getPostman",
 		'method' : 'API',
 		'request' : 'get',
 		'url' : 'https://548a3990-a83e-4862-a950-cc252c905ce2.mock.pstmn.io/get',
@@ -707,7 +725,8 @@ DataSource = {
 		'variables' : [],
 		'multi_thread' : True
 	},
-	"API_postPostman" : {
+	{
+        'name' : "API_postPostman",
 		'method' : 'API',
 		'request' : 'post',
 		'url' : 'https://75c9507b-8f2e-4211-a518-2c2ab988c27d.mock.pstmn.io/post',
@@ -716,7 +735,8 @@ DataSource = {
 		'variables' : [],
 		'multi_thread' : True
 	},
-	"API_mapQuest" : {
+	{
+        'name' : "API_mapQuest",
 		'method' : 'API',
 		'request' : 'post',
 		'url' : 'http://www.mapquestapi.com/directions/v2/routematrix?key=1XpKHYmtfjhVKQhYAfpTfbjP8pz0d7Q4',
@@ -725,7 +745,8 @@ DataSource = {
 		'variables' : [],
 		'multi_thread' : True
 	},
-	"database_sqlRuleEngine" : {
+	{
+        'name' : "database_sqlRuleEngine",
 		'method' : 'data_base',
 		'host_name' : 'localhost',
 		'user_name' : 'root',
@@ -734,19 +755,16 @@ DataSource = {
 		'variables' : [],
 		'multi_thread' : True
 	}
-}
+]
 
-
-with open("./configuration_files/use_cases.yml", 'w') as f:
-    yaml.dump(use_cases, f)
-with open("./configuration_files/rules.yml", 'w') as f:
-    yaml.dump(rules, f)
-with open("./configuration_files/variables.yml", 'w') as f:
-    yaml.dump(variables, f)
-with open("./configuration_files/actions.yml", 'w') as f:
-    yaml.dump(actions, f)
-with open("./configuration_files/DataSource.yml", 'w') as f:
-    yaml.dump(DataSource, f)
+myclient = MongoClient("localhost",27017)
+myclient.drop_database("rules_engine")
+mydb = myclient["rules_engine"]
+mydb["use_cases"].insert_many(use_cases)
+mydb["rules"].insert_many(rules)
+mydb["variables"].insert_many(variables)
+mydb["actions"].insert_many(actions)
+mydb["DataSource"].insert_many(DataSource)
 
 
 """

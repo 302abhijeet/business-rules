@@ -5,9 +5,9 @@ from business_rules.variables import *
 from business_rules.actions import *
 from business_rules.best_case import *
 from datetime import datetime
+from pymongo import MongoClient
 import business_rules.collector as collector
 import weakref
-import yaml
 import threading
 import logging
 import xml.etree.ElementTree as ET
@@ -34,7 +34,7 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
     global root 
     global logger
     file_name =(run_rule or case)+"_"+str(datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
-    logging.basicConfig(filename="./logs/"+file_name+".log",format='%(asctime)s %(levelname)s %(message)s',filemode='w')
+    logging.basicConfig(filename="./logs/"+file_name+".log",format='Module:%(module)s Function:%(funcName)s Line:%(lineno)d %(levelname)s %(message)s',filemode='w')
     logger = logging.getLogger()
     logger.setLevel(20)
     root = ET.Element("Rules_engine")
@@ -77,10 +77,12 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
                     if rules[rule]['multi_thread']:
                         try:
                             if not run(rule = rules[rule],defined_variables = ProductVariables(product),defined_actions = ProductActions(product)) :
+                                history.update_one({"name": case['name'],"type":"use_case"},{"$inc":{rule+".failed":1}},upsert=True)
                                 logger.info("Rule: {} returned false".format(rule))
                                 ET.SubElement(rules_report,rule).text = str("Rule returned false!")
                                 passed = False
                             else:
+                                history.update_one({"name": case['name'],"type":"use_case"},{"$inc":{rule+".passed":1}},upsert=True)
                                 logger.info("Rule: {} returned true".format(rule))
                                 ET.SubElement(rules_report,rule).text = str("Rule returned true!")
                         except Exception as e:
@@ -145,6 +147,7 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
                     continue
                 try:
                     if run(rule = rules[rule],defined_variables = ProductVariables(product),defined_actions = ProductActions(product)) :
+                        history.update_one({"name": case['name'],"type":"use_case"},{"$inc":{rule+".passed":1}},upsert=True)
                         logger.info("Rule: {} returned true".format(rule))
                         ET.SubElement(rules_report,rule).text = str("Rule returned true!")
 
@@ -152,6 +155,7 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
                         if stop_on_first_success:
                             return all_pass
                     else :
+                        history.update_one({"name": case['name'],"type":"use_case"},{"$inc":{rule+".failed":1}},upsert=True)
                         logger.info("Rule: {} returned false".format(rule))
                         ET.SubElement(rules_report,rule).text = str("Rule returned false!")
                         all_pass = False
@@ -215,7 +219,7 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
                 ET.SubElement(rules_report,"Dictionary").text = str("All conditions were NOT satisfied: {}!Running all else rules: {}".format(dicts['all'],dicts['else']))
                 return run_rules_list(dicts['else'])
         elif 'any' in dicts:
-            if run_rules_list(dicts['any'][list(dicts['any'].keys())[0]],pass_param = list(dicts['any'].keys())[0]):
+            if run_rules_list(dicts['any'][list(dicts['any'].keys())[0]],pass_param = int(list(dicts['any'].keys())[0])):
                 logger.info("Any condition was satisfied: {}!Running all then rules: {}".format(dicts['any'],dicts['then']))
                 ET.SubElement(rules_report,"Dictionary").text = str("Any condition was satisfied: {}!Running all then rules: {}".format(dicts['any'],dicts['then']))
                 return run_rules_list(dicts['then'])
@@ -224,35 +228,34 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
                 ET.SubElement(rules_report,"Dictionary").text = str("Any condition was satisfied: {}!Running all else rules: {}".format(dicts['any'],dicts['else']))
                 return run_rules_list(dicts['else'])
 
-    #import use cases,rules,variables and actions
-    with open("./business_rules/configuration_files/use_cases.yml", 'r') as f:
-        logger.info("Importing use_cases.yml")
-        use_cases = yaml.load(f, Loader=yaml.FullLoader)
-    with open("./business_rules/configuration_files/rules.yml", 'r') as f:
-        logger.info("Importing rules.yml")
-        rules = yaml.load(f, Loader=yaml.FullLoader)
-    with open("./business_rules/configuration_files/variables.yml", 'r') as f:
-        logger.info("Importing variables.yml")
-        variables = yaml.load( f, Loader=yaml.FullLoader)
-    with open("./business_rules/configuration_files/actions.yml", 'r') as f:
-        logger.info("Importing actions.yml")
-        actions = yaml.load( f, Loader=yaml.FullLoader)
-    with open("./business_rules/configuration_files/DataSource.yml", 'r') as f:
-        logger.info("Importing DataSource.yml")
-        DataSource = yaml.load( f, Loader=yaml.FullLoader)
+
+    #Connect to configuraion database
+    global database
+    database = "rules_engine"
+    mydb = MongoClient("localhost",27017)[database]
+    rules = {}
+    variables = {}
+    actions = {}
+    DataSource = {}
+    history = mydb["history"]
 
     #check if use_case and run_rule defined in config
-    if case and case in use_cases:
-        logger.info("Use_case created")
-        case = use_cases[case]
-    elif case:
-        logger.critical("Case not defined in config")
-        ET.SubElement(error,'NameError').text = str("Case: " + case +" not defined in config!")
-        raise NameError(_write_to_xml(root))
-    if run_rule and run_rule not in rules:
-        logger.critical("Rule not defined in config")
-        ET.SubElement(error,'NameError').text = str("Rule: " + case +" not defined in config!")
-        raise NameError(_write_to_xml(root))
+    if case:
+        case = mydb["use_cases"].find_one({"name":case},{"_id":0})
+        if case:
+            logger.info("Use_case fetched from database")
+        else:
+            logger.critical("Case not defined in config")
+            ET.SubElement(error,'NameError').text = str("Case: " + case +" not defined in config!")
+            raise NameError(_write_to_xml(root))
+    if run_rule:
+        run_rule = mydb["rules"].find_one({"name":run_rule},{"_id":0})
+        if run_rule:
+            logger.info("Run_Rule fetched from database")
+        else:
+            logger.critical("Rule not defined in config")
+            ET.SubElement(error,'NameError').text = str("Rule: " + case +" not defined in config!")
+            raise NameError(_write_to_xml(root))
 
 
 
@@ -273,7 +276,6 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
     kill_rule = []    #variable for storing rules to be killed
 
     #import prodcut variables from UI
-    variables_list = []
     derived_variables = []
     source_variables_list = []
     extra_variables = []
@@ -297,10 +299,14 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
 
     #Prepare list of variable needed for rules
     if run_rule :
-        for var in rules[run_rule]['variables']:
+        for var in run_rule['variables']:
             logger.info("adding variable: "+var)
-            variables_list.append(variables[var])
+            variables[var] = mydb["variables"].find_one({"name":var},{"_id":0})
             if var in parameter_variables:
+                if variables[var]["input_method"]["method"] == "derived":
+                    logger.info("Parameter_variable: {} was derived! Changed to value given!".format(var))
+                    ET.SubElement(warning,'RuntimeError').text = "Parameter_variable: {} was derived! Changed to value given!".format(var)
+                    variables[var]["formulae"] = "self.product."+var
                 logger.info("Variable: {} in parameter_variables".format(var))
                 if var in source_variables_list:
                     logger.warning("Variable: "+var+" declared in parameters as well as given a source by user!Source selected")
@@ -308,7 +314,10 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
                 continue
             if var not in source_variables_list:
                 if "DataSource" in variables[var]["input_method"]:
-                    DataSource[variables[var]["input_method"]["DataSource"]]["variables"].append(var)
+                    source_name = variables[var]["input_method"]["DataSource"]
+                    if source_name not in DataSource:
+                        DataSource[source_name] = mydb["DataSource"].find_one({"name":source_name},{"_id":0})
+                    DataSource[source_name]["variables"].append(var)
                 else:
                     derived_variables.append(var)
             else :
@@ -316,13 +325,14 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
                 source_variables_list.remove(var)
     else :
         for rule in case['rule_list'] :
+            rules[rule] = mydb["rules"].find_one({"name":rule},{"_id":0})
             logger.info("Adding rule: {} variables".format(rule))
             for var in rules[rule]['variables'] :
                 logger.info("Adding variable: {} ".format(var))
-                if variables[var] in variables_list:
+                if var in variables:
                     logger.info("Variable: {} already in list".format(var))
                     continue
-                variables_list.append(variables[var])
+                variables[var] = mydb["variables"].find_one({"name":var},{"_id":0})
                 if var in parameter_variables:
                     logger.info("Variable: {} in parameter_variables".format(var))
                     if var in source_variables_list:
@@ -331,7 +341,11 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
                     continue
                 if var not in source_variables_list:
                     if "DataSource" in variables[var]["input_method"]:
-                        DataSource[variables[var]["input_method"]["DataSource"]]["variables"].append(var)
+                        source_name = variables[var]["input_method"]["DataSource"]
+                        logger.info("Adding Variable: {} to DataSource: {}".format(var,source_name))
+                        if source_name not in DataSource:
+                            DataSource[source_name] = mydb["DataSource"].find_one({"name":source_name},{"_id":0})
+                        DataSource[source_name]["variables"].append(var)
                     else:
                         derived_variables.append(var)
                 else :
@@ -383,13 +397,14 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
             """
             self.product = product
 
-        for var in variables_list :
+        for var in variables :
+            var = variables[var]
             try:
                 if var['options'] == 'None' :
                     exec("@" + var['field'] + "(" + var['label'] + ")" + """\ndef """ + var['name'] + """(self): \n\t""" + var['formulae'] + """\n\treturn self.product.""" + var['name'])
                 else :
                     exec("@" + var['field'] + "(" + var['label'] + "," + var['options'] + """)\ndef """ + var['name'] + """(self):\n\t""" + var['formulae'] + """\n\treturn self.product.""" + var['name'])
-                logger.info("Product Vriable: {} has been created!".format(var['name']))
+                logger.info("Product Variable: {} has been created!".format(var['name']))
             except Exception as e:
                 if run_rule:
                     logger.error("Product Variable: " + var['name'] + " could not be defined hence rule:" + run_rule + " cannot run!Error: {}".format(e))
@@ -406,26 +421,26 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
             exec("logger.info('Variable: {} has been created!Value: {}!Source: Derived'.format(var,ProductVariables(product)."+var+"()))\nET.SubElement(collector.var_report,var, source = 'Derived').text = str(ProductVariables(product)."+var+"())")
     except:
         pass
+
     #import product actions from UI
-    actions_list = []
     if run_rule :
-        for act in rules[run_rule]['actions'] :
+        for act in run_rule['actions'] :
             logger.info("Adding action : {} to list!".format(act))
-            actions_list.append(actions[act])
+            actions[act] = mydb["actions"].find_one({"name":act},{"_id":0})
     else :
         for act in case["actions"]:
             logger.info("Adding action : {} to list!".format(act))
-            if actions[act] in actions_list:
+            if act in actions:
                 logger.info("Action : {} already in list!".format(act))
                 continue
-            actions_list.append(actions[act])
+            actions[act] = mydb["actions"].find_one({"name":act},{"_id":0})
         for rule in case['rule_list'] :
             for act in rules[rule]['actions'] :
                 logger.info("Adding action : {} to list!".format(act))
-                if actions[act] in actions_list:
+                if act in actions:
                     logger.info("Action : {} already in list!".format(act))
                     continue
-                actions_list.append(actions[act])
+                actions[act] = mydb["actions"].find_one({"name":act},{"_id":0})
 
 
     #Create ruleActions
@@ -439,7 +454,8 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
             """
             self.product = product
 
-        for act in actions_list : 
+        for act in actions : 
+            act = actions[act]
             try:
                 li = []
                 if act['params'] :
@@ -469,18 +485,27 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
 
 
     #run rules
+    case_report= ET.SubElement(root,"Case_Report")
     try :
         if run_rule:
-            if run(rule = rules[run_rule], defined_variables = ProductVariables(product), defined_actions = ProductActions(product)):
+            if run(rule = run_rule, defined_variables = ProductVariables(product), defined_actions = ProductActions(product)):
+                history.update_one({"name": run_rule['name'],"type":"rule"},{"$inc":{"passed":1}},upsert=True)
                 logger.info("Rule has retuned true!")
                 ET.SubElement(rules_report,run_rule).text = str("Rule has returned true!")
             else:
+                history.update_one({"name": run_rule,"type":"rule"},{"$inc":{"failed":1}},upsert=True)
                 logger.info("Rule has retuned false!")
                 ET.SubElement(rules_report,run_rule).text = str("Rule has returned false!")
         else :
             if run_rules_list(case['rules'],stop_on_first_success=case["stop_on_first_success"],stop_on_first_failure = case["stop_on_first_failure"]) :
+                history.update_one({"name": case['name'],"type":"use_case"},{"$inc":{"passed":1}},upsert=True)
+                logger.info("Case has retuned true!")
+                ET.SubElement(case_report,run_rule).text = str("Case has returned true!")
                 do_actions(case["actions_true"], defined_actions = ProductActions(product))
             else :
+                history.update_one({"name": case['name'],"type":"use_case"},{"$inc":{"failed":1}},upsert=True)
+                logger.info("Case has retuned false!")
+                ET.SubElement(case_report,run_rule).text = str("Case has returned false!")
                 do_actions(case["actions_false"], defined_actions = ProductActions(product))
     except Exception as e:
         logger.critical("Couldn't run rules on engine!Error: {}".format(e))

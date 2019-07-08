@@ -5,6 +5,7 @@ import business_rules.data_base as data_base
 import threading
 import business_rules.API as API
 import xml.etree.ElementTree as ET
+from pymongo import MongoClient
 
 kill_variable = []
 var_report = None
@@ -54,6 +55,8 @@ class Collector:
                 API.logger.error("source method: {} not found!".format(source['method']))
                 raise NameError("source method: "+source['method']+" not found!")
             API.logger.info("Source: {} fetched variables: {}".format(source,result))
+            mydb = MongoClient("localhost",27017)[API.database]
+            mydb["cache"].update_one({"name":source['name']},{"$set":{"result":result}},upsert=True)
         except Exception as e:
             API.logger.error("Unable to connect to source host: {}! Rules with variables in source will not run: {}! Error: {}".format(source,source["variables"],e))
             ET.SubElement(API.root[0],"RuntimeError").text = str("Unable to connect to source host: {}! Rules with variables in source will not run: {}! Error: {}".format(source,source["variables"],e))
