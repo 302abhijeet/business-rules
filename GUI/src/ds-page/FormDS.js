@@ -104,7 +104,6 @@ class FormDsSSH extends Component{
 
         return(
             <React.Fragment>
-                <form>
                     User name:
                     <input type='text' name='user_name' onChange={this.props.handleInfoChange} /><br />
                     Host name:
@@ -113,7 +112,24 @@ class FormDsSSH extends Component{
                     <input type='password' name='password' onChange={this.props.handleInfoChange} /><br />
                     Key File Location:
                     <input type='text' name='key_filename' onChange={this.props.handleInfoChange} /><br />
-                </form>
+            </React.Fragment>
+        )
+    }
+}
+
+class FormDsDB extends Component{
+    render(){
+        return(
+            <React.Fragment>
+                    User name:
+                    <input type='text' name='user_name' onChange={this.props.handleInfoChange} /><br />
+                    Host name:
+                    <input type='text' name='host_name' onChange={this.props.handleInfoChange} /><br />
+                    Password:
+                    <input type='password' name='password' onChange={this.props.handleInfoChange} /><br />
+                    Database:
+                    <input type='text' name='data_base' onChange={this.props.handleInfoChange} /><br />
+
             </React.Fragment>
         )
     }
@@ -127,7 +143,7 @@ class FormDsAPI extends Component{
     }
     
     handleReqTypeChange = event =>{
-        if(event.target.name === 'get')
+        //if(event.target.name === 'get')
         this.setState({ [event.target.name]: event.target.value})
         this.props.handleInfoChange(event)
     }
@@ -139,11 +155,11 @@ class FormDsAPI extends Component{
 
     render(){
         const request_type = this.state.request
-
+        console.log(request_type)
         const style = request_type === 'get'? {display:'none'}:{}
         return(
             <React.Fragment>
-                <form>
+                
                     Request Type:
                     <select onChange={this.handleReqTypeChange} name='request'>
                         <option  value='post'>Post</option>
@@ -161,28 +177,9 @@ class FormDsAPI extends Component{
                         Data:
                         <input type='textarea' name='data' onChange={this.props.handleReqTypeChange} />
                     </div>
-                </form>
             </React.Fragment>
         )
     }
 }
 
-class FormDsDB extends Component{
-    render(){
-        return(
-            <React.Fragment>
-                <form>
-                    User name:
-                    <input type='text' name='user_name' onChange={this.props.handleInfoChange} /><br />
-                    Host name:
-                    <input type='text' name='host_name' onChange={this.props.handleInfoChange} /><br />
-                    Password:
-                    <input type='password' name='password' onChange={this.props.handleInfoChange} /><br />
-                    Database:
-                    <input type='text' name='data_base' onChange={this.props.handleInfoChange} /><br />
 
-                </form>
-            </React.Fragment>
-        )
-    }
-}

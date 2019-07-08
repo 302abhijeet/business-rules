@@ -10,7 +10,7 @@ import Rule from './rule-page/Rule'
 import UseCase from './uc-page/UseCase'
 import Action from './action-page/Action'
 import Variable from './var-page/Variable'
-import DataSource from './ds-page/DataSource'
+import DataSource from './datas-page/DataSource'
 import Error from './Error'
 
 
