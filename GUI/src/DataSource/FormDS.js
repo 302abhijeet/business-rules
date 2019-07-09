@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import {Form,Row, Col,Button} from 'react-bootstrap'
-import {Link} from 'react-router-dom'
+import {Form,Row, Col,Button,ButtonGroup,ToggleButton} from 'react-bootstrap'
+
 export class FormDS extends Component {
     
     state = {
@@ -8,12 +8,13 @@ export class FormDS extends Component {
         method:'',
         info:{
             host_name:'',
-                    user_name:'',
-                    password:null,
-                    key_filename:''
+            user_name:'',
+            password:'',
+            key_filename:''
         },
         variables:[],
-        multi_thread:true
+        multi_thread:true,
+        read:this.props.readOnly
     }
     
     componentWillMount =()=>{
@@ -42,6 +43,8 @@ export class FormDS extends Component {
                     this.setState({info})
                 }
     }}
+    
+
     componentWillReceiveProps= (nextProps)=>{
         
         if(nextProps!==this.props && nextProps.cat !== 'add'){
@@ -82,7 +85,7 @@ export class FormDS extends Component {
                 info:{
                     host_name:'',
                     user_name:'',
-                    password:null,
+                    password:'',
                     key_filename:''
                 }
             })
@@ -93,7 +96,7 @@ export class FormDS extends Component {
                     request:'',
                     url:'',
                     params:{},
-                    data:''
+                    data:{}
                 }
             })
         }
@@ -102,11 +105,23 @@ export class FormDS extends Component {
                 info:{
                     host_name:'',
                     user_name:'',
-                    password:null,
+                    password:'',
                     data_base:''
                 }
             })
         }
+    }
+
+    changeDataParams = (newData,id) =>{
+        let information = this.state.info
+        if(id==='Parameter')
+            id = 'params'
+        if(id === 'Data')
+            id='data'
+        console.log(id)
+        information[id] = newData
+        console.log(information)
+        this.setState({info:information})
     }
 
     changeState = event =>{
@@ -116,19 +131,37 @@ export class FormDS extends Component {
     changeInfoState = event =>{
         let information = this.state.info
         information[event.target.name] = event.target.value
-        console.log(information)
         this.setState({info:information})
     }
     
-    
+    changeCheck = event =>{
+        this.setState({[event.target.name]: !this.state.multi_thread})
+    }
+
+    submitData = (e) =>{
+        e.preventDefault()
+        const st = this.state
+        delete st['read']
+        const name = st['name']
+        delete st['name']
+        const newOb = {
+            [name]: st
+        }
+        this.props.addNewData('data_sources',newOb)
+    }
+    changeReadMode = ()=>{
+        const prev = this.state.read
+        this.setState({read:!prev})
+    }
+
     render() {
         let displaySubForm
             if(this.state.method === 'SSH'){
-                 displaySubForm =  <FormDSSSH changeInfoState={this.changeInfoState} readOnly={this.props.readOnly} values = {this.state.info} />
+                 displaySubForm =  <FormDSSSH changeInfoState={this.changeInfoState} readOnly={this.state.read} values = {this.state.info} />
             }else if(this.state.method === 'data_base'){
-                 displaySubForm = <FormDSDB changeInfoState={this.changeInfoState} readOnly={this.props.readOnly} values = {this.state.info}/>
+                 displaySubForm = <FormDSDB changeInfoState={this.changeInfoState} readOnly={this.state.read} values = {this.state.info}/>
             }else if(this.state.method === 'API'){
-                displaySubForm = <FormDSAPI changeInfoState={this.changeInfoState} readOnly={this.props.readOnly} values = {this.state.info}/>
+                displaySubForm = <FormDSAPI changeInfoState={this.changeInfoState} readOnly={this.state.read} values = {this.state.info} changeDataParams={this.changeDataParams}/>
             }
             
         
@@ -140,11 +173,11 @@ export class FormDS extends Component {
                 {
                     this.props.cat ==='add' ? <h1>Add new Data Source</h1> : <h1>{this.props.cat} Data Source</h1>
                 }
-                <Form>
+                <Form onSubmit={this.submitData}>
                     <Form.Group as={Row} controlId='name'>
                         <Form.Label column sm={3}>Name</Form.Label>
                         <Col sm={9}>
-                            <Form.Control type='text' name='name' onChange={this.changeState} readOnly={this.props.readOnly} value={this.state.name} />
+                            <Form.Control type='text' name='name' onChange={this.changeState} readOnly={this.state.read} value={this.state.name} />
                         </Col>
                     </Form.Group>
                     
@@ -152,7 +185,7 @@ export class FormDS extends Component {
                     <Form.Group as={Row} controlId='method'>
                         <Form.Label column sm={3}>Method</Form.Label>
                         <Col sm={9}>
-                            <Form.Control as='select' name='method' onChange={this.changeSelectState} disabled={this.props.readOnly} value={this.state.method}>
+                            <Form.Control as='select' name='method' onChange={this.changeSelectState} disabled={this.state.read} value={this.state.method}>
                                 <option value='SSH'>SSH</option>
                                 <option value='data_base'>Database</option>
                                 <option value='API'>API</option>
@@ -164,7 +197,13 @@ export class FormDS extends Component {
                    
                     {displaySubForm}
 
+                    <Form.Group as={Row} controlId="formBasicChecbox">
+                        <Form.Label column sm={3}>Multithread</Form.Label>
+                        <Form.Check type="checkbox" name='multi_thread' disabled={this.state.read} value={this.state.multi_thread} onChange={this.changeCheck}/>
+                    </Form.Group>
 
+                    <Button type = 'submit' variant='outline-success' disabled={this.state.read}>Submit</Button>
+                    <Button name='modify' variant='outline-secondary' disabled={!this.state.read} onClick={this.changeReadMode}>Modify</Button>
                 </Form>
 
             </React.Fragment>
@@ -258,7 +297,7 @@ export class FormDSAPI extends Component {
         let displayData= ''
         const {params,data} = this.props.values
         if(this.props.values.request === 'post')
-            displayData =  <FormDSAPIhelper id='data' />
+            displayData =  <FormDSAPIhelper id='Data' data={data} onChange={this.props.changeInfoState} readOnly= {this.props.readOnly} changeDataParams={this.props.changeDataParams}/>
         return (
             <React.Fragment>
 
@@ -280,7 +319,7 @@ export class FormDSAPI extends Component {
                     </Form.Group>
                     {displayData}
 
-                
+                    <FormDSAPIhelper id='Parameter' data={params} onChange={this.props.changeInfoState} readOnly= {this.props.readOnly} changeDataParams={this.props.changeDataParams}/>
                 
             
             
@@ -294,21 +333,85 @@ export class FormDSAPI extends Component {
 
 
 export class FormDSAPIhelper extends Component {
+    
+    newVal = React.createRef()
+    newKey = React.createRef()
+    
     state = {}
     componentWillMount=()=>{
-        if(this.props.datas!=null || this.props.datas!==undefined){
-            this.setState({state:this.props.datas})
+        if(this.props.datas!==null || this.props.datas!==undefined){
+            this.setState(this.props.data)
         }
     }
+
     addNewData = ()=>{
-        //start here
+        console.log('newData')
+        const st = this.state
+        const newState = {...st,
+            [this.newKey.current.value]:this.newVal.current.value
+        }
+        this.setState(newState)
+        this.newKey.current.value=''
+        this.newVal.current.value=''
+        this.props.changeDataParams(newState,this.props.id)
     }
+
+    deleteData = (e)=>{
+       
+        const st = this.state
+        delete st[e]
+        this.setState(st)
+        this.props.changeDataParams(st,this.props.id)
+    }
+
     render() {
-        const {id} =this.props
+        const {id,readOnly,data} =this.props
         return (
             <React.Fragment>
                 <Form.Group controlId={id}>
-                    <Form.Label><Button variant = 'outline-dark' onClick={this.addNewData}>Add new {id}</Button></Form.Label>
+                    <Row>
+                        <Col sm={3}><Form.Label>{id}</Form.Label></Col>
+                        <Col sm={9}>
+                            {
+                                Object.keys(this.state).map(ele => {
+                                    return(
+                                        <Row>
+                                            <Col>                 
+                                                <Form.Control type='text' name={ele} onChange={this.props.changeInfoState} readOnly={true} value={ele}/>
+
+                                            </Col>
+                                            <Col>                                        
+                                                <Form.Control type='text' name={this.state[ele]} onChange={this.props.changeInfoState} readOnly={true} value={this.state[ele]}/>
+                                            </Col>
+                                            <Col>
+                                                <Button variant='outline-danger' name={ele} disabled={readOnly} onClick={()=>this.deleteData(ele)}>Delete</Button>
+                                            </Col>
+                                        </Row>
+                                    )
+                                })
+                            }
+
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={3}>
+                            <Form.Label><Button variant = 'outline-dark' onClick={this.addNewData} disabled={readOnly}>Add new {id}</Button></Form.Label>
+
+                        </Col>
+                        <Col><Row> 
+                        <Col>               
+                            <Form.Control type='text' name='newKey' onChange={this.props.changeInfoState} readOnly={readOnly} ref={this.newKey} />
+
+                            </Col>
+                            <Col>                                        
+                                <Form.Control type='text' name='newVal' onChange={this.props.changeInfoState} readOnly={readOnly} ref={this.newVal}/>
+                            </Col>
+                            <Col></Col>
+                            </Row>
+                        </Col>
+                        
+                    
+                    </Row>
                     
                 </Form.Group>
             </React.Fragment>

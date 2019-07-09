@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { objectTypeAnnotation } from '@babel/types';
+import {Redirect} from 'react-router-dom'
 
 const Context = React.createContext()
 
@@ -12,6 +14,27 @@ export  class Provider extends Component {
         actions:null,
         data_sources:null,
         use_cases:null
+
+    }
+
+    addNewData = (ty,newOb)=>{
+        const st = this.state[ty]
+        const key = Object.keys(newOb)[0]
+        st[key] = newOb[key]
+        for(let k in newOb[key]['info']){
+            st[key][k] = newOb[key]['info'][k]
+            newOb[key][k] = newOb[key]['info'][k]
+        }
+        delete st[key]['info']
+        delete newOb[key]['info']
+        let li
+        if(ty==='data_sources')
+            li = 'datasource'
+        
+        axios.post(`http://127.0.0.1:5000/add/${li}`,newOb)
+        Redirect('/DataSource/index')
+        this.setState({[ty]:st})
+        
 
     }
     
@@ -58,7 +81,7 @@ export  class Provider extends Component {
     render() {
         return (
             <div>
-                <Context.Provider value = {this.state}>
+                <Context.Provider value = {{ value:this.state, addNewData:this.addNewData}} >
                     {this.props.children}    
                 </Context.Provider>       
             </div>
