@@ -318,6 +318,8 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
                     if source_name not in DataSource:
                         DataSource[source_name] = mydb["DataSource"].find_one({"name":source_name},{"_id":0})
                     DataSource[source_name]["variables"].append(var)
+                    if not variables[var]["cache"]:
+                        DataSource[source_name]["cache"] = False
                 else:
                     derived_variables.append(var)
             else :
@@ -346,6 +348,8 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
                         if source_name not in DataSource:
                             DataSource[source_name] = mydb["DataSource"].find_one({"name":source_name},{"_id":0})
                         DataSource[source_name]["variables"].append(var)
+                        if not variables[var]["cache"]:
+                            DataSource[source_name]["cache"] = False
                     else:
                         derived_variables.append(var)
                 else :

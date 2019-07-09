@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+	<Rules_engine>
+		<Errors/>
+		<Warning>
+			<RuntimeError>Unable to connect to source host: SSH_awsIntern! Source variables in source will be taken from cache: ['free_mem', 'total_mem', 'expected']! Error: source method: SSHi not found!</RuntimeError>
+		</Warning>
+		<Rules_status>
+			<CPU_usage>Rule returned false!</CPU_usage>
+			<memory>Rule returned false!</memory>
+			<disk_space>Rule returned true!</disk_space>
+			<Dictionary>All conditions were NOT satisfied: ['CPU_usage', 'memory', 'disk_space']!Running all else rules: ['rule2']</Dictionary>
+			<rule2>Rule returned false!</rule2>
+			<CPU_usage>Rule returned false!</CPU_usage>
+			<memory>Rule returned false!</memory>
+			<disk_space>Rule returned true!</disk_space>
+			<Dictionary>Any condition was satisfied: {'2': ['CPU_usage', 'memory', 'disk_space']}!Running all else rules: ['rule1']</Dictionary>
+			<rule1>Rule returned true!</rule1>
+		</Rules_status>
+		<Variables>
+			<free_mem source="SSH_awsIntern">         1397296 </free_mem>
+			<total_mem source="SSH_awsIntern">        4044880 </total_mem>
+			<expected source="SSH_awsIntern">104
+</expected>
+			<correct source="database_sqlRuleEngine">5</correct>
+			<CPU_usage source="API_getPostman">78</CPU_usage>
+			<actual source="API_getPostman">78</actual>
+			<disk_space source="API_postPostman">33</disk_space>
+			<incorrect source="API_postPostman">33</incorrect>
+			<memory source="Derived">65.45519273748542</memory>
+		</Variables>
+		<Case_Report>Case has returned false!</Case_Report>
+	</Rules_engine>
