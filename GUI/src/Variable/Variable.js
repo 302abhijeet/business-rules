@@ -11,10 +11,11 @@ export class Variable extends Component {
             <Consumer>
                 {value=>{
                     const {cat} = this.props
-                    const {data_sources,variables} = value
+                    const {data_sources,variables} = value.value
                     if( variables === null || variables===undefined){
                         return(<Spinner animation="border" role="status">
                         <span className="sr-only">Loading...</span>
+
                       </Spinner>)
                     }else{
                         if(cat === 'index'){
