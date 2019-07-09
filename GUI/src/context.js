@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { objectTypeAnnotation } from '@babel/types';
+import { objectTypeAnnotation, throwStatement } from '@babel/types';
 import {Redirect} from 'react-router-dom'
 
 const Context = React.createContext()
@@ -15,6 +15,25 @@ export  class Provider extends Component {
         data_sources:null,
         use_cases:null
 
+    }
+
+    addData = (ty,newOb) =>{
+        console.log(newOb)
+        axios.post(`http://127.0.0.1:5000/add/${ty}`,newOb)
+        this.setState({
+            [ty]:[...this.state[ty],newOb]
+        })
+        this.forceUpdate()
+    }
+
+    modifyData = (ty,newOb)=>{
+        axios.post(`http://127.0.0.1:5000/add/${ty}`,newOb)
+        const datas = this.state[ty]
+        datas.forEach(element => {
+            if(element['name']===newOb['name']){
+                element = newOb
+            }    
+        })
     }
 
     addNewData = (ty,newOb)=>{
@@ -81,7 +100,7 @@ export  class Provider extends Component {
     render() {
         return (
             <div>
-                <Context.Provider value = {{ value:this.state, addNewData:this.addNewData}} >
+                <Context.Provider value = {{ value:this.state, addNewData:this.addNewData,addData:this.addData,modifyData:this.modifyData}} >
                     {this.props.children}    
                 </Context.Provider>       
             </div>

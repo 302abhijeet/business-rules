@@ -1,14 +1,14 @@
-Threshold_false:
-  formulae: "l=locals()\n\texec('var,threshold = self.product.' + var+','+threshold,globals(),l)\n\
-    \tthreshold,var =l['threshold'],l['var']\n\treturn {name : name + ' NOT under\
-    \ threshold(' + str(threshold) +'): ' +  str(var)}"
-  name: Threshold_false
+- formulae: 'return {name : ''All conditions were met succesfully!'', ''msg'' : msg}'
+  name: condition_pass
   params:
+    msg: text
     name: text
-    threshold: text
-    var: text
-Threshold_true:
-  formulae: "l=locals()\n\texec('var,t = self.product.' + var+','+threshold,globals(),l)\n\
+- formulae: 'return {name : ''NOT all conditions were met!'', ''msg'' : msg}'
+  name: condition_fail
+  params:
+    msg: text
+    name: text
+- formulae: "l=locals()\n\texec('var,t = self.product.' + var+','+threshold,globals(),l)\n\
     \tt,var=l['t'],l['var']\n\treturn {name : name + ' under threshold(' + str(t)\
     \ +') : '+ str(var)}"
   name: Threshold_true
@@ -16,15 +16,11 @@ Threshold_true:
     name: text
     threshold: text
     var: text
-condition_fail:
-  formulae: 'return {name : ''NOT all conditions were met!'', ''msg'' : msg}'
-  name: condition_fail
+- formulae: "l=locals()\n\texec('var,threshold = self.product.' + var+','+threshold,globals(),l)\n\
+    \tthreshold,var =l['threshold'],l['var']\n\treturn {name : name + ' NOT under\
+    \ threshold(' + str(threshold) +'): ' +  str(var)}"
+  name: Threshold_false
   params:
-    msg: text
     name: text
-condition_pass:
-  formulae: 'return {name : ''All conditions were met succesfully!'', ''msg'' : msg}'
-  name: condition_pass
-  params:
-    msg: text
-    name: text
+    threshold: text
+    var: text

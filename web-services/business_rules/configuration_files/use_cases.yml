@@ -1,5 +1,28 @@
-CPU_Asynchronous:
-  actions:
+- actions:
+  - condition_pass
+  - condition_fail
+  actions_false:
+  - multi_thread: true
+    name: condition_fail
+    params:
+      msg: Restraunt does NOT meet all requirements!
+      name: restraunt_case
+  actions_true:
+  - multi_thread: true
+    name: condition_pass
+    params:
+      msg: Restraunt meets all requirements!
+      name: restraunt_case
+  name: restraunt
+  rule_list:
+  - distance_check
+  - cost_check
+  rules:
+  - distance_check
+  - cost_check
+  stop_on_first_failure: true
+  stop_on_first_success: false
+- actions:
   - condition_pass
   - condition_fail
   actions_false:
@@ -14,19 +37,18 @@ CPU_Asynchronous:
     params:
       msg: CPU meets all requirements!
       name: CPU_case
+  name: CPU_Performance
   rule_list:
   - CPU_usage
   - memory
   - disk_space
   rules:
-  - !!python/tuple
-    - CPU_usage
-    - - memory
-      - disk_space
+  - CPU_usage
+  - memory
+  - disk_space
   stop_on_first_failure: false
   stop_on_first_success: false
-CPU_Conditional:
-  actions:
+- actions:
   - condition_pass
   - condition_fail
   actions_false:
@@ -41,6 +63,7 @@ CPU_Conditional:
     params:
       msg: CPU meets all requirements!
       name: CPU_case
+  name: CPU_Conditional
   rule_list:
   - CPU_usage
   - memory
@@ -57,7 +80,7 @@ CPU_Conditional:
     - rule2
     then: null
   - any:
-      2:
+      '2':
       - CPU_usage
       - memory
       - disk_space
@@ -67,8 +90,7 @@ CPU_Conditional:
     - rule3
   stop_on_first_failure: false
   stop_on_first_success: false
-CPU_Performance:
-  actions:
+- actions:
   - condition_pass
   - condition_fail
   actions_false:
@@ -83,18 +105,19 @@ CPU_Performance:
     params:
       msg: CPU meets all requirements!
       name: CPU_case
+  name: CPU_Asynchronous
   rule_list:
   - CPU_usage
   - memory
   - disk_space
   rules:
-  - CPU_usage
-  - memory
-  - disk_space
+  - !!python/tuple
+    - CPU_usage
+    - - memory
+      - disk_space
   stop_on_first_failure: false
   stop_on_first_success: false
-case1:
-  actions:
+- actions:
   - condition_pass
   - condition_fail
   actions_false:
@@ -109,6 +132,7 @@ case1:
     params:
       msg: Meets all requirements!
       name: case1
+  name: case1
   rule_list:
   - rule1
   - rule2
@@ -122,7 +146,7 @@ case1:
     then:
     - rule3
   - any:
-      1:
+      '1':
       - rule1
       - rule2
       - rule3
@@ -132,8 +156,7 @@ case1:
     - rule2
   stop_on_first_failure: false
   stop_on_first_success: false
-case2:
-  actions:
+- actions:
   - condition_pass
   - condition_fail
   actions_false:
@@ -148,6 +171,7 @@ case2:
     params:
       msg: Meets all requirements!
       name: case2
+  name: case2
   rule_list:
   - rule1
   - rule2
@@ -159,8 +183,7 @@ case2:
       - rule3
   stop_on_first_failure: false
   stop_on_first_success: false
-case3:
-  actions:
+- actions:
   - condition_pass
   - condition_fail
   actions_false:
@@ -175,6 +198,7 @@ case3:
     params:
       msg: Meets all requirements!
       name: case3
+  name: case3
   rule_list:
   - rule1
   - rule2
@@ -184,28 +208,4 @@ case3:
   - rule2
   - rule3
   stop_on_first_failure: false
-  stop_on_first_success: false
-restraunt:
-  actions:
-  - condition_pass
-  - condition_fail
-  actions_false:
-  - multi_thread: true
-    name: condition_fail
-    params:
-      msg: Restraunt does NOT meet all requirements!
-      name: restraunt_case
-  actions_true:
-  - multi_thread: true
-    name: condition_pass
-    params:
-      msg: Restraunt meets all requirements!
-      name: restraunt_case
-  rule_list:
-  - distance_check
-  - cost_check
-  rules:
-  - distance_check
-  - cost_check
-  stop_on_first_failure: true
   stop_on_first_success: false

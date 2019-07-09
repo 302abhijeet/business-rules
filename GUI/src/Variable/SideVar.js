@@ -4,7 +4,7 @@ import {ListGroup} from 'react-bootstrap'
 
 export class SideDS extends Component {
     render(){
-        const vars = Object.keys(this.props.variables)
+        const vars = this.props.variables.map( ele => ele['name'])
         return(
             <React.Fragment>
             <h3>List of Variables</h3>

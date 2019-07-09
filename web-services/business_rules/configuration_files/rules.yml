@@ -1,85 +1,4 @@
-CPU_usage:
-  actions:
-  - Threshold_true
-  - Threshold_false
-  actions_false:
-  - multi_thread: true
-    name: Threshold_false
-    params:
-      name: CPU Usage
-      threshold: '50'
-      var: CPU_usage
-  actions_true:
-  - multi_thread: true
-    name: Threshold_true
-    params:
-      name: CPU Usage
-      threshold: '50'
-      var: CPU_usage
-  conditions:
-    name:
-    - CPU_usage
-    operator: less_than
-    value: 50
-  multi_thread: true
-  variables:
-  - CPU_usage
-cost_check:
-  actions:
-  - Threshold_true
-  - Threshold_false
-  actions_false:
-  - multi_thread: true
-    name: Threshold_false
-    params:
-      name: cost_check
-      threshold: self.product.cost_limit
-      var: cost
-  actions_true:
-  - multi_thread: true
-    name: Threshold_true
-    params:
-      name: cost_check
-      threshold: self.product.cost_limit
-      var: cost
-  conditions:
-    name:
-    - cost
-    - cost_limit
-    operator: less_than
-    value: null
-  multi_thread: true
-  variables:
-  - cost
-  - cost_limit
-disk_space:
-  actions:
-  - Threshold_true
-  - Threshold_false
-  actions_false:
-  - multi_thread: true
-    name: Threshold_false
-    params:
-      name: Disk Usage
-      threshold: '70'
-      var: disk_space
-  actions_true:
-  - multi_thread: true
-    name: Threshold_true
-    params:
-      name: Disk Usage
-      threshold: '70'
-      var: disk_space
-  conditions:
-    name:
-    - disk_space
-    operator: less_than
-    value: 70
-  multi_thread: false
-  variables:
-  - disk_space
-distance_check:
-  actions:
+- actions:
   - Threshold_true
   - Threshold_false
   actions_false:
@@ -103,11 +22,65 @@ distance_check:
     operator: less_than
     value: null
   multi_thread: true
+  name: distance_check
   variables:
   - distance
   - dist_limit
-memory:
-  actions:
+- actions:
+  - Threshold_true
+  - Threshold_false
+  actions_false:
+  - multi_thread: true
+    name: Threshold_false
+    params:
+      name: cost_check
+      threshold: self.product.cost_limit
+      var: cost
+  actions_true:
+  - multi_thread: true
+    name: Threshold_true
+    params:
+      name: cost_check
+      threshold: self.product.cost_limit
+      var: cost
+  conditions:
+    name:
+    - cost
+    - cost_limit
+    operator: less_than
+    value: null
+  multi_thread: true
+  name: cost_check
+  variables:
+  - cost
+  - cost_limit
+- actions:
+  - Threshold_true
+  - Threshold_false
+  actions_false:
+  - multi_thread: true
+    name: Threshold_false
+    params:
+      name: CPU Usage
+      threshold: '50'
+      var: CPU_usage
+  actions_true:
+  - multi_thread: true
+    name: Threshold_true
+    params:
+      name: CPU Usage
+      threshold: '50'
+      var: CPU_usage
+  conditions:
+    name:
+    - CPU_usage
+    operator: less_than
+    value: 50
+  multi_thread: true
+  name: CPU_usage
+  variables:
+  - CPU_usage
+- actions:
   - Threshold_true
   - Threshold_false
   actions_false:
@@ -130,12 +103,38 @@ memory:
     operator: less_than
     value: 60
   multi_thread: true
+  name: memory
   variables:
   - free_mem
   - total_mem
   - memory
-rule1:
-  actions:
+- actions:
+  - Threshold_true
+  - Threshold_false
+  actions_false:
+  - multi_thread: true
+    name: Threshold_false
+    params:
+      name: Disk Usage
+      threshold: '70'
+      var: disk_space
+  actions_true:
+  - multi_thread: true
+    name: Threshold_true
+    params:
+      name: Disk Usage
+      threshold: '70'
+      var: disk_space
+  conditions:
+    name:
+    - disk_space
+    operator: less_than
+    value: 70
+  multi_thread: false
+  name: disk_space
+  variables:
+  - disk_space
+- actions:
   - condition_pass
   - condition_fail
   actions_false:
@@ -170,12 +169,12 @@ rule1:
       operator: less_than
       value: 10
   multi_thread: true
+  name: rule1
   variables:
   - actual
   - expected
   - correct
-rule2:
-  actions:
+- actions:
   - condition_pass
   - condition_fail
   actions_false:
@@ -209,13 +208,13 @@ rule2:
       operator: equal_to
       value: 23
   multi_thread: true
+  name: rule2
   variables:
   - actual
   - expected
   - correct
   - incorrect
-rule3:
-  actions:
+- actions:
   - condition_pass
   - condition_fail
   actions_false:
@@ -243,6 +242,7 @@ rule3:
       operator: less_than
       value: 10
   multi_thread: true
+  name: rule3
   variables:
   - actual
   - expected

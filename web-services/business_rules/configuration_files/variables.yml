@@ -1,96 +1,4 @@
-CPU_usage:
-  field: numeric_rule_variable
-  formulae: self.product.CPU_usage
-  input_method:
-    DataSource: API_getPostman
-    command: response.json()["actual"]
-    end: null
-    evaluation: int
-    start: null
-  label: None
-  multi_thread: true
-  name: CPU_usage
-  options: None
-actual:
-  field: numeric_rule_variable
-  formulae: self.product.actual
-  input_method:
-    DataSource: API_getPostman
-    command: response.json()["actual"]
-    end: null
-    evaluation: int
-    start: null
-  label: None
-  multi_thread: true
-  name: actual
-  options: None
-correct:
-  field: numeric_rule_variable
-  formulae: self.product.correct
-  input_method:
-    DataSource: database_sqlRuleEngine
-    command: select correct from rule where correct order by correct limit 1
-    end: null
-    evaluation: int
-    start: null
-  label: None
-  multi_thread: true
-  name: correct
-  options: None
-cost:
-  field: numeric_rule_variable
-  formulae: self.product.cost
-  input_method:
-    DataSource: API_mapQuest
-    command: response.json()["time"][1]
-    end: null
-    evaluation: int
-    start: null
-  label: None
-  multi_thread: true
-  name: cost
-  options: None
-cost_limit:
-  field: numeric_rule_variable
-  formulae: self.product.cost_limit
-  input_method:
-    DataSource: API_getPostman
-    command: response.json()["actual"]
-    end: null
-    evaluation: int
-    start: null
-  label: None
-  multi_thread: true
-  name: cost_limit
-  options: None
-disk_space:
-  field: numeric_rule_variable
-  formulae: self.product.disk_space
-  input_method:
-    DataSource: API_postPostman
-    command: response.json()["incorrect"]
-    end: null
-    evaluation: int
-    start: null
-  label: None
-  multi_thread: true
-  name: disk_space
-  options: None
-dist_limit:
-  field: numeric_rule_variable
-  formulae: self.product.dist_limit
-  input_method:
-    DataSource: API_getPostman
-    command: response.json()["actual"]
-    end: null
-    evaluation: int
-    start: null
-  label: None
-  multi_thread: true
-  name: dist_limit
-  options: None
-distance:
-  field: numeric_rule_variable
+- field: numeric_rule_variable
   formulae: self.product.distance
   input_method:
     DataSource: API_mapQuest
@@ -102,8 +10,126 @@ distance:
   multi_thread: true
   name: distance
   options: None
-expected:
-  field: numeric_rule_variable
+- field: numeric_rule_variable
+  formulae: self.product.dist_limit
+  input_method:
+    DataSource: API_getPostman
+    command: response.json()["actual"]
+    end: null
+    evaluation: int
+    start: null
+  label: None
+  multi_thread: true
+  name: dist_limit
+  options: None
+- field: numeric_rule_variable
+  formulae: self.product.cost
+  input_method:
+    DataSource: API_mapQuest
+    command: response.json()["time"][1]
+    end: null
+    evaluation: int
+    start: null
+  label: None
+  multi_thread: true
+  name: cost
+  options: None
+- field: numeric_rule_variable
+  formulae: self.product.cost_limit
+  input_method:
+    DataSource: API_getPostman
+    command: response.json()["actual"]
+    end: null
+    evaluation: int
+    start: null
+  label: None
+  multi_thread: true
+  name: cost_limit
+  options: None
+- field: numeric_rule_variable
+  formulae: self.product.free_mem
+  input_method:
+    DataSource: SSH_awsIntern
+    command: cat /proc/meminfo | grep MemFree
+    end: kB
+    evaluation: int
+    start: ':'
+  label: None
+  multi_thread: false
+  name: free_mem
+  options: None
+- field: numeric_rule_variable
+  formulae: self.product.total_mem
+  input_method:
+    DataSource: SSH_awsIntern
+    command: cat /proc/meminfo | grep MemTotal
+    end: kB
+    evaluation: int
+    start: ':'
+  label: None
+  multi_thread: false
+  name: total_mem
+  options: None
+- field: numeric_rule_variable
+  formulae: self.product.memory = 100 - 100 * self.product.free_mem / self.product.total_mem
+  input_method:
+    method: derived
+    variables:
+    - free_mem
+    - total_mem
+  label: None
+  multi_thread: false
+  name: memory
+  options: None
+- field: numeric_rule_variable
+  formulae: self.product.CPU_usage
+  input_method:
+    DataSource: API_getPostman
+    command: response.json()["actual"]
+    end: null
+    evaluation: int
+    start: null
+  label: None
+  multi_thread: true
+  name: CPU_usage
+  options: None
+- field: numeric_rule_variable
+  formulae: self.product.disk_space
+  input_method:
+    DataSource: API_postPostman
+    command: response.json()["incorrect"]
+    end: null
+    evaluation: int
+    start: null
+  label: None
+  multi_thread: true
+  name: disk_space
+  options: None
+- field: numeric_rule_variable
+  formulae: self.product.actual
+  input_method:
+    DataSource: API_getPostman
+    command: response.json()["actual"]
+    end: null
+    evaluation: int
+    start: null
+  label: None
+  multi_thread: true
+  name: actual
+  options: None
+- field: numeric_rule_variable
+  formulae: self.product.incorrect
+  input_method:
+    DataSource: API_postPostman
+    command: response.json()["incorrect"]
+    end: null
+    evaluation: int
+    start: null
+  label: None
+  multi_thread: true
+  name: incorrect
+  options: None
+- field: numeric_rule_variable
   formulae: self.product.expected
   input_method:
     DataSource: SSH_awsIntern
@@ -117,51 +143,15 @@ expected:
   multi_thread: true
   name: expected
   options: None
-free_mem:
-  field: numeric_rule_variable
-  formulae: self.product.free_mem
+- field: numeric_rule_variable
+  formulae: self.product.correct
   input_method:
-    DataSource: SSH_awsIntern
-    command: cat /proc/meminfo | grep MemFree
-    end: kB
-    evaluation: int
-    start: ':'
-  label: None
-  multi_thread: false
-  name: free_mem
-  options: None
-incorrect:
-  field: numeric_rule_variable
-  formulae: self.product.incorrect
-  input_method:
-    DataSource: API_postPostman
-    command: response.json()["incorrect"]
+    DataSource: database_sqlRuleEngine
+    command: select correct from rule where correct order by correct limit 1
     end: null
     evaluation: int
     start: null
   label: None
   multi_thread: true
-  name: incorrect
-  options: None
-memory:
-  field: numeric_rule_variable
-  formulae: self.product.memory = 100 - 100 * self.product.free_mem / self.product.total_mem
-  input_method:
-    method: derived
-  label: None
-  multi_thread: false
-  name: memory
-  options: None
-total_mem:
-  field: numeric_rule_variable
-  formulae: self.product.total_mem
-  input_method:
-    DataSource: SSH_awsIntern
-    command: cat /proc/meminfo | grep MemTotal
-    end: kB
-    evaluation: int
-    start: ':'
-  label: None
-  multi_thread: false
-  name: total_mem
+  name: correct
   options: None

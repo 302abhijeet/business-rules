@@ -12,7 +12,8 @@ export class Variable extends Component {
                 {value=>{
                     const {cat} = this.props
                     const {data_sources,variables} = value.value
-                    if( variables === null || variables===undefined){
+                    
+                    if( variables === null || variables===undefined || data_sources===null || data_sources===undefined){
                         return(<Spinner animation="border" role="status">
                         <span className="sr-only">Loading...</span>
 
@@ -41,7 +42,7 @@ export class Variable extends Component {
                                 <Container>
                                     <Row>
                                     <Col lg = {9}>
-                                        <FormVar cat = {cat} readOnly = {readOnly} data_sources={data_sources} variables={variables} />
+                                        <FormVar cat = {cat} readOnly = {readOnly} data_sources={data_sources} variables={variables} addData={value.addData} modifyData={value.modifyData}/>
                                     </Col>
                                     <Col>
                                         <SideVar variables = {variables} />

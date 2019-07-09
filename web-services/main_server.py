@@ -129,8 +129,9 @@ def addrule(ty):
 
         rule = request.get_data()
         if rule != None:
+                print(rule)
+
                 rule = eval(rule)
-    
         
                 appendData(filepath,rule)
 
