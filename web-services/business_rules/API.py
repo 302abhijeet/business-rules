@@ -33,23 +33,40 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
     """
     global root 
     global logger
+    global output
+    output = []       #final output for run_rule/use_case
+    #create log file and logger
     file_name =(run_rule or case)+"_"+str(datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
     logging.basicConfig(filename="./logs/"+file_name+".log",format='Module:%(module)s Function:%(funcName)s Line:%(lineno)d %(levelname)s %(message)s',filemode='w')
     logger = logging.getLogger()
     logger.setLevel(20)
+    #create xml report to be sent to user
     root = ET.Element("Rules_engine")
     error = ET.SubElement(root,"Errors")
     warning = ET.SubElement(root,"Warning")
     rules_report = ET.SubElement(root,"Rules_status")
+    #Connect to configuraion database
+    rules = {}
+    variables = {}
+    actions = {}
+    DataSource = {}
+    history = mydb["history"]
+
     logger.info("Starting _run_API")
 
-    global output
-    output = []
-
     def _write_to_xml(root):
+        """write xml object to file
+        
+        Arguments:
+            root {xml} -- xml object to be written
+        
+        Returns:
+            [file] -- file path containing xml
+        """
         with open("./reports/"+file_name+".xml",'w') as f:
             parseString(ET.tostring(root)).writexml(f,indent="\t",addindent="\t",newl='\n')
         return "./reports/"+file_name+".xml"
+
 
     def run_rules_tuple(tuples) :
         """run rules in tuples on different threads
@@ -69,7 +86,6 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
                 rule {str/list/dict} -- rule to be run
             """
             nonlocal passed
-
             if type(rule) == type('') :
                 if rule in kill_rule:
                     passed = False
@@ -93,33 +109,25 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
                         logger.error("The (" + rule + ") rule cannot be multi threaded")
                         ET.SubElement(error,"RuntimeError").text = str("The (" + rule + ") rule cannot be multi threaded")
                         passed = False
-
             elif type(rule) == type(dict()):
                 if not run_rules_dict(rule) :
                     logger.info("Dictionary: {} returned false".format(rule))
                     passed = False
                 else:
                     logger.info("Dictionary: {} returned true".format(rule))
-
             elif type(rule) == type(list()):
                 if not run_rules_list(rule):
                     passed = False
-
-        
         threads = []
         for rule in tuples :
             thread = threading.Thread(target = run_rules_thread, args = (rule,),name = rule)
             thread.start()
             logger.info("Started thread: {} for rule: {}!".format(thread.getName(),rule))
-            threads.append(thread)
-        
+            threads.append(thread)    
         for thread in threads:
             thread.join()
-            logger.info("Joined thread: {}!".format(thread.getName()))
-            
+            logger.info("Joined thread: {}!".format(thread.getName()))          
         return passed
-
-
 
     def run_rules_list(lists,pass_param = None,stop_on_first_success = False, stop_on_first_failure = False) :
         """runs all the rules in the list-lists
@@ -140,7 +148,6 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
         if not lists :
             return True
         for rule in lists :
-
             if type(rule) == type('') :
                 if rule in kill_rule:
                     all_pass = False
@@ -150,7 +157,6 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
                         history.update_one({"name": case['name'],"type":"use_case"},{"$inc":{rule+".passed":1}},upsert=True)
                         logger.info("Rule: {} returned true".format(rule))
                         ET.SubElement(rules_report,rule).text = str("Rule returned true!")
-
                         passed += 1
                         if stop_on_first_success:
                             return all_pass
@@ -165,8 +171,6 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
                     logger.error("Rule: " + rule + " couldn't be run on engine!Error: {}".format(e))
                     ET.SubElement(error,"RuntimeError").text = str("Rule: " + rule + " couldn't be run on engine!Error: {}".format(e))
                     all_pass = False
-
-
             elif type(rule) == type(dict()):
                 if run_rules_dict(rule) :
                     logger.info("Rule conditional: {} returned true!".format(rule))
@@ -178,7 +182,6 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
                     all_pass = False
                     if stop_on_first_failure:
                         return all_pass
-
             elif type(rule) == type(tuple()):
                 if run_rules_tuple(rule) :
                     logger.info("Rule multithread: {} returned true!".format(rule))
@@ -190,15 +193,12 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
                     all_pass = False
                     if stop_on_first_failure:
                         return all_pass
-
         if pass_param and pass_param <= passed:
             logger.info("List: {} has returned true".format(lists))
             return True
         else :
             logger.info("List: {} has returned {}".format(lists,all_pass))
             return  all_pass
-
-
 
     def run_rules_dict(dicts) :
         """run onditional format rules
@@ -229,13 +229,6 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
                 return run_rules_list(dicts['else'])
 
 
-    #Connect to configuraion database
-    rules = {}
-    variables = {}
-    actions = {}
-    DataSource = {}
-    history = mydb["history"]
-
     #check if use_case and run_rule defined in config
     if case:
         case = mydb["use_cases"].find_one({"name":case},{"_id":0})
@@ -255,7 +248,6 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
             raise NameError(_write_to_xml(root))
 
 
-
     """
     To be added later for parameter matching to use case
     #load parameters
@@ -270,13 +262,14 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
         #run rules
     """
 
-    kill_rule = []    #variable for storing rules to be killed
 
-    #import prodcut variables from UI
+    #Create variable lists to be created
+    kill_rule = []    #variable for storing rules to be killed
     derived_variables = []
     source_variables_list = []
     extra_variables = []
     variable_source = {}
+
     #To make a list of source variables and check for duplication
     for source in parameter_dataSource:
         try:
@@ -397,7 +390,6 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
                 product {object} -- object with variables to be assigned
             """
             self.product = product
-
         for var in variables :
             var = variables[var]
             try:
@@ -423,7 +415,7 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
     except:
         pass
 
-    #import product actions from UI
+    #add required actions from database
     if run_rule :
         for act in run_rule['actions'] :
             logger.info("Adding action : {} to list!".format(act))
@@ -454,7 +446,6 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
                 product {object} -- product with input variables
             """
             self.product = product
-
         for act in actions : 
             act = actions[act]
             try:
@@ -482,7 +473,6 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
                                 rules[rule]['actions_false'].remove(act_false)
                         logger.warning("Product Action: " + act['name'] + " could not be defined hence rule:" + rule + " will not run that action!Error: {}".format(e))
                         ET.SubElement(warning,"RuntimeError").text = str("Product Action: " + act['name'] + " could not be defined hence rule:" + rule + " will not run that action!Error: {}".format(e))
-
 
 
     #run rules
@@ -515,6 +505,7 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
         for handler in logger.handlers:
             logger.removeHandler(handler)
 
+    #return back output and xml report to user
     return output,_write_to_xml(root)
 
 

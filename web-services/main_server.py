@@ -12,6 +12,11 @@ dirpath = './business_rules/configuration_files/'
 
 #conect to database
 def _create_SSHtunnel():
+    """create a ssh tunnel to aws instance
+    
+    Returns:
+        sshunnel -- server to ssh instance
+    """
     server = SSHTunnelForwarder(
         "10.137.89.13",
         ssh_username="ubuntu",
@@ -23,6 +28,11 @@ def _create_SSHtunnel():
 #Server route to run rules
 @server.route('/runrule',methods=['POST'])
 def runrule():
+    """run rule given by user
+    
+    Returns:
+        response -- response to be given to user
+    """
     server = _create_SSHtunnel()
     server.start()
     mydb = MongoClient("127.0.0.1",server.local_bind_port)["rules_engine"]
@@ -84,6 +94,11 @@ def runrule():
 #Server route to run use cases
 @server.route('/runusecase',methods = ["POST"])
 def runusecase():
+    """run use_case requested by use
+    
+    Returns:
+        response -- response to be given to user
+    """
     server = _create_SSHtunnel()
     server.start()
     mydb = MongoClient("127.0.0.1",server.local_bind_port)["rules_engine"]
@@ -147,6 +162,14 @@ def runusecase():
 #Server route to add data
 @server.route('/add/<ty>',methods = ['POST'])
 def adddata(ty):
+    """add data sent by user databse
+    
+    Arguments:
+        ty {collection} -- collection in databses to be appended
+    
+    Returns:
+        response -- response to be given to user
+    """
     if request.method == 'POST':
         try:
             server = _create_SSHtunnel()
@@ -180,6 +203,14 @@ def adddata(ty):
 #Server route to delete data
 @server.route('/del/<ty>',methods = ['DELETE'])
 def deldata(ty):
+    """delete data from databse
+    
+    Arguments:
+        ty {collection} -- collection from which data is to be deleted
+    
+    Returns:
+        response -- response to be given to user
+    """
     if request.method == 'DELETE':
         try:
             server = _create_SSHtunnel()
@@ -212,6 +243,14 @@ def deldata(ty):
 #Server route to modify data
 @server.route('/modify/<ty>',methods = ['POST'])
 def modifydata(ty):
+    """modify the databse 
+    
+    Arguments:
+        ty {collection} -- collection to be modified
+    
+    Returns:
+        response -- response to be given to user
+    """
     if request.method == 'POST':
         try:
             server = _create_SSHtunnel()
@@ -245,6 +284,14 @@ def modifydata(ty):
 #Server route to get data
 @server.route('/get/<ty>',methods = ['GET'])
 def getdata(ty):
+    """send data from database to GUI
+    
+    Arguments:
+        ty {collection} -- collection which is requested
+    
+    Returns:
+        response -- response to be given to user
+    """
     if request.method=='GET':
         try:
             server = _create_SSHtunnel()
@@ -280,15 +327,36 @@ def getdata(ty):
 
 @server.errorhandler(500)
 def internal_error(error):
+    """response in case of internal error
+    
+    Arguments:
+        error {Exception} -- internal error hat occured
+    
+    Returns:
+        response -- response to be given to user
+    """
     print(error)
     return Response(status = 500,response=json.dumps({'Error':'Internal server error'}))
 
 @server.errorhandler(405)
 def bad_method(error):
+    """error for bad method
+
+    Returns:
+        response -- response to be given to user
+    """
         return Response(status=405,response=json.dumps({'Error':'Method not allowed'}))
 
 @server.errorhandler(404)
 def not_found(error):
+    """error if module not found
+    
+    Arguments:
+        error {Exception} -- error that raised the function
+    
+    Returns:
+        response -- response to be given to user
+    """
         return Response(status=404,response=json.dumps({'Error':'Route not found'}))
 
 if __name__ == "__main__":
