@@ -1,0 +1,66 @@
+Module:API Function:_run_API Line:44 INFO Starting _run_API
+Module:API Function:_run_API Line:243 INFO Use_case fetched from database
+Module:API Function:_run_API Line:295 INFO source_variable_list made :[]
+Module:API Function:_run_API Line:328 INFO Adding rule: CPU_usage variables
+Module:API Function:_run_API Line:330 INFO Adding variable: CPU_usage 
+Module:API Function:_run_API Line:344 INFO Adding Variable: CPU_usage to DataSource: API_getPostman
+Module:API Function:_run_API Line:328 INFO Adding rule: memory variables
+Module:API Function:_run_API Line:330 INFO Adding variable: free_mem 
+Module:API Function:_run_API Line:344 INFO Adding Variable: free_mem to DataSource: SSH_awsIntern
+Module:API Function:_run_API Line:330 INFO Adding variable: total_mem 
+Module:API Function:_run_API Line:344 INFO Adding Variable: total_mem to DataSource: SSH_awsIntern
+Module:API Function:_run_API Line:330 INFO Adding variable: memory 
+Module:API Function:_run_API Line:328 INFO Adding rule: disk_space variables
+Module:API Function:_run_API Line:330 INFO Adding variable: disk_space 
+Module:API Function:_run_API Line:344 INFO Adding Variable: disk_space to DataSource: API_postPostman
+Module:API Function:_run_API Line:370 INFO Addin data source: API_getPostman to be populated!
+Module:API Function:_run_API Line:370 INFO Addin data source: SSH_awsIntern to be populated!
+Module:API Function:_run_API Line:370 INFO Addin data source: API_postPostman to be populated!
+Module:collector Function:__init__ Line:96 INFO starting collector module
+Module:collector Function:__init__ Line:103 INFO Getting data source: API_getPostman variables!
+Module:collector Function:__init__ Line:112 INFO Starting thread: API_getPostman
+Module:collector Function:__init__ Line:103 INFO Getting data source: SSH_awsIntern variables!
+Module:collector Function:__init__ Line:112 INFO Starting thread: SSH_awsIntern
+Module:collector Function:__init__ Line:103 INFO Getting data source: API_postPostman variables!
+Module:collector Function:__init__ Line:112 INFO Starting thread: API_postPostman
+Module:collector Function:_get_source Line:65 INFO Source: API_getPostman fetched variables: {'CPU_usage': 78}
+Module:collector Function:_init_source_variables Line:29 INFO Variable: CPU_usage has been created!Value: 78!Source: API_getPostman
+Module:transport Function:_log Line:1760 INFO Connected (version 2.0, client OpenSSH_7.2p2)
+Module:collector Function:_get_source Line:65 INFO Source: API_postPostman fetched variables: {'disk_space': 33}
+Module:collector Function:_init_source_variables Line:29 INFO Variable: disk_space has been created!Value: 33!Source: API_postPostman
+Module:transport Function:_log Line:1760 INFO Authentication (publickey) successful!
+Module:collector Function:_get_source Line:65 INFO Source: SSH_awsIntern fetched variables: {'free_mem': '          823608 ', 'total_mem': '        4044880 '}
+Module:collector Function:_init_source_variables Line:29 INFO Variable: free_mem has been created!Value:           823608 !Source: SSH_awsIntern
+Module:collector Function:_init_source_variables Line:29 INFO Variable: total_mem has been created!Value:         4044880 !Source: SSH_awsIntern
+Module:API Function:_run_API Line:375 INFO variables input taken from collector!
+Module:API Function:ProductVariables Line:408 INFO Product Variable: CPU_usage has been created!
+Module:API Function:ProductVariables Line:408 INFO Product Variable: free_mem has been created!
+Module:API Function:ProductVariables Line:408 INFO Product Variable: total_mem has been created!
+Module:API Function:ProductVariables Line:408 INFO Product Variable: memory has been created!
+Module:API Function:ProductVariables Line:408 INFO Product Variable: disk_space has been created!
+Module:<string> Function:<module> Line:1 INFO Variable: memory has been created!Value: 79.63825873697118!Source: Derived
+Module:API Function:_run_API Line:433 INFO Adding action : condition_pass to list!
+Module:API Function:_run_API Line:433 INFO Adding action : condition_fail to list!
+Module:API Function:_run_API Line:440 INFO Adding action : Threshold_true to list!
+Module:API Function:_run_API Line:440 INFO Adding action : Threshold_false to list!
+Module:API Function:_run_API Line:440 INFO Adding action : Threshold_true to list!
+Module:API Function:_run_API Line:442 INFO Action : Threshold_true already in list!
+Module:API Function:_run_API Line:440 INFO Adding action : Threshold_false to list!
+Module:API Function:_run_API Line:442 INFO Action : Threshold_false already in list!
+Module:API Function:_run_API Line:440 INFO Adding action : Threshold_true to list!
+Module:API Function:_run_API Line:442 INFO Action : Threshold_true already in list!
+Module:API Function:_run_API Line:440 INFO Adding action : Threshold_false to list!
+Module:API Function:_run_API Line:442 INFO Action : Threshold_false already in list!
+Module:API Function:ProductActions Line:467 INFO Creater Product action : condition_pass successfully!
+Module:API Function:ProductActions Line:467 INFO Creater Product action : condition_fail successfully!
+Module:API Function:ProductActions Line:467 INFO Creater Product action : Threshold_true successfully!
+Module:API Function:ProductActions Line:467 INFO Creater Product action : Threshold_false successfully!
+Module:engine Function:do_actions Line:108 INFO Starting action: Threshold_false
+Module:API Function:run_rules_list Line:159 INFO Rule: CPU_usage returned false
+Module:engine Function:do_actions Line:108 INFO Starting action: Threshold_false
+Module:API Function:run_rules_list Line:159 INFO Rule: memory returned false
+Module:engine Function:do_actions Line:108 INFO Starting action: Threshold_true
+Module:API Function:run_rules_list Line:151 INFO Rule: disk_space returned true
+Module:API Function:run_rules_list Line:198 INFO List: ['CPU_usage', 'memory', 'disk_space'] has returned False
+Module:API Function:_run_API Line:508 INFO Case has retuned false!
+Module:engine Function:do_actions Line:108 INFO Starting action: condition_fail

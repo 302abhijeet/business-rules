@@ -3,42 +3,64 @@ import json
 from filehandler import *
 from utils import *
 from flask import Flask,request,jsonify,Response
+from sshtunnel import SSHTunnelForwarder
+from pymongo import MongoClient
 
 server = Flask(__name__)
 
 
 dirpath = './business_rules/configuration_files/'
 
+#conect to database
+def _create_SSHtunnel():
+    server = SSHTunnelForwarder(
+        "10.137.89.13",
+        ssh_username="ubuntu",
+        ssh_password="rules_engine",
+        remote_bind_address=('127.0.0.1', 27017)
+    )
+    return server
 
 #Server route to run rules
 @server.route('/runrule',methods=['POST'])
 def runrule():
+    server = _create_SSHtunnel()
+    server.start()
+    mydb = MongoClient("127.0.0.1",server.local_bind_port)["rules_engine"]
     if request.method == 'POST':
         data_given = request.args.to_dict()
         if 'rule' not in data_given:
+                server._server_list[0].block_on_close = False
+                server.stop()
                 return Response(
                         response=json.dumps({'Error':'Please specify a rule'}),
                         mimetype='application/json',
                         status=400
                 )
         rulename = data_given['rule']
-        flag = check_valid_rule(rulename)
+        flag = check_valid_rule(rulename,mydb)
         if not flag:
+            server._server_list[0].block_on_close = False
+            server.stop()
             return  Response(
-                        response=json.dumps({'Error':'Rule doesnot exist'}),
+                        response=json.dumps({'Error':'Rule does not exist'}),
                         mimetype='application/json',
                         status=400
                 )
         del data_given['rule']
-        check_valid_data(data_given)
+        check_valid_data(data_given,mydb)
         #check if any data is in body or not
         parameter_data = checkValidatePD(request.get_data())
         
         #API function to run the rules
         #this function returns a list of messages
         try:
-                data,file_path = API._run_API(run_rule=rulename,case=None,parameter_variables=data_given,parameter_dataSource=parameter_data)
+                data,file_path = API._run_API(run_rule=rulename,case=None,parameter_variables=data_given,parameter_dataSource=parameter_data,mydb=mydb)
+                server._server_list[0].block_on_close = False
+                server.stop()
         except Exception as e:
+            server._server_list[0].block_on_close = False
+            server.stop()
             try:
                 with open(str(e),'r') as f:
                     return  Response(
@@ -63,18 +85,25 @@ def runrule():
 #Server route to run use cases
 @server.route('/runusecase',methods = ["POST"])
 def runusecase():
+    server = _create_SSHtunnel()
+    server.start()
+    mydb = MongoClient("127.0.0.1",server.local_bind_port)["rules_engine"]
     if request.method == 'POST':
         #get the optional variable values as arguments
         data_given = request.args.to_dict()
         if 'use_case' not in data_given:
-               return Response(
+                server._server_list[0].block_on_close = False
+                server.stop()
+                return Response(
                         response=json.dumps({'Error':'Please specify a Use Case'}),
                         mimetype='application/json',
                         status=400
                 )
         ucname = data_given['use_case']
-        flag = check_valid_usecase(ucname)
+        flag = check_valid_usecase(ucname,mydb)
         if not flag:
+            server._server_list[0].block_on_close = False
+            server.stop()
             return Response(
                         response=json.dumps({'Error':'Use case doesnot exist'}),
                         mimetype='application/json',
@@ -83,14 +112,18 @@ def runusecase():
 
 
         del data_given['use_case']
-        check_valid_data(data_given)
+        check_valid_data(data_given,mydb)
         
         parameter_data = checkValidatePD(request.get_data())
         
         #this function returns a list of messages
         try:
-            data,file_path = API._run_API(run_rule=None,case=ucname,parameter_variables=data_given,parameter_dataSource=parameter_data)
+            data,file_path = API._run_API(run_rule=None,case=ucname,parameter_variables=data_given,parameter_dataSource=parameter_data,mydb=mydb)
+            server._server_list[0].block_on_close = False
+            server.stop()
         except Exception as e:
+            server._server_list[0].block_on_close = False
+            server.stop()
             try:
                 with open(str(e),'r') as f:
                     return  Response(

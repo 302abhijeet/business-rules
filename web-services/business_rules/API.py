@@ -5,7 +5,6 @@ from business_rules.variables import *
 from business_rules.actions import *
 from business_rules.best_case import *
 from datetime import datetime
-from pymongo import MongoClient
 import business_rules.collector as collector
 import weakref
 import threading
@@ -13,7 +12,7 @@ import logging
 import xml.etree.ElementTree as ET
 from xml.dom.minidom import parseString
 
-def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSource = []) :
+def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dataSource = []) :
     """Initiate variables and actions and run Rule/Use-Case
     
     Keyword Arguments:
@@ -21,6 +20,7 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
         run_rule {str} -- rule ame to be run (default: {""})
         parameter_variables {dict} -- user given values for variables (default: {{}})
         parameter_dataSource {list} -- user given data sources for variables (default: {[]})
+        mydb {pymongo} -- database to be accessed
     
     Raises:
         NameError: case name not found
@@ -230,9 +230,6 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
 
 
     #Connect to configuraion database
-    global database
-    database = "rules_engine"
-    mydb = MongoClient("localhost",27017)[database]
     rules = {}
     variables = {}
     actions = {}
@@ -374,7 +371,7 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
             parameter_dataSource.append(DataSource[source])
 
     #populate data from case variables
-    product = collector.Collector(parameter_variables,parameter_dataSource,variables)
+    product = collector.Collector(parameter_variables=parameter_variables,parameter_dataSource=parameter_dataSource,variables=variables,mydb=mydb)
     logger.info("variables input taken from collector!")
 
     #For killing rules whose variables couldn't be fetched
@@ -495,11 +492,11 @@ def _run_API(case = "",run_rule = "",parameter_variables = {},parameter_dataSour
             if run(rule = run_rule, defined_variables = ProductVariables(product), defined_actions = ProductActions(product)):
                 history.update_one({"name": run_rule['name'],"type":"rule"},{"$inc":{"passed":1}},upsert=True)
                 logger.info("Rule has retuned true!")
-                ET.SubElement(rules_report,run_rule).text = str("Rule has returned true!")
+                ET.SubElement(rules_report,run_rule['name']).text = str("Rule has returned true!")
             else:
-                history.update_one({"name": run_rule,"type":"rule"},{"$inc":{"failed":1}},upsert=True)
+                history.update_one({"name": run_rule['name'],"type":"rule"},{"$inc":{"failed":1}},upsert=True)
                 logger.info("Rule has retuned false!")
-                ET.SubElement(rules_report,run_rule).text = str("Rule has returned false!")
+                ET.SubElement(rules_report,run_rule['name']).text = str("Rule has returned false!")
         else :
             if run_rules_list(case['rules'],stop_on_first_success=case["stop_on_first_success"],stop_on_first_failure = case["stop_on_first_failure"]) :
                 history.update_one({"name": case['name'],"type":"use_case"},{"$inc":{"passed":1}},upsert=True)

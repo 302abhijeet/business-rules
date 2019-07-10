@@ -1,0 +1,8 @@
+Module:API Function:_run_API Line:44 INFO Starting _run_API
+Module:API Function:_run_API Line:243 INFO Use_case fetched from database
+Module:API Function:_run_API Line:295 INFO source_variable_list made :[]
+Module:API Function:_run_API Line:328 INFO Adding rule: CPU_usage variables
+Module:API Function:_run_API Line:330 INFO Adding variable: CPU_usage 
+Module:API Function:_run_API Line:344 INFO Adding Variable: CPU_usage to DataSource: API_getPostman
+Module:_internal Function:_log Line:122 INFO 127.0.0.1 - - [10/Jul/2019 16:17:57] "POST /runusecase?use_case=CPU_Performance HTTP/1.1" 500 -
+Module:_internal Function:_log Line:122 INFO  * Detected change in 'C:\\Users\\axsingh\\Documents\\business-rules\\web-services\\main_server.py', reloading

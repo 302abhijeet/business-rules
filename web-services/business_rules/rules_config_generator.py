@@ -1,5 +1,6 @@
 #configuration file for the API
 from pymongo import MongoClient
+from sshtunnel import SSHTunnelForwarder
 from fields import *
 
 use_cases = [ 
@@ -757,7 +758,18 @@ DataSource = [
 	}
 ]
 
-myclient = MongoClient("localhost",27017)
+# define ssh tunnel
+server = SSHTunnelForwarder(
+    "10.137.89.13",
+    ssh_username="ubuntu",
+    ssh_password="rules_engine",
+    remote_bind_address=('127.0.0.1', 27017)
+)
+
+# start ssh tunnel
+server.start()
+
+myclient = MongoClient('127.0.0.1', server.local_bind_port)
 myclient.drop_database("rules_engine")
 mydb = myclient["rules_engine"]
 mydb["use_cases"].insert_many(use_cases)
@@ -765,6 +777,10 @@ mydb["rules"].insert_many(rules)
 mydb["variables"].insert_many(variables)
 mydb["actions"].insert_many(actions)
 mydb["DataSource"].insert_many(DataSource)
+
+# close ssh tunnel
+server._server_list[0].block_on_close = False
+server.stop()
 
 
 """

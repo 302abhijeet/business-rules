@@ -1,0 +1,35 @@
+Module:API Function:_run_API Line:44 INFO Starting _run_API
+Module:API Function:_run_API Line:251 INFO Run_Rule fetched from database
+Module:API Function:_run_API Line:295 INFO source_variable_list made :[]
+Module:API Function:_run_API Line:300 INFO adding variable: actual
+Module:API Function:_run_API Line:300 INFO adding variable: expected
+Module:API Function:_run_API Line:300 INFO adding variable: correct
+Module:API Function:_run_API Line:370 INFO Addin data source: API_getPostman to be populated!
+Module:API Function:_run_API Line:370 INFO Addin data source: SSH_awsIntern to be populated!
+Module:API Function:_run_API Line:370 INFO Addin data source: database_sqlRuleEngine to be populated!
+Module:collector Function:__init__ Line:96 INFO starting collector module
+Module:collector Function:__init__ Line:103 INFO Getting data source: API_getPostman variables!
+Module:collector Function:__init__ Line:112 INFO Starting thread: API_getPostman
+Module:collector Function:__init__ Line:103 INFO Getting data source: SSH_awsIntern variables!
+Module:collector Function:__init__ Line:112 INFO Starting thread: SSH_awsIntern
+Module:collector Function:__init__ Line:103 INFO Getting data source: database_sqlRuleEngine variables!
+Module:collector Function:__init__ Line:112 INFO Starting thread: database_sqlRuleEngine
+Module:collector Function:_get_source Line:65 INFO Source: API_getPostman fetched variables: {'actual': 78}
+Module:collector Function:_get_source Line:65 INFO Source: database_sqlRuleEngine fetched variables: {'correct': 5}
+Module:collector Function:_init_source_variables Line:29 INFO Variable: correct has been created!Value: 5!Source: database_sqlRuleEngine
+Module:collector Function:_init_source_variables Line:29 INFO Variable: actual has been created!Value: 78!Source: API_getPostman
+Module:transport Function:_log Line:1760 INFO Connected (version 2.0, client OpenSSH_7.2p2)
+Module:transport Function:_log Line:1760 INFO Authentication (publickey) successful!
+Module:collector Function:_get_source Line:65 INFO Source: SSH_awsIntern fetched variables: {'expected': '104\n'}
+Module:collector Function:_init_source_variables Line:29 INFO Variable: expected has been created!Value: 104
+!Source: SSH_awsIntern
+Module:API Function:_run_API Line:375 INFO variables input taken from collector!
+Module:API Function:ProductVariables Line:408 INFO Product Variable: actual has been created!
+Module:API Function:ProductVariables Line:408 INFO Product Variable: expected has been created!
+Module:API Function:ProductVariables Line:408 INFO Product Variable: correct has been created!
+Module:API Function:_run_API Line:429 INFO Adding action : condition_pass to list!
+Module:API Function:_run_API Line:429 INFO Adding action : condition_fail to list!
+Module:API Function:ProductActions Line:467 INFO Creater Product action : condition_pass successfully!
+Module:API Function:ProductActions Line:467 INFO Creater Product action : condition_fail successfully!
+Module:engine Function:do_actions Line:108 INFO Starting action: condition_pass
+Module:API Function:_run_API Line:494 INFO Rule has retuned true!
