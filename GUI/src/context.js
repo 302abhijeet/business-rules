@@ -9,9 +9,9 @@ const Context = React.createContext()
 export  class Provider extends Component {
     
     state = {
-        rules:null,
+        rule:null,
         variables:null,
-        actions:null,
+        action:null,
         data_sources:null,
         use_cases:null,
         redirect:false
@@ -97,7 +97,7 @@ export  class Provider extends Component {
         axios.get('http://127.0.0.1:5000/get/rule?id=all ')
             .then(res => {
                 
-                this.setState({ rules: res.data.data})
+                this.setState({ rule: res.data.data})
             })
             .catch(err => console.log(err))
 
@@ -111,7 +111,7 @@ export  class Provider extends Component {
         axios.get('http://127.0.0.1:5000/get/action?id=all ')
             .then(res => {
                 
-                this.setState({ actions: res.data.data})
+                this.setState({ action: res.data.data})
             })
             .catch(err => console.log(err))
 
