@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Form,Row,Col, Button} from 'react-bootstrap'
-import {Link} from 'react-router-dom'
+import {Link,withRouter} from 'react-router-dom'
 
 
 export class FormVar extends Component {
@@ -18,7 +18,7 @@ export class FormVar extends Component {
             start:'',
             end:''
         },
-        read:this.props.readOnly
+        read:false
     }
     
     componentWillMount = () =>{
@@ -27,7 +27,7 @@ export class FormVar extends Component {
         if(cat!=='add'){
             variables.forEach(element => {
                 if(element['name'] === cat){
-                    this.setState({...element})
+                    this.setState({...element,read:true})
                 }
             })
                 
@@ -45,7 +45,8 @@ export class FormVar extends Component {
                     evaluation:'',
                     start:'',
                     end:''
-                }
+                },
+                read:false
             })
         }
     }
@@ -56,13 +57,39 @@ export class FormVar extends Component {
             if(cat!=='add'){
                 variables.forEach(element => {
                     if(element['name'] === cat){
-                        this.setState({...element})
+                        if(element['input_method']['start']===null)
+                            element['input_method']['start']=''
+                            if(element['input_method']['end']===null)
+                            element['input_method']['end']=''
+                        this.setState({...element,read:true})
                     }
                 })
                     
             
+            }else{
+                this.setState({
+                    name:'',
+                    field:'',
+                    label:'',
+                    options:'',
+                    formulae:'',
+                    input_method:{
+                        DataSource:'',
+                        command:'',
+                        evaluation:'',
+                        start:'',
+                        end:''
+                    },
+                    read:false
+                })
             }
         }
+    }
+    deleteData = () =>{
+        //delete data from context
+        this.props.delData('variables',this.state['name'])
+        //Redirect?
+        this.props.history.push('/Variable/index')
     }
 
     changeState = event =>{
@@ -95,7 +122,7 @@ export class FormVar extends Component {
     render() {
 
 
-        const {data_sources,variables} = this.props
+        const {data_sources} = this.props
         const list_of_ds = data_sources.map(ele => ele['name'])
         
         return (
@@ -150,7 +177,7 @@ export class FormVar extends Component {
                             </Form.Control>
                         </Col>
                         <Col>
-                            <Link to='/DataSource/add'><Button variant='outline-secondary'>Add new Data Source</Button></Link>
+                            <Link to='/DataSource/add'><Button variant='outline-secondary' disabled={this.state.read}>Add new Data Source</Button></Link>
                         </Col>
                     </Form.Group>
 
@@ -181,8 +208,11 @@ export class FormVar extends Component {
                             <Form.Control type='text' name='end' onChange={this.changeStateim} readOnly={this.state.read} value={this.state.input_method.end} />
                         </Col>
                     </Form.Group>
-                    <Button type = 'submit' variant='outline-success' disabled={this.state.read}>Submit</Button>
-                    <Button name='modify' variant='outline-secondary' disabled={!this.state.read} onClick={this.changeReadMode}>Modify</Button>
+                    <Row>
+                        <Col><Button type = 'submit' variant='outline-success' disabled={this.state.read}>Submit</Button></Col>
+                        <Col><Button name='modify' variant='outline-secondary' disabled={!this.state.read} onClick={this.changeReadMode}>Modify</Button></Col>
+                        <Col><Button name = 'delete' variant='outline-danger' disabled={this.state.read} onClick={this.deleteData}>Delete</Button></Col>
+                    </Row>
 
             </Form>                
 
@@ -192,5 +222,5 @@ export class FormVar extends Component {
     }
 }
 
-export default FormVar
+export default withRouter(FormVar)
     

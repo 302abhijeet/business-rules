@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Consumer } from '../context';
 import {Spinner ,Container,Row,Col,Button} from 'react-bootstrap'
-import {Link} from 'react-router-dom'
+import {Link,Redirect} from 'react-router-dom'
 import SideVar from './SideVar'
 import FormVar from './FormVar'
 
@@ -11,8 +11,10 @@ export class Variable extends Component {
             <Consumer>
                 {value=>{
                     const {cat} = this.props
-                    const {data_sources,variables} = value.value
-                    
+                    const {data_sources,variables,redirect} = value.value
+                    // if(redirect===true)
+                    //     return <Redirect to='/Variable/index' />
+
                     if( variables === null || variables===undefined || data_sources===null || data_sources===undefined){
                         return(<Spinner animation="border" role="status">
                         <span className="sr-only">Loading...</span>
@@ -42,7 +44,7 @@ export class Variable extends Component {
                                 <Container>
                                     <Row>
                                     <Col lg = {9}>
-                                        <FormVar cat = {cat} readOnly = {readOnly} data_sources={data_sources} variables={variables} addData={value.addData} modifyData={value.modifyData}/>
+                                        <FormVar cat = {cat} readOnly = {readOnly} data_sources={data_sources} variables={variables} addData={value.addData} modifyData={value.modifyData} delData={value.delData}/>
                                     </Col>
                                     <Col>
                                         <SideVar variables = {variables} />

@@ -13,26 +13,46 @@ export  class Provider extends Component {
         variables:null,
         actions:null,
         data_sources:null,
-        use_cases:null
+        use_cases:null,
+        redirect:false
+    }
 
+    delData = (ty,id)=>{
+        axios.delete(`http://127.0.0.1:5000/del/${ty}?id=${id}`)
+            .then((res)=>{
+                console.log(res)
+            })
+            .catch(err=>console.log(err))
+        const datas = this.state[ty]
+        const newData = datas.filter(ele => ele['name']!==id)
+        this.setState({
+            [ty]:[...newData],
+            redirect:true
+        })
     }
 
     addData = (ty,newOb) =>{
         console.log(newOb)
         axios.post(`http://127.0.0.1:5000/add/${ty}`,newOb)
         this.setState({
-            [ty]:[...this.state[ty],newOb]
+            [ty]:[...this.state[ty],newOb],
+            redirect:true
+
         })
-        this.forceUpdate()
     }
 
     modifyData = (ty,newOb)=>{
-        axios.post(`http://127.0.0.1:5000/add/${ty}`,newOb)
+        axios.post(`http://127.0.0.1:5000/modify/${ty}`,newOb)
         const datas = this.state[ty]
         datas.forEach(element => {
             if(element['name']===newOb['name']){
                 element = newOb
             }    
+        })
+        this.setState({
+            [ty]:[...datas],
+            redirect:true
+
         })
     }
 
@@ -100,7 +120,7 @@ export  class Provider extends Component {
     render() {
         return (
             <div>
-                <Context.Provider value = {{ value:this.state, addNewData:this.addNewData,addData:this.addData,modifyData:this.modifyData}} >
+                <Context.Provider value = {{ value:this.state, addNewData:this.addNewData,addData:this.addData,modifyData:this.modifyData,delData:this.delData}} >
                     {this.props.children}    
                 </Context.Provider>       
             </div>
