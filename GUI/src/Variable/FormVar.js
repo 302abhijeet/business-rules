@@ -110,13 +110,17 @@ export class FormVar extends Component {
 
     submitForm=(e)=>{
         e.preventDefault()
+        const data = this.state
+        delete data['read']
         if(this.props.cat === 'add'){
             
-            this.props.addData('variables',this.state)
+            this.props.addData('variables',data)
 
         }else{
-            this.props.modifyData('variables',this.state)
+            this.props.modifyData('variables',data)
         }
+        this.props.history.push('/Variable/index')
+
     }
     
     render() {
