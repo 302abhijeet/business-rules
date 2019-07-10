@@ -1,6 +1,5 @@
 import business_rules.API as API
 import json
-from filehandler import *
 from utils import *
 from flask import Flask,request,jsonify,Response
 from sshtunnel import SSHTunnelForwarder
@@ -147,106 +146,134 @@ def runusecase():
 
 #Server route to add data
 @server.route('/add/<ty>',methods = ['POST'])
-def addrule(ty):
+def adddata(ty):
     if request.method == 'POST':
-        
-        filepath = updateFilePath(dirpath,ty) 
-        if filepath == False:
-                return Response(
-                        response=json.dumps({'Error':'Wrong type'}),
+        try:
+            server = _create_SSHtunnel()
+            server.start()
+            mydb = MongoClient("127.0.0.1",server.local_bind_port)["rules_engine"]
+            collection = mydb[ty]
+            data = request.get_data()
+            if data != None:
+                    data = eval(rule)
+                    if type(data) == list:
+                        collection.insert_many(data)
+                    elif type(data) == dict:
+                        collection.insert(data)
+            server._server_list[0].block_on_close = False
+            server.stop()
+            return Response(
+                            response=json.dumps({'run_msg':'Data added'}),
+                            mimetype='application/json',
+                            status=200
+                    )
+        except Exception as e:
+            server._server_list[0].block_on_close = False
+            server.stop()
+            return Response(
+                        response=json.dumps({'Error':str(e)}),
                         mimetype='application/json',
                         status=400
                 )
-        
 
-        rule = request.get_data()
-        if rule != None:
-                rule = eval(rule)
-    
-        
-                appendData(filepath,rule)
-
-        return Response(
-                        response=json.dumps({'run_msg':'Data added'}),
-                        mimetype='application/json',
-                        status=200
-                )
 
 #Server route to delete data
 @server.route('/del/<ty>',methods = ['DELETE'])
-def delrule(ty):
+def deldata(ty):
     if request.method == 'DELETE':
+        try:
+            server = _create_SSHtunnel()
+            server.start()
+            mydb = MongoClient("127.0.0.1",server.local_bind_port)["rules_engine"]
+            collection = mydb[ty]
 
-        filepath = updateFilePath(dirpath,ty) 
-        if filepath == False:
-                return Response(
-                        response=json.dumps({'Error':'Wrong type'}),
+            querry = request.get_data()
+            if querry:
+                querry = eval(querry)
+                deleted_count = collection.delete_many(querry)
+            message = 'Entries deleted: '+str(deleted_count)
+            sts = 200 if deleted_count > 0 else 400
+            server._server_list[0].block_on_close = False
+            server.stop()
+            return Response(
+                            response=json.dumps({'run_msg':message}),
+                            mimetype='application/json',
+                            status=sts
+                    )
+        except Exception as e:
+            server._server_list[0].block_on_close = False
+            server.stop()
+            return Response(
+                        response=json.dumps({'Error':str(e)}),
                         mimetype='application/json',
                         status=400
-                )
-
-        id = request.args['id']
-        flag = deleteData(filepath,id)
-        message = 'Data deleted' if flag is True else id+' doesnot exist'
-        sts = 200 if flag is True else 400
-        return Response(
-                        response=json.dumps({'run_msg':message}),
-                        mimetype='application/json',
-                        status=sts
                 )
 
 #Server route to modify data
 @server.route('/modify/<ty>',methods = ['POST'])
-def modifyrule(ty):
+def modifydata(ty):
     if request.method == 'POST':
-
-        filepath = updateFilePath(dirpath,ty) 
-        if filepath == False:
-                return Response(
-                        response=json.dumps({'Error':'Wrong type'}),
+        try:
+            server = _create_SSHtunnel()
+            server.start()
+            mydb = MongoClient("127.0.0.1",server.local_bind_port)["rules_engine"]
+            collection = mydb[ty]
+            
+            data = request.get_data()
+            if data!=None:
+                    querry=eval(data)["querry"]
+                    newData = eval(data)['newData']
+                    modified_count = collection.update_many(querry,{"$set":newData}).modified_count
+            msg = 'Entries updated: ' + str(modified_count)
+            sts = 200 if modified_count > 0 else 400
+            server._server_list[0].block_on_close = False
+            server.stop()
+            return Response(
+                            response=json.dumps({'run_msg':msg}),
+                            mimetype='application/json',
+                            status=sts
+                    )
+        except Exception as e:
+            server._server_list[0].block_on_close = False
+            server.stop()
+            return Response(
+                        response=json.dumps({'Error':str(e)}),
                         mimetype='application/json',
                         status=400
                 )
 
-        flag =False
-        rule = request.get_data()
-        if rule!=None:
-                rule=eval(rule)
-                flag = updateRule(filepath,rule)
-        
-        msg = 'Data updated' if flag else 'Data with specified id not found'
-        sts = 200 if flag is True else 400
-
-        return Response(
-                        response=json.dumps({'run_msg':msg}),
-                        mimetype='application/json',
-                        status=sts
-                )
 #Server route to get data
 @server.route('/get/<ty>',methods = ['GET'])
-def getrule(ty):
+def getdata(ty):
     if request.method=='GET':
+        try:
+            server = _create_SSHtunnel()
+            server.start()
+            mydb = MongoClient("127.0.0.1",server.local_bind_port)["rules_engine"]
+            collection = mydb[ty]
 
-        filepath = updateFilePath(dirpath,ty) 
-        if filepath == False:
-                return Response(
-                        response=json.dumps({'Error':'Wrong type'}),
-                        mimetype='application/json',
-                        status=400
-                )
+            data = request.get_data()
+            if data:
+                querry = eval(data)
+                result = collection.find(querry,{"_id":0})
+                result = list(result) if result else None
 
-        id = request.args['id']
-        if id == 'all':
-            data = getAllRules(filepath,id)
-        else:
-            data = getSpecificRule(filepath,id)
-
-        message = 'Data found' if data != False else 'data not found'
-        sts = 200 if data!=False  else 400
-        return Response(
+            message = 'Data found' if result else 'data not found'
+            sts = 200 if result  else 400
+            server._server_list[0].block_on_close = False
+            server.stop()
+            return Response(
                         response=json.dumps({'run_msg':message,'data':data}),
                         mimetype='application/json',
                         status=sts
+                )
+        except Exception as e:
+            server._server_list[0].block_on_close = False
+            server.stop()
+            return Response(
+                        response=json.dumps({'Error':str(e)}),
+                        mimetype='application/json',
+                        status=400
                 )
         
 
