@@ -4,7 +4,7 @@ import {ListGroup} from 'react-bootstrap'
 
 export class SideDS extends Component {
     render(){
-        const ds_names = Object.keys(this.props.data_sources)
+        const ds_names = this.props.data_sources.map( ele => ele['name'])
         return(
             <React.Fragment>
             <h3>List of Data Sources</h3>
