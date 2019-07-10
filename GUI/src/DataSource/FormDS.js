@@ -14,68 +14,127 @@ export class FormDS extends Component {
         },
         variables:[],
         multi_thread:true,
-        read:this.props.readOnly
+        read:false
     }
     
-    componentWillMount =()=>{
+
+    componentWillMount = ()=>{
         const {cat,data} = this.props
-        if(cat !== 'add'){
-            const {method,variables,multi_thread} = data[cat]
-            this.setState({
-                    name:cat,
-                    method,
-                    variables,
-                    multi_thread
-                })
-                if(method === 'API'){
-                    const {params,request,url} =data[cat]
-                    const dat = request==='post'?data[cat]['data']:null
-                    const info = {params,request,url,data:dat}
-                    this.setState({info})
-                }
-                else if(method ==='data_base'){
-                    const {host_name,user_name,password,data_base} = data[cat]
-                    const info = {host_name,user_name,password,data_base}
-                    this.setState({info})
-                }else if(method === 'SSH'){
-                    const {host_name,user_name,password,key_filename} = data[cat]
-                    const info = {host_name,user_name,password,key_filename}
-                    this.setState({info})
-                }
-    }}
+        if(cat!=='add'){
+            const d = data.filter(ele  => ele['name'] === cat)[0]
+            const {name,method,variables,multi_thread} = d
+            this.setState({name,method,variables,multi_thread,read:true})
+            if(method==='API'){
+                const {params,request,url} = d
+                const dat = request==='post'?d['data']:null
+                const info = {params,request,url,data:dat}
+                this.setState({info})
+            }
+            else if(method ==='data_base'){
+                const {host_name,user_name,password,data_base} = d
+                const info = {host_name,user_name,password,data_base}
+                this.setState({info})
+            }
+            else if(method==='SSH'){
+                const {host_name,user_name,password,key_filename} = d
+                const info = {host_name,user_name,password,key_filename}
+                this.setState({info})
+            }
+        }
+    }
+
+    componentWillReceiveProps = nextProps =>{
+        if(nextProps!==this.props){
+            const {cat,data} = this.props
+            if(cat!=='add'){
+            const d = data.filter(ele  => ele['name'] === cat)[0]
+            const {name,method,variables,multi_thread} = d
+            this.setState({name,method,variables,multi_thread,read:true})
+            if(method==='API'){
+                const {params,request,url} = d
+                const dat = request==='post'?d['data']:null
+                const info = {params,request,url,data:dat}
+                this.setState({info})
+            }
+            else if(method ==='data_base'){
+                const {host_name,user_name,password,data_base} = d
+                const info = {host_name,user_name,password,data_base}
+                this.setState({info})
+            }
+            else if(method==='SSH'){
+                const {host_name,user_name,password,key_filename} = d
+                const info = {host_name,user_name,password,key_filename}
+                this.setState({info})
+            }
+        }
+        }
+    }
+
+    // componentWillMount =()=>{
+    //     const {cat,data} = this.props
+    //     if(cat !== 'add'){
+            
+    //         const d = data.filter(ele  => ele['name'] === cat)[0]
+            
+            
+    //         const {method,variables,multi_thread} = d[cat]
+    //         this.setState({
+    //                 name:cat,
+    //                 method,
+    //                 variables,
+    //                 multi_thread
+    //             })
+    //             if(method === 'API'){
+    //                 const {params,request,url} =d[cat]
+    //                 const dat = request==='post'?d[cat]['data']:null
+    //                 const info = {params,request,url,data:dat}
+    //                 this.setState({info})
+    //             }
+    //             else if(method ==='data_base'){
+    //                 const {host_name,user_name,password,data_base} = data[cat]
+    //                 const info = {host_name,user_name,password,data_base}
+    //                 this.setState({info})
+    //             }else if(method === 'SSH'){
+    //                 const {host_name,user_name,password,key_filename} = data[cat]
+    //                 const info = {host_name,user_name,password,key_filename}
+    //                 this.setState({info})
+    //             }
+    // }}
     
 
-    componentWillReceiveProps= (nextProps)=>{
+    // componentWillReceiveProps= (nextProps)=>{
         
-        if(nextProps!==this.props && nextProps.cat !== 'add'){
+    //     if(nextProps!==this.props && nextProps.cat !== 'add'){
 
-            const {cat,data} = nextProps
-            const {method,variables,multi_thread} = data[cat]
-            this.setState({
-                    name:cat,
-                    method,
-                    variables,
-                    multi_thread
-                })
-                if(method === 'API'){
-                    const {params,request,url} =data[cat]
-                    const dat = request==='post'?data[cat]['data']:null
-                    const info = {params,request,url,data:dat}
-                    this.setState({info})
-                }
-                else if(method ==='data_base'){
-                    const {host_name,user_name,password,data_base} = data[cat]
-                    const info = {host_name,user_name,password,data_base}
-                    this.setState({info})
-                }else if(method === 'SSH'){
-                    const {host_name,user_name,password,key_filename} = data[cat]
-                    const info = {host_name,user_name,password,key_filename}
-                    this.setState({info})
-                }
+    //         const {cat,data} = nextProps
+    //         const d = data.filter(ele  => ele['name'] === cat)[0]
+
+    //         const {method,variables,multi_thread} = d[cat]
+    //         this.setState({
+    //                 name:cat,
+    //                 method,
+    //                 variables,
+    //                 multi_thread
+    //             })
+    //             if(method === 'API'){
+    //                 const {params,request,url} =data[cat]
+    //                 const dat = request==='post'?data[cat]['data']:null
+    //                 const info = {params,request,url,data:dat}
+    //                 this.setState({info})
+    //             }
+    //             else if(method ==='data_base'){
+    //                 const {host_name,user_name,password,data_base} = data[cat]
+    //                 const info = {host_name,user_name,password,data_base}
+    //                 this.setState({info})
+    //             }else if(method === 'SSH'){
+    //                 const {host_name,user_name,password,key_filename} = data[cat]
+    //                 const info = {host_name,user_name,password,key_filename}
+    //                 this.setState({info})
+    //             }
             
-        }
+    //     }
         
-    }
+    // }
 
     changeSelectState = event =>{
         this.setState({[event.target.name]:event.target.value})
