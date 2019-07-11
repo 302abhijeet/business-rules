@@ -6,6 +6,7 @@ def check_valid_data(data_given,mydb):
         to_be_removed = []
         for d in data_given:
                 if not variables.find_one({"name":d}):
+                        main_server.output.append("parameter variable: {} not defined in database!".format(d))
                         to_be_removed.append(d)
 
         for d in to_be_removed:
@@ -31,9 +32,24 @@ def checkValidatePD(data):
                 return []
         
         data =  eval(data)
-        type_allowed = ['API','SSH','data_base','derived']
+        to_be_removed = []
         
         for d in data:
-                if d['method'] not in type_allowed:
+                if d['method'] == "API":
+                    if not {"name","method","request","url","cache","multi_thread","params","variables"}.issubset(d.keys()) or (d["request"]=="post" and "data" not in d):
+                        main_server.output.append("DataSource: {} mandatory arguments are missing!".format(d))
+                        to_be_removed.append(d)
+                elif d["method"] == "SSH":
+                    if not {"name","method","host_name","user_name","cache","password","key_filename","variables","multi_thread"}.issubset(d.keys()):
+                            main_server.output.append("DataSource: {} mandatory arguments are missing!".format(d))
+                            to_be_removed.append(d)
+                elif d["method"] == "database":
+                    if not {"name","method","host_name","user_name","cache","password","data_base","variables","multi_thread"}.issubset(d.keys()):
+                            main_server.output.append("DataSource: {} mandatory arguments are missing!".format(d))
+                            to_be_removed.append(d)
+                else:
+                        main_server.output.append("DataSource method: {} not defined in database!".format(d))
                         data.remove(d)
+        for d in to_be_removed:
+            data.remove(d)
         return data

@@ -37,7 +37,7 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
     output = []       #final output for run_rule/use_case
     #create log file and logger
     file_name =(run_rule or case)+"_"+str(datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
-    logging.basicConfig(filename="./logs/"+file_name+".log",format='Module:%(module)s Function:%(funcName)s Line:%(lineno)d %(levelname)s %(message)s',filemode='w')
+    logging.basicConfig(filename="./logs/"+file_name+".log",format='%(levelname)s Module:%(module)s Function:%(funcName)s Line:%(lineno)d %(message)s',filemode='w')
     logger = logging.getLogger()
     logger.setLevel(20)
     #create xml report to be sent to user

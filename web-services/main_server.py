@@ -6,6 +6,7 @@ from sshtunnel import SSHTunnelForwarder
 from pymongo import MongoClient
 
 server = Flask(__name__)
+output = []
 
 
 dirpath = './business_rules/configuration_files/'
@@ -33,6 +34,7 @@ def runrule():
     Returns:
         response -- response to be given to user
     """
+    main_server.output = []
     server = _create_SSHtunnel()
     server.start()
     mydb = MongoClient("127.0.0.1",server.local_bind_port)["rules_engine"]
@@ -73,19 +75,19 @@ def runrule():
             try:
                 with open(str(e),'r') as f:
                     return  Response(
-                            response=json.dumps({'file':str(e)}),
+                            response=json.dumps({'parameter_warnings':main_server.output,'file':str(e)}),
                             mimetype='application/json',
                             status=500
                     )
             except:
                 pass
             return  Response(
-                    response=json.dumps({'file':str(e)}),
+                    response=json.dumps({'parameter_warnings':main_server.output,'error':str(e)}),
                     mimetype='application/json',
                     status=500
             )
         return  Response(
-                        response=json.dumps({'run_msg':'Run successful','data':data,'file':file_path}),
+                        response=json.dumps({'run_msg':'Run successful','data':data,'file':file_path,'parameter_warnings':main_server.output,}),
                         mimetype='application/json',
                         status=200
                 )
@@ -99,6 +101,7 @@ def runusecase():
     Returns:
         response -- response to be given to user
     """
+    main_server.output = []
     server = _create_SSHtunnel()
     server.start()
     mydb = MongoClient("127.0.0.1",server.local_bind_port)["rules_engine"]
@@ -127,7 +130,6 @@ def runusecase():
 
         del data_given['use_case']
         check_valid_data(data_given,mydb)
-        
         parameter_data = checkValidatePD(request.get_data())
         
         #this function returns a list of messages
@@ -141,19 +143,19 @@ def runusecase():
             try:
                 with open(str(e),'r') as f:
                     return  Response(
-                            response=json.dumps({'file':str(e)}),
+                            response=json.dumps({'parameter_warnings':main_server.output,'file':str(e)}),
                             mimetype='application/json',
                             status=500
                         )
             except:
                 pass 
             return  Response(
-                        response=json.dumps({'Error':str(e)}),
+                        response=json.dumps({'parameter_warnings':main_server.output,'Error':str(e)}),
                         mimetype='application/json',
                         status=500
                     ) 
         return Response(
-                        response=json.dumps({'run_msg':'run successful','data':data,'file':file_path}),
+                        response=json.dumps({'run_msg':'run successful','data':data,'file':file_path,'parameter_warnings':main_server.output}),
                         mimetype='application/json',
                         status=200
                 )
@@ -345,7 +347,7 @@ def bad_method(error):
     Returns:
         response -- response to be given to user
     """
-        return Response(status=405,response=json.dumps({'Error':'Method not allowed'}))
+    return Response(status=405,response=json.dumps({'Error':'Method not allowed'}))
 
 @server.errorhandler(404)
 def not_found(error):
@@ -357,7 +359,7 @@ def not_found(error):
     Returns:
         response -- response to be given to user
     """
-        return Response(status=404,response=json.dumps({'Error':'Route not found'}))
+    return Response(status=404,response=json.dumps({'Error':'Route not found'}))
 
 if __name__ == "__main__":
     server.run(port = 5000,debug=True)
