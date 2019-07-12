@@ -14,7 +14,10 @@ export class FormRule extends Component {
         variables:[],
         actions:[],
         multi_thread:false,
-        read:false
+        read:false,
+        current_act_true:undefined,
+        current_param_true:{},
+        current_mt_true:false
     }
     
     componentWillMount = () =>{
@@ -23,7 +26,7 @@ export class FormRule extends Component {
             const r = rule.filter(ele => ele['name'] === cat)[0]
             console.log(r)
             
-            this.setState({...r,read:true})
+            this.setState({...r,read:true, current_act_true:undefined,current_param_true:{}})
         }else{
             this.setState({
                 name:'',
@@ -33,7 +36,9 @@ export class FormRule extends Component {
                 variables:[],
                 actions:[],
                 multi_thread:false,
-                read:false
+                read:false,
+                current_act_true:undefined,
+                current_param_true:{}
             })
         }
     }
@@ -45,7 +50,7 @@ export class FormRule extends Component {
                 const r = rule.filter(ele => ele['name'] === cat)[0]
                 
 
-                this.setState({...r,read:true})
+                this.setState({...r,read:true,current_act_true:undefined,current_param_true:{}})
             }else{
                 this.setState({
                     name:'',
@@ -55,7 +60,10 @@ export class FormRule extends Component {
                     variables:[],
                     actions:[],
                     multi_thread:false,
-                    read:false
+                    read:false,
+                    current_act_true:undefined,
+                    current_param_true:{}
+
                 })
             }
         }
@@ -78,6 +86,23 @@ export class FormRule extends Component {
         })
     }
     
+    onChangeAct = event =>{
+        const val = event.target.value
+        const params = this.props.actions.filter(
+            ele => ele['name'] === val 
+        )[0]['params']
+        console.log(params)
+
+        this.setState({
+            current_act_true:val,
+            current_param_true: params 
+        })
+        this.forceUpdate()
+    }
+
+    addTrueAct = () =>{
+
+    }
     
     render() {
 
@@ -96,6 +121,7 @@ export class FormRule extends Component {
             }
         })
         
+        const cpt = this.state.current_param_true
 
         return (
             <React.Fragment>
@@ -147,11 +173,45 @@ export class FormRule extends Component {
                     
                     <Form.Group as={Row} controlId='conditions'>
                         <Form.Label column sm={3}>Conditions</Form.Label>
-                        <Col sm={9}>
-                           <Condition variables = {this.props.variables}/>
-                        </Col>
+                            
+
+                           {/* <Condition variables = {this.state.variables}/> */}
                     
                     </Form.Group>
+                    
+                    <Form.Group as={Row} controlId='actions_trues'>
+                        <Form.Label column sm={3}>True actions</Form.Label>
+                            
+                        <Col sm={4}>
+                            <Col>
+                            <Form.Control as='select' onChange={this.onChangeAct} value = {this.state.current_act_true}>
+                                { this.state.actions.map( ele => <option value={ele}>{ele}</option>     )  }
+                            </Form.Control></Col>
+                            <Col>
+                            <Form.Label>multi_thread</Form.Label>
+                            <Form.Control type='checkbox' />
+                            </Col>
+
+                        </Col>
+                        <Col sm={4}>
+                            <Button variant='outline-danger' onClick={this.addTrueAct}>Add this action for true</Button>
+                        </Col>
+                        <Row>
+                            {
+                                Object.keys(cpt).map( ele =>{
+                                    return(
+                                        <React.Fragment>
+                                            <Form.Label >{ele}</Form.Label>
+                                            <Form.Control type='text'></Form.Control>
+                                        </React.Fragment>
+                                    )
+                                })
+                            }
+                        </Row>
+
+                    </Form.Group>
+
+                    
 
                 </Form>
                 
@@ -161,3 +221,29 @@ export class FormRule extends Component {
 }
 
 export default FormRule
+
+class ActionDisplay extends Component {
+    render(){
+        return(
+            <React.Fragment>
+                <Row>
+                    <Col sm={3}>
+                    <Form.Group as={Row} >
+                        <Form.Label column sm={3}>Name</Form.Label>
+                        <Form.Control as='select' >
+                            {this.props.action_list.map(
+                                ele => <option value={ele}>{ele}</option>
+                            )}
+                        </Form.Control>
+                    </Form.Group>
+                    </Col>
+                    <Col sm={3}>
+
+                    </Col>
+                </Row>
+                
+
+            </React.Fragment>
+        )
+    }
+}
