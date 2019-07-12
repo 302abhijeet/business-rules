@@ -1,5 +1,0 @@
-2019-07-08 14:38:49,144 INFO Starting _run_API
-2019-07-08 14:38:49,153 INFO Use_case fetched from database
-2019-07-08 14:38:49,153 INFO source_variable_list made :['total_mem', 'free_mem', 'CPU_usage', 'disk_space']
-2019-07-08 14:38:49,155 INFO 127.0.0.1 - - [08/Jul/2019 14:38:49] "POST /runusecase?use_case=CPU_Performance HTTP/1.1" 500 -
-2019-07-08 14:39:01,310 INFO  * Detected change in 'C:\\Users\\axsingh\\Documents\\business-rules\\web-services\\business_rules\\API.py', reloading

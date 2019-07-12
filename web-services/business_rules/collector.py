@@ -33,18 +33,18 @@ class Collector:
                 ET.SubElement(API.root[0],"RuntimeError").text = str("Unable to initiate variable: {}! Rules with variable will not run!Error: {}".format(var,e))
                 kill_variable.append(var)
 
-    def _get_source(self,source,variables) :
+    def _get_source(self,source,variables,mydb) :
         """connect to source and get vlues for input variables
         
         Arguments:
             source {dict} -- source to be connected to
             variables {dict} -- variables in config file
+            mydb {pymongo} -- database to be accessed
         
         Raises:
             NameError: source method is not defined
         """
         result = {}
-        mydb = MongoClient("localhost",27017)[API.database]
         if source["cache"]:
             result = mydb["cache"].find_one({"name":source['name']},{"_id":0,"result":1})
             if result and set(source['variables']).issubset(result['result'].keys()):
@@ -84,13 +84,14 @@ class Collector:
         self._init_source_variables(variables,result,source['name'])
 
 
-    def __init__(self,parameter_variables = {},parameter_dataSource = [],variables = {}) :
+    def __init__(self,mydb,parameter_variables = {},parameter_dataSource = [],variables = {}) :
         """initialise product with input variables
         
         Keyword Arguments:
             parameter_variables {dict} -- user defined values for variables (default: {{}})
             parameter_dataSource {list} -- data sources to fetch input values from (default: {[]})
             variables {dict} -- variables in config file (default: {{}})
+            mydb {pymongo} -- database to be accessed
         """
         API.logger.info("starting collector module")
         global var_report
@@ -107,7 +108,7 @@ class Collector:
                     kill_variable.append(variables[var]['name'])
                 continue
             if source["multi_thread"]:
-                thread = threading.Thread(target = self._get_source, args = (source,variables),name=source['name'])
+                thread = threading.Thread(target = self._get_source, args = (source,variables,mydb),name=source['name'])
                 API.logger.info("Starting thread: {}".format(thread.getName()))
                 thread.start()
                 threads.append(thread)
@@ -117,7 +118,7 @@ class Collector:
                         thread.join()
                         API.logger.info("Joining thread: {}".format(thread.getName()))
                     threads = []
-                self._get_source(source,variables)
+                self._get_source(source,variables,mydb)
             
 		
         for var in parameter_variables :

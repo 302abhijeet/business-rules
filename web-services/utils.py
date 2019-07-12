@@ -1,30 +1,28 @@
-import yaml
+import main_server
 
 #to check if variables exists
-def check_valid_data(data_given):
-        with open('./business_rules/configuration_files/variables.yml') as f:
-                variables = yaml.load(f, Loader=yaml.FullLoader)
+def check_valid_data(data_given,mydb):
+        variables = mydb["variables"]
         to_be_removed = []
         for d in data_given:
-                if d not in variables:
+                if not variables.find_one({"name":d}):
+                        main_server.output.append("parameter variable: {} not defined in database!".format(d))
                         to_be_removed.append(d)
 
         for d in to_be_removed:
                 del data_given[d]  
 
 #to check if rule exists
-def check_valid_rule(rulename):
-    with open('./business_rules/configuration_files/rules.yml') as f:
-        rule_list = yaml.load(f,Loader=yaml.FullLoader)
-    if rulename not in rule_list:
+def check_valid_rule(rulename,mydb):
+    rule_list = mydb["rules"]
+    if not rule_list.find_one({"name":rulename}):
         return False
     return True
 
 #to check if use case exist
-def check_valid_usecase(ucname):
-    with open('./business_rules/configuration_files/use_cases.yml') as f:
-        uc_list = yaml.load(f,Loader=yaml.FullLoader)
-    if ucname not in uc_list:
+def check_valid_usecase(ucname,mydb):
+    uc_list = mydb["use_cases"]
+    if not uc_list.find_one({"name":ucname}):
         return False
     return True
 
@@ -34,9 +32,24 @@ def checkValidatePD(data):
                 return []
         
         data =  eval(data)
-        type_allowed = ['API','SSH','data_base','derived']
+        to_be_removed = []
         
         for d in data:
-                if d['method'] not in type_allowed:
+                if d['method'] == "API":
+                    if not {"name","method","request","url","cache","multi_thread","params","variables"}.issubset(d.keys()) or (d["request"]=="post" and "data" not in d):
+                        main_server.output.append("DataSource: {} mandatory arguments are missing!".format(d))
+                        to_be_removed.append(d)
+                elif d["method"] == "SSH":
+                    if not {"name","method","host_name","user_name","cache","password","key_filename","variables","multi_thread"}.issubset(d.keys()):
+                            main_server.output.append("DataSource: {} mandatory arguments are missing!".format(d))
+                            to_be_removed.append(d)
+                elif d["method"] == "database":
+                    if not {"name","method","host_name","user_name","cache","password","data_base","variables","multi_thread"}.issubset(d.keys()):
+                            main_server.output.append("DataSource: {} mandatory arguments are missing!".format(d))
+                            to_be_removed.append(d)
+                else:
+                        main_server.output.append("DataSource method: {} not defined in database!".format(d))
                         data.remove(d)
+        for d in to_be_removed:
+            data.remove(d)
         return data

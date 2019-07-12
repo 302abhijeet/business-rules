@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+	<Rules_engine>
+		<Errors/>
+		<Warning>
+			<INFO>Variables: ['correct'] of Source: database_sqlRuleEngine taken from cache!</INFO>
+		</Warning>
+		<Rules_status>
+			<rule2>Rule has returned false!</rule2>
+		</Rules_status>
+		<Variables>
+			<correct source="database_sqlRuleEngine">5</correct>
+			<actual source="API_getPostman">78</actual>
+			<incorrect source="API_postPostman">33</incorrect>
+			<expected source="SSH_awsIntern">104
+</expected>
+		</Variables>
+		<Case_Report/>
+	</Rules_engine>

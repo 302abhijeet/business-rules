@@ -1,0 +1,42 @@
+INFO Module:API Function:_run_API Line:55 Starting _run_API
+INFO Module:API Function:_run_API Line:244 Run_Rule fetched from database
+INFO Module:API Function:_run_API Line:288 source_variable_list made :[]
+INFO Module:API Function:_run_API Line:293 adding variable: actual
+INFO Module:API Function:_run_API Line:293 adding variable: expected
+INFO Module:API Function:_run_API Line:293 adding variable: correct
+INFO Module:API Function:_run_API Line:293 adding variable: incorrect
+INFO Module:API Function:_run_API Line:363 Addin data source: API_getPostman to be populated!
+INFO Module:API Function:_run_API Line:363 Addin data source: SSH_awsIntern to be populated!
+INFO Module:API Function:_run_API Line:363 Addin data source: database_sqlRuleEngine to be populated!
+INFO Module:API Function:_run_API Line:363 Addin data source: API_postPostman to be populated!
+INFO Module:collector Function:__init__ Line:96 starting collector module
+INFO Module:collector Function:__init__ Line:103 Getting data source: API_getPostman variables!
+INFO Module:collector Function:__init__ Line:112 Starting thread: API_getPostman
+INFO Module:collector Function:__init__ Line:103 Getting data source: SSH_awsIntern variables!
+INFO Module:collector Function:__init__ Line:112 Starting thread: SSH_awsIntern
+INFO Module:collector Function:__init__ Line:103 Getting data source: database_sqlRuleEngine variables!
+INFO Module:collector Function:__init__ Line:112 Starting thread: database_sqlRuleEngine
+INFO Module:collector Function:__init__ Line:103 Getting data source: API_postPostman variables!
+INFO Module:collector Function:__init__ Line:112 Starting thread: API_postPostman
+INFO Module:collector Function:_get_source Line:65 Source: API_getPostman fetched variables: {'actual': 78}
+INFO Module:collector Function:_get_source Line:51 Variables : ['correct'] of Source : database_sqlRuleEngine taken from cache!
+INFO Module:collector Function:_init_source_variables Line:29 Variable: correct has been created!Value: 5!Source: database_sqlRuleEngine
+INFO Module:collector Function:_init_source_variables Line:29 Variable: actual has been created!Value: 78!Source: API_getPostman
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:collector Function:_get_source Line:65 Source: API_postPostman fetched variables: {'incorrect': 33}
+INFO Module:collector Function:_init_source_variables Line:29 Variable: incorrect has been created!Value: 33!Source: API_postPostman
+INFO Module:transport Function:_log Line:1760 Authentication (publickey) successful!
+INFO Module:collector Function:_get_source Line:65 Source: SSH_awsIntern fetched variables: {'expected': '104\n'}
+INFO Module:collector Function:_init_source_variables Line:29 Variable: expected has been created!Value: 104
+!Source: SSH_awsIntern
+INFO Module:API Function:_run_API Line:368 variables input taken from collector!
+INFO Module:API Function:ProductVariables Line:400 Product Variable: actual has been created!
+INFO Module:API Function:ProductVariables Line:400 Product Variable: expected has been created!
+INFO Module:API Function:ProductVariables Line:400 Product Variable: correct has been created!
+INFO Module:API Function:ProductVariables Line:400 Product Variable: incorrect has been created!
+INFO Module:API Function:_run_API Line:421 Adding action : condition_pass to list!
+INFO Module:API Function:_run_API Line:421 Adding action : condition_fail to list!
+INFO Module:API Function:ProductActions Line:458 Creater Product action : condition_pass successfully!
+INFO Module:API Function:ProductActions Line:458 Creater Product action : condition_fail successfully!
+INFO Module:engine Function:do_actions Line:108 Starting action: condition_fail
+INFO Module:API Function:_run_API Line:488 Rule has retuned false!
