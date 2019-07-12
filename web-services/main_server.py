@@ -2,12 +2,13 @@ import business_rules.API as API
 import json
 from utils import *
 from flask import Flask,request,jsonify,Response
+<<<<<<< HEAD
 from sshtunnel import SSHTunnelForwarder
 from pymongo import MongoClient
+from flask_cors import CORS
 
 server = Flask(__name__)
-output = []
-
+CORS(server)
 
 dirpath = './business_rules/configuration_files/'
 
@@ -200,6 +201,18 @@ def adddata(ty):
                         mimetype='application/json',
                         status=400
                 )
+<<<<<<< HEAD
+=======
+        
+
+        rule = request.get_data()
+        if rule != None:
+                print(rule)
+
+                rule = eval(rule)
+        
+                appendData(filepath,rule)
+>>>>>>> validation
 
 
 #Server route to delete data
