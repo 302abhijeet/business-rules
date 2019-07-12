@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {Form,Row,Col, Button} from 'react-bootstrap'
 import {Link,withRouter} from 'react-router-dom'
+import Select from 'react-select'
 
 
 export class FormVar extends Component {

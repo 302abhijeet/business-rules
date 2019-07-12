@@ -2,7 +2,6 @@ import business_rules.API as API
 import json
 from utils import *
 from flask import Flask,request,jsonify,Response
-<<<<<<< HEAD
 from sshtunnel import SSHTunnelForwarder
 from pymongo import MongoClient
 from flask_cors import CORS
@@ -19,13 +18,13 @@ def _create_SSHtunnel():
     Returns:
         sshunnel -- server to ssh instance
     """
-    server = SSHTunnelForwarder(
+    ssh_server = SSHTunnelForwarder(
         "10.137.89.13",
         ssh_username="ubuntu",
         ssh_password="rules_engine",
         remote_bind_address=('127.0.0.1', 27017)
     )
-    return server
+    return ssh_server
 
 #Server route to run rules
 @server.route('/runrule',methods=['POST'])
@@ -36,14 +35,14 @@ def runrule():
         response -- response to be given to user
     """
     main_server.output = []
-    server = _create_SSHtunnel()
-    server.start()
-    mydb = MongoClient("127.0.0.1",server.local_bind_port)["rules_engine"]
+    ssh_server = _create_SSHtunnel()
+    ssh_server.start()
+    mydb = MongoClient("127.0.0.1",ssh_server.local_bind_port)["rules_engine"]
     if request.method == 'POST':
         data_given = request.args.to_dict()
         if 'rule' not in data_given:
-                server._server_list[0].block_on_close = False
-                server.stop()
+                ssh_server._server_list[0].block_on_close = False
+                ssh_server.stop()
                 return Response(
                         response=json.dumps({'Error':'Please specify a rule'}),
                         mimetype='application/json',
@@ -52,8 +51,8 @@ def runrule():
         rulename = data_given['rule']
         flag = check_valid_rule(rulename,mydb)
         if not flag:
-            server._server_list[0].block_on_close = False
-            server.stop()
+            ssh_server._server_list[0].block_on_close = False
+            ssh_server.stop()
             return  Response(
                         response=json.dumps({'Error':'Rule does not exist'}),
                         mimetype='application/json',
@@ -68,11 +67,11 @@ def runrule():
         #this function returns a list of messages
         try:
                 data,file_path = API._run_API(run_rule=rulename,case=None,parameter_variables=data_given,parameter_dataSource=parameter_data,mydb=mydb)
-                server._server_list[0].block_on_close = False
-                server.stop()
+                ssh_server._server_list[0].block_on_close = False
+                ssh_server.stop()
         except Exception as e:
-            server._server_list[0].block_on_close = False
-            server.stop()
+            ssh_server._server_list[0].block_on_close = False
+            ssh_server.stop()
             try:
                 with open(str(e),'r') as f:
                     return  Response(
@@ -103,15 +102,15 @@ def runusecase():
         response -- response to be given to user
     """
     main_server.output = []
-    server = _create_SSHtunnel()
-    server.start()
-    mydb = MongoClient("127.0.0.1",server.local_bind_port)["rules_engine"]
+    ssh_server = _create_SSHtunnel()
+    ssh_server.start()
+    mydb = MongoClient("127.0.0.1",ssh_server.local_bind_port)["rules_engine"]
     if request.method == 'POST':
         #get the optional variable values as arguments
         data_given = request.args.to_dict()
         if 'use_case' not in data_given:
-                server._server_list[0].block_on_close = False
-                server.stop()
+                ssh_server._server_list[0].block_on_close = False
+                ssh_server.stop()
                 return Response(
                         response=json.dumps({'Error':'Please specify a Use Case'}),
                         mimetype='application/json',
@@ -120,8 +119,8 @@ def runusecase():
         ucname = data_given['use_case']
         flag = check_valid_usecase(ucname,mydb)
         if not flag:
-            server._server_list[0].block_on_close = False
-            server.stop()
+            ssh_server._server_list[0].block_on_close = False
+            ssh_server.stop()
             return Response(
                         response=json.dumps({'Error':'Use case doesnot exist'}),
                         mimetype='application/json',
@@ -136,11 +135,11 @@ def runusecase():
         #this function returns a list of messages
         try:
             data,file_path = API._run_API(run_rule=None,case=ucname,parameter_variables=data_given,parameter_dataSource=parameter_data,mydb=mydb)
-            server._server_list[0].block_on_close = False
-            server.stop()
+            ssh_server._server_list[0].block_on_close = False
+            ssh_server.stop()
         except Exception as e:
-            server._server_list[0].block_on_close = False
-            server.stop()
+            ssh_server._server_list[0].block_on_close = False
+            ssh_server.stop()
             try:
                 with open(str(e),'r') as f:
                     return  Response(
@@ -175,44 +174,31 @@ def adddata(ty):
     """
     if request.method == 'POST':
         try:
-            server = _create_SSHtunnel()
-            server.start()
-            mydb = MongoClient("127.0.0.1",server.local_bind_port)["rules_engine"]
+            ssh_server = _create_SSHtunnel()
+            ssh_server.start()
+            mydb = MongoClient("127.0.0.1",ssh_server.local_bind_port)["rules_engine"]
             collection = mydb[ty]
-            data = request.get_data()
+            data = json.loads(request.get_data())
             if data != None:
-                    data = eval(rule)
                     if type(data) == list:
                         collection.insert_many(data)
                     elif type(data) == dict:
                         collection.insert(data)
-            server._server_list[0].block_on_close = False
-            server.stop()
+            ssh_server._server_list[0].block_on_close = False
+            ssh_server.stop()
             return Response(
                             response=json.dumps({'run_msg':'Data added'}),
                             mimetype='application/json',
                             status=200
                     )
         except Exception as e:
-            server._server_list[0].block_on_close = False
-            server.stop()
+            ssh_server._server_list[0].block_on_close = False
+            ssh_server.stop()
             return Response(
                         response=json.dumps({'Error':str(e)}),
                         mimetype='application/json',
                         status=400
                 )
-<<<<<<< HEAD
-=======
-        
-
-        rule = request.get_data()
-        if rule != None:
-                print(rule)
-
-                rule = eval(rule)
-        
-                appendData(filepath,rule)
->>>>>>> validation
 
 
 #Server route to delete data
@@ -228,9 +214,9 @@ def deldata(ty):
     """
     if request.method == 'DELETE':
         try:
-            server = _create_SSHtunnel()
-            server.start()
-            mydb = MongoClient("127.0.0.1",server.local_bind_port)["rules_engine"]
+            ssh_server = _create_SSHtunnel()
+            ssh_server.start()
+            mydb = MongoClient("127.0.0.1",ssh_server.local_bind_port)["rules_engine"]
             collection = mydb[ty]
 
             querry = request.get_data()
@@ -239,16 +225,16 @@ def deldata(ty):
                 deleted_count = collection.delete_many(querry)
             message = 'Entries deleted: '+str(deleted_count)
             sts = 200 if deleted_count > 0 else 400
-            server._server_list[0].block_on_close = False
-            server.stop()
+            ssh_server._server_list[0].block_on_close = False
+            ssh_server.stop()
             return Response(
                             response=json.dumps({'run_msg':message}),
                             mimetype='application/json',
                             status=sts
                     )
         except Exception as e:
-            server._server_list[0].block_on_close = False
-            server.stop()
+            ssh_server._server_list[0].block_on_close = False
+            ssh_server.stop()
             return Response(
                         response=json.dumps({'Error':str(e)}),
                         mimetype='application/json',
@@ -268,9 +254,9 @@ def modifydata(ty):
     """
     if request.method == 'POST':
         try:
-            server = _create_SSHtunnel()
-            server.start()
-            mydb = MongoClient("127.0.0.1",server.local_bind_port)["rules_engine"]
+            ssh_server = _create_SSHtunnel()
+            ssh_server.start()
+            mydb = MongoClient("127.0.0.1",ssh_server.local_bind_port)["rules_engine"]
             collection = mydb[ty]
             
             data = request.get_data()
@@ -280,16 +266,16 @@ def modifydata(ty):
                     modified_count = collection.update_many(querry,{"$set":newData}).modified_count
             msg = 'Entries updated: ' + str(modified_count)
             sts = 200 if modified_count > 0 else 400
-            server._server_list[0].block_on_close = False
-            server.stop()
+            ssh_server._server_list[0].block_on_close = False
+            ssh_server.stop()
             return Response(
                             response=json.dumps({'run_msg':msg}),
                             mimetype='application/json',
                             status=sts
                     )
         except Exception as e:
-            server._server_list[0].block_on_close = False
-            server.stop()
+            ssh_server._server_list[0].block_on_close = False
+            ssh_server.stop()
             return Response(
                         response=json.dumps({'Error':str(e)}),
                         mimetype='application/json',
@@ -309,29 +295,26 @@ def getdata(ty):
     """
     if request.method=='GET':
         try:
-            server = _create_SSHtunnel()
-            server.start()
-            mydb = MongoClient("127.0.0.1",server.local_bind_port)["rules_engine"]
+            ssh_server = _create_SSHtunnel()
+            ssh_server.start()
+            mydb = MongoClient("127.0.0.1",ssh_server.local_bind_port)["rules_engine"]
             collection = mydb[ty]
 
-            data = request.get_data()
-            if data:
-                querry = eval(data)
-                result = collection.find(querry,{"_id":0})
-                result = list(result) if result else None
+            result = collection.find({},{"_id":0})
+            result = list(result) if result else None
 
             message = 'Data found' if result else 'data not found'
             sts = 200 if result  else 400
-            server._server_list[0].block_on_close = False
-            server.stop()
+            ssh_server._server_list[0].block_on_close = False
+            ssh_server.stop()
             return Response(
-                        response=json.dumps({'run_msg':message,'data':data}),
+                        response=json.dumps({'run_msg':message,'data':result}),
                         mimetype='application/json',
                         status=sts
                 )
         except Exception as e:
-            server._server_list[0].block_on_close = False
-            server.stop()
+            ssh_server._server_list[0].block_on_close = False
+            ssh_server.stop()
             return Response(
                         response=json.dumps({'Error':str(e)}),
                         mimetype='application/json',

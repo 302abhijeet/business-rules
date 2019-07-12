@@ -80,35 +80,35 @@ export  class Provider extends Component {
     //fetch data from server here
     componentDidMount(){
         //use axios to get data
-        axios.get('http://127.0.0.1:5000/get/variables?id=all ')
+        axios.get('http://127.0.0.1:5000/get/variables ')
             .then(res => {
                 //console.log(res.data.data)
                 this.setState({ variables: res.data.data})
             })
             .catch(err => console.log(err))
 
-        axios.get('http://127.0.0.1:5000/get/datasource?id=all ')
+        axios.get('http://127.0.0.1:5000/get/DataSource ')
             .then(res => {
                 
                 this.setState({ data_sources: res.data.data})
             })
             .catch(err => console.log(err))
         
-        axios.get('http://127.0.0.1:5000/get/rule?id=all ')
+        axios.get('http://127.0.0.1:5000/get/rules ')
             .then(res => {
                 
                 this.setState({ rule: res.data.data})
             })
             .catch(err => console.log(err))
 
-        axios.get('http://127.0.0.1:5000/get/use_case?id=all ')
+        axios.get('http://127.0.0.1:5000/get/use_cases ')
             .then(res => {
                 
                 this.setState({ use_cases: res.data.data})
             })
             .catch(err => console.log(err))
         
-        axios.get('http://127.0.0.1:5000/get/action?id=all ')
+        axios.get('http://127.0.0.1:5000/get/actions ')
             .then(res => {
                 
                 this.setState({ action: res.data.data})
