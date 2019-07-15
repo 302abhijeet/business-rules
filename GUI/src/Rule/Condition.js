@@ -5,13 +5,19 @@ import {Form,Row,Col,Button} from'react-bootstrap'
 export class Condition extends Component {
     
     state = {
-
+        data_tree:{}
     }
     
     render() {
         return (
-        
-            <SubCond variables={this.props.variables}/>
+            <React.Fragment>
+                <Form.Group>
+                    <Form.Label>Conditions</Form.Label>
+                    <SubCond variables={this.props.variables} data_tree = {this.state.data_tree}/> 
+                </Form.Group>
+                
+
+            </React.Fragment>
         )
     }
 }
@@ -61,24 +67,9 @@ class SubCond extends Component {
     render() {
         return(
             <React.Fragment>
-                <Row>
-                <Col sm={3}>
-                    <Form.Control as = 'select' >
-                        <option value='all'>all</option>
-                        <option value='any'>any</option>
-                    </Form.Control>
-                </Col>
-                <Col sm={4}>
-                    <Button variant = 'outline-dark' onClick={this.addCondition}>Add Condition</Button>
-                </Col>
-                <Col sm={5}>
-                    <Button variant = 'outline-dark' onClick={this.addSubCondition}>Add Sub-Condition</Button>
-
-                </Col>    
-               </Row>
-               <Row>
-               <CondVar variables ={this.props.variables}/>
-               </Row>
+                <Form.Group>
+                    <Form.Label column sm={3}></Form.Label>
+                </Form.Group>
                
             </React.Fragment>
         )
