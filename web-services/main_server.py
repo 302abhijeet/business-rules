@@ -262,7 +262,8 @@ def modifydata(ty):
             if data!=None:
                     querry=data["querry"]
                     newData = data['newData']
-                    modified_count = collection.update_many(querry,{"$set":newData}).modified_count
+                    modified_count = collection.delete_many(querry).deleted_count
+                    collection.insert(newData)
             msg = 'Entries updated: ' + str(modified_count)
             sts = 200 if modified_count > 0 else 400
             ssh_server._server_list[0].block_on_close = False

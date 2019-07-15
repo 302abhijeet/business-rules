@@ -11,7 +11,8 @@ export class Variable extends Component {
             <Consumer>
                 {value=>{
                     const {cat} = this.props
-                    const {data_sources,variables,redirect} = value.value
+                    const {variables,redirect} = value.value
+                    const data_sources = value.value.DataSource
                     // if(redirect===true)
                     //     return <Redirect to='/Variable/index' />
 

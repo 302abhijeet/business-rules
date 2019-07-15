@@ -11,7 +11,8 @@ export class Rule extends Component {
             <Consumer>
                 {value=>{
                     const {cat} = this.props
-                    const {action,rule,variables,redirect} = value.value
+                    const {rule,variables,redirect} = value.value
+                    const action = value.value.actions
                     // if(redirect===true)
                     //     return <Redirect to='/Variable/index' />
 

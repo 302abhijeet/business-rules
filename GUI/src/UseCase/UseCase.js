@@ -11,7 +11,8 @@ export class UseCase extends Component {
             <Consumer>
                 {value=>{
                     const {cat} = this.props
-                    const {rule,use_cases,action} = value.value
+                    const {rule,use_cases} = value.value
+                    const action =  value.value.actions
                     // if(redirect===true)
                     //     return <Redirect to='/Variable/index' />
 
