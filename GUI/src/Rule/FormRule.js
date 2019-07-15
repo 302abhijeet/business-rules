@@ -76,15 +76,27 @@ export class FormRule extends Component {
     }
     
     changeVars = (values) =>{
-         
+        
+        const val=values === null?[]:values.map(ele => ele['label'])
         this.setState({
-            variables:values === null?[]:values.map(ele => ele['label'])
+            variables:val
         })
     }
     changeActs = (values) =>{
+        let at = this.state.actions_true, af = this.state.actions_false
+        const val = values === null?[]:values.map(ele => ele['label'])
+       //filter data
+
+
         this.setState({
-            actions:values===null?[]:values.map(ele => ele['label'])
+            actions: val,
+            actions_true:at,
+            actions_false:af
+
         })
+
+
+      
     }
 
     changeCheck = event => {
@@ -163,6 +175,18 @@ export class FormRule extends Component {
         })
         this.forceUpdate()
     }
+    
+    modifyRead = () =>{
+        this.setState({read:!this.state.read})
+    }
+
+    addData = () =>{
+
+    }
+
+    delData = () =>{
+
+    }
 
     render() {
 
@@ -185,11 +209,17 @@ export class FormRule extends Component {
 
         return (
             <React.Fragment>
-                <Form>
+                <Form onSubmit={this.addData}>
+                    
+                    <Row>
+                        <Col>
                     {
                         this.props.cat ==='add' ? <h1>Add new Rule</h1> : <h1>{this.props.cat} Rule</h1>
-                    } 
-                    
+                    } </Col>
+                    <Col>
+                        <Button variant='outline-secondary' onClick={this.modifyRead}>Modify</Button>
+                    </Col>
+                    </Row>
                     <Form.Group as={Row} controlId='name'>
                         <Form.Label column sm={3}>Name</Form.Label>
                         <Col sm={9}>
@@ -374,8 +404,16 @@ export class FormRule extends Component {
                         <hr />
                         <Condition variables = {this.state.variables}/>
 
-                    
-
+                        <Row>
+                            <Col>
+                                <Button variant='outline-success' type='submit' disabled={this.state.read}>Submit</Button>
+                            </Col>
+                            <Col>
+                                <Button variant = 'outline-danger' onClick = {this.delData} >Delete</Button>
+                            </Col>
+                        </Row>
+                        
+                        
                 </Form>
                 
             </React.Fragment>
