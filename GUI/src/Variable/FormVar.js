@@ -177,11 +177,9 @@ export class FormVar extends Component {
                 catch {}
             }
             if(this.props.cat === 'add'){
-                //open modal to display variable already exists
-                this.showModal()
                 if( this.props.variables.filter( ele => ele['name']===data['name']).length > 0){
-                    e.preventDefault()
                     e.stopPropagation()
+                    this.showModal()
                     return false
                 }
                 this.props.addData('variables',data)

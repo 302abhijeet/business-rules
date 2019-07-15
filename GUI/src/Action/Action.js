@@ -13,7 +13,7 @@ export class Action extends Component {
             <Consumer>
                 {value=>{
                     const {cat} = this.props
-                    const {action} = value.value
+                    const action = value.value.actions
                     // if(redirect===true)
                     //     return <Redirect to='/Variable/index' />
 
