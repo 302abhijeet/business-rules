@@ -13,7 +13,7 @@ export class FormRule extends Component {
         actions_false:[],
         variables:[],
         actions:[],
-        multi_thread:false,
+        multi_thread:true,
         read:false,
         current_act_true:undefined,
         current_param_true:{},
@@ -35,7 +35,7 @@ export class FormRule extends Component {
                 actions_false:[],
                 variables:[],
                 actions:[],
-                multi_thread:false,
+                multi_thread:true,
                 read:false,
                 current_act_true:undefined,
                 current_param_true:{}
@@ -59,7 +59,7 @@ export class FormRule extends Component {
                     actions_false:[],
                     variables:[],
                     actions:[],
-                    multi_thread:false,
+                    multi_thread:true,
                     read:false,
                     current_act_true:undefined,
                     current_param_true:{}
@@ -85,6 +85,10 @@ export class FormRule extends Component {
             actions:values===null?[]:values.map(ele => ele['label'])
         })
     }
+
+    changeCheck = event => {
+        this.setState({[event.target.name]: !this.state[event.target.name]})
+    }
     
     onChangeAct = event =>{
         const val = event.target.value
@@ -104,6 +108,11 @@ export class FormRule extends Component {
 
     }
     
+    changeParams = event => {
+
+    }
+
+
     render() {
 
 
@@ -178,38 +187,55 @@ export class FormRule extends Component {
                            {/* <Condition variables = {this.state.variables}/> */}
                     
                     </Form.Group>
+                    <Form.Group as = {Row}>
+                        <Form.Label column sm={3}>Multithread</Form.Label>
+                        <Form.Check as ='checkbox' checked={this.state.multi_thread} onChange={this.changeCheck} name='multi_thread' disabled={this.state.read}/>
+                    </Form.Group>
                     
                     <Form.Group as={Row} controlId='actions_trues'>
+                        
                         <Form.Label column sm={3}>True actions</Form.Label>
                             
                         <Col sm={4}>
                             <Col>
-                            <Form.Control as='select' onChange={this.onChangeAct} value = {this.state.current_act_true}>
+                            <Form.Control as='select' onChange={this.onChangeAct} value = {this.state.current_act_true} disabled={this.state.read}>
+                                <option selected disabled hidden>Select action</option>
                                 { this.state.actions.map( ele => <option value={ele}>{ele}</option>     )  }
                             </Form.Control></Col>
-                            <Col>
-                            <Form.Label>multi_thread</Form.Label>
-                            <Form.Control type='checkbox' />
-                            </Col>
+                            
 
                         </Col>
                         <Col sm={4}>
-                            <Button variant='outline-danger' onClick={this.addTrueAct}>Add this action for true</Button>
+                            <Button variant='outline-danger' onClick={this.addTrueAct} disabled={this.state.read}>Add this action for true</Button>
                         </Col>
-                        <Row>
-                            {
+                    </Form.Group>
+                            
+                        {/* displaying action true list*/}
+                        {
+                            this.state.actions_true.map(ele => <DisplayActionList ele={ele}/>)
+                        }
+
+                        
+
+                        {
                                 Object.keys(cpt).map( ele =>{
                                     return(
                                         <React.Fragment>
-                                            <Form.Label >{ele}</Form.Label>
-                                            <Form.Control type='text'></Form.Control>
+                                                <Form.Group as={Row}>
+                                                    <Col sm={3}>
+                                                    </Col>
+                                                    <Form.Label column sm={3}>{ele}</Form.Label>
+                                                    <Col sm={4}>
+                                                    <Form.Control type='text' onChange={this.changeParams}/>
+                                                    </Col>
+                                                    
+                                                </Form.Group>
+
                                         </React.Fragment>
                                     )
                                 })
                             }
-                        </Row>
 
-                    </Form.Group>
 
                     
 
@@ -226,8 +252,7 @@ class ActionDisplay extends Component {
     render(){
         return(
             <React.Fragment>
-                <Row>
-                    <Col sm={3}>
+                    
                     <Form.Group as={Row} >
                         <Form.Label column sm={3}>Name</Form.Label>
                         <Form.Control as='select' >
@@ -236,13 +261,41 @@ class ActionDisplay extends Component {
                             )}
                         </Form.Control>
                     </Form.Group>
-                    </Col>
                     <Col sm={3}>
 
                     </Col>
-                </Row>
                 
 
+            </React.Fragment>
+        )
+    }
+}
+
+class DisplayActionList extends Component{
+
+    render(){
+        const {ele} = this.props
+        
+        return(
+            <React.Fragment>
+                <Form.Group as={Row}>
+                    <Col sm={3}>
+                    </Col>
+                    <Form.label column sm={3}>{ele['name']}</Form.label>
+                    <Col sm={6}>
+                        {
+                            Object.keys(ele['params']).map( e => {
+                                return (
+                                    <Row>
+                                        <Form.Label>{e}</Form.Label>
+                                        <Form.Label>{ele['params'][e]}</Form.Label>
+                                    </Row>
+                                )
+                            })
+                        }
+                        
+                    </Col>
+                </Form.Group>
             </React.Fragment>
         )
     }
