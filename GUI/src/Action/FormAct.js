@@ -20,7 +20,8 @@ export class FormAct extends Component {
         if(cat!=='add'){
             const data = actions.filter(ele => ele['name']===cat)[0]
             this.setState({...data,read:true,key:'',value:'',validated:false,show_modal:false})
-        }else{
+        }
+        else{
             this.setState({
                 name:'',
                 params:{},
@@ -62,7 +63,6 @@ export class FormAct extends Component {
     deleteData =()=>{
         this.props.delData('actions',{name: this.state['name']})
         this.props.history.push('/Action/index')
-
     }
 
     delParam = key =>{
@@ -82,9 +82,14 @@ export class FormAct extends Component {
     }
 
     addPara=()=>{
-        this.setState({
-            params:{...this.state.params,[this.state.key]:this.state.value}
-        })
+        if (this.state.key && this.state.value) {
+            this.setState({
+                params:{...this.state.params,[this.state.key]:this.state.value}
+            })
+        }
+        else {
+            return false
+        }
     }
 
     closeModal = () => {
@@ -107,6 +112,7 @@ export class FormAct extends Component {
             delete data['read']
             delete data['key']
             delete data['value']
+            delete data['validated']
             delete data["show_modal"]
             console.log(data)
             if(this.props.cat==='add'){
@@ -148,7 +154,7 @@ export class FormAct extends Component {
                 } 
 
                 <Form.Group as={Row} controlId='name'>
-                    <Form.Label column sm={3}>Name</Form.Label>
+                    <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Name</Form.Label>
                     <Col sm={9}>
                         <Form.Control required type='text' name='name' onChange={this.changeState} readOnly={this.state.read} value={this.state.name} />
                         <Form.Control.Feedback type="invalid">Enter Action Name!</Form.Control.Feedback>
@@ -195,7 +201,7 @@ export class FormAct extends Component {
                     </Row>
 
                 <Form.Group as={Row} controlId='formulae'>
-                    <Form.Label column sm={3}>Formulae</Form.Label>
+                    <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Formulae</Form.Label>
                     <Col sm={9}>
                         <Form.Control required as='textarea' name='formulae' onChange={this.changeState} readOnly={this.state.read} value={this.state.formulae} />
                         <Form.Control.Feedback type="invalid">Enter formulae for what action must do!</Form.Control.Feedback>

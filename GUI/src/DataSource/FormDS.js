@@ -1,42 +1,40 @@
 import React, { Component } from 'react'
-import {Form,Row, Col,Button,ButtonGroup,ToggleButton} from 'react-bootstrap'
+import {Modal,Form,Row, Col,Button,ButtonGroup,ToggleButton} from 'react-bootstrap'
+import {withRouter} from 'react-router-dom'
 
 export class FormDS extends Component {
     
     state = {
         name:'',
         method:'',
-        info:{
-            host_name:'',
-            user_name:'',
-            password:'',
-            key_filename:''
-        },
+        info:{},
         variables:[],
         multi_thread:true,
-        read:false
+        cache:true,
+        validated:false,
+        read:false,
+        show_modal:false
     }
     
 
     componentWillMount = ()=>{
-        const {cat,data} = this.props
+        const {cat,data_sources} = this.props
         if(cat!=='add'){
-            const d = data.filter(ele  => ele['name'] === cat)[0]
-            const {name,method,variables,multi_thread} = d
-            this.setState({name,method,variables,multi_thread,read:true})
+            const data = data_sources.filter(ele  => ele['name'] === cat)[0]
+            const {name,method,variables,multi_thread,cache} = data
+            this.setState({name,method,variables,multi_thread,cache,read:true,validated:false,show_modal:false})
             if(method==='API'){
-                const {params,request,url} = d
-                const dat = request==='post'?d['data']:null
-                const info = {params,request,url,data:dat}
+                const {params,request,url} = data
+                const info = {params,request,url,data:request==='post'?data['data']:null,key:'',value:''}
                 this.setState({info})
             }
             else if(method ==='data_base'){
-                const {host_name,user_name,password,data_base} = d
+                const {host_name,user_name,password,data_base} = data
                 const info = {host_name,user_name,password,data_base}
                 this.setState({info})
             }
             else if(method==='SSH'){
-                const {host_name,user_name,password,key_filename} = d
+                const {host_name,user_name,password,key_filename} = data
                 const info = {host_name,user_name,password,key_filename}
                 this.setState({info})
             }
@@ -45,96 +43,30 @@ export class FormDS extends Component {
 
     componentWillReceiveProps = nextProps =>{
         if(nextProps!==this.props){
-            const {cat,data} = this.props
+            const {cat,data_sources} = nextProps
             if(cat!=='add'){
-            const d = data.filter(ele  => ele['name'] === cat)[0]
-            const {name,method,variables,multi_thread} = d
-            this.setState({name,method,variables,multi_thread,read:true})
-            if(method==='API'){
-                const {params,request,url} = d
-                const dat = request==='post'?d['data']:null
-                const info = {params,request,url,data:dat}
-                this.setState({info})
+                const data = data_sources.filter(ele  => ele['name'] === cat)[0]
+                const {name,method,variables,multi_thread,cache} = data
+                this.setState({name,method,variables,multi_thread,cache,read:true,validated:false,show_modal:false})
+                if(method==='API'){
+                    const {params,request,url} = data
+                    const dat = request==='post'?data['data']:null
+                    const info = {params,request,url,data:dat}
+                    this.setState({info})
+                }
+                else if(method ==='data_base'){
+                    const {host_name,user_name,password,data_base} = data
+                    const info = {host_name,user_name,password,data_base}
+                    this.setState({info})
+                }
+                else if(method==='SSH'){
+                    const {host_name,user_name,password,key_filename} = data
+                    const info = {host_name,user_name,password,key_filename}
+                    this.setState({info})
+                }
             }
-            else if(method ==='data_base'){
-                const {host_name,user_name,password,data_base} = d
-                const info = {host_name,user_name,password,data_base}
-                this.setState({info})
-            }
-            else if(method==='SSH'){
-                const {host_name,user_name,password,key_filename} = d
-                const info = {host_name,user_name,password,key_filename}
-                this.setState({info})
-            }
-        }
         }
     }
-
-    // componentWillMount =()=>{
-    //     const {cat,data} = this.props
-    //     if(cat !== 'add'){
-            
-    //         const d = data.filter(ele  => ele['name'] === cat)[0]
-            
-            
-    //         const {method,variables,multi_thread} = d[cat]
-    //         this.setState({
-    //                 name:cat,
-    //                 method,
-    //                 variables,
-    //                 multi_thread
-    //             })
-    //             if(method === 'API'){
-    //                 const {params,request,url} =d[cat]
-    //                 const dat = request==='post'?d[cat]['data']:null
-    //                 const info = {params,request,url,data:dat}
-    //                 this.setState({info})
-    //             }
-    //             else if(method ==='data_base'){
-    //                 const {host_name,user_name,password,data_base} = data[cat]
-    //                 const info = {host_name,user_name,password,data_base}
-    //                 this.setState({info})
-    //             }else if(method === 'SSH'){
-    //                 const {host_name,user_name,password,key_filename} = data[cat]
-    //                 const info = {host_name,user_name,password,key_filename}
-    //                 this.setState({info})
-    //             }
-    // }}
-    
-
-    // componentWillReceiveProps= (nextProps)=>{
-        
-    //     if(nextProps!==this.props && nextProps.cat !== 'add'){
-
-    //         const {cat,data} = nextProps
-    //         const d = data.filter(ele  => ele['name'] === cat)[0]
-
-    //         const {method,variables,multi_thread} = d[cat]
-    //         this.setState({
-    //                 name:cat,
-    //                 method,
-    //                 variables,
-    //                 multi_thread
-    //             })
-    //             if(method === 'API'){
-    //                 const {params,request,url} =data[cat]
-    //                 const dat = request==='post'?data[cat]['data']:null
-    //                 const info = {params,request,url,data:dat}
-    //                 this.setState({info})
-    //             }
-    //             else if(method ==='data_base'){
-    //                 const {host_name,user_name,password,data_base} = data[cat]
-    //                 const info = {host_name,user_name,password,data_base}
-    //                 this.setState({info})
-    //             }else if(method === 'SSH'){
-    //                 const {host_name,user_name,password,key_filename} = data[cat]
-    //                 const info = {host_name,user_name,password,key_filename}
-    //                 this.setState({info})
-    //             }
-            
-    //     }
-        
-    // }
 
     changeSelectState = event =>{
         this.setState({[event.target.name]:event.target.value})
@@ -144,8 +76,8 @@ export class FormDS extends Component {
                 info:{
                     host_name:'',
                     user_name:'',
-                    password:'',
-                    key_filename:''
+                    password:null,
+                    key_filename:null
                 }
             })
         }
@@ -164,8 +96,8 @@ export class FormDS extends Component {
                 info:{
                     host_name:'',
                     user_name:'',
-                    password:'',
-                    data_base:''
+                    password:null,
+                    data_base:null
                 }
             })
         }
@@ -196,17 +128,62 @@ export class FormDS extends Component {
     changeCheck = event =>{
         this.setState({[event.target.name]: !this.state.multi_thread})
     }
+    changeCheckCache = event =>{
+        this.setState({[event.target.name]: !this.state.cache})
+    }
+    closeModal = () => {
+        this.setState({show_modal:false})
+    }
+    showModal = () => {
+        this.setState({show_modal:true})
+    }
+    deleteData =()=>{
+        this.props.delData('DataSource',{name: this.state['name']})
+        this.props.history.push('/DataSource/index')
+    }
 
     submitData = (e) =>{
-        e.preventDefault()
-        const st = this.state
-        delete st['read']
-        const name = st['name']
-        delete st['name']
-        const newOb = {
-            [name]: st
+        const form = e.currentTarget
+        if (form.checkValidity() === false) {
+            e.preventDefault()
+            e.stopPropagation()
         }
-        this.props.addNewData('data_sources',newOb)
+        else {
+            e.preventDefault()
+            console.log('submitting data')
+            const data = this.state
+            if(this.props.cat==='add') {
+                if( this.props.data_sources.filter( ele => ele['name']===data['name']).length > 0){
+                    e.stopPropagation()
+                    this.showModal()
+                    return false
+                }
+            }
+            delete data['read']
+            delete data['validated']
+            delete data["show_modal"]
+            Object.keys(data['info']).forEach( ele => {
+                data[ele] = data["info"][ele]
+            })
+            delete data['info']
+            console.log(data)
+            if(this.props.cat==='add'){
+                console.log('in add')
+                this.props.addData('DataSource',data)
+                this.props.history.push('/DataSource/index')
+
+            }
+            else{
+                console.log('in '+this.props.cat)
+                let newData = {
+                    querry : {name : data['name']},
+                    newData : data
+                }
+                this.props.modifyData('DataSource',newData)
+                this.props.history.push('/DataSource/index')
+            }
+        }
+        this.setState({validated:true})
     }
     changeReadMode = ()=>{
         const prev = this.state.read
@@ -214,6 +191,7 @@ export class FormDS extends Component {
     }
 
     render() {
+        const {validated} = this.state
         let displaySubForm
             if(this.state.method === 'SSH'){
                  displaySubForm =  <FormDSSSH changeInfoState={this.changeInfoState} readOnly={this.state.read} values = {this.state.info} />
@@ -225,26 +203,32 @@ export class FormDS extends Component {
             
         
         return (
-            
-            
             <React.Fragment>
+                <Modal show={this.state.show_modal}>
+                        <Modal.Header closeButton><Modal.Title>Cannot ADD DataSource</Modal.Title></Modal.Header>
+                        <Modal.Body> <p>DataSource name already exists!</p></Modal.Body>
+                        <Modal.Footer><Button variant="secondary" onClick={this.closeModal}>Close</Button></Modal.Footer>
+                </Modal>
 
                 {
                     this.props.cat ==='add' ? <h1>Add new Data Source</h1> : <h1>{this.props.cat} Data Source</h1>
                 }
-                <Form onSubmit={this.submitData}>
+                <Form noValidate validated={validated} onSubmit={this.submitData}>
                     <Form.Group as={Row} controlId='name'>
-                        <Form.Label column sm={3}>Name</Form.Label>
+                        <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Name</Form.Label>
                         <Col sm={9}>
-                            <Form.Control type='text' name='name' onChange={this.changeState} readOnly={this.state.read} value={this.state.name} />
+                            <Form.Control required type='text' name='name' onChange={this.changeState} readOnly={this.state.read} value={this.state.name} />
                         </Col>
                     </Form.Group>
                     
                 
                     <Form.Group as={Row} controlId='method'>
-                        <Form.Label column sm={3}>Method</Form.Label>
+                        <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Method</Form.Label>
                         <Col sm={9}>
-                            <Form.Control as='select' name='method' onChange={this.changeSelectState} disabled={this.state.read} value={this.state.method}>
+                            <Form.Control required as='select' name='method' onChange={this.changeSelectState} disabled={this.state.read} value={this.state.method}>
+                                <option value="" selected hidden>
+                                        Select an option
+                                    </option>
                                 <option value='SSH'>SSH</option>
                                 <option value='data_base'>Database</option>
                                 <option value='API'>API</option>
@@ -257,12 +241,20 @@ export class FormDS extends Component {
                     {displaySubForm}
 
                     <Form.Group as={Row} controlId="formBasicChecbox">
-                        <Form.Label column sm={3}>Multithread</Form.Label>
-                        <Form.Check type="checkbox" name='multi_thread' disabled={this.state.read} value={this.state.multi_thread} onChange={this.changeCheck}/>
+                        <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Multithread</Form.Label>
+                        <Form.Check type="checkbox" checked name='multi_thread' disabled={this.state.read} value={this.state.multi_thread} onChange={this.changeCheck}/>
                     </Form.Group>
 
-                    <Button type = 'submit' variant='outline-success' disabled={this.state.read}>Submit</Button>
-                    <Button name='modify' variant='outline-secondary' disabled={!this.state.read} onClick={this.changeReadMode}>Modify</Button>
+                    <Form.Group as={Row} controlId="formBasicChecbox">
+                        <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Cache</Form.Label>
+                        <Form.Check type="checkbox" checked name='cache' disabled={this.state.read} value={this.state.cache} onChange={this.changeCheckCache}/>
+                    </Form.Group>
+
+                    <Row>
+                        <Col><Button type = 'submit' variant='outline-success' disabled={this.state.read}>Submit</Button></Col>
+                        <Col><Button name='modify' variant='outline-secondary' disabled={!this.state.read} onClick={this.changeReadMode}>Modify</Button></Col>
+                        <Col><Button name = 'delete' variant='outline-danger' disabled={!this.state.read} onClick={this.deleteData}>Delete</Button></Col>
+                    </Row>
                 </Form>
 
             </React.Fragment>
@@ -270,7 +262,7 @@ export class FormDS extends Component {
     }
 }
 
-export default FormDS
+export default withRouter(FormDS)
 
 
 // Sub forms here
@@ -280,16 +272,16 @@ class FormDSSSH extends Component {
         return (
             <React.Fragment>
             <Form.Group as={Row} controlId='host_name'>
-                <Form.Label column sm={3}>Host Name</Form.Label>
+                <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Host Name</Form.Label>
                 <Col sm={9}>
-                    <Form.Control type='text' name='host_name' onChange={this.props.changeInfoState} readOnly={this.props.readOnly} value={this.props.values.host_name} />
+                    <Form.Control required type='text' name='host_name' onChange={this.props.changeInfoState} readOnly={this.props.readOnly} value={this.props.values.host_name} />
                 </Col>
             </Form.Group>
 
             <Form.Group as={Row} controlId='user_name'>
-                <Form.Label column sm={3}>Username</Form.Label>
+                <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Username</Form.Label>
                 <Col sm={9}>
-                    <Form.Control type='text' name='user_name' onChange={this.props.changeInfoState} readOnly={this.props.readOnly} value={this.props.values.user_name}/>
+                    <Form.Control type='text' required name='user_name' onChange={this.props.changeInfoState} readOnly={this.props.readOnly} value={this.props.values.user_name}/>
                 </Col>
             </Form.Group>
 
@@ -318,16 +310,16 @@ export class FormDSDB extends Component {
         return (
             <React.Fragment>
             <Form.Group as={Row} controlId='host_name'>
-                <Form.Label column sm={3}>Host Name</Form.Label>
+                <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Host Name</Form.Label>
                 <Col sm={9}>
-                    <Form.Control type='text' name='host_name' onChange={this.props.changeInfoState} readOnly={this.props.readOnly} value={this.props.values.host_name} />
+                    <Form.Control required type='text' name='host_name' onChange={this.props.changeInfoState} readOnly={this.props.readOnly} value={this.props.values.host_name} />
                 </Col>
             </Form.Group>
 
             <Form.Group as={Row} controlId='user_name'>
-                <Form.Label column sm={3}>Username</Form.Label>
+                <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Username</Form.Label>
                 <Col sm={9}>
-                    <Form.Control type='text' name='user_name' onChange={this.props.changeInfoState} readOnly={this.props.readOnly} value={this.props.values.user_name}/>
+                    <Form.Control required type='text' name='user_name' onChange={this.props.changeInfoState} readOnly={this.props.readOnly} value={this.props.values.user_name}/>
                 </Col>
             </Form.Group>
 
@@ -361,9 +353,10 @@ export class FormDSAPI extends Component {
             <React.Fragment>
 
                     <Form.Group as={Row} controlId='request'>
-                        <Form.Label column sm={3}>Request</Form.Label>
+                        <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Request</Form.Label>
                         <Col sm={9}>
-                            <Form.Control as='select' name='request' onChange={this.props.changeInfoState} disabled={this.props.readOnly} value={this.props.values.request}>
+                            <Form.Control required as='select' name='request' onChange={this.props.changeInfoState} disabled={this.props.readOnly} value={this.props.values.request}>
+                                <option value="" selected hidden>Select an option</option>
                                 <option value='post'>Post</option>
                                 <option value='get'>Get</option>
                             </Form.Control>
@@ -371,9 +364,9 @@ export class FormDSAPI extends Component {
                     </Form.Group>
 
                     <Form.Group as={Row} controlId='url'>
-                        <Form.Label column sm={3}>URL</Form.Label>
+                        <Form.Label column sm={3}><span style={{color:"red"}}>*</span>URL</Form.Label>
                         <Col sm={9}>
-                            <Form.Control type='text' name='url' onChange={this.props.changeInfoState} readOnly={this.props.readOnly} value={this.props.values.url}/>
+                            <Form.Control required type='text' name='url' onChange={this.props.changeInfoState} readOnly={this.props.readOnly} value={this.props.values.url}/>
                         </Col>
                     </Form.Group>
                     {displayData}
@@ -404,15 +397,20 @@ export class FormDSAPIhelper extends Component {
     }
 
     addNewData = ()=>{
-        console.log('newData')
-        const st = this.state
-        const newState = {...st,
-            [this.newKey.current.value]:this.newVal.current.value
+        if (this.newKey.current.value && this.newVal.current.value) {
+            console.log('newData')
+            const st = this.state
+            const newState = {...st,
+                [this.newKey.current.value]:this.newVal.current.value
+            }
+            this.setState(newState)
+            this.newKey.current.value=''
+            this.newVal.current.value=''
+            this.props.changeDataParams(newState,this.props.id)
         }
-        this.setState(newState)
-        this.newKey.current.value=''
-        this.newVal.current.value=''
-        this.props.changeDataParams(newState,this.props.id)
+        else {
+            return false
+        }
     }
 
     deleteData = (e)=>{
@@ -459,11 +457,11 @@ export class FormDSAPIhelper extends Component {
                         </Col>
                         <Col><Row> 
                         <Col>               
-                            <Form.Control type='text' name='newKey' onChange={this.props.changeInfoState} readOnly={readOnly} ref={this.newKey} />
+                            <Form.Control type='text' placeholder='Name' name='newKey' onChange={this.props.changeInfoState} readOnly={readOnly} ref={this.newKey} />
 
                             </Col>
                             <Col>                                        
-                                <Form.Control type='text' name='newVal' onChange={this.props.changeInfoState} readOnly={readOnly} ref={this.newVal}/>
+                                <Form.Control type='text' placeholder='Value' name='newVal' onChange={this.props.changeInfoState} readOnly={readOnly} ref={this.newVal}/>
                             </Col>
                             <Col></Col>
                             </Row>

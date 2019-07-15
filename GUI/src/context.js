@@ -12,7 +12,7 @@ export  class Provider extends Component {
         rules:null,
         variables:null,
         actions:null,
-        data_sources:null,
+        DataSource:null,
         use_cases:null,
         redirect:false
     }
@@ -90,7 +90,7 @@ export  class Provider extends Component {
         axios.get('http://127.0.0.1:5000/get/DataSource ')
             .then(res => {
                 
-                this.setState({ data_sources: res.data.data})
+                this.setState({ DataSource: res.data.data})
             })
             .catch(err => console.log(err))
         
