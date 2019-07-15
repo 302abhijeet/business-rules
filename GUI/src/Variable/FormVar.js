@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import {Form,Row,Col, Button} from 'react-bootstrap'
+import {Modal,Form,Row,Col, Button} from 'react-bootstrap'
 import {Link,withRouter} from 'react-router-dom'
-import Select from 'react-select'
 
 
 export class FormVar extends Component {
@@ -13,7 +12,6 @@ export class FormVar extends Component {
         options:'None',
         formulae:'',
         input_method:{
-            method: null,
             DataSource:'',
             command:'',
             evaluation:'',
@@ -24,7 +22,8 @@ export class FormVar extends Component {
         cashe:true,
         derived:true,
         validated:false,
-        read:false
+        read:false,
+        show_modal:false
     }
     
     componentWillMount = () =>{
@@ -33,7 +32,7 @@ export class FormVar extends Component {
         if(cat!=='add'){
             variables.forEach(element => {
                 if(element['name'] === cat){
-                    this.setState({...element,read:true,validated:false})
+                    this.setState({...element,derived:element['input_method']['DataSource']?false:true,read:true,validated:false,show_modal:false})
                 }
             })
                 
@@ -46,8 +45,7 @@ export class FormVar extends Component {
                 options:'None',
                 formulae:'',
                 input_method:{
-                    method: 'derived',
-                    DataSource:'None',
+                    DataSource:'',
                     command:'',
                     evaluation:'',
                     start:null,
@@ -57,7 +55,8 @@ export class FormVar extends Component {
                 cashe:true,
                 derived:true,
                 validated:false,
-                read:false
+                read:false,
+                show_modal:false
             })
         }
     }
@@ -72,7 +71,7 @@ export class FormVar extends Component {
                             element['input_method']['start']=''
                             if(element['input_method']['end']===null)
                             element['input_method']['end']=''
-                        this.setState({...element,read:true,validated:false})
+                        this.setState({...element,derived:element['input_method']['DataSource']?false:true,read:true,validated:false})
                     }
                 })
                     
@@ -85,8 +84,7 @@ export class FormVar extends Component {
                     options:'None',
                     formulae:'',
                     input_method:{
-                        method: 'derived',
-                        DataSource:'None',
+                        DataSource:'',
                         command:'',
                         evaluation:'',
                         start:null,
@@ -96,14 +94,15 @@ export class FormVar extends Component {
                     cashe:true,
                     derived:true,
                     validated:false,
-                    read:false
+                    read:false,
+                    show_modal:false
                 })
             }
         }
     }
     deleteData = () =>{
         //delete data from context
-        this.props.delData('variables',{'name':this.state['name']})
+        this.props.delData('variables',{name:this.state['name']})
         //Redirect?
         this.props.history.push('/Variable/index')
     }
@@ -117,11 +116,11 @@ export class FormVar extends Component {
         })
     }
     changeStatedb =event =>{
-        if (event.target.value === 'None') {
-            this.setState({derived:true, method:'derived'} )
+        if (event.target.value === 'derived') {
+            this.setState({derived:true} )
         }
         else {
-            this.setState({derived:false,method:null})
+            this.setState({derived:false})
         }
         this.changeStateim(event)
     }
@@ -141,6 +140,12 @@ export class FormVar extends Component {
             read:!this.state.read
         })
     }
+    closeModal = () => {
+        this.setState({show_modal:false})
+    }
+    showModal = () => {
+        this.setState({show_modal:true})
+    }
 
     submitForm=(e)=>{
         const form = e.currentTarget
@@ -154,17 +159,31 @@ export class FormVar extends Component {
             delete data["read"]
             delete data["derived"]
             delete data["validated"]
-            if (data["input_method"]["DataSource"] === "None"){
+            delete data["show_modal"]
+            if (data["input_method"]["DataSource"] === "derived"){
                 delete data["input_method"]["DataSource"]
                 delete data["input_method"]["command"]
                 delete data["input_method"]["evaluation"]
                 delete data["input_method"]["start"]
                 delete data["input_method"]["end"]
+                data["input_method"]["method"] = "derived"
             }
             else {
-                delete data["input_method"]["method"]
+                try {
+                    delete data["input_method"]["method"]
+                    data["input_method"]["start"] = data["input_method"]["start"]?data["input_method"]["start"]:null
+                    data["input_method"]["end"] = data["input_method"]["end"]?data["input_method"]["end"]:null
+                }
+                catch {}
             }
             if(this.props.cat === 'add'){
+                //open modal to display variable already exists
+                this.showModal()
+                if( this.props.variables.filter( ele => ele['name']===data['name']).length > 0){
+                    e.preventDefault()
+                    e.stopPropagation()
+                    return false
+                }
                 this.props.addData('variables',data)
             }
             else{
@@ -190,13 +209,18 @@ export class FormVar extends Component {
         
         return (
             <React.Fragment>
+            <Modal show={this.state.show_modal}>
+                <Modal.Header closeButton><Modal.Title>Cannot ADD variable</Modal.Title></Modal.Header>
+                <Modal.Body> <p>Variable name already exists!</p></Modal.Body>
+                <Modal.Footer><Button variant="secondary" onClick={this.closeModal}>Close</Button></Modal.Footer>
+            </Modal>
             <Form noValidate validated={validated} onSubmit={this.submitForm}>
                 {
                     this.props.cat ==='add' ? <h1>Add new Variable</h1> : <h1>{this.props.cat} Variable</h1>
                 }   
                 
                     <Form.Group as={Row} controlId='name'>
-                        <Form.Label column sm={3}>Name</Form.Label>
+                        <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Name</Form.Label>
                         <Col sm={9}>
                             <Form.Control required type='text' name='name' onChange={this.changeState} readOnly={this.state.read} value={this.state.name} />
                             <Form.Control.Feedback type="invalid">Enter Variable Name!</Form.Control.Feedback>
@@ -204,9 +228,12 @@ export class FormVar extends Component {
                     </Form.Group>
 
                     <Form.Group as={Row} controlId='field'>
-                        <Form.Label column sm={3}>Field</Form.Label>
+                        <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Field</Form.Label>
                         <Col sm={9}>
-                            <Form.Control required as='select' name='field' onChange={this.changeState} readOnly={this.state.read} value={this.state.field}>
+                            <Form.Control required as='select' name='field' onChange={this.changeState} disabled={this.state.read} value={this.state.field}>
+                                    <option value="" selected hidden>
+                                        Select an option
+                                    </option>
                                     <option value = 'numeric_rule_variable'>
                                         numeric
                                     </option>
@@ -242,13 +269,16 @@ export class FormVar extends Component {
                     </Form.Group>
 
                     <Form.Group as={Row} controlId='DataSource'>
-                        <Form.Label column sm={3}>Data Source</Form.Label>
+                        <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Data Source</Form.Label>
                         <Col sm={6}>
                             <Form.Control required as='select' name='DataSource' onChange={this.changeStatedb} disabled={this.state.read} value={this.state.input_method.DataSource}>
-                                <option value = {null}>
+                                {list_of_ds.map(ele => <option value={ele}>{ele}</option>)}
+                                <option value = 'derived'>
                                         None
                                 </option>
-                                {list_of_ds.map(ele => <option value={ele}>{ele}</option>)}
+                                <option value="" selected hidden>
+                                        Select an option
+                                </option>
                             </Form.Control>
                             <Form.Control.Feedback type="invalid">Please select None if variable is "derived"</Form.Control.Feedback>
                         </Col>
@@ -259,7 +289,7 @@ export class FormVar extends Component {
 
 
                     <Form.Group as={Row} controlId='formulae' hidden={!this.state.derived}>
-                        <Form.Label column sm={3}>Formulae</Form.Label>
+                        <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Formulae</Form.Label>
                         <Col sm={9}>
                             <Form.Control required type='text' name='formulae' onChange={this.changeState} readOnly={this.state.read} value={this.state.formulae} />
                             <Form.Control.Feedback type="invalid">Enter formulae if vaiable is derived</Form.Control.Feedback>
@@ -267,7 +297,7 @@ export class FormVar extends Component {
                     </Form.Group>
 
                     <Form.Group as={Row} controlId='command' hidden={this.state.derived}>
-                        <Form.Label column sm={3}>Command</Form.Label>
+                        <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Command</Form.Label>
                         <Col sm={9}>
                             <Form.Control required={!this.state.derived} type='text' name='command' onChange={this.changeStateim} readOnly={this.state.read} value={this.state.input_method.command} />
                             <Form.Control.Feedback type="invalid">Enter command if vaiable is to be fetched</Form.Control.Feedback>
@@ -275,7 +305,7 @@ export class FormVar extends Component {
                     </Form.Group>
 
                     <Form.Group as={Row} controlId='evaluation' hidden={this.state.derived}>
-                        <Form.Label column sm={3}>Evaluation</Form.Label>
+                        <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Evaluation</Form.Label>
                         <Col sm={9}>
                             <Form.Control type='text' required={!this.state.derived} name='evaluation' onChange={this.changeStateim} readOnly={this.state.read} value={this.state.input_method.evaluation} />
                             <Form.Control.Feedback type="invalid">Enter type of variabe for evaluation(int,string)</Form.Control.Feedback>
@@ -285,26 +315,26 @@ export class FormVar extends Component {
                     <Form.Group as={Row} controlId='start' hidden={this.state.derived}>
                         <Form.Label column sm={3}>Start</Form.Label>
                         <Col sm={9}>
-                            <Form.Control type='text' name='start' onChange={this.changeStateim} readOnly={this.state.read} value={this.state.input_method.start} />
+                            <Form.Control type='text' defaultValue={null} name='start' onChange={this.changeStateim} readOnly={this.state.read} value={this.state.input_method.start} />
                         </Col>
                     </Form.Group>
 
-                    <Form.Group as={Row} controlId='end' hidden = {this.state.derived}>
+                    <Form.Group as={Row}controlId='end' hidden = {this.state.derived}>
                         <Form.Label column sm={3}>End</Form.Label>
                         <Col sm={9}>
-                            <Form.Control type='text' name='end' onChange={this.changeStateim} readOnly={this.state.read} value={this.state.input_method.end} />
+                            <Form.Control type='text' defaultValue={null} name='end' onChange={this.changeStateim} readOnly={this.state.read} value={this.state.input_method.end} />
                         </Col>
                     </Form.Group>
 
                     <Form.Group as={Row} controlId='cache'>
-                        <Form.Label column sm={3}>Cache</Form.Label>
+                        <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Cache</Form.Label>
                         <Col sm={9}>
                             <Form.Check checked={this.state.cashe} type='checkbox' name='cache' onChange={this.changeCheckCache} readOnly={this.state.read} value={this.state.cashe} />
                         </Col>
                     </Form.Group>
 
                     <Form.Group as={Row} controlId='multi_thread'>
-                        <Form.Label column sm={3}>Multi-thread</Form.Label>
+                        <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Multi-thread</Form.Label>
                         <Col sm={9}>
                             <Form.Check checked={this.state.multi_thread} required type='checkbox'  name='multi_thread' onChange={this.changeCheck} readOnly={this.state.read} value={this.state.multi_thread} />
                         </Col>

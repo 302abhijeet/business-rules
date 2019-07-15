@@ -18,7 +18,7 @@ export  class Provider extends Component {
     }
 
     delData = (ty,newOb)=>{
-        axios.delete(`http://127.0.0.1:5000/del/${ty}`,JSON.stringify(newOb))
+        axios.post(`http://127.0.0.1:5000/del/${ty}`,JSON.stringify(newOb))
             .then((res)=>{
                 console.log(res)
             })

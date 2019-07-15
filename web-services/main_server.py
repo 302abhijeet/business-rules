@@ -202,7 +202,7 @@ def adddata(ty):
 
 
 #Server route to delete data
-@server.route('/del/<ty>',methods = ['DELETE'])
+@server.route('/del/<ty>',methods = ['POST'])
 def deldata(ty):
     """delete data from databse
     
@@ -212,17 +212,16 @@ def deldata(ty):
     Returns:
         response -- response to be given to user
     """
-    if request.method == 'DELETE':
+    if request.method == 'POST':
         try:
             ssh_server = _create_SSHtunnel()
             ssh_server.start()
             mydb = MongoClient("127.0.0.1",ssh_server.local_bind_port)["rules_engine"]
             collection = mydb[ty]
 
-            querry = request.get_data()
+            querry = json.loads(request.get_data())
             if querry:
-                querry = eval(querry)
-                deleted_count = collection.delete_many(querry)
+                deleted_count = collection.delete_many(querry).deleted_count
             message = 'Entries deleted: '+str(deleted_count)
             sts = 200 if deleted_count > 0 else 400
             ssh_server._server_list[0].block_on_close = False
@@ -259,10 +258,10 @@ def modifydata(ty):
             mydb = MongoClient("127.0.0.1",ssh_server.local_bind_port)["rules_engine"]
             collection = mydb[ty]
             
-            data = request.get_data()
+            data = json.loads(request.get_data())
             if data!=None:
-                    querry=eval(data)["querry"]
-                    newData = eval(data)['newData']
+                    querry=data["querry"]
+                    newData = data['newData']
                     modified_count = collection.update_many(querry,{"$set":newData}).modified_count
             msg = 'Entries updated: ' + str(modified_count)
             sts = 200 if modified_count > 0 else 400
