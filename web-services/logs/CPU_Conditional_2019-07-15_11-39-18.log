@@ -1,0 +1,132 @@
+INFO Module:API Function:_run_API Line:55 Starting _run_API
+INFO Module:API Function:_run_API Line:236 Use_case fetched from database
+INFO Module:API Function:_run_API Line:288 source_variable_list made :[]
+INFO Module:API Function:_run_API Line:321 Adding rule: CPU_usage variables
+INFO Module:API Function:_run_API Line:323 Adding variable: CPU_usage 
+INFO Module:API Function:_run_API Line:337 Adding Variable: CPU_usage to DataSource: API_getPostman
+INFO Module:API Function:_run_API Line:321 Adding rule: memory variables
+INFO Module:API Function:_run_API Line:323 Adding variable: free_mem 
+INFO Module:API Function:_run_API Line:337 Adding Variable: free_mem to DataSource: SSH_awsIntern
+INFO Module:API Function:_run_API Line:323 Adding variable: total_mem 
+INFO Module:API Function:_run_API Line:337 Adding Variable: total_mem to DataSource: SSH_awsIntern
+INFO Module:API Function:_run_API Line:323 Adding variable: memory 
+INFO Module:API Function:_run_API Line:321 Adding rule: disk_space variables
+INFO Module:API Function:_run_API Line:323 Adding variable: disk_space 
+INFO Module:API Function:_run_API Line:337 Adding Variable: disk_space to DataSource: API_postPostman
+INFO Module:API Function:_run_API Line:321 Adding rule: rule1 variables
+INFO Module:API Function:_run_API Line:323 Adding variable: actual 
+INFO Module:API Function:_run_API Line:337 Adding Variable: actual to DataSource: API_getPostman
+INFO Module:API Function:_run_API Line:323 Adding variable: expected 
+INFO Module:API Function:_run_API Line:337 Adding Variable: expected to DataSource: SSH_awsIntern
+INFO Module:API Function:_run_API Line:323 Adding variable: correct 
+INFO Module:API Function:_run_API Line:337 Adding Variable: correct to DataSource: database_sqlRuleEngine
+INFO Module:API Function:_run_API Line:321 Adding rule: rule2 variables
+INFO Module:API Function:_run_API Line:323 Adding variable: actual 
+INFO Module:API Function:_run_API Line:325 Variable: actual already in list
+INFO Module:API Function:_run_API Line:323 Adding variable: expected 
+INFO Module:API Function:_run_API Line:325 Variable: expected already in list
+INFO Module:API Function:_run_API Line:323 Adding variable: correct 
+INFO Module:API Function:_run_API Line:325 Variable: correct already in list
+INFO Module:API Function:_run_API Line:323 Adding variable: incorrect 
+INFO Module:API Function:_run_API Line:337 Adding Variable: incorrect to DataSource: API_postPostman
+INFO Module:API Function:_run_API Line:321 Adding rule: rule3 variables
+INFO Module:API Function:_run_API Line:323 Adding variable: actual 
+INFO Module:API Function:_run_API Line:325 Variable: actual already in list
+INFO Module:API Function:_run_API Line:323 Adding variable: expected 
+INFO Module:API Function:_run_API Line:325 Variable: expected already in list
+INFO Module:API Function:_run_API Line:323 Adding variable: correct 
+INFO Module:API Function:_run_API Line:325 Variable: correct already in list
+INFO Module:API Function:_run_API Line:363 Addin data source: API_getPostman to be populated!
+INFO Module:API Function:_run_API Line:363 Addin data source: SSH_awsIntern to be populated!
+INFO Module:API Function:_run_API Line:363 Addin data source: API_postPostman to be populated!
+INFO Module:API Function:_run_API Line:363 Addin data source: database_sqlRuleEngine to be populated!
+INFO Module:collector Function:__init__ Line:96 starting collector module
+INFO Module:collector Function:__init__ Line:103 Getting data source: API_getPostman variables!
+INFO Module:collector Function:__init__ Line:112 Starting thread: API_getPostman
+INFO Module:collector Function:__init__ Line:103 Getting data source: SSH_awsIntern variables!
+INFO Module:collector Function:__init__ Line:112 Starting thread: SSH_awsIntern
+INFO Module:collector Function:__init__ Line:103 Getting data source: API_postPostman variables!
+INFO Module:collector Function:__init__ Line:112 Starting thread: API_postPostman
+INFO Module:collector Function:__init__ Line:103 Getting data source: database_sqlRuleEngine variables!
+INFO Module:collector Function:__init__ Line:112 Starting thread: database_sqlRuleEngine
+INFO Module:collector Function:_get_source Line:51 Variables : ['correct'] of Source : database_sqlRuleEngine taken from cache!
+INFO Module:collector Function:_init_source_variables Line:29 Variable: correct has been created!Value: 5!Source: database_sqlRuleEngine
+INFO Module:collector Function:_get_source Line:65 Source: API_getPostman fetched variables: {'CPU_usage': 78, 'actual': 78}
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:collector Function:_init_source_variables Line:29 Variable: CPU_usage has been created!Value: 78!Source: API_getPostman
+INFO Module:collector Function:_init_source_variables Line:29 Variable: actual has been created!Value: 78!Source: API_getPostman
+INFO Module:collector Function:_get_source Line:65 Source: API_postPostman fetched variables: {'disk_space': 33, 'incorrect': 33}
+INFO Module:collector Function:_init_source_variables Line:29 Variable: disk_space has been created!Value: 33!Source: API_postPostman
+INFO Module:collector Function:_init_source_variables Line:29 Variable: incorrect has been created!Value: 33!Source: API_postPostman
+INFO Module:transport Function:_log Line:1760 Authentication (publickey) successful!
+INFO Module:collector Function:_get_source Line:65 Source: SSH_awsIntern fetched variables: {'free_mem': '          808668 ', 'total_mem': '        4044880 ', 'expected': '104\n'}
+INFO Module:collector Function:_init_source_variables Line:29 Variable: free_mem has been created!Value:           808668 !Source: SSH_awsIntern
+INFO Module:collector Function:_init_source_variables Line:29 Variable: total_mem has been created!Value:         4044880 !Source: SSH_awsIntern
+INFO Module:collector Function:_init_source_variables Line:29 Variable: expected has been created!Value: 104
+!Source: SSH_awsIntern
+INFO Module:API Function:_run_API Line:368 variables input taken from collector!
+INFO Module:API Function:ProductVariables Line:400 Product Variable: CPU_usage has been created!
+INFO Module:API Function:ProductVariables Line:400 Product Variable: free_mem has been created!
+INFO Module:API Function:ProductVariables Line:400 Product Variable: total_mem has been created!
+INFO Module:API Function:ProductVariables Line:400 Product Variable: memory has been created!
+INFO Module:API Function:ProductVariables Line:400 Product Variable: disk_space has been created!
+INFO Module:API Function:ProductVariables Line:400 Product Variable: actual has been created!
+INFO Module:API Function:ProductVariables Line:400 Product Variable: expected has been created!
+INFO Module:API Function:ProductVariables Line:400 Product Variable: correct has been created!
+INFO Module:API Function:ProductVariables Line:400 Product Variable: incorrect has been created!
+INFO Module:<string> Function:<module> Line:1 Variable: memory has been created!Value: 80.00761456458535!Source: Derived
+INFO Module:API Function:_run_API Line:425 Adding action : condition_pass to list!
+INFO Module:API Function:_run_API Line:425 Adding action : condition_fail to list!
+INFO Module:API Function:_run_API Line:432 Adding action : Threshold_true to list!
+INFO Module:API Function:_run_API Line:432 Adding action : Threshold_false to list!
+INFO Module:API Function:_run_API Line:432 Adding action : Threshold_true to list!
+INFO Module:API Function:_run_API Line:434 Action : Threshold_true already in list!
+INFO Module:API Function:_run_API Line:432 Adding action : Threshold_false to list!
+INFO Module:API Function:_run_API Line:434 Action : Threshold_false already in list!
+INFO Module:API Function:_run_API Line:432 Adding action : Threshold_true to list!
+INFO Module:API Function:_run_API Line:434 Action : Threshold_true already in list!
+INFO Module:API Function:_run_API Line:432 Adding action : Threshold_false to list!
+INFO Module:API Function:_run_API Line:434 Action : Threshold_false already in list!
+INFO Module:API Function:_run_API Line:432 Adding action : condition_pass to list!
+INFO Module:API Function:_run_API Line:434 Action : condition_pass already in list!
+INFO Module:API Function:_run_API Line:432 Adding action : condition_fail to list!
+INFO Module:API Function:_run_API Line:434 Action : condition_fail already in list!
+INFO Module:API Function:_run_API Line:432 Adding action : condition_pass to list!
+INFO Module:API Function:_run_API Line:434 Action : condition_pass already in list!
+INFO Module:API Function:_run_API Line:432 Adding action : condition_fail to list!
+INFO Module:API Function:_run_API Line:434 Action : condition_fail already in list!
+INFO Module:API Function:_run_API Line:432 Adding action : condition_pass to list!
+INFO Module:API Function:_run_API Line:434 Action : condition_pass already in list!
+INFO Module:API Function:_run_API Line:432 Adding action : condition_fail to list!
+INFO Module:API Function:_run_API Line:434 Action : condition_fail already in list!
+INFO Module:API Function:ProductActions Line:458 Creater Product action : condition_pass successfully!
+INFO Module:API Function:ProductActions Line:458 Creater Product action : condition_fail successfully!
+INFO Module:API Function:ProductActions Line:458 Creater Product action : Threshold_true successfully!
+INFO Module:API Function:ProductActions Line:458 Creater Product action : Threshold_false successfully!
+INFO Module:engine Function:do_actions Line:108 Starting action: Threshold_false
+INFO Module:API Function:run_rules_list Line:165 Rule: CPU_usage returned false
+INFO Module:engine Function:do_actions Line:108 Starting action: Threshold_false
+INFO Module:API Function:run_rules_list Line:165 Rule: memory returned false
+INFO Module:engine Function:do_actions Line:108 Starting action: Threshold_true
+INFO Module:API Function:run_rules_list Line:158 Rule: disk_space returned true
+INFO Module:API Function:run_rules_list Line:200 List: ['CPU_usage', 'memory', 'disk_space'] has returned False
+INFO Module:API Function:run_rules_dict Line:218 All conditions were NOT satisfied: ['CPU_usage', 'memory', 'disk_space']!Running all else rules: ['rule2']
+INFO Module:engine Function:do_actions Line:108 Starting action: condition_fail
+INFO Module:API Function:run_rules_list Line:165 Rule: rule2 returned false
+INFO Module:API Function:run_rules_list Line:200 List: ['rule2'] has returned False
+INFO Module:API Function:run_rules_list Line:181 Rule conditional: {'all': ['CPU_usage', 'memory', 'disk_space'], 'then': None, 'else': ['rule2']} returned false!
+INFO Module:engine Function:do_actions Line:108 Starting action: Threshold_false
+INFO Module:API Function:run_rules_list Line:165 Rule: CPU_usage returned false
+INFO Module:engine Function:do_actions Line:108 Starting action: Threshold_false
+INFO Module:API Function:run_rules_list Line:165 Rule: memory returned false
+INFO Module:engine Function:do_actions Line:108 Starting action: Threshold_true
+INFO Module:API Function:run_rules_list Line:158 Rule: disk_space returned true
+INFO Module:API Function:run_rules_list Line:200 List: ['CPU_usage', 'memory', 'disk_space'] has returned False
+INFO Module:API Function:run_rules_dict Line:227 Any condition was satisfied: {'2': ['CPU_usage', 'memory', 'disk_space']}!Running all else rules: ['rule1']
+INFO Module:engine Function:do_actions Line:108 Starting action: condition_pass
+INFO Module:API Function:run_rules_list Line:158 Rule: rule1 returned true
+INFO Module:API Function:run_rules_list Line:200 List: ['rule1'] has returned True
+INFO Module:API Function:run_rules_list Line:176 Rule conditional: {'any': {'2': ['CPU_usage', 'memory', 'disk_space']}, 'then': ['rule3'], 'else': ['rule1']} returned true!
+INFO Module:API Function:run_rules_list Line:200 List: [{'all': ['CPU_usage', 'memory', 'disk_space'], 'then': None, 'else': ['rule2']}, {'any': {'2': ['CPU_usage', 'memory', 'disk_space']}, 'then': ['rule3'], 'else': ['rule1']}] has returned False
+INFO Module:API Function:_run_API Line:498 Case has retuned false!
+INFO Module:engine Function:do_actions Line:108 Starting action: condition_fail

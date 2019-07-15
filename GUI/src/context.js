@@ -11,14 +11,14 @@ export  class Provider extends Component {
     state = {
         rule:null,
         variables:null,
-        action:null,
+        actions:null,
         data_sources:null,
         use_cases:null,
         redirect:false
     }
 
     delData = (ty,newOb)=>{
-        axios.delete(`http://127.0.0.1:5000/del/${ty}`,JSON.stringify(newOb))
+        axios.post(`http://127.0.0.1:5000/del/${ty}`,JSON.stringify(newOb))
             .then((res)=>{
                 console.log(res)
             })
@@ -111,7 +111,7 @@ export  class Provider extends Component {
         axios.get('http://127.0.0.1:5000/get/actions ')
             .then(res => {
                 
-                this.setState({ action: res.data.data})
+                this.setState({ actions: res.data.data})
             })
             .catch(err => console.log(err))
 

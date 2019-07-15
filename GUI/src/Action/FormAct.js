@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { isFor } from '@babel/types';
-import {Form,Row,Col,Button, ListGroup} from 'react-bootstrap'
+import {Modal,Form,Row,Col,Button, ListGroup} from 'react-bootstrap'
 import {withRouter} from 'react-router-dom'
 export class FormAct extends Component {
     
@@ -10,14 +10,16 @@ export class FormAct extends Component {
         formulae:'',
         read:false,
         key:'',
-        value:''
+        value:'',
+        validated:false,
+        show_modal:false
     } 
     
     componentWillMount = () =>{
         const {cat,actions } = this.props
         if(cat!=='add'){
             const data = actions.filter(ele => ele['name']===cat)[0]
-            this.setState({...data,read:true,key:'',value:''})
+            this.setState({...data,read:true,key:'',value:'',validated:false,show_modal:false})
         }else{
             this.setState({
                 name:'',
@@ -25,7 +27,9 @@ export class FormAct extends Component {
                 formulae:'',
                 read:false,
                 key:'',
-                value:''
+                value:'',
+                validated:false,
+                show_modal:false
             })
         }
     }
@@ -35,7 +39,7 @@ export class FormAct extends Component {
             const {cat,actions } = nextProps
             if(cat!=='add'){
                 const data = actions.filter(ele => ele['name']===cat)[0]
-                this.setState({...data,read:true,key:'',value:''})
+                this.setState({...data,read:true,key:'',value:'',validated:false,show_modal:false})
             }else{
                 this.setState({
                     name:'',
@@ -43,7 +47,9 @@ export class FormAct extends Component {
                     formulae:'',
                     read:false,
                     key:'',
-                    value:''
+                    value:'',
+                    validated:false,
+                    show_modal:false
                 })
             }
         }
@@ -54,7 +60,7 @@ export class FormAct extends Component {
         })
     }
     deleteData =()=>{
-        this.props.delData('action',this.state['name'])
+        this.props.delData('actions',{name: this.state['name']})
         this.props.history.push('/Action/index')
 
     }
@@ -81,32 +87,62 @@ export class FormAct extends Component {
         })
     }
 
-    submitData =() =>{
-        console.log('submitting data')
-        const data = this.state
-        delete data['read']
-        delete data['key']
-        delete data['value']
-        console.log(data)
-        if(this.props.cat==='add'){
-            console.log('in add')
-            this.props.addData('action',data)
-            this.props.history.push('/Action/index')
+    closeModal = () => {
+        this.setState({show_modal:false})
+    }
+    showModal = () => {
+        this.setState({show_modal:true})
+    }
 
-        }else{
-            console.log('in '+this.props.cat)
-            this.props.modifyData('action',data)
-            this.props.history.push('/Action/index')
-
-
+    submitData =(e) =>{
+        const form = e.currentTarget
+        if (form.checkValidity() === false) {
+            e.preventDefault()
+            e.stopPropagation()
         }
+        else {
+            e.preventDefault()
+            console.log('submitting data')
+            const data = this.state
+            delete data['read']
+            delete data['key']
+            delete data['value']
+            delete data["show_modal"]
+            console.log(data)
+            if(this.props.cat==='add'){
+                console.log('in add')
+                if( this.props.actions.filter( ele => ele['name']===data['name']).length > 0){
+                    e.stopPropagation()
+                    this.showModal()
+                    return false
+                }
+                this.props.addData('actions',data)
+                this.props.history.push('/Action/index')
 
+            }
+            else{
+                console.log('in '+this.props.cat)
+                let newData = {
+                    querry : {name : data['name']},
+                    newData : data
+                }
+                this.props.modifyData('actions',newData)
+                this.props.history.push('/Action/index')
+            }
+        }
+        this.setState({validated:true})
     }
 
     render() {
+        const {validated} = this.state
         return (
             <React.Fragment>
-                <Form > 
+                <Modal show={this.state.show_modal}>
+                        <Modal.Header closeButton><Modal.Title>Cannot ADD action</Modal.Title></Modal.Header>
+                        <Modal.Body> <p>Action name already exists!</p></Modal.Body>
+                        <Modal.Footer><Button variant="secondary" onClick={this.closeModal}>Close</Button></Modal.Footer>
+                </Modal>
+                <Form noValidate validated={validated} onSubmit={this.submitData}> 
                 {
                     this.props.cat ==='add' ? <h1>Add new Action</h1> : <h1>{this.props.cat} Action</h1>
                 } 
@@ -114,7 +150,8 @@ export class FormAct extends Component {
                 <Form.Group as={Row} controlId='name'>
                     <Form.Label column sm={3}>Name</Form.Label>
                     <Col sm={9}>
-                        <Form.Control type='text' name='name' onChange={this.changeState} readOnly={this.state.read} value={this.state.name} />
+                        <Form.Control required type='text' name='name' onChange={this.changeState} readOnly={this.state.read} value={this.state.name} />
+                        <Form.Control.Feedback type="invalid">Enter Action Name!</Form.Control.Feedback>
                     </Col>
                 
                 </Form.Group>
@@ -122,11 +159,32 @@ export class FormAct extends Component {
                 <Form.Group as={Row} controlId='params'>
                     
                     <Form.Label column sm = {3}>Parameters</Form.Label>
-                    <Row>
-                        <Col><Form.Control type='text' placeholder='key' name='key' onChange={this.changeState} readOnly={this.state.read} value={this.state.key} /></Col>
-                        <Col><Form.Control type='text' placeholder='value' name='value' onChange={this.changeState} readOnly={this.state.read} value={this.state.value} /></Col>
+                   
+                        <Col><Form.Control type='text' placeholder='name' name='key' onChange={this.changeState} readOnly={this.state.read} value={this.state.key} /></Col>
+                        <Col>
+                            <Form.Control as='select' name='value' onChange={this.changeState} disabled={this.state.read} value={this.state.value} >
+                                    <option value="" selected hidden>
+                                        Select an option
+                                    </option>
+                                    <option value = 'numeric'>
+                                        numeric
+                                    </option>
+                                    <option value = 'text'>
+                                        text
+                                    </option>
+                                    <option value = 'none'>
+                                        no input
+                                    </option>
+                                    <option value = 'select'>
+                                        select
+                                    </option>
+                                    <option value = 'select_multiple'>
+                                        select_multiple
+                                    </option>
+                            </Form.Control>
+                        </Col>
                         <Col><Button variant='outline-secondary' onClick={this.addPara}>Add Parameter</Button></Col>
-                    </Row>
+                
                     
                 </Form.Group> 
                 <Row>
@@ -139,16 +197,17 @@ export class FormAct extends Component {
                 <Form.Group as={Row} controlId='formulae'>
                     <Form.Label column sm={3}>Formulae</Form.Label>
                     <Col sm={9}>
-                        <Form.Control as='textarea' name='formulae' onChange={this.changeState} readOnly={this.state.read} value={this.state.formulae} />
+                        <Form.Control required as='textarea' name='formulae' onChange={this.changeState} readOnly={this.state.read} value={this.state.formulae} />
+                        <Form.Control.Feedback type="invalid">Enter formulae for what action must do!</Form.Control.Feedback>
                     </Col>
                 </Form.Group>
 
-                </Form>
                 <Row>
-                        <Col><Button type = 'submit' variant='outline-success' disabled={this.state.read} onClick={this.submitData}>Submit</Button></Col>
+                        <Col><Button type = 'submit' variant='outline-success' disabled={this.state.read}>Submit</Button></Col>
                         <Col><Button name='modify' variant='outline-secondary' disabled={!this.state.read} onClick={this.changeReadMode}>Modify</Button></Col>
-                        <Col><Button name = 'delete' variant='outline-danger' disabled={this.state.read} onClick={this.deleteData}>Delete</Button></Col>
-                    </Row>
+                        <Col><Button name = 'delete' variant='outline-danger' disabled={!this.state.read} onClick={this.deleteData}>Delete</Button></Col>
+                </Row>
+            </Form>
 
             </React.Fragment>
         )
