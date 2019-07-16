@@ -6,7 +6,7 @@ export class Navigation extends Component {
     render() {
         return (
             <Navbar bg='light' expand='lg'>
-                <Navbar.Brand >Rule Engine</Navbar.Brand>
+                <Link to='/'><Navbar.Brand >Rule Engine</Navbar.Brand></Link>
                 <Nav className='mr-auto'>
                     <Nav.Link><Link to='/DataSource/index'>DataSource</Link></Nav.Link>
                     <Nav.Link><Link to='/Rule/index'>Rule</Link></Nav.Link>
