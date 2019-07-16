@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {Modal,Form,Row, Col,Button,ButtonGroup,ToggleButton} from 'react-bootstrap'
 import {withRouter} from 'react-router-dom'
+import { Prompt } from 'react-router'
 
 export class FormDS extends Component {
     
@@ -15,7 +16,13 @@ export class FormDS extends Component {
         read:false,
         show_modal:false
     }
-    
+    hasFetched = false
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.hasFetched){
+          return false;
+        }
+        return true;
+    }
 
     componentWillMount = ()=>{
         const {cat,data_sources} = this.props
@@ -152,12 +159,10 @@ export class FormDS extends Component {
             e.preventDefault()
             console.log('submitting data')
             const data = this.state
-            if(this.props.cat==='add') {
-                if( this.props.data_sources.filter( ele => ele['name']===data['name']).length > 0){
-                    e.stopPropagation()
-                    this.showModal()
-                    return false
-                }
+            if(this.props.cat==='add' && this.props.data_sources.filter( ele => ele['name']===data['name']).length > 0){
+                e.stopPropagation()
+                this.showModal()
+                return false
             }
             delete data['read']
             delete data['validated']
@@ -170,8 +175,17 @@ export class FormDS extends Component {
             if(this.props.cat==='add'){
                 console.log('in add')
                 this.props.addData('DataSource',data)
-                this.props.history.push('/DataSource/index')
-
+                if (!this.props.popUp) {
+                    console.log("Why here")
+                    this.props.history.push('/DataSource/index')
+                }
+                else {
+                    console.log("yes pop up!")
+                    e.stopPropagation()
+                    this.hasFetched = true
+                    this.props.closeDataSourceModal()
+                }
+                console.log("getting out add!")
             }
             else{
                 console.log('in '+this.props.cat)
@@ -204,15 +218,22 @@ export class FormDS extends Component {
         
         return (
             <React.Fragment>
+                <Prompt
+                    when={!this.state.read}
+                    message="Click OK to Continue! ALL data in the form will be lost!"
+                />
                 <Modal show={this.state.show_modal}>
                         <Modal.Header closeButton><Modal.Title>Cannot ADD DataSource</Modal.Title></Modal.Header>
                         <Modal.Body> <p>DataSource name already exists!</p></Modal.Body>
                         <Modal.Footer><Button variant="secondary" onClick={this.closeModal}>Close</Button></Modal.Footer>
                 </Modal>
-
-                {
-                    this.props.cat ==='add' ? <h1>Add new Data Source</h1> : <h1>{this.props.cat} Data Source</h1>
-                }
+                <Row>
+                    <Col >{
+                        this.props.cat ==='add' ? <h1>Add new Data Source</h1> : <h1>{this.props.cat} Data Source</h1>
+                    }</Col>
+                    <Col md="auto"><Button name='modify' variant='outline-secondary' disabled={!this.state.read} hidden={this.props.popUp} onClick={this.changeReadMode}>Modify</Button></Col>
+                    <Col md="auto"><Button name = 'delete' variant='outline-danger' disabled={!this.state.read} hidden={this.props.popUp} onClick={this.deleteData}>Delete</Button></Col>
+                </Row>
                 <Form noValidate validated={validated} onSubmit={this.submitData}>
                     <Form.Group as={Row} controlId='name'>
                         <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Name</Form.Label>
@@ -251,9 +272,7 @@ export class FormDS extends Component {
                     </Form.Group>
 
                     <Row>
-                        <Col><Button type = 'submit' variant='outline-success' disabled={this.state.read}>Submit</Button></Col>
-                        <Col><Button name='modify' variant='outline-secondary' disabled={!this.state.read} onClick={this.changeReadMode}>Modify</Button></Col>
-                        <Col><Button name = 'delete' variant='outline-danger' disabled={!this.state.read} onClick={this.deleteData}>Delete</Button></Col>
+                        <Col md="auto"><Button type = 'submit' variant='outline-success' disabled={this.state.read}>Submit</Button></Col>
                     </Row>
                 </Form>
 

@@ -1,105 +1,51 @@
 import React from "react"
-import {Form,Col,Row,InputGroup,Button} from 'react-bootstrap' 
+import {Modal,Form,Col,Row,InputGroup,Button} from 'react-bootstrap' 
+import {Link,withRouter} from 'react-router-dom'
 export class FormExample extends React.Component {
-    constructor(...args) {
-      super(...args);
+    constructor(props, context) {
+      super(props, context);
   
-      this.state = { validated: false };
+      this.handleShow = this.handleShow.bind(this);
+      this.handleClose = this.handleClose.bind(this);
+  
+      this.state = {
+        show: false,
+      };
     }
   
-    handleSubmit(event) {
-      const form = event.currentTarget;
-      if (form.checkValidity() === false) {
-          console.log("fail submit")
-        event.preventDefault();
-        event.stopPropagation();
-      }
-      console.log("submin now")
-      this.setState({ validated: true });
-      console.log("after state")
+    handleClose() {
+      this.setState({ show: false });
+    }
+  
+    handleShow() {
+      this.setState({ show: true });
     }
   
     render() {
-      const { validated } = this.state;
       return (
-        <Form
-          noValidate
-          validated={validated}
-          onSubmit={e => this.handleSubmit(e)}
-        >
-          <Form.Row>
-            <Form.Group as={Col} md="4" controlId="validationCustom01">
-              <Form.Label>First name</Form.Label>
-              <Form.Control
-                required
-                type="text"
-                placeholder="First name"
-                defaultValue="Mark"
-              />
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom02">
-              <Form.Label>Last name</Form.Label>
-              <Form.Control
-                required
-                type="text"
-                placeholder="Last name"
-                defaultValue="Otto"
-              />
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-              <Form.Label>Username</Form.Label>
-              <InputGroup>
-                <InputGroup.Prepend>
-                  <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-                </InputGroup.Prepend>
-                <Form.Control
-                  type="text"
-                  placeholder="Username"
-                  aria-describedby="inputGroupPrepend"
-                  required
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please choose a username.
-                </Form.Control.Feedback>
-              </InputGroup>
-            </Form.Group>
-          </Form.Row>
-          <Form.Row>
-            <Form.Group as={Col} md="6" controlId="validationCustom03">
-              <Form.Label>City</Form.Label>
-              <Form.Control type="text" placeholder="City" required />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="3" controlId="validationCustom04">
-              <Form.Label>State</Form.Label>
-              <Form.Control type="text" placeholder="State" required />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="3" controlId="validationCustom05">
-              <Form.Label>Zip</Form.Label>
-              <Form.Control type="text" placeholder="Zip" required />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid zip.
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Form.Row>
-          <Form.Group>
-            <Form.Check
-              required
-              label="Agree to terms and conditions"
-              feedback="You must agree before submitting."
-            />
-          </Form.Group>
-          <Button type="submit">Submit form</Button>
-        </Form>
+        <>
+          <Button variant="primary" onClick={this.handleShow}>
+            Launch demo modal
+          </Button>
+  
+          <Modal show={this.state.show} onHide={this.handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Modal heading</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>yo </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={this.handleClose}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={this.handleClose}>
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </>
       );
     }
   }
+
   
   export default FormExample

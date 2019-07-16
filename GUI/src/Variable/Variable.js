@@ -25,16 +25,16 @@ export class Variable extends Component {
                         if(cat === 'index'){
                             return(
                                 //Add button here
-                                <Container>
+                                <Container fluid={true}>
                                     <Row>
+                                    <Col>
+                                        <SideVar variables = {variables} />
+                                    </Col>
                                     <Col lg = {9}>
                                         <h1>Variable</h1>
                                         <p>Click on the Add button to create a variable or choose a variable from the given list</p>
                                         <Link to = '/Variable/add'><Button variant='outline-primary'>Add new Variable</Button></Link>
                                         
-                                    </Col>
-                                    <Col>
-                                        <SideVar variables = {variables} />
                                     </Col>
                                     </Row>
                                 </Container>
@@ -42,13 +42,13 @@ export class Variable extends Component {
                         }else{
                             const readOnly = cat === 'add'? false:true
                             return(
-                                <Container>
+                                <Container fluid={true}>
                                     <Row>
-                                    <Col lg = {9}>
-                                        <FormVar cat = {cat} readOnly = {readOnly} data_sources={data_sources} variables={variables} addData={value.addData} modifyData={value.modifyData} delData={value.delData}/>
-                                    </Col>
                                     <Col>
                                         <SideVar variables = {variables} />
+                                    </Col>
+                                    <Col lg = {10}>
+                                        <FormVar cat = {cat} readOnly = {readOnly} data_sources={data_sources} variables={variables} addData={value.addData} modifyData={value.modifyData} delData={value.delData}/>
                                     </Col>
                                     </Row>
                                 </Container>

@@ -46,11 +46,12 @@ class Collector:
         """
         result = {}
         if source["cache"]:
-            result = mydb["cache"].find_one({"name":source['name']},{"_id":0,"result":1})
-            if result and set(source['variables']).issubset(result['result'].keys()):
+            cache = mydb["cache"].find_one({"name":source['name']},{"_id":0,"result":1})
+            if result and set(source['variables']).issubset(cache['result'].keys()):
                 API.logger.info("Variables : {} of Source : {} taken from cache!".format(source['variables'],source["name"]))
                 ET.SubElement(API.root[1],"INFO").text = str("Variables: {} of Source: {} taken from cache!".format(source['variables'],source["name"]))
-                result = result["result"]
+                for var in source["variables"]:
+                    result[var] = cache["result"][var]
                 return self._init_source_variables(variables,result,source['name'])
         try:
             if source['method'] == "SSH":

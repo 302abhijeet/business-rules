@@ -26,16 +26,16 @@ export class Action extends Component {
                         if(cat === 'index'){
                             return(
                                 //Add button here
-                                <Container>
+                                <Container fluid={true}>
                                     <Row>
+                                    <Col>
+                                        <SideAct actions = {action} />
+                                    </Col>
                                     <Col lg = {9}>
                                         <h1>Action</h1>
                                         <p>Click on the Add button to create an action or choose an action from the given list</p>
                                         <Link to = '/Action/add'><Button variant='outline-primary'>Add new Action</Button></Link>
                                         
-                                    </Col>
-                                    <Col>
-                                        <SideAct actions = {action} />
                                     </Col>
                                     </Row>
                                 </Container>
@@ -43,14 +43,15 @@ export class Action extends Component {
                         }else{
                             const readOnly = cat === 'add'? false:true
                             return(
-                                <Container>
+                                <Container fluid={true}>
                                     <Row>
-                                    <Col lg = {9}>
-                                        <FormAct cat = {cat} readOnly = {readOnly} actions={action} addData={value.addData} modifyData={value.modifyData} delData={value.delData}/>
-                                    </Col>
                                     <Col>
                                         <SideAct actions = {action} />
                                     </Col>
+                                    <Col lg = {10}>
+                                        <FormAct cat = {cat} readOnly = {readOnly} actions={action} addData={value.addData} modifyData={value.modifyData} delData={value.delData}/>
+                                    </Col>
+                                
                                     </Row>
                                 </Container>
 

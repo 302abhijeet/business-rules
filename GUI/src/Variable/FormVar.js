@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
+import Iframe from 'iframe-react'
 import {Modal,Form,Row,Col, Button} from 'react-bootstrap'
 import {Link,withRouter} from 'react-router-dom'
-
+import FormDS from './../DataSource/FormDS'
+import { Prompt } from 'react-router'
 
 export class FormVar extends Component {
     
@@ -23,7 +25,8 @@ export class FormVar extends Component {
         derived:true,
         validated:false,
         read:false,
-        show_modal:false
+        show_modal:false,
+        show_dataSource:false
     }
     
     componentWillMount = () =>{
@@ -146,7 +149,12 @@ export class FormVar extends Component {
     showModal = () => {
         this.setState({show_modal:true})
     }
-
+    closeDataSourceModal = () => {
+        this.setState({show_dataSource:false})
+    }
+    showDataSourceModal = () => {
+        this.setState({show_dataSource:true})
+    }
     submitForm=(e)=>{
         const form = e.currentTarget
         if (form.checkValidity() === false) {
@@ -207,16 +215,30 @@ export class FormVar extends Component {
         
         return (
             <React.Fragment>
+            <Prompt
+                    when={!this.state.read}
+                    message="Click OK to Continue! ALL data in the form will be lost!"
+            />
             <Modal show={this.state.show_modal}>
                 <Modal.Header closeButton><Modal.Title>Cannot ADD variable</Modal.Title></Modal.Header>
                 <Modal.Body> <p>Variable name already exists!</p></Modal.Body>
                 <Modal.Footer><Button variant="secondary" onClick={this.closeModal}>Close</Button></Modal.Footer>
             </Modal>
+            <Modal size='xl' scrollable size="Large"  scrollable show={this.state.show_dataSource}>
+                <Modal.Header closeButton><Modal.Title>ADD Data Source</Modal.Title></Modal.Header>
+                <Modal.Body> 
+                    <FormDS cat = 'add' readOnly = {false} data_sources={data_sources} addData={this.props.addData} popUp={true} closeDataSourceModal={this.closeDataSourceModal}/>
+                </Modal.Body>
+                <Modal.Footer><Button variant="secondary" onClick={this.closeDataSourceModal}>Close</Button></Modal.Footer>
+            </Modal>
             <Form noValidate validated={validated} onSubmit={this.submitForm}>
-                {
-                    this.props.cat ==='add' ? <h1>Add new Variable</h1> : <h1>{this.props.cat} Variable</h1>
-                }   
-                
+                <Row>
+                    <Col>{
+                        this.props.cat ==='add' ? <h1>Add new Variable</h1> : <h1>{this.props.cat} Variable</h1>
+                    }</Col>
+                    <Col md="auto"><Button name='modify' variant='outline-secondary' disabled={!this.state.read} onClick={this.changeReadMode}>Modify</Button></Col>
+                    <Col md="auto"><Button name = 'delete' variant='outline-danger' disabled={!this.state.read} onClick={this.deleteData}>Delete</Button></Col>   
+                </Row>
                     <Form.Group as={Row} controlId='name'>
                         <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Name</Form.Label>
                         <Col sm={9}>
@@ -281,9 +303,10 @@ export class FormVar extends Component {
                             <Form.Control.Feedback type="invalid">Please select None if variable is "derived"</Form.Control.Feedback>
                         </Col>
                         <Col>
-                            <Link to='/DataSource/add'><Button variant='outline-secondary' disabled={this.state.read}>Add new Data Source</Button></Link>
+                            <Button variant='outline-secondary' onClick={this.showDataSourceModal} disabled={this.state.read}>Add new Data Source</Button>
                         </Col>
                     </Form.Group>
+            
 
 
                     <Form.Group as={Row} controlId='formulae' hidden={!this.state.derived}>
@@ -340,8 +363,6 @@ export class FormVar extends Component {
 
                     <Row>
                         <Col><Button type = 'submit' variant='outline-success' disabled={this.state.read}>Submit</Button></Col>
-                        <Col><Button name='modify' variant='outline-secondary' disabled={!this.state.read} onClick={this.changeReadMode}>Modify</Button></Col>
-                        <Col><Button name = 'delete' variant='outline-danger' disabled={!this.state.read} onClick={this.deleteData}>Delete</Button></Col>
                     </Row>
 
             </Form>                
