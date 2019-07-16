@@ -9,7 +9,7 @@ const Context = React.createContext()
 export  class Provider extends Component {
     
     state = {
-        rule:null,
+        rules:null,
         variables:null,
         actions:null,
         DataSource:null,
@@ -77,7 +77,7 @@ export  class Provider extends Component {
         axios.get('http://127.0.0.1:5000/get/rules ')
             .then(res => {
                 
-                this.setState({ rule: res.data.data})
+                this.setState({ rules: res.data.data})
             })
             .catch(err => console.log(err))
 
