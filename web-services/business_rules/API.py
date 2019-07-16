@@ -36,7 +36,8 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
     global output
     output = []       #final output for run_rule/use_case
     #create log file and logger
-    file_name =(run_rule or case)+"_"+str(datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
+    time_stamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    file_name =(run_rule or case)+"_"+str(time_stamp)
     logging.basicConfig(filename="./logs/"+file_name+".log",format='%(levelname)s Module:%(module)s Function:%(funcName)s Line:%(lineno)d %(message)s',filemode='w')
     logger = logging.getLogger()
     logger.setLevel(20)
@@ -53,6 +54,12 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
     history = mydb["history"]
 
     logger.info("Starting _run_API")
+
+    history.insert_one({
+        'Date': time_stamp,
+        "Use_Case" : case
+        })
+    
 
     def _write_to_xml(root):
         """write xml object to file
@@ -93,12 +100,12 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
                     if rules[rule]['multi_thread']:
                         try:
                             if not run(rule = rules[rule],defined_variables = ProductVariables(product),defined_actions = ProductActions(product)) :
-                                history.update_one({"name": case['name'],"type":"use_case"},{"$inc":{rule+".failed":1}},upsert=True)
+                                history.update_one({"Date": time_stamp},{"$inc":{"Rules."+rule+".failed":1}},upsert=True)
                                 logger.info("Rule: {} returned false".format(rule))
                                 ET.SubElement(rules_report,rule).text = str("Rule returned false!")
                                 passed = False
                             else:
-                                history.update_one({"name": case['name'],"type":"use_case"},{"$inc":{rule+".passed":1}},upsert=True)
+                                history.update_one({"Date": time_stamp},{"$inc":{"Rules."+rule+".passed":1}},upsert=True)
                                 logger.info("Rule: {} returned true".format(rule))
                                 ET.SubElement(rules_report,rule).text = str("Rule returned true!")
                         except Exception as e:
@@ -154,14 +161,14 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
                     continue
                 try:
                     if run(rule = rules[rule],defined_variables = ProductVariables(product),defined_actions = ProductActions(product)) :
-                        history.update_one({"name": case['name'],"type":"use_case"},{"$inc":{rule+".passed":1}},upsert=True)
+                        history.update_one({"Date": time_stamp},{"$inc":{"Rules."+rule+".passed":1}},upsert=True)
                         logger.info("Rule: {} returned true".format(rule))
                         ET.SubElement(rules_report,rule).text = str("Rule returned true!")
                         passed += 1
                         if stop_on_first_success:
                             return all_pass
                     else :
-                        history.update_one({"name": case['name'],"type":"use_case"},{"$inc":{rule+".failed":1}},upsert=True)
+                        history.update_one({"Date": time_stamp},{"$inc":{"Rules."+rule+".failed":1}},upsert=True)
                         logger.info("Rule: {} returned false".format(rule))
                         ET.SubElement(rules_report,rule).text = str("Rule returned false!")
                         all_pass = False
@@ -237,6 +244,9 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
         else:
             logger.critical("Case not defined in config")
             ET.SubElement(error,'NameError').text = str("Case: " + case +" not defined in config!")
+            if logger.handlers:
+                for handler in logger.handlers:
+                    logger.removeHandler(handler)
             raise NameError(_write_to_xml(root))
     if run_rule:
         run_rule = mydb["rules"].find_one({"name":run_rule},{"_id":0})
@@ -245,6 +255,9 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
         else:
             logger.critical("Rule not defined in config")
             ET.SubElement(error,'NameError').text = str("Rule: " + case +" not defined in config!")
+            if logger.handlers:
+                for handler in logger.handlers:
+                    logger.removeHandler(handler)
             raise NameError(_write_to_xml(root))
 
 
@@ -372,6 +385,9 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
         if run_rule:
             logger.critical("Rule cannot run bacause variable: "+var+" not defined!")
             ET.SubElement(error,"RuntimeError").text = str("Rule cannot run bacause variable: "+var+" not defined!")
+            if logger.handlers:
+                for handler in logger.handlers:
+                    logger.removeHandler(handler)
             raise RuntimeError(_write_to_xml(root))
         for rule in case["rule_list"]:
             if var in rules[rule]['variables']:
@@ -402,6 +418,9 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
                 if run_rule:
                     logger.error("Product Variable: " + var['name'] + " could not be defined hence rule:" + run_rule + " cannot run!Error: {}".format(e))
                     ET.SubElement(error,"RuntimeError").text = str("Product Variable: " + var['name'] + " could not be defined hence rule:" + run_rule + " cannot run!Error: {}".format(e))
+                    if logger.handlers:
+                        for handler in logger.handlers:
+                            logger.removeHandler(handler)
                     raise RuntimeError(_write_to_xml(root))
                 for rule in case['rule_list']:
                     if var['name'] in rules[rule]['variables']:
@@ -480,21 +499,21 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
     try :
         if run_rule:
             if run(rule = run_rule, defined_variables = ProductVariables(product), defined_actions = ProductActions(product)):
-                history.update_one({"name": run_rule['name'],"type":"rule"},{"$inc":{"passed":1}},upsert=True)
+                history.update_one({"Date": time_stamp},{"$inc":{"Rules."+run_rule["name"]+".passed":1}},upsert=True)
                 logger.info("Rule has retuned true!")
                 ET.SubElement(rules_report,run_rule['name']).text = str("Rule has returned true!")
             else:
-                history.update_one({"name": run_rule['name'],"type":"rule"},{"$inc":{"failed":1}},upsert=True)
+                history.update_one({"name": run_rule['name'],"type":"rule"},{"$inc":{"Rules."+run_rule["name"]+".failed":1}},upsert=True)
                 logger.info("Rule has retuned false!")
                 ET.SubElement(rules_report,run_rule['name']).text = str("Rule has returned false!")
         else :
             if run_rules_list(case['rules'],stop_on_first_success=case["stop_on_first_success"],stop_on_first_failure = case["stop_on_first_failure"]) :
-                history.update_one({"name": case['name'],"type":"use_case"},{"$inc":{"passed":1}},upsert=True)
+                history.update_one({"Date":time_stamp},{"$inc":{"passed":1}},upsert=True)
                 logger.info("Case has retuned true!")
                 ET.SubElement(case_report,run_rule).text = str("Case has returned true!")
                 do_actions(case["actions_true"], defined_actions = ProductActions(product))
             else :
-                history.update_one({"name": case['name'],"type":"use_case"},{"$inc":{"failed":1}},upsert=True)
+                history.update_one({"Date":time_stamp},{"$inc":{"failed":1}},upsert=True)
                 logger.info("Case has retuned false!")
                 ET.SubElement(case_report,run_rule).text = str("Case has returned false!")
                 do_actions(case["actions_false"], defined_actions = ProductActions(product))
@@ -506,6 +525,7 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
             logger.removeHandler(handler)
 
     #return back output and xml report to user
+    history.update_one({"Date":time_stamp},{"$set":{"Report":"/reports/"+file_name+".xml"}})
     return output,_write_to_xml(root)
 
 
