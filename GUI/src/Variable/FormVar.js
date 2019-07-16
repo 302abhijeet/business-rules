@@ -3,6 +3,7 @@ import Iframe from 'iframe-react'
 import {Modal,Form,Row,Col, Button} from 'react-bootstrap'
 import {Link,withRouter} from 'react-router-dom'
 import FormDS from './../DataSource/FormDS'
+import { Prompt } from 'react-router'
 
 export class FormVar extends Component {
     
@@ -214,6 +215,10 @@ export class FormVar extends Component {
         
         return (
             <React.Fragment>
+            <Prompt
+                    when={!this.state.read}
+                    message="Click OK to Continue! ALL data in the form will be lost!"
+            />
             <Modal show={this.state.show_modal}>
                 <Modal.Header closeButton><Modal.Title>Cannot ADD variable</Modal.Title></Modal.Header>
                 <Modal.Body> <p>Variable name already exists!</p></Modal.Body>
@@ -227,10 +232,13 @@ export class FormVar extends Component {
                 <Modal.Footer><Button variant="secondary" onClick={this.closeDataSourceModal}>Close</Button></Modal.Footer>
             </Modal>
             <Form noValidate validated={validated} onSubmit={this.submitForm}>
-                {
-                    this.props.cat ==='add' ? <h1>Add new Variable</h1> : <h1>{this.props.cat} Variable</h1>
-                }   
-                
+                <Row>
+                    <Col>{
+                        this.props.cat ==='add' ? <h1>Add new Variable</h1> : <h1>{this.props.cat} Variable</h1>
+                    }</Col>
+                    <Col md="auto"><Button name='modify' variant='outline-secondary' disabled={!this.state.read} onClick={this.changeReadMode}>Modify</Button></Col>
+                    <Col md="auto"><Button name = 'delete' variant='outline-danger' disabled={!this.state.read} onClick={this.deleteData}>Delete</Button></Col>   
+                </Row>
                     <Form.Group as={Row} controlId='name'>
                         <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Name</Form.Label>
                         <Col sm={9}>
@@ -355,8 +363,6 @@ export class FormVar extends Component {
 
                     <Row>
                         <Col><Button type = 'submit' variant='outline-success' disabled={this.state.read}>Submit</Button></Col>
-                        <Col><Button name='modify' variant='outline-secondary' disabled={!this.state.read} onClick={this.changeReadMode}>Modify</Button></Col>
-                        <Col><Button name = 'delete' variant='outline-danger' disabled={!this.state.read} onClick={this.deleteData}>Delete</Button></Col>
                     </Row>
 
             </Form>                

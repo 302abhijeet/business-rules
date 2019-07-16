@@ -25,16 +25,16 @@ export class DataSource extends Component {
                             if(cat === 'index'){
                                 return(
                                     //Add button here
-                                    <Container>
+                                    <Container fluid={true}>
                                         <Row>
+                                        <Col>
+                                            <SideDS data_sources = {data_sources} />
+                                        </Col>
                                         <Col lg = {9}>
                                             <h1>Data Source</h1>
                                             <p>Click on the Add button to create a data source or choose a data source from the given list</p>
                                             <Link to = '/DataSource/add'><Button variant='outline-primary'>Add new Data Source</Button></Link>
                                             
-                                        </Col>
-                                        <Col>
-                                            <SideDS data_sources = {data_sources} />
                                         </Col>
                                         </Row>
                                     </Container>
@@ -43,13 +43,13 @@ export class DataSource extends Component {
                             else{
                                 const readOnly = cat === 'add'? false:true
                                 return(
-                                    <Container>
+                                    <Container fluid={true}>
                                         <Row>
-                                        <Col lg = {9}>
-                                            <FormDS cat = {cat} readOnly = {readOnly} data_sources={data_sources} addData={value.addData} modifyData = {value.modifyData} delData={value.delData} popUp={false}/>
-                                        </Col>
                                         <Col>
                                             <SideDS data_sources = {data_sources} />
+                                        </Col>
+                                        <Col lg = {10}>
+                                            <FormDS cat = {cat} readOnly = {readOnly} data_sources={data_sources} addData={value.addData} modifyData = {value.modifyData} delData={value.delData} popUp={false}/>
                                         </Col>
                                         </Row>
                                     </Container>

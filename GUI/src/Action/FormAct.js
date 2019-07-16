@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { isFor } from '@babel/types';
 import {Modal,Form,Row,Col,Button, ListGroup} from 'react-bootstrap'
 import {withRouter} from 'react-router-dom'
+import { Prompt } from 'react-router'
 export class FormAct extends Component {
     
     state={
@@ -143,15 +144,23 @@ export class FormAct extends Component {
         const {validated} = this.state
         return (
             <React.Fragment>
+                <Prompt
+                    when={!this.state.read}
+                    message="Click OK to Continue! ALL data in the form will be lost!"
+                />
                 <Modal show={this.state.show_modal}>
                         <Modal.Header closeButton><Modal.Title>Cannot ADD action</Modal.Title></Modal.Header>
                         <Modal.Body> <p>Action name already exists!</p></Modal.Body>
                         <Modal.Footer><Button variant="secondary" onClick={this.closeModal}>Close</Button></Modal.Footer>
                 </Modal>
                 <Form noValidate validated={validated} onSubmit={this.submitData}> 
-                {
-                    this.props.cat ==='add' ? <h1>Add new Action</h1> : <h1>{this.props.cat} Action</h1>
-                } 
+                <Row>
+                    <Col>{
+                        this.props.cat ==='add' ? <h1>Add new Action</h1> : <h1>{this.props.cat} Action</h1>
+                    }</Col>
+                    <Col md="auto"><Button name='modify' variant='outline-secondary' disabled={!this.state.read} onClick={this.changeReadMode}>Modify</Button></Col>
+                    <Col md="auto"><Button name = 'delete' variant='outline-danger' disabled={!this.state.read} onClick={this.deleteData}>Delete</Button></Col>   
+                </Row> 
 
                 <Form.Group as={Row} controlId='name'>
                     <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Name</Form.Label>
@@ -210,8 +219,6 @@ export class FormAct extends Component {
 
                 <Row>
                         <Col><Button type = 'submit' variant='outline-success' disabled={this.state.read}>Submit</Button></Col>
-                        <Col><Button name='modify' variant='outline-secondary' disabled={!this.state.read} onClick={this.changeReadMode}>Modify</Button></Col>
-                        <Col><Button name = 'delete' variant='outline-danger' disabled={!this.state.read} onClick={this.deleteData}>Delete</Button></Col>
                 </Row>
             </Form>
 
