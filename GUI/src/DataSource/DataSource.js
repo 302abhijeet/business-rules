@@ -46,7 +46,7 @@ export class DataSource extends Component {
                                     <Container>
                                         <Row>
                                         <Col lg = {9}>
-                                            <FormDS cat = {cat} readOnly = {readOnly} data_sources={data_sources} addData={value.addData} modifyData = {value.modifyData} delData={value.delData}/>
+                                            <FormDS cat = {cat} readOnly = {readOnly} data_sources={data_sources} addData={value.addData} modifyData = {value.modifyData} delData={value.delData} popUp={false}/>
                                         </Col>
                                         <Col>
                                             <SideDS data_sources = {data_sources} />

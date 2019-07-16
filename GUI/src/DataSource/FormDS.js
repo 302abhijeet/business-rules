@@ -15,7 +15,13 @@ export class FormDS extends Component {
         read:false,
         show_modal:false
     }
-    
+    hasFetched = false
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.hasFetched){
+          return false;
+        }
+        return true;
+    }
 
     componentWillMount = ()=>{
         const {cat,data_sources} = this.props
@@ -152,12 +158,10 @@ export class FormDS extends Component {
             e.preventDefault()
             console.log('submitting data')
             const data = this.state
-            if(this.props.cat==='add') {
-                if( this.props.data_sources.filter( ele => ele['name']===data['name']).length > 0){
-                    e.stopPropagation()
-                    this.showModal()
-                    return false
-                }
+            if(this.props.cat==='add' && this.props.data_sources.filter( ele => ele['name']===data['name']).length > 0){
+                e.stopPropagation()
+                this.showModal()
+                return false
             }
             delete data['read']
             delete data['validated']
@@ -170,8 +174,17 @@ export class FormDS extends Component {
             if(this.props.cat==='add'){
                 console.log('in add')
                 this.props.addData('DataSource',data)
-                this.props.history.push('/DataSource/index')
-
+                if (!this.props.popUp) {
+                    console.log("Why here")
+                    this.props.history.push('/DataSource/index')
+                }
+                else {
+                    console.log("yes pop up!")
+                    e.stopPropagation()
+                    this.hasFetched = true
+                    this.props.closeDataSourceModal()
+                }
+                console.log("getting out add!")
             }
             else{
                 console.log('in '+this.props.cat)

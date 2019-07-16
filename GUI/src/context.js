@@ -56,26 +56,6 @@ export  class Provider extends Component {
         })
     }
 
-    addNewData = (ty,newOb)=>{
-        const st = this.state[ty]
-        const key = Object.keys(newOb)[0]
-        st[key] = newOb[key]
-        for(let k in newOb[key]['info']){
-            st[key][k] = newOb[key]['info'][k]
-            newOb[key][k] = newOb[key]['info'][k]
-        }
-        delete st[key]['info']
-        delete newOb[key]['info']
-        let li
-        if(ty==='data_sources')
-            li = 'datasource'
-        
-        axios.post(`http://127.0.0.1:5000/add/${li}`,newOb)
-        Redirect('/DataSource/index')
-        this.setState({[ty]:st})
-        
-
-    }
     
     //fetch data from server here
     componentDidMount(){

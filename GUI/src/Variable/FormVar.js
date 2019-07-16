@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import Iframe from 'react-iframe'
+import Iframe from 'iframe-react'
 import {Modal,Form,Row,Col, Button} from 'react-bootstrap'
 import {Link,withRouter} from 'react-router-dom'
 import FormDS from './../DataSource/FormDS'
-
 
 export class FormVar extends Component {
     
@@ -25,7 +24,8 @@ export class FormVar extends Component {
         derived:true,
         validated:false,
         read:false,
-        show_modal:false
+        show_modal:false,
+        show_dataSource:false
     }
     
     componentWillMount = () =>{
@@ -148,7 +148,12 @@ export class FormVar extends Component {
     showModal = () => {
         this.setState({show_modal:true})
     }
-
+    closeDataSourceModal = () => {
+        this.setState({show_dataSource:false})
+    }
+    showDataSourceModal = () => {
+        this.setState({show_dataSource:true})
+    }
     submitForm=(e)=>{
         const form = e.currentTarget
         if (form.checkValidity() === false) {
@@ -209,10 +214,17 @@ export class FormVar extends Component {
         
         return (
             <React.Fragment>
-            <Modal show='false'>
+            <Modal show={this.state.show_modal}>
                 <Modal.Header closeButton><Modal.Title>Cannot ADD variable</Modal.Title></Modal.Header>
                 <Modal.Body> <p>Variable name already exists!</p></Modal.Body>
                 <Modal.Footer><Button variant="secondary" onClick={this.closeModal}>Close</Button></Modal.Footer>
+            </Modal>
+            <Modal size='xl' scrollable size="Large"  scrollable show={this.state.show_dataSource}>
+                <Modal.Header closeButton><Modal.Title>ADD Data Source</Modal.Title></Modal.Header>
+                <Modal.Body> 
+                    <FormDS cat = 'add' readOnly = {false} data_sources={data_sources} addData={this.props.addData} popUp={true} closeDataSourceModal={this.closeDataSourceModal}/>
+                </Modal.Body>
+                <Modal.Footer><Button variant="secondary" onClick={this.closeDataSourceModal}>Close</Button></Modal.Footer>
             </Modal>
             <Form noValidate validated={validated} onSubmit={this.submitForm}>
                 {
@@ -283,15 +295,8 @@ export class FormVar extends Component {
                             <Form.Control.Feedback type="invalid">Please select None if variable is "derived"</Form.Control.Feedback>
                         </Col>
                         <Col>
-                            <Button variant='outline-secondary' onClick={this.showModal} disabled={this.state.read}>Add new Data Source</Button>
+                            <Button variant='outline-secondary' onClick={this.showDataSourceModal} disabled={this.state.read}>Add new Data Source</Button>
                         </Col>
-                        <Modal show={this.state.show_modal}>
-                            <Modal.Header closeButton><Modal.Title>ADD Data Source</Modal.Title></Modal.Header>
-                            <Modal.Body> 
-                                <Iframe url="/DataSource/add"/>
-                            </Modal.Body>
-                            <Modal.Footer><Button variant="secondary" onClick={this.closeModal}>Close</Button></Modal.Footer>
-                        </Modal>
                     </Form.Group>
             
 
