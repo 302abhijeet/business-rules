@@ -86,6 +86,8 @@ export class FormRule extends Component {
         let at = this.state.actions_true, af = this.state.actions_false
         const val = values === null?[]:values.map(ele => ele['label'])
        //filter data
+       at = at.filter(ele => val.includes(ele['name']))
+       af = af.filter(ele => val.includes(ele['name']))
 
 
         this.setState({
@@ -181,11 +183,14 @@ export class FormRule extends Component {
     }
 
     addData = () =>{
+        if(this.props.cat === 'add'){
+            //add data and redirect
 
+        }
     }
 
     delData = () =>{
-
+        //delete data and redirect
     }
 
     render() {
@@ -222,7 +227,7 @@ export class FormRule extends Component {
                     </Row>
                     <Form.Group as={Row} controlId='name'>
                         <Form.Label column sm={3}>Name</Form.Label>
-                        <Col sm={9}>
+                        <Col sm={6}>
                             <Form.Control type='text' name='name' onChange={this.changeState} readOnly={this.props.cat==='add'?false:true} value={this.state.name} />
                         </Col>
                     
@@ -265,7 +270,7 @@ export class FormRule extends Component {
                         <Form.Label column sm={3}>Multithread</Form.Label>
                         <Form.Check as ='checkbox' checked={this.state.multi_thread} onChange={this.changeCheck} name='multi_thread' disabled={this.state.read}/>
                     </Form.Group>
-                    
+                    <hr />
                     <Form.Group as={Row} controlId='actions_trues'>
                         
                         <Form.Label column sm={3}>True actions</Form.Label>
@@ -402,7 +407,8 @@ export class FormRule extends Component {
                             this.state.actions_false.map(ele => <DisplayActionList ele={ele} read={this.state.read} delAction={(keyname)=>    this.delAction('actions_false',keyname)}/>)
                         }
                         <hr />
-                        <Condition variables = {this.state.variables}/>
+                        <Condition variables = {this.state.variables} conditions={this.state.conditions} read = {this.state.read}/>
+                        <hr />
 
                         <Row>
                             <Col>
