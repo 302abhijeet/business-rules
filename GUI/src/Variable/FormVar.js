@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import Iframe from 'react-iframe'
 import {Modal,Form,Row,Col, Button} from 'react-bootstrap'
 import {Link,withRouter} from 'react-router-dom'
+import FormDS from './../DataSource/FormDS'
 
 
 export class FormVar extends Component {
@@ -207,7 +209,7 @@ export class FormVar extends Component {
         
         return (
             <React.Fragment>
-            <Modal show={this.state.show_modal}>
+            <Modal show='false'>
                 <Modal.Header closeButton><Modal.Title>Cannot ADD variable</Modal.Title></Modal.Header>
                 <Modal.Body> <p>Variable name already exists!</p></Modal.Body>
                 <Modal.Footer><Button variant="secondary" onClick={this.closeModal}>Close</Button></Modal.Footer>
@@ -281,9 +283,17 @@ export class FormVar extends Component {
                             <Form.Control.Feedback type="invalid">Please select None if variable is "derived"</Form.Control.Feedback>
                         </Col>
                         <Col>
-                            <Link to='/DataSource/add'><Button variant='outline-secondary' disabled={this.state.read}>Add new Data Source</Button></Link>
+                            <Button variant='outline-secondary' onClick={this.showModal} disabled={this.state.read}>Add new Data Source</Button>
                         </Col>
+                        <Modal show={this.state.show_modal}>
+                            <Modal.Header closeButton><Modal.Title>ADD Data Source</Modal.Title></Modal.Header>
+                            <Modal.Body> 
+                                <Iframe url="/DataSource/add"/>
+                            </Modal.Body>
+                            <Modal.Footer><Button variant="secondary" onClick={this.closeModal}>Close</Button></Modal.Footer>
+                        </Modal>
                     </Form.Group>
+            
 
 
                     <Form.Group as={Row} controlId='formulae' hidden={!this.state.derived}>
