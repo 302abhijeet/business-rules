@@ -1,10 +1,17 @@
 import React, { Component } from 'react'
 import {Form,Row,Col, Button} from 'react-bootstrap';
 import Select from 'react-select'
-import {Link} from 'react-router-dom'
-import Condition from './Condition';
+import {Link,withRouter} from 'react-router-dom'
+import Condition2 from './Condition2';
 
 export class FormRule extends Component {
+    
+    handleConditionChange = (conditions,count) =>{
+        this.setState({
+            conditions,
+            count
+        })
+    }
     
     state = {
         name:'',
@@ -182,15 +189,45 @@ export class FormRule extends Component {
         this.setState({read:!this.state.read})
     }
 
-    addData = () =>{
+    addData = (e) =>{
+        e.preventDefault()
+        const newData = this.state
+            delete newData['current_act_false']
+            delete newData['current_act_true']
+            delete newData['current_mt_false']
+            delete newData['current_mt_true']
+            delete newData['current_param_false']
+            delete newData['current_param_true']
+            delete newData['read']
+            if(newData['count'])
+                delete newData['count']
+        
         if(this.props.cat === 'add'){
             //add data and redirect
+            
+            console.log(newData)
+            this.props.addData('rules',newData)
+            this.props.history.push('/Rule/index')
+
+        }
+        else{
+            //modify data
+            const newOb = {
+                'querry':{
+                    'name':newData['name']
+                },
+                'newData':newData
+            }
+            this.props.modifyData('rules',newOb)
+            this.props.history.push('/Rule/index')
 
         }
     }
 
     delData = () =>{
         //delete data and redirect
+        this.props.delData('rules',{name:this.state.name})
+        this.props.history.push('/Rule/index')
     }
 
     render() {
@@ -221,8 +258,12 @@ export class FormRule extends Component {
                     {
                         this.props.cat ==='add' ? <h1>Add new Rule</h1> : <h1>{this.props.cat} Rule</h1>
                     } </Col>
-                    <Col>
-                        <Button variant='outline-secondary' onClick={this.modifyRead}>Modify</Button>
+                    <Col md='auto'>
+                        <Button variant='outline-secondary' onClick={this.modifyRead} disabled={!this.state.read}>Modify</Button>
+                    </Col>
+                    <Col md='auto'> 
+                    <Button variant = 'outline-danger' onClick = {this.delData} disabled = {this.props.cat!=='add'?false:true}>Delete</Button>
+
                     </Col>
                     </Row>
                     <Form.Group as={Row} controlId='name'>
@@ -407,7 +448,7 @@ export class FormRule extends Component {
                             this.state.actions_false.map(ele => <DisplayActionList ele={ele} read={this.state.read} delAction={(keyname)=>    this.delAction('actions_false',keyname)}/>)
                         }
                         <hr />
-                        <Condition variables = {this.state.variables} conditions={this.state.conditions} read = {this.state.read}/>
+                        <Condition2 variables = {this.state.variables} conditions={this.state.conditions} read = {this.state.read} handleConditionChange={this.handleConditionChange}/>
                         <hr />
 
                         <Row>
@@ -415,7 +456,6 @@ export class FormRule extends Component {
                                 <Button variant='outline-success' type='submit' disabled={this.state.read}>Submit</Button>
                             </Col>
                             <Col>
-                                <Button variant = 'outline-danger' onClick = {this.delData} >Delete</Button>
                             </Col>
                         </Row>
                         
@@ -427,7 +467,7 @@ export class FormRule extends Component {
     }
 }
 
-export default FormRule
+export default withRouter(FormRule)
 
 class DisplayActionList extends Component{
 
