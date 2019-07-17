@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {Modal,Form,Row, Col,Button,ButtonGroup,ToggleButton} from 'react-bootstrap'
 import {withRouter} from 'react-router-dom'
 import { Prompt } from 'react-router'
+import Select from 'react-select'
 
 export class FormDS extends Component {
     
@@ -22,6 +23,11 @@ export class FormDS extends Component {
           return false;
         }
         return true;
+    }
+    componentWillUpdate(nextProps, nextState) {
+        if(this.props.run) {
+            this.props.addData(nextState,this.props._id)
+        }
     }
 
     componentWillMount = ()=>{
@@ -108,6 +114,7 @@ export class FormDS extends Component {
                 }
             })
         }
+        
     }
 
     changeDataParams = (newData,id) =>{
@@ -120,9 +127,18 @@ export class FormDS extends Component {
         information[id] = newData
         console.log(information)
         this.setState({info:information})
+        
+    }
+    changeVars = (values) =>{
+        const val=values === null?[]:values.map(ele => ele['label'])
+        this.setState({
+            variables:val
+        })
+        
     }
 
     changeState = event =>{
+         
         this.setState({[event.target.name]:event.target.value})
     }
 
@@ -130,13 +146,16 @@ export class FormDS extends Component {
         let information = this.state.info
         information[event.target.name] = event.target.value
         this.setState({info:information})
+        
     }
     
     changeCheck = event =>{
         this.setState({[event.target.name]: !this.state.multi_thread})
+        
     }
     changeCheckCache = event =>{
         this.setState({[event.target.name]: !this.state.cache})
+        
     }
     closeModal = () => {
         this.setState({show_modal:false})
@@ -181,7 +200,6 @@ export class FormDS extends Component {
                 }
                 else {
                     console.log("yes pop up!")
-                    e.stopPropagation()
                     this.hasFetched = true
                     this.props.closeDataSourceModal()
                 }
@@ -206,6 +224,15 @@ export class FormDS extends Component {
 
     render() {
         const {validated} = this.state
+        const {variables} = this.props
+        console.log(variables)
+        const var_options = variables !== undefined? variables.map(ele => {
+            return {
+                'value':ele,
+                'label':ele
+            }
+        }) : null
+        console.log(var_options)
         let displaySubForm
             if(this.state.method === 'SSH'){
                  displaySubForm =  <FormDSSSH changeInfoState={this.changeInfoState} readOnly={this.state.read} values = {this.state.info} />
@@ -228,13 +255,13 @@ export class FormDS extends Component {
                         <Modal.Footer><Button variant="secondary" onClick={this.closeModal}>Close</Button></Modal.Footer>
                 </Modal>
                 <Row>
-                    <Col >{
+                    <Col hidden={this.props.run}>{
                         this.props.cat ==='add' ? <h1>Add new Data Source</h1> : <h1>{this.props.cat} Data Source</h1>
                     }</Col>
-                    <Col md="auto"><Button name='modify' variant='outline-secondary' disabled={!this.state.read} hidden={this.props.popUp} onClick={this.changeReadMode}>Modify</Button></Col>
-                    <Col md="auto"><Button name = 'delete' variant='outline-danger' disabled={!this.state.read} hidden={this.props.popUp} onClick={this.deleteData}>Delete</Button></Col>
+                    <Col md="auto"><Button name='modify' variant='outline-secondary' disabled={!this.state.read} hidden={this.props.popUp || this.props.run} onClick={this.changeReadMode}>Modify</Button></Col>
+                    <Col md="auto"><Button name = 'delete' variant='outline-danger' disabled={!this.state.read} hidden={this.props.popUp || this.props.run} onClick={this.deleteData}>Delete</Button></Col>
                 </Row>
-                <Form noValidate validated={validated} onSubmit={this.submitData}>
+                <Form className="overflow-auto" noValidate validated={validated} onSubmit={this.submitData} hidden={this.props.hidden}>
                     <Form.Group as={Row} controlId='name'>
                         <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Name</Form.Label>
                         <Col sm={9}>
@@ -263,16 +290,30 @@ export class FormDS extends Component {
 
                     <Form.Group as={Row} controlId="formBasicChecbox">
                         <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Multithread</Form.Label>
-                        <Form.Check type="checkbox" checked name='multi_thread' disabled={this.state.read} value={this.state.multi_thread} onChange={this.changeCheck}/>
+                        <Form.Check type="checkbox" checked={this.state.multi_thread} name='multi_thread' disabled={this.state.read} value={this.state.multi_thread} onChange={this.changeCheck}/>
                     </Form.Group>
 
                     <Form.Group as={Row} controlId="formBasicChecbox">
                         <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Cache</Form.Label>
-                        <Form.Check type="checkbox" checked name='cache' disabled={this.state.read} value={this.state.cache} onChange={this.changeCheckCache}/>
+                        <Form.Check type="checkbox" checked={this.state.cache} name='cache' disabled={this.state.read} value={this.state.cache} onChange={this.changeCheckCache}/>
                     </Form.Group>
 
+                    <div hidden={!this.props.run}>
+                        <Form.Group as={Row} controlId='variables'>
+                            <Form.Label column sm={3}>Variables</Form.Label>
+                            <Col sm={6}>
+                                <Select value={this.state.variables.map(ele => {
+                                    return {
+                                        'value':ele,
+                                        'label':ele
+                                    }
+                                })} options={var_options} onChange={this.changeVars} name='variables' isMulti/>
+                            </Col>
+                        </Form.Group>
+                    </div>
+
                     <Row>
-                        <Col md="auto"><Button type = 'submit' variant='outline-success' disabled={this.state.read}>Submit</Button></Col>
+                        <Col md="auto"><Button hidden={this.props.run} type = 'submit' variant='outline-success' disabled={this.state.read}>Submit</Button></Col>
                     </Row>
                 </Form>
 

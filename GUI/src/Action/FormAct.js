@@ -207,7 +207,7 @@ export class FormAct extends Component {
                     {
                         Object.keys(this.state.params).map(ele => <ParameterDisplay key ={ele} keyv={ele} value={this.state.params[ele]} delParam={this.delParam} read={this.state.read}/>   )
                     }</Col>
-                    </Row>
+                </Row>
 
                 <Form.Group as={Row} controlId='formulae'>
                     <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Formulae</Form.Label>

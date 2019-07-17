@@ -1,4 +1,5 @@
 import main_server
+import json
 
 #to check if variables exists
 def check_valid_data(data_given,mydb):
@@ -31,7 +32,7 @@ def checkValidatePD(data):
         if not data:
                 return []
         
-        data =  eval(data)
+        data =  json.loads(data)
         to_be_removed = []
         
         for d in data:

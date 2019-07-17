@@ -21,7 +21,7 @@ export class FormVar extends Component {
             end:null
         },
         multi_thread:true,
-        cashe:true,
+        cache:true,
         derived:true,
         validated:false,
         read:false,
@@ -55,7 +55,7 @@ export class FormVar extends Component {
                     end:null
                 },
                 multi_thread:true,
-                cashe:true,
+                cache:true,
                 derived:true,
                 validated:false,
                 read:false,
@@ -94,7 +94,7 @@ export class FormVar extends Component {
                         end:null
                     },
                     multi_thread:true,
-                    cashe:true,
+                    cache:true,
                     derived:true,
                     validated:false,
                     read:false,
@@ -136,7 +136,7 @@ export class FormVar extends Component {
         this.setState({[event.target.name]: !this.state.multi_thread})
     }
     changeCheckCache = event =>{
-        this.setState({[event.target.name]: !this.state.cashe})
+        this.setState({[event.target.name]: !this.state.cache})
     }
     changeReadMode = () =>{
         this.setState({
@@ -227,7 +227,7 @@ export class FormVar extends Component {
             <Modal size='xl' scrollable size="Large"  scrollable show={this.state.show_dataSource}>
                 <Modal.Header closeButton><Modal.Title>ADD Data Source</Modal.Title></Modal.Header>
                 <Modal.Body> 
-                    <FormDS cat = 'add' readOnly = {false} data_sources={data_sources} addData={this.props.addData} popUp={true} closeDataSourceModal={this.closeDataSourceModal}/>
+                    <FormDS cat = 'add' hidden={false} run={false} readOnly = {false} data_sources={data_sources} addData={this.props.addData} popUp={true} closeDataSourceModal={this.closeDataSourceModal}/>
                 </Modal.Body>
                 <Modal.Footer><Button variant="secondary" onClick={this.closeDataSourceModal}>Close</Button></Modal.Footer>
             </Modal>
@@ -350,7 +350,7 @@ export class FormVar extends Component {
                     <Form.Group as={Row} controlId='cache'>
                         <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Cache</Form.Label>
                         <Col sm={9}>
-                            <Form.Check checked={this.state.cashe} type='checkbox' name='cache' onChange={this.changeCheckCache} readOnly={this.state.read} value={this.state.cashe} />
+                            <Form.Check checked={this.state.cache} type='checkbox' name='cache' onChange={this.changeCheckCache} readOnly={this.state.read} value={this.state.cache} />
                         </Col>
                     </Form.Group>
 
