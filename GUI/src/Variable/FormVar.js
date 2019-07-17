@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Iframe from 'iframe-react'
 import {Modal,Form,Row,Col, Button} from 'react-bootstrap'
 import {Link,withRouter} from 'react-router-dom'
 import FormDS from './../DataSource/FormDS'
