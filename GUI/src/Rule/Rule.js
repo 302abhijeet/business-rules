@@ -30,7 +30,7 @@ export class Rule extends Component {
                                     <Col>
                                         <SideRule rule = {rule} />
                                     </Col>
-                                    <Col lg = {9}>
+                                    <Col lg = {10}>
                                         <h1>Rule</h1>
                                         <p>Click on the Add button to create a rule or choose a rule from the given list</p>
                                         <Link to = '/Rule/add'><Button variant='outline-primary'>Add new Rule</Button></Link>

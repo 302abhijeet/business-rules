@@ -2,21 +2,19 @@ import React, { Component } from 'react'
 import { Consumer } from '../context';
 import {Spinner ,Container,Row,Col,Button} from 'react-bootstrap'
 import {Link,Redirect} from 'react-router-dom'
-import FormUC from './FormUC'
 import SideUC from './SideUC'
+import FormUC from './FormUC'
 
-export class UseCase extends Component {
+export class Rule extends Component {
     render() {
         return (
             <Consumer>
                 {value=>{
                     const {cat} = this.props
-                    const {rule,use_cases} = value.value
-                    const action =  value.value.actions
-                    // if(redirect===true)
-                    //     return <Redirect to='/Variable/index' />
-
-                    if(  action===null || action===undefined || rule===null || rule===undefined || use_cases===null || use_cases===undefined){
+                    const {actions,rules,use_cases} = value.value
+                   
+            
+                    if( use_cases === null || use_cases===undefined || actions===null || actions===undefined || rules===null || rules===undefined){
                         return(<Spinner animation="border" role="status">
                         <span className="sr-only">Loading...</span>
 
@@ -25,31 +23,33 @@ export class UseCase extends Component {
                         if(cat === 'index'){
                             return(
                                 //Add button here
-                                <Container>
+                                <Container fluid={true}>
                                     <Row>
-                                    <Col lg = {9}>
-                                        <h1>Usecase</h1>
-                                        <p>Click on the Add button to create a usecase or choose a usecase from the given list</p>
-                                        <Link to = '/UseCase/add'><Button variant='outline-primary'>Add new usecase</Button></Link>
-                                        
-                                    </Col>
                                     <Col>
                                         <SideUC use_cases = {use_cases} />
                                     </Col>
+                                    <Col lg = {10}>
+                                        <h1>Use Case</h1>
+                                        <p>Click on the Add button to create a use case or choose a use case from the given list</p>
+                                        <Link to = '/UseCase/add'><Button variant='outline-primary'>Add new Use Case</Button></Link>
+                                        
+                                    </Col>
+                                    
                                     </Row>
                                 </Container>
                             )
                         }else{
                             const readOnly = cat === 'add'? false:true
                             return(
-                                <Container>
+                                <Container fluid={true}>
                                     <Row>
-                                    <Col lg = {9}>
-                                        <FormUC cat = {cat} readOnly = {readOnly} action={action}  use_cases={use_cases} rule={rule} addData={value.addData} modifyData={value.modifyData} delData={value.delData}/>
-                                    </Col>
                                     <Col>
                                         <SideUC use_cases = {use_cases} />
                                     </Col>
+                                    <Col lg = {10}>
+                                        <FormUC cat = {cat} readOnly = {readOnly} rules={rules} actions={actions} use_cases={use_cases} addData={value.addData} modifyData={value.modifyData} delData={value.delData}/>
+                                    </Col>
+                                    
                                     </Row>
                                 </Container>
 
@@ -63,4 +63,4 @@ export class UseCase extends Component {
     }
 }
 
-export default UseCase
+export default Rule

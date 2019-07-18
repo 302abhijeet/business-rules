@@ -469,7 +469,7 @@ export class FormRule extends Component {
 
 export default withRouter(FormRule)
 
-class DisplayActionList extends Component{
+export class DisplayActionList extends Component{
 
     render(){
         const {ele} = this.props
