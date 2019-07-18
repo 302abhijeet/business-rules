@@ -12,6 +12,7 @@ export  class Provider extends Component {
         rules:null,
         variables:null,
         actions:null,
+        history:null,
         DataSource:null,
         use_cases:null,
         redirect:false
@@ -94,6 +95,13 @@ export  class Provider extends Component {
                 this.setState({ actions: res.data.data})
             })
             .catch(err => console.log(err))
+
+        axios.get('http://127.0.0.1:5000/get/history ')
+        .then(res => {
+            
+            this.setState({ history: res.data.data})
+        })
+        .catch(err => console.log(err))
 
     }
 

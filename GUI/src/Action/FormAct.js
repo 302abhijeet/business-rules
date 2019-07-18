@@ -15,13 +15,6 @@ export class FormAct extends Component {
         validated:false,
         show_modal:false
     } 
-    // hasFetched = false
-    // shouldComponentUpdate(nextProps, nextState) {
-    //     if (this.hasFetched){
-    //       return false;
-    //     }
-    //     return true;
-    // }
     componentWillMount = () =>{
         const {cat,actions } = this.props
         if(cat!=='add'){
@@ -133,11 +126,6 @@ export class FormAct extends Component {
                 if (!this.props.popUp) {
                     console.log("Why here")
                     this.props.history.push('/Action/index')
-                }
-                else {
-                    console.log("yes pop up!")
-                    //this.hasFetched = true
-                    //this.props.closeActionFormModal()
                 }
             }
             else{
