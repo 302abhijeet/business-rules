@@ -49,7 +49,7 @@ export class Action extends Component {
                                         <SideAct actions = {action} />
                                     </Col>
                                     <Col lg = {10}>
-                                        <FormAct cat = {cat} readOnly = {readOnly} actions={action} addData={value.addData} modifyData={value.modifyData} delData={value.delData}/>
+                                        <FormAct cat = {cat} popUp={false} readOnly = {readOnly} actions={action} addData={value.addData} modifyData={value.modifyData} delData={value.delData}/>
                                     </Col>
                                 
                                     </Row>
