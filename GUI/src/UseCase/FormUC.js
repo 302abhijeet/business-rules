@@ -3,6 +3,7 @@ import { Form,Row,Col,Button } from 'react-bootstrap';
 import Select from 'react-select'
 import {Link } from 'react-router-dom'
  import {DisplayActionList} from '../Rule/FormRule'
+import RuleCondition from './RuleCondition'
 
 export class FormUC extends Component {
     
@@ -196,7 +197,7 @@ export class FormUC extends Component {
     }
 
     submitData = () =>{
-        
+
     }
     
     render() {
@@ -423,7 +424,7 @@ export class FormUC extends Component {
                             this.state.actions_false.map(ele => <DisplayActionList ele={ele} read={this.state.read} delAction={(keyname)=>    this.delAction('actions_false',keyname)}/>)
                         }
                         <hr />
-                        {/* <Condition2 variables = {this.state.variables} conditions={this.state.conditions} read = {this.state.read} handleConditionChange={this.handleConditionChange}/> */}
+                        <RuleCondition rules = {this.state.rules} rule_list={this.state.rule_list} read = {this.state.read}/>
                         <hr />
 
                         <Row>

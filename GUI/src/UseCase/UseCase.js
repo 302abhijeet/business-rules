@@ -5,7 +5,7 @@ import {Link,Redirect} from 'react-router-dom'
 import SideUC from './SideUC'
 import FormUC from './FormUC'
 
-export class Rule extends Component {
+export class UseCase extends Component {
     render() {
         return (
             <Consumer>
@@ -63,4 +63,4 @@ export class Rule extends Component {
     }
 }
 
-export default Rule
+export default UseCase
