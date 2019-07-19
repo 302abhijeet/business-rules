@@ -75,6 +75,28 @@ export class Home extends Component {
     }
 }
 export class HistoryCard extends Component {
+    returnFile = (filename) => {
+        console.log("http://127.0.0.1:5000/return-files?file=reports\\"+filename.substr(9,))
+        fetch("http://127.0.0.1:5000/return-files?file=reports\\"+filename.substr(9,))
+            .then(res => res.blob())
+            .then(blob => {
+                // 2. Create blob link to download
+                console.log(blob)
+                const url = window.URL.createObjectURL(new Blob([blob]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', filename);
+                // 3. Append to html page
+                document.body.appendChild(link);
+                // 4. Force download
+                link.click();
+                // 5. Clean up and remove the link
+                link.parentNode.removeChild(link);
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
     render(){
         return(
             <Card>
@@ -82,6 +104,7 @@ export class HistoryCard extends Component {
                     <Row>
                         <Col>{this.props.his["Date"]}</Col>
                         <Col sm="auto"><h5>{this.props.his["Use_Case"]}</h5></Col>
+                        <Col md="auto"><Button onClick={()=>this.returnFile(this.props.his["Report"])} variant="outline-info">Report</Button></Col>
                     </Row>
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey={this.props.his["Date"]}>

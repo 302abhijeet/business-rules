@@ -57,6 +57,28 @@ export class Run extends Component {
             ++i
         })
     }
+    returnFile = () => {
+        console.log("http://127.0.0.1:5000/return-files?file=reports\\"+this.state.result["file"].substr(10,))
+        fetch("http://127.0.0.1:5000/return-files?file=reports\\"+this.state.result["file"].substr(10,))
+            .then(res => res.blob())
+            .then(blob => {
+                // 2. Create blob link to download
+                console.log(blob)
+                const url = window.URL.createObjectURL(new Blob([blob]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', this.state.result["file"]);
+                // 3. Append to html page
+                document.body.appendChild(link);
+                // 4. Force download
+                link.click();
+                // 5. Clean up and remove the link
+                link.parentNode.removeChild(link);
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
 
     runCase = () => {
         this.setState({isLoading:true})
@@ -139,7 +161,7 @@ export class Run extends Component {
                                             <Col><h5>{this.state.result["run_msg"]}</h5></Col>
                                         </Row>
                                         {this.state.result["data"].map(ele => <h6>{JSON.stringify(ele)}</h6>)}
-                                        <h5>Report: <h6>{this.state.result["file"]}</h6></h5>
+                                        <h5>Report: <Link onClick={this.returnFile}>{this.state.result["file"]}</Link></h5>
                                         <h5>{this.state.result["parameter_warnings"].length !== 0?'Warnings':''}</h5>
                                         {this.state.result["parameter_warnings"].map(ele => <h6>JSON.stringify(ele)</h6>)}
 
