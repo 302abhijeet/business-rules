@@ -61,9 +61,9 @@ export class Home extends Component {
                                         <Col md='auto'><Button variant="primary" onClick={this.showHistory}>See History</Button></Col>
                                     </Row>
                                     <br />
-                                    <ListGroup hidden={!this.state.show_history}>
-                                        {history.filter(ele => new Date(ele["Date"].substr(0,10))<=this.state.end_date && new Date(ele["Date"].substr(0,10))>=this.state.start_date).map(ele => <ListGroup.Item>{JSON.stringify(ele)}</ListGroup.Item>)}
-                                    </ListGroup>
+                                    <Accordion hidden={!this.state.show_history}>
+                                        {history.filter(ele => new Date(ele["Date"].substr(0,10))<=this.state.end_date && new Date(ele["Date"].substr(0,10))>=this.state.start_date).map(ele => <HistoryCard his={ele} />)}
+                                    </Accordion>
 
                                 </Container>
                             )
@@ -71,6 +71,25 @@ export class Home extends Component {
                     }}
                 </Consumer>
             </React.Fragment>
+        )
+    }
+}
+export class HistoryCard extends Component {
+    render(){
+        return(
+            <Card>
+                <Accordion.Toggle as={Card.Header} eventKey={this.props.his["Date"]}>
+                    <Row>
+                        <Col>{this.props.his["Date"]}</Col>
+                        <Col sm="auto"><h5>{this.props.his["Use_Case"]}</h5></Col>
+                    </Row>
+                </Accordion.Toggle>
+                <Accordion.Collapse eventKey={this.props.his["Date"]}>
+                    <Card.Body>
+                        <pre>{JSON.stringify(this.props.his,null,'\t')}</pre>
+                    </Card.Body>
+                </Accordion.Collapse>
+            </Card>
         )
     }
 }
