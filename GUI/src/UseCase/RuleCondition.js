@@ -5,7 +5,7 @@ export class RuleCondition extends Component {
     
     createID = (rootArray,id) =>{
         if(Array.isArray(rootArray)){
-            if(!Number.isInteger(rootArray[0])){
+            if(!Number.isInteger(rootArray[0]) || rootArray[0]!==undefined || rootArray[0]!==null){
                 rootArray.unshift(id)
             }
             id++
@@ -13,12 +13,15 @@ export class RuleCondition extends Component {
 
 
             for (let i in rootArray){
-                if(typeof rootArray[i] === 'string'){
+                if(Number.isInteger(rootArray[i]))
+                    continue
+
+                else if(typeof rootArray[i] === 'string'){
                     const name = rootArray[i]
                     rootArray[i] = {id,name}
                     id++
                 }
-                else if(rootArray[i]['all'] || rootArray[i]['any']){
+                else if(typeof rootArray[i]==='object' && ('all' in rootArray[i]|| 'any' in rootArray[i])){
                     rootArray[i]['id'] = id
                     id++
                     if(rootArray[i]['all'])
@@ -28,7 +31,7 @@ export class RuleCondition extends Component {
                     id = this.createID(rootArray[i]['then'],id)
                     id = this.createID(rootArray[i]['else'],id)
                 }
-                else if(rootArray[i]['multi_thread']){
+                else if(typeof rootArray[i]==='object' && 'multi_thread' in rootArray[i]){
                     rootArray[i]['id'] =id
                     id++
                     id = this.createID(rootArray[i]['multi_thread'],id)
@@ -36,7 +39,6 @@ export class RuleCondition extends Component {
                     id = this.createID(rootArray[i],id)
                 }
             }
-            console.log(id)
             return id
         }
         
@@ -104,12 +106,12 @@ export class RuleCondition extends Component {
                 else    
                     stack = [...stack,...element]
             }
-            else if('name' in element){
+            else if(typeof element === 'object' && 'name' in element){
                 if(element['id'] === id){
                     return element
                 }
             }
-            else if('multi_thread' in element){
+            else if(typeof element === 'object' &&'multi_thread' in element){
                 if(element['id'===id]){
                     return element
                 }
@@ -117,7 +119,7 @@ export class RuleCondition extends Component {
                     stack = [...stack,element['multi_thread']]
                 }
             }
-            else if('all' in element|| 'any'in element){
+            else if(typeof element === 'object' && ('all' in element|| 'any'in element)){
                 if(element['id']===id){
                     return element
                 }
@@ -216,8 +218,9 @@ export class RuleCondition extends Component {
 
     }
 
-    delMulti = () =>{
+    delMulti = (id,parentId) =>{
         console.log('del multi')
+        
 
     }
 
@@ -359,12 +362,12 @@ class RuleArr extends Component{
         const display = data.map(ele => {
             if(Number.isInteger(ele)){}
                 
-            else if('name' in ele){
+            else if(typeof ele === 'object' && 'name' in ele){
                 return <RuleVar data={ele} rule_list={rule_list} modRule={modRule} delRule={delRule} parentId={data[0]}/>
             }
-            else if('multi_thread' in ele){
+            else if(typeof ele === 'object' && 'multi_thread' in ele){
                 return <Multi data={ele} rule_list={rule_list} modRule={modRule} delRule={delRule} parentId={data[0]} addCondition={addCondition} addMulti={addMulti} addRule={addRule}/>
-            }else if('all' in ele || 'any' in ele){
+            }else if(typeof ele === 'object' && ('all' in ele || 'any' in ele)){
                 return <Conditional data={ele} rule_list={rule_list} modRule={modRule} delRule={delRule} parentId={data[0]}  addCondition={addCondition} addMulti={addMulti} addRule={addRule}/>
             }else if(Array.isArray(ele)){
                 //array in array, pass the state as a parameter and make this function recursive
