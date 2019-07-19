@@ -49,7 +49,7 @@ export class Rule extends Component {
                                         <SideRule rule = {rule} />
                                     </Col>
                                     <Col lg = {10}>
-                                        <FormRule cat = {cat} readOnly = {readOnly} rule={rule} data_sources={DataSource} actions={action} variables={variables} addData={value.addData} modifyData={value.modifyData} delData={value.delData}/>
+                                        <FormRule cat = {cat} popUp={false} readOnly = {readOnly} rule={rule} data_sources={DataSource} actions={action} variables={variables} addData={value.addData} modifyData={value.modifyData} delData={value.delData}/>
                                     </Col>
                                     
                                     </Row>

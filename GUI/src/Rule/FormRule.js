@@ -249,6 +249,11 @@ export class FormRule extends Component {
         else {
             e.preventDefault()
             const newData = this.state
+            if(this.props.cat === 'add' && this.props.rule.filter( ele => ele['name']===newData['name']).length > 0){
+                e.stopPropagation()
+                this.showModal()
+                return false
+            }
                 delete newData['current_act_false']
                 delete newData['current_act_true']
                 delete newData['current_mt_false']
@@ -263,13 +268,11 @@ export class FormRule extends Component {
                 //add data and redirect
                 
                 console.log(newData)
-                if( this.props.rule.filter( ele => ele['name']===newData['name']).length > 0){
-                    e.stopPropagation()
-                    this.showModal()
-                    return false
-                }
                 this.props.addData('rules',newData)
-                this.props.history.push('/Rule/index')
+                if (!this.props.popUp) {
+                    console.log("Why here")
+                    this.props.history.push('/Rule/index')
+                }
 
             }
             else{
@@ -346,10 +349,10 @@ export class FormRule extends Component {
                         this.props.cat ==='add' ? <h1>Add new Rule</h1> : <h1>{this.props.cat} Rule</h1>
                     } </Col>
                     <Col md='auto'>
-                        <Button variant='outline-secondary' onClick={this.modifyRead} disabled={!this.state.read}>Modify</Button>
+                        <Button hidden={this.props.popUp} variant='outline-secondary' onClick={this.modifyRead} disabled={!this.state.read}>Modify</Button>
                     </Col>
                     <Col md='auto'> 
-                    <Button variant = 'outline-danger' onClick = {this.delData} disabled = {this.props.cat!=='add'?false:true}>Delete</Button>
+                    <Button variant = 'outline-danger' hidden={this.props.popUp} onClick = {this.delData} disabled = {this.props.cat!=='add'?false:true}>Delete</Button>
 
                     </Col>
                     </Row>
