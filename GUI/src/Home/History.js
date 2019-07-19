@@ -62,7 +62,7 @@ export class History extends Component {
                             }
                             else {
                                 history.forEach(ele => {
-                                    if(ele["Rules"][name]!==undefined) {
+                                    if(ele["Rules"] !== undefined && ele["Rules"][name]!==undefined) {
                                         if(ele["Rules"][name]["passed"] === undefined) {
                                             ++failed
                                         }
@@ -91,7 +91,7 @@ export class History extends Component {
                                     </Row>
                                     <br />
                                     <Accordion hidden={!this.state.show_history}>
-                                        {   type=="UseCase"? 
+                                        {   type==="UseCase"? 
                                             history.filter(ele =>ele["Use_Case"]===name && new Date(ele["Date"].substr(0,10))<=this.state.end_date && new Date(ele["Date"].substr(0,10))>=this.state.start_date).map(ele => <HistoryCard his={ele} />)
                                             :history.filter(ele =>ele["Rules"][name]!==undefined && new Date(ele["Date"].substr(0,10))<=this.state.end_date && new Date(ele["Date"].substr(0,10))>=this.state.start_date).map(ele => <HistoryCard his={ele} />)
                                         }

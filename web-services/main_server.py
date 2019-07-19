@@ -1,7 +1,7 @@
 import business_rules.API as API
 import json
 from utils import *
-from flask import Flask,request,jsonify,Response
+from flask import Flask,request,jsonify,Response,send_file
 from sshtunnel import SSHTunnelForwarder
 from pymongo import MongoClient
 from flask_cors import CORS
@@ -26,7 +26,15 @@ def _create_SSHtunnel():
     )
     return ssh_server
 
-#Server route to run rules
+@server.route('/return-files/')
+def return_files_tut():
+    try:
+        data=request.args.to_dict()
+        return send_file(data["file"], attachment_filename=data["file"][9:])
+    except Exception as e:
+        return str(e)
+
+
 @server.route('/runrule',methods=['POST'])
 def runrule():
     """run rule given by user

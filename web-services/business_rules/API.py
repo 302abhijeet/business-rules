@@ -509,11 +509,11 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
     try :
         if run_rule:
             if run(rule = run_rule, defined_variables = ProductVariables(product), defined_actions = ProductActions(product)):
-                history.update_one({"Date": time_stamp},{"$inc":{"Rules."+run_rule["name"]+".passed":1}},upsert=True)
+                history.update_one({"Date": time_stamp},{"$inc":{"Rules."+run_rule["name"]+".passed":1}})
                 logger.info("Rule has retuned true!")
                 ET.SubElement(rules_report,run_rule['name']).text = str("Rule has returned true!")
             else:
-                history.update_one({"name": run_rule['name'],"type":"rule"},{"$inc":{"Rules."+run_rule["name"]+".failed":1}},upsert=True)
+                history.update_one({"Date": time_stamp},{"$inc":{"Rules."+run_rule["name"]+".failed":1}})
                 logger.info("Rule has retuned false!")
                 ET.SubElement(rules_report,run_rule['name']).text = str("Rule has returned false!")
         else :
