@@ -6,6 +6,7 @@ export class RuleCondition extends Component {
     createID = (rootArray,id) =>{
         if(Array.isArray(rootArray)){
             if(!Number.isInteger(rootArray[0]) || rootArray[0]!==undefined || rootArray[0]!==null){
+                console.log(rootArray[0])
                 rootArray.unshift(id)
             }
             id++
@@ -152,7 +153,8 @@ export class RuleCondition extends Component {
         const ob = this.getID(obid,rules)
         console.log(ob)
         ob.push({ name:'',id:this.state.id +1  })
-        this.setState({rules,id:this.state.id+1})
+        this.props.handleRulesChange(rules,this.state.id+1)
+        //this.setState({rules,id:this.state.id+1})
     }
 
     modCondition = (id,newval) =>{
@@ -166,7 +168,8 @@ export class RuleCondition extends Component {
             ob[newval] = ob['any'][Object.keys(ob['any'])[0]]
             delete ob['any']
         }
-        this.setState({rules})
+        this.props.handleRulesChange(rules,this.state.id)
+//        this.setState({rules})
     }
 
     modAny = (id,newval) => {
@@ -181,7 +184,8 @@ export class RuleCondition extends Component {
             console.log(ob)
 
         }
-        this.setState({rules})
+        this.props.handleRulesChange(rules,this.state.id)
+        // this.setState({rules})
     }
 
     addCondition = (obid) =>{
@@ -189,14 +193,16 @@ export class RuleCondition extends Component {
         const {rules,id} = this.state
         const ob = this.getID(obid,rules)
         ob.push({'all':[id+1],'then':[id+2],'else':[id+3],id:this.state.id+4})
-        this.setState({rules,id:this.state.id+4})
+        this.props.handleRulesChange(rules,this.state.id+4)
+        // this.setState({rules,id:this.state.id+4})
     }
 
     addMulti = (obid) => {
         const {rules,id} = this.state
         const ob = this.getID(obid,rules)
         ob.push({'multi_thread':[id+1],id:id+2})
-        this.setState({rules,id:id+2})
+        this.props.handleRulesChange(rules,this.state.id+2)
+        // this.setState({rules,id:id+2})
     }
 
     modRule = (id,newval) =>{
@@ -204,7 +210,8 @@ export class RuleCondition extends Component {
         const {rules} = this.state
         const ob = this.getID(id,rules)
         ob['name'] = newval
-        this.setState({rules})
+        this.props.handleRulesChange(rules,this.state.id)
+        // this.setState({rules})
     }
 
   
@@ -235,7 +242,8 @@ export class RuleCondition extends Component {
             pob.splice(ind,1)
         }
         console.log(pob)
-        this.setState({rules})
+        this.props.handleRulesChange(rules,this.state.id)
+        // this.setState({rules})
 
     }
 

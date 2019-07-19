@@ -10,6 +10,11 @@ import FormRule from './../Rule/FormRule'
 
 export class FormUC extends Component {
     
+
+    handleRulesChange=(rules,id)=>{
+        this.setState({rules,id})
+    }
+
     state={
         name:'',
         rule_list:[],
@@ -497,7 +502,7 @@ export class FormUC extends Component {
                             this.state.actions_false.map(ele => <DisplayActionList ele={ele} read={this.state.read} delAction={(keyname)=>    this.delAction('actions_false',keyname)}/>)
                         }
                         <hr />
-                        <RuleCondition rules = {this.state.rules} rule_list={this.state.rule_list} read = {this.state.read}/>
+                        <RuleCondition rules = {this.state.rules} rule_list={this.state.rule_list} read = {this.state.read} handleRulesChange={this.handleRulesChange}/>
                         <hr />
 
                         <Row>
