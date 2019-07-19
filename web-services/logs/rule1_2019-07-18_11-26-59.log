@@ -1,0 +1,845 @@
+INFO Module:API Function:_run_API Line:56 Starting _run_API
+INFO Module:API Function:_run_API Line:254 Run_Rule fetched from database
+INFO Module:API Function:_run_API Line:301 source_variable_list made :[]
+INFO Module:API Function:_run_API Line:306 adding variable: actual
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:27:00] "POST /runrule?rule=rule1&actual=10&expected=10&correct=10 HTTP/1.1" 500 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:33:18] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:33:18] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:33:18] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:33:18] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:33:18] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:33:46] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:33:46] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:33:46] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:33:46] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:33:46] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:41:30] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:41:30] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:41:30] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:41:30] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:41:30] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:43:07] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:43:07] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:43:07] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:43:07] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:43:07] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:43:21] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:43:21] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:43:21] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:43:21] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:43:21] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:43:40] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:43:40] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:43:40] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:43:40] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:43:40] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:44:24] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:44:24] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:44:24] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:44:24] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:44:24] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:47:53] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:47:53] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:47:53] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:47:53] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:47:53] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:49:10] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:49:10] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:49:10] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:49:10] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:49:10] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:53:36] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:53:36] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:53:36] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:53:36] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:53:36] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:54:37] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:54:37] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:54:37] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:54:37] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:54:37] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:59:28] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:59:28] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:59:28] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:59:28] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 11:59:28] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:04:53] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:04:53] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:04:53] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:04:53] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:04:53] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:05:29] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:05:29] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:05:29] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:05:29] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:05:29] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:05:33] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:05:33] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:05:33] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:05:33] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:05:33] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:05:35] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:05:35] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:05:35] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:05:35] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:05:35] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:05:47] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:05:47] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:05:47] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:05:47] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:05:47] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:11:21] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:11:21] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:11:21] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:11:21] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:11:21] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:14:43] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:14:43] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:14:43] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:14:43] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:14:43] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:15:30] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:15:30] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:15:30] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:15:30] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:15:30] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:16:04] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:16:04] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:16:04] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:16:04] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:16:04] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:18:23] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:18:23] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:18:23] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:18:23] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:18:23] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:19:07] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:19:07] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:19:07] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:19:07] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:19:07] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:19:54] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:19:54] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:19:54] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:19:55] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:19:55] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:20:42] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:20:42] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:20:42] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:20:42] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:20:42] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:21:12] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:21:12] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:21:12] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:21:12] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:21:12] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:22:04] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:22:04] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:22:04] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:22:04] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:22:04] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:23:28] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:23:28] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:23:28] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:23:28] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:23:28] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:43:45] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:43:45] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:43:45] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:43:45] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:43:45] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:43:59] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:43:59] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:43:59] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:43:59] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 12:43:59] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 13:57:23] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 13:57:23] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 13:57:23] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 13:57:23] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 13:57:23] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 13:58:22] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 13:58:22] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 13:58:22] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 13:58:22] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 13:58:22] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 13:59:26] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 13:59:26] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 13:59:26] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 13:59:26] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 13:59:27] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 14:09:10] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 14:09:10] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 14:09:10] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 14:09:10] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 14:09:10] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 14:13:03] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 14:13:04] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 14:13:04] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 14:13:04] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 14:13:04] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 14:13:38] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 14:13:38] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 14:13:38] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 14:13:38] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 14:13:39] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 14:16:02] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 14:16:02] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 14:16:02] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 14:16:02] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 14:16:02] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 15:36:52] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 15:36:52] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 15:36:52] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 15:36:52] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 15:36:52] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 15:38:08] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 15:38:08] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 15:38:08] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 15:38:08] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 15:38:08] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 15:38:33] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 15:38:34] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 15:38:34] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 15:38:34] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 15:38:34] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 15:50:11] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 15:50:11] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 15:50:11] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 15:50:11] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 15:50:11] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:00:11] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:00:11] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:00:11] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:00:11] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:00:11] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:01:03] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:01:03] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:01:03] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:01:03] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:01:03] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:24:43] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:24:43] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:24:43] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:24:43] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:24:43] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:36:16] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:36:16] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:36:17] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:36:17] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:36:17] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:37:57] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:37:57] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:37:57] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:37:57] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:37:57] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:38:32] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:38:32] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:38:32] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:38:32] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:38:32] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:42:30] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:42:30] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:42:30] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:42:30] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:42:31] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:42:42] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:42:42] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:42:42] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:42:42] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:42:43] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:44:06] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:44:07] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:44:07] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:44:07] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:44:07] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:44:30] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:44:30] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:44:30] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:44:30] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:44:30] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:45:57] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:45:57] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:45:57] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:45:57] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:45:57] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:59:57] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:59:57] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:59:58] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:59:58] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 16:59:58] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 17:00:50] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 17:00:50] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 17:00:50] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 17:00:51] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 17:00:51] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 17:01:49] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 17:01:49] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 17:01:49] "GET /get/use_cases HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 17:01:49] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 17:01:49] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:transport Function:_log Line:1760 Authentication (password) successful!
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 17:02:22] "GET /get/variables HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 17:02:22] "GET /get/DataSource HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 17:02:22] "GET /get/actions HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 17:02:22] "GET /get/rules HTTP/1.1" 200 -
+INFO Module:_internal Function:_log Line:122 127.0.0.1 - - [18/Jul/2019 17:02:22] "GET /get/use_cases HTTP/1.1" 200 -

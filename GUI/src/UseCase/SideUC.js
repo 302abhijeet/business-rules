@@ -7,7 +7,7 @@ export class SideUC extends Component {
         const vars = this.props.use_cases.map( ele => ele['name'])
         return(
             <React.Fragment>
-            <h3>List of Variables</h3>
+            <h3>List of Use Cases</h3>
             <ListGroup>
                 { vars.map( ds =>  <SDS key={ds}  name={ds} />)  }
             </ListGroup>
