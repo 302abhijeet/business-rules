@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
-import { Form,Row,Col,Button } from 'react-bootstrap';
+import { Modal,Form,Row,Col,Button } from 'react-bootstrap';
 import Select from 'react-select'
 import {Link } from 'react-router-dom'
  import {DisplayActionList} from '../Rule/FormRule'
 import RuleCondition from './RuleCondition'
+import { Prompt } from 'react-router'
+import FormAct from './../Action/FormAct'
+import FormRule from './../Rule/FormRule'
 
 export class FormUC extends Component {
     
@@ -22,7 +25,9 @@ export class FormUC extends Component {
         current_mt_true:false,
         current_act_false:undefined,
         current_param_false:{},
-        current_mt_false:false
+        current_mt_false:false,
+        validated:false,
+        show_modal:false
     }
     
     componentWillMount = () =>{
@@ -34,7 +39,11 @@ export class FormUC extends Component {
                 current_mt_true:false,
                 current_act_false:undefined,
                 current_param_false:{},
-                current_mt_false:false})
+                current_mt_false:false,
+                validated:false,
+                show_modal:false,
+                show_ruleForm:false,
+                show_actionForm:false})
         }
     }
     
@@ -48,7 +57,11 @@ export class FormUC extends Component {
                     current_mt_true:false,
                     current_act_false:undefined,
                     current_param_false:{},
-                    current_mt_false:false})
+                    current_mt_false:false,
+                    validated:false,
+                    show_modal:false,
+                    show_ruleForm:false,
+                    show_actionForm:false})
             }else{
                 this.setState({
                     name:'',
@@ -65,7 +78,11 @@ export class FormUC extends Component {
                     current_mt_true:false,
                     current_act_false:undefined,
                     current_param_false:{},
-                    current_mt_false:false
+                    current_mt_false:false,
+                    validated:false,
+                    show_modal:false,
+                    show_ruleForm:false,
+                    show_actionForm:false
                 })
             }
         }
@@ -119,7 +136,7 @@ export class FormUC extends Component {
         newAct['multi_thread'] = this.state.current_mt_true
         const lst = this.state.actions_true
         lst.push(newAct)
-        this.setState({ actions_true:lst })
+        this.setState({ actions_true:lst,current_act_true:"",current_param_true:{} })
     }
     
     addActFalse = () =>{
@@ -129,7 +146,7 @@ export class FormUC extends Component {
         newAct['multi_thread'] = this.state.current_mt_false
         const lst = this.state.actions_false
         lst.push(newAct)
-        this.setState({ actions_false:lst })
+        this.setState({ actions_false:lst,current_act_false:"",current_param_false:{} })
     }
 
     changeParams = event => {
@@ -191,17 +208,55 @@ export class FormUC extends Component {
             rule_list:val
         })
     }
+    closeModal = () => {
+        this.setState({show_modal:false})
+    }
+    showModal = () => {
+        this.setState({show_modal:true})
+    }
+    showRuleFormModal = () => {
+        this.setState({show_ruleForm:true})
+    }
+    closeRuleFormModal = () => {
+        this.setState({show_ruleForm:false})
+    }
+    showActionFormModal = () => {
+        this.setState({show_actionForm:true})
+    }
+    closeActionFormModal = () => {
+        this.setState({show_actionForm:false})
+    }
     
     delData = () =>{
 
     }
 
-    submitData = () =>{
-
+    submitData = (e) =>{
+        const form = e.currentTarget
+        if (form.checkValidity() === false) {
+            e.preventDefault()
+            e.stopPropagation()
+        }
+        else {
+            e.preventDefault()
+            //write code here
+            let data = this.state
+            if(this.props.cat==='add'){
+                console.log('in add')
+                if( this.props.use_cases.filter( ele => ele['name']===data['name']).length > 0){
+                    e.stopPropagation()
+                    this.showModal()
+                    return false
+                }
+                //Write code here
+            }
+        }
+        this.setState({validated:true})
     }
     
     render() {
-        const {rules,actions}  = this.props
+        const {rules,actions,DataSource,variables}  = this.props
+        const {validated} = this.state
         const rule_options = rules.map(ele => {
             return {
                 'value':ele['name'],
@@ -217,7 +272,30 @@ export class FormUC extends Component {
         const cpt = this.state.current_param_true, cpf = this.state.current_param_false
         return (
             <React.Fragment>
-                <Form onSubmit = {this.submitData}>
+                <Prompt
+                    when={!this.state.read}
+                    message="Click OK to Continue! ALL data in the form will be lost!"
+                />
+                <Modal show={this.state.show_modal}>
+                    <Modal.Header closeButton><Modal.Title>Cannot ADD Use Case</Modal.Title></Modal.Header>
+                    <Modal.Body> <p>Use Case name already exists!</p></Modal.Body>
+                    <Modal.Footer><Button variant="secondary" onClick={this.closeModal}>Close</Button></Modal.Footer>
+                </Modal>
+                <Modal size='xl' scrollable size="Large"  scrollable show={this.state.show_ruleForm}>
+                    <Modal.Header closeButton><Modal.Title>ADD Rule</Modal.Title></Modal.Header>
+                    <Modal.Body> 
+                        <FormRule cat = "add" popUp={true} readOnly = {false} rule={rules} data_sources={DataSource} actions={actions} variables={variables} addData={this.props.addData}/>
+                    </Modal.Body>
+                    <Modal.Footer><Button variant="secondary" onClick={this.closeRuleFormModal}>Close</Button></Modal.Footer>
+                </Modal>
+                <Modal size='xl' scrollable size="Large"  scrollable show={this.state.show_actionForm}>
+                    <Modal.Header closeButton><Modal.Title>ADD Action</Modal.Title></Modal.Header>
+                    <Modal.Body> 
+                        <FormAct cat ='add' popUp={true} readOnly = {false} actions={actions} addData={this.props.addData}/>
+                    </Modal.Body>
+                    <Modal.Footer><Button variant="secondary" onClick={this.closeActionFormModal}>Close</Button></Modal.Footer>
+                </Modal>
+                <Form noValidate validated={validated} onSubmit = {this.submitData}>
                 <Row>
                     <Col>
                     {
@@ -233,9 +311,9 @@ export class FormUC extends Component {
                     </Row>
                     
                     <Form.Group as={Row} controlId='name'>
-                        <Form.Label column sm={3}>Name</Form.Label>
+                        <Form.Label column sm={3}><span style={{color:'red'}}>*</span> Name</Form.Label>
                         <Col sm={6}>
-                            <Form.Control type='text' name='name' onChange={this.changeState} readOnly={this.props.cat==='add'?false:true} value={this.state.name} />
+                            <Form.Control required type='text' name='name' onChange={this.changeState} readOnly={this.props.cat==='add'?false:true} value={this.state.name} />
                         </Col>
                     
                     </Form.Group>
@@ -251,9 +329,7 @@ export class FormUC extends Component {
                             })} options={rule_options} onChange={this.changeRules} name='rule_list' isMulti isDisabled={this.state.read}/>
                         </Col>
                         <Col>
-                        <Link to='/Rule/add'>
-                            <Button variant='outline-dark' disabled={this.state.read}  >Add new Rule</Button>
-                            </Link>
+                            <Button variant='outline-dark' onClick={this.showRuleFormModal} disabled={this.state.read}  >Add new Rule</Button>
                         </Col>
                     </Form.Group>
 
@@ -269,9 +345,7 @@ export class FormUC extends Component {
                             })} options={act_options} onChange={this.changeActs} name='actions' isMulti isDisabled={this.state.read}/>
                         </Col>
                         <Col>
-                        <Link to='/Action/add'>
-                            <Button variant='outline-dark' disabled={this.state.read}   >Add new Action</Button>
-                            </Link>                        
+                            <Button variant='outline-dark' onClick={this.showActionFormModal} disabled={this.state.read}   >Add new Action</Button>             
                         </Col>
                     </Form.Group>
 
@@ -297,14 +371,14 @@ export class FormUC extends Component {
                         <Col sm={4}>
                             <Col>
                             <Form.Control as='select' onChange={this.onChangeAct} value = {this.state.current_act_true} disabled={this.state.read}>
-                                <option selected disabled hidden>Select action</option>
+                                <option value={""} selected disabled hidden>Select action</option>
                                 { this.state.actions.map( ele => <option value={ele}>{ele}</option>     )  }
                             </Form.Control></Col>
                             
 
                         </Col>
                         <Col sm={4}>
-                            <Button variant='outline-danger' onClick={this.addTrueAct} disabled={this.state.read}>Add this action for true</Button>
+                            <Button variant='outline-dark' onClick={this.addTrueAct} disabled={this.state.read}>Add this action for true</Button>
                         </Col>
                     </Form.Group>
 
@@ -365,14 +439,14 @@ export class FormUC extends Component {
                         <Col sm={4}>
                             <Col>
                             <Form.Control as='select' onChange={this.onChangeActFalse} value = {this.state.current_act_false} disabled={this.state.read}>
-                                <option selected disabled hidden>Select action</option>
+                                <option value="" selected disabled hidden>Select action</option>
                                 { this.state.actions.map( ele => <option value={ele}>{ele}</option>     )  }
                             </Form.Control></Col>
                             
 
                         </Col>
                         <Col sm={4}>
-                            <Button variant='outline-danger' onClick={this.addActFalse} disabled={this.state.read}>Add this action for false</Button>
+                            <Button variant='outline-dark' onClick={this.addActFalse} disabled={this.state.read}>Add this action for false</Button>
                         </Col>
                     </Form.Group>
 

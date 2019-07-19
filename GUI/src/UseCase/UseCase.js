@@ -11,10 +11,10 @@ export class UseCase extends Component {
             <Consumer>
                 {value=>{
                     const {cat} = this.props
-                    const {actions,rules,use_cases} = value.value
+                    const {actions,rules,use_cases,DataSource,variables} = value.value
                    
             
-                    if( use_cases === null || use_cases===undefined || actions===null || actions===undefined || rules===null || rules===undefined){
+                    if( use_cases === null || use_cases===undefined || DataSource=== null || DataSource===undefined || variables===null || variables===undefined || actions===null || actions===undefined || rules===null || rules===undefined){
                         return(<Spinner animation="border" role="status">
                         <span className="sr-only">Loading...</span>
 
@@ -47,7 +47,7 @@ export class UseCase extends Component {
                                         <SideUC use_cases = {use_cases} />
                                     </Col>
                                     <Col lg = {10}>
-                                        <FormUC cat = {cat} readOnly = {readOnly} rules={rules} actions={actions} use_cases={use_cases} addData={value.addData} modifyData={value.modifyData} delData={value.delData}/>
+                                        <FormUC cat = {cat} readOnly = {readOnly} variables={variables} rules={rules} DataSource={DataSource} actions={actions} use_cases={use_cases} addData={value.addData} modifyData={value.modifyData} delData={value.delData}/>
                                     </Col>
                                     
                                     </Row>
