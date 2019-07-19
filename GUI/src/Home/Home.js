@@ -2,16 +2,39 @@ import React, { Component } from 'react'
 import { Consumer } from '../context';
 import {Accordion,Card, Container, Button,Row,Col,Spinner, ListGroup} from 'react-bootstrap'
 import {Link,Redirect} from 'react-router-dom'
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css";
 
 export class Home extends Component {
+    state = {
+        start_date:new Date(),
+        end_date:new Date(),
+        show_history:false
+    }
+    changeStartDate = (date) => {
+        console.log(date)
+        this.setState({start_date:date,show_history:false})
+    }
+    changeEndDate = (date) => {
+        this.setState({end_date:date,show_history:false})
+    }
+    showHistory = () => {
+        this.state.start_date.setHours(0)
+        this.state.start_date.setMinutes(0)
+        this.state.start_date.setSeconds(0)
+        this.state.end_date.setHours(23)
+        this.state.end_date.setMinutes(59)
+        this.state.end_date.setSeconds(59)
+        this.setState({show_history:true})
+    }
     render() {
         return (
             <React.Fragment>
                 <Consumer>
                     {value=>{
-                        const {use_cases,rules,variables} = value.value
+                        const {use_cases,rules,variables,history} = value.value
 
-                        if( variables === null || variables===undefined || rules===null || rules===undefined || use_cases===null || use_cases===undefined){
+                        if( variables === null || variables===undefined || rules===null || rules===undefined || history===null || history===undefined || use_cases===null || use_cases===undefined){
                             return(
                             <Spinner animation="border" role="status">
                                 <span className="sr-only">Loading...</span>
@@ -28,6 +51,20 @@ export class Home extends Component {
                                     <Accordion>
                                         {use_cases.map(uc => <UCCard name={uc["name"]} rules={uc['rule_list']}/>)}
                                     </Accordion>
+                                    <hr/>
+                                    <Row>
+                                        <Col md='auto'><h3>History: </h3></Col>
+                                        <Col md='auto'><h6>FROM:</h6></Col>
+                                        <Col md="auto"><DatePicker selected={this.state.start_date} onChange={this.changeStartDate} value={this.state.start_date}/></Col>
+                                        <Col md="auto"><h6>TO:</h6></Col>
+                                        <Col md="auto"><DatePicker selected={this.state.end_date} onChange={this.changeEndDate} value={this.state.end_date}/></Col>
+                                        <Col md='auto'><Button variant="primary" onClick={this.showHistory}>See History</Button></Col>
+                                    </Row>
+                                    <br />
+                                    <ListGroup hidden={!this.state.show_history}>
+                                        {history.filter(ele => new Date(ele["Date"].substr(0,10))<=this.state.end_date && new Date(ele["Date"].substr(0,10))>=this.state.start_date).map(ele => <ListGroup.Item>{JSON.stringify(ele)}</ListGroup.Item>)}
+                                    </ListGroup>
+
                                 </Container>
                             )
                         }
@@ -46,6 +83,7 @@ class UCCard extends Component{
                         {console.log(this.props.name)}
                         {console.log(this.props.rules)}
                         <Col>{this.props.name}</Col>
+                        <Col sm="auto"><Link to = {'/History/UseCase/'+this.props.name}><Button variant='outline-warning' size='sm'>History</Button></Link></Col>
                         <Col sm="auto"><Link to = {'/UseCase/'+this.props.name}><Button variant='outline-secondary' size='sm'>Modify</Button></Link></Col>
                         <Col sm="auto"><Link to = {'/Run/UseCase/'+this.props.name}><Button variant='outline-primary' size="sm">Run</Button></Link></Col>
                     </Row>
@@ -67,6 +105,7 @@ class RuleInfo extends Component{
             <ListGroup.Item>
                 <Row>
                     <Col>{this.props.name}</Col>
+                    <Col sm="auto"><Link to = {'/History/Rule/'+this.props.name}><Button variant='outline-warning' size='sm'>History</Button></Link></Col>
                     <Col sm="auto"><Link to = {'/Rule/'+this.props.name}><Button variant='outline-secondary' size='sm'>Modify</Button></Link></Col>
                     <Col sm="auto"><Link to = {`/Run/Rule/${this.props.name}`}><Button variant='outline-primary' size="sm">Run</Button></Link></Col>
                 </Row>

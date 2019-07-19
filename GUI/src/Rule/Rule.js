@@ -11,7 +11,7 @@ export class Rule extends Component {
             <Consumer>
                 {value=>{
                     const {cat} = this.props
-                    const {actions,rules,variables,redirect} = value.value
+                    const {DataSource,actions,rules,variables,redirect} = value.value
                     const action=actions,rule=rules
                     // if(redirect===true)  
                     //     return <Redirect to='/Variable/index' />
@@ -49,7 +49,7 @@ export class Rule extends Component {
                                         <SideRule rule = {rule} />
                                     </Col>
                                     <Col lg = {10}>
-                                        <FormRule cat = {cat} readOnly = {readOnly} rule={rule} actions={action} variables={variables} addData={value.addData} modifyData={value.modifyData} delData={value.delData}/>
+                                        <FormRule cat = {cat} readOnly = {readOnly} rule={rule} data_sources={DataSource} actions={action} variables={variables} addData={value.addData} modifyData={value.modifyData} delData={value.delData}/>
                                     </Col>
                                     
                                     </Row>

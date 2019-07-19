@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {Modal,Form,Row,Col, Button} from 'react-bootstrap'
+import Select from 'react-select'
 import {Link,withRouter} from 'react-router-dom'
 import FormDS from './../DataSource/FormDS'
 import { Prompt } from 'react-router'
@@ -102,6 +103,12 @@ export class FormVar extends Component {
             }
         }
     }
+    changeVars = (values) =>{    
+        const val=values === null?[]:values.map(ele => ele['label'])
+        this.setState({
+            input_method:{variables:val}
+        })
+    }
     deleteData = () =>{
         //delete data from context
         this.props.delData('variables',{name:this.state['name']})
@@ -198,7 +205,10 @@ export class FormVar extends Component {
                 } 
                 this.props.modifyData('variables',newData)
             }
-            this.props.history.push('/Variable/index')
+            if (!this.props.popUp) {
+                console.log("Why here")
+                this.props.history.push('/Variable/index')
+            }
         }
         this.setState({validated:true})
         
@@ -209,8 +219,15 @@ export class FormVar extends Component {
 
 
         const {data_sources} = this.props
+        const variables = this.props.variables
         const list_of_ds = data_sources.map(ele => ele['name'])
         const {validated} = this.state
+        const var_options = variables.map(ele => {
+            return {
+                'value':ele['name'],
+                'label':ele['name']
+            }
+        })
         
         return (
             <React.Fragment>
@@ -235,8 +252,8 @@ export class FormVar extends Component {
                     <Col>{
                         this.props.cat ==='add' ? <h1>Add new Variable</h1> : <h1>{this.props.cat} Variable</h1>
                     }</Col>
-                    <Col md="auto"><Button name='modify' variant='outline-secondary' disabled={!this.state.read} onClick={this.changeReadMode}>Modify</Button></Col>
-                    <Col md="auto"><Button name = 'delete' variant='outline-danger' disabled={!this.state.read} onClick={this.deleteData}>Delete</Button></Col>   
+                    <Col hidden={this.props.popUp} md="auto"><Button name='modify' variant='outline-secondary' disabled={!this.state.read} onClick={this.changeReadMode}>Modify</Button></Col>
+                    <Col hidden={this.props.popUp} md="auto"><Button name = 'delete' variant='outline-danger' disabled={!this.state.read} onClick={this.deleteData}>Delete</Button></Col>   
                 </Row>
                     <Form.Group as={Row} controlId='name'>
                         <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Name</Form.Label>
@@ -313,6 +330,17 @@ export class FormVar extends Component {
                         <Col sm={9}>
                             <Form.Control required type='text' name='formulae' onChange={this.changeState} readOnly={this.state.read} value={this.state.formulae} />
                             <Form.Control.Feedback type="invalid">Enter formulae if vaiable is derived</Form.Control.Feedback>
+                        </Col>
+                    </Form.Group>
+                    <Form.Group as={Row} controlId='variables' hidden={!this.state.derived}>
+                        <Form.Label column sm={3}>Derived Variables</Form.Label>
+                        <Col sm={6}>
+                            <Select value={this.state.input_method.variables === undefined?null:this.state.input_method.variables.map(ele => {
+                                return {
+                                    'value':ele,
+                                    'label':ele
+                                }
+                            })} options={var_options} onChange={this.changeVars} name='variables' isMulti isDisabled={this.state.read}/>
                         </Col>
                     </Form.Group>
 

@@ -15,7 +15,6 @@ export class FormAct extends Component {
         validated:false,
         show_modal:false
     } 
-    
     componentWillMount = () =>{
         const {cat,actions } = this.props
         if(cat!=='add'){
@@ -124,8 +123,10 @@ export class FormAct extends Component {
                     return false
                 }
                 this.props.addData('actions',data)
-                this.props.history.push('/Action/index')
-
+                if (!this.props.popUp) {
+                    console.log("Why here")
+                    this.props.history.push('/Action/index')
+                }
             }
             else{
                 console.log('in '+this.props.cat)
@@ -158,8 +159,8 @@ export class FormAct extends Component {
                     <Col>{
                         this.props.cat ==='add' ? <h1>Add new Action</h1> : <h1>{this.props.cat} Action</h1>
                     }</Col>
-                    <Col md="auto"><Button name='modify' variant='outline-secondary' disabled={!this.state.read} onClick={this.changeReadMode}>Modify</Button></Col>
-                    <Col md="auto"><Button name = 'delete' variant='outline-danger' disabled={!this.state.read} onClick={this.deleteData}>Delete</Button></Col>   
+                    <Col hidden={this.props.popUp} md="auto"><Button name='modify' variant='outline-secondary' disabled={!this.state.read} onClick={this.changeReadMode}>Modify</Button></Col>
+                    <Col hidden={this.props.popUp} md="auto"><Button name = 'delete' variant='outline-danger' disabled={!this.state.read} onClick={this.deleteData}>Delete</Button></Col>   
                 </Row> 
 
                 <Form.Group as={Row} controlId='name'>

@@ -48,7 +48,7 @@ export class Variable extends Component {
                                         <SideVar variables = {variables} />
                                     </Col>
                                     <Col lg = {10}>
-                                        <FormVar cat = {cat} readOnly = {readOnly} data_sources={data_sources} variables={variables} addData={value.addData} modifyData={value.modifyData} delData={value.delData}/>
+                                        <FormVar cat = {cat} popUp={false} readOnly = {readOnly} data_sources={data_sources} variables={variables} addData={value.addData} modifyData={value.modifyData} delData={value.delData}/>
                                     </Col>
                                     </Row>
                                 </Container>

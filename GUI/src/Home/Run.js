@@ -15,10 +15,10 @@ export class Run extends Component {
         parameter_variables :[],
         show_result:true,
         result:{
-            run_msg:null,
-            data:null,
-            file:null,
-            parameter_warnings:null
+            run_msg:'',
+            data:[],
+            file:'',
+            parameter_warnings:[]
         }
     }
     Vars = []
@@ -125,7 +125,10 @@ export class Run extends Component {
                                             <Col md="auto"><h5>Run Message:</h5></Col>
                                             <Col><h5>{this.state.result["run_msg"]}</h5></Col>
                                         </Row>
-                                        {this.state.result["data"]?this.state.result["data"].map(ele => <h6>{JSON.stringify(ele)}</h6>):''}
+                                        {this.state.result["data"].map(ele => <h6>{JSON.stringify(ele)}</h6>)}
+                                        <h5>Report: <h6>{this.state.result["file"]}</h6></h5>
+                                        <h5>{this.state.result["parameter_warnings"].length !== 0?'Warnings':''}</h5>
+                                        {this.state.result["parameter_warnings"].map(ele => <h6>JSON.stringify(ele)</h6>)}
 
                                     </div>
                                 </Container>

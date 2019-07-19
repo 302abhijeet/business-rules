@@ -40,6 +40,7 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
     file_name =(run_rule or case)+"_"+str(time_stamp)
     logging.basicConfig(filename="./logs/"+file_name+".log",format='%(levelname)s Module:%(module)s Function:%(funcName)s Line:%(lineno)d %(message)s',filemode='w')
     logger = logging.getLogger()
+
     logger.setLevel(20)
     #create xml report to be sent to user
     root = ET.Element("Rules_engine")
@@ -51,6 +52,7 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
     variables = {}
     actions = {}
     DataSource = {}
+    
     history = mydb["history"]
 
     logger.info("Starting _run_API")
@@ -241,6 +243,14 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
         case = mydb["use_cases"].find_one({"name":case},{"_id":0})
         if case:
             logger.info("Use_case fetched from database")
+            #changing multi-thread dicts to tuple
+            i = 0
+            for dicts in case["rules"]:
+                if(type(dicts)==dict):
+                    if 'multi_thread' in dicts:
+                        case["rules"][i] = tuple(dicts["multi_thread"])
+                        logger.info("Changed multi-thread dict to tuple")
+                i += 1
         else:
             logger.critical("Case not defined in config")
             ET.SubElement(error,'NameError').text = str("Case: " + case +" not defined in config!")
