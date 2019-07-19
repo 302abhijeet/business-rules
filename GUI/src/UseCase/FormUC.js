@@ -239,7 +239,6 @@ export class FormUC extends Component {
         }
         else {
             e.preventDefault()
-            //write code here
             let data = this.state
             if(this.props.cat==='add'){
                 console.log('in add')
