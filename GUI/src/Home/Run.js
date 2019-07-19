@@ -64,14 +64,9 @@ export class Run extends Component {
         this.state.parameter_variables.forEach(ele => {
             url += "&"+ele['name']+"="+ele["value"]
         })
-        const data = this.state.DataSource.map(ele => {
-            if(ele["is_checked"]) {
-                delete ele["is_checked"]
-                return ele
-            }
-        })
+        const data = this.state.DataSource.filter(ele => ele["is_checked"])
         console.log(data)
-        axios.post(url,JSON.stringify(this.state.DataSource))
+        axios.post(url,JSON.stringify(data))
             .then(res => {
                 //console.log(res.data.data)
                 this.setState({ result: res.data})
@@ -163,7 +158,18 @@ class UCCard extends Component{
     state = {
         checked:false
     }
+    changeCheckToTrue = () => {
+        console.log("changeCheckToTrue")
+        if(this.state.checked) {
+            return false
+        }
+        this.props.changeCheck(!this.state.checked,this.props._id)
+        this.setState({checked:!this.state.checked})
+    }
     changeCheck = () => {
+        if(!this.state.checked) {
+            return false
+        }
         this.props.changeCheck(!this.state.checked,this.props._id)
         this.setState({checked:!this.state.checked})
     }
@@ -179,7 +185,7 @@ class UCCard extends Component{
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey={this.props.name}>
                     <Card.Body>
-                        <FormDS _id={this.props._id} addData={this.props.addData} variables={this.props.variables} run={true} cat = 'add' readOnly = {false} popUp={false}/>
+                        <FormDS _id={this.props._id} changeCheckToTrue={this.changeCheckToTrue} changeCheck={this.changeCheck} addData={this.props.addData} variables={this.props.variables} run={true} cat = 'add' readOnly = {false} popUp={false}/>
                     </Card.Body>
                 </Accordion.Collapse>
             </Card>

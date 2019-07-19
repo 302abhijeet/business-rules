@@ -174,6 +174,11 @@ export class FormDS extends Component {
             e.preventDefault()
             e.stopPropagation()
         }
+        else if(this.props.run) {
+            this.props.changeCheckToTrue()
+            e.preventDefault()
+            e.stopPropagation()
+        }
         else {
             e.preventDefault()
             console.log('submitting data')
@@ -261,7 +266,7 @@ export class FormDS extends Component {
                     <Col md="auto"><Button name='modify' variant='outline-secondary' disabled={!this.state.read} hidden={this.props.popUp || this.props.run} onClick={this.changeReadMode}>Modify</Button></Col>
                     <Col md="auto"><Button name = 'delete' variant='outline-danger' disabled={!this.state.read} hidden={this.props.popUp || this.props.run} onClick={this.deleteData}>Delete</Button></Col>
                 </Row>
-                <Form className="overflow-auto" noValidate validated={validated} onSubmit={this.submitData} hidden={this.props.hidden}>
+                <Form onChange={this.props.changeCheck} className="overflow-auto" noValidate validated={validated} onSubmit={this.submitData} hidden={this.props.hidden}>
                     <Form.Group as={Row} controlId='name'>
                         <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Name</Form.Label>
                         <Col sm={9}>
@@ -313,7 +318,7 @@ export class FormDS extends Component {
                     </div>
 
                     <Row>
-                        <Col md="auto"><Button hidden={this.props.run} type = 'submit' variant='outline-success' disabled={this.state.read}>Submit</Button></Col>
+                        <Col md="auto"><Button type = 'submit' variant='outline-success' disabled={this.state.read}>Submit</Button></Col>
                     </Row>
                 </Form>
 
