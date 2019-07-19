@@ -30,9 +30,20 @@ export class Run extends Component {
     changeState = event =>{
         this.setState({[event.target.name]:event.target.value})
     }
+    changeCheck = (val,_id) => {
+        if (!this.state.DataSource[_id]) {
+            this.state.DataSource[_id] = {}
+        }
+        this.state.DataSource[_id]["is_checked"] = val
+    }
     addData = (DS,_id) => {
         console.log("Add data source")
+        const val = !this.state.DataSource[_id] || this.state.DataSource[_id]===undefined?false:this.state.DataSource[_id]["is_checked"]
         this.state.DataSource[_id] = DS
+        if (!this.state.DataSource[_id]) {
+            this.state.DataSource[_id] = {}
+        }
+        this.state.DataSource[_id]["is_checked"] = val
     }
     addParameterVariable = (PV) => {
         this.setState({parameter_variables:[...this.state.parameter_variables,PV]})
@@ -53,7 +64,9 @@ export class Run extends Component {
         this.state.parameter_variables.forEach(ele => {
             url += "&"+ele['name']+"="+ele["value"]
         })
-        axios.post(url,JSON.stringify(this.state.DataSource))
+        const data = this.state.DataSource.filter(ele => ele["is_checked"])
+        console.log(data)
+        axios.post(url,JSON.stringify(data))
             .then(res => {
                 //console.log(res.data.data)
                 this.setState({ result: res.data})
@@ -114,7 +127,7 @@ export class Run extends Component {
                                     </Row>
                                     <br />
                                     <Accordion>
-                                        {this.state.DSList.map(uc => <UCCard _id={i++} addData={this.addData} variables={this.Vars} state={uc} name={uc}/>)}
+                                        {this.state.DSList.map(uc => <UCCard changeCheck={this.changeCheck} _id={i++} addData={this.addData} variables={this.Vars} state={uc} name={uc}/>)}
                                     </Accordion>
                                     <br />
                                     <Button variant="outline-success" disabled={this.state.isLoading} onClick={this.runCase}>{this.state.isLoading? 'Loading...': `Run ${type}`}</Button>
@@ -142,6 +155,24 @@ export class Run extends Component {
     }
 }
 class UCCard extends Component{
+    state = {
+        checked:false
+    }
+    changeCheckToTrue = () => {
+        console.log("changeCheckToTrue")
+        if(this.state.checked) {
+            return false
+        }
+        this.props.changeCheck(!this.state.checked,this.props._id)
+        this.setState({checked:!this.state.checked})
+    }
+    changeCheck = () => {
+        if(!this.state.checked) {
+            return false
+        }
+        this.props.changeCheck(!this.state.checked,this.props._id)
+        this.setState({checked:!this.state.checked})
+    }
     render(){
         this.props.addData(null,this.props._id)
         return(
@@ -149,11 +180,12 @@ class UCCard extends Component{
                 <Accordion.Toggle as={Card.Header} eventKey={this.props.name}>
                     <Row>
                         <Col>{this.props.name}</Col>
+                        <Col md="auto"><Form.Check checked={this.state.checked} type='checkbox'  name='checked' onChange={this.changeCheck} value={this.state.checked} /></Col>
                     </Row>
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey={this.props.name}>
                     <Card.Body>
-                        <FormDS _id={this.props._id} addData={this.props.addData} variables={this.props.variables} run={true} cat = 'add' readOnly = {false} popUp={false}/>
+                        <FormDS _id={this.props._id} changeCheckToTrue={this.changeCheckToTrue} changeCheck={this.changeCheck} addData={this.props.addData} variables={this.props.variables} run={true} cat = 'add' readOnly = {false} popUp={false}/>
                     </Card.Body>
                 </Accordion.Collapse>
             </Card>

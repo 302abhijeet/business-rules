@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Form,Row,Col, Button} from 'react-bootstrap'
+import {Form,Row,Col, Button, ListGroup} from 'react-bootstrap'
 
 
 export class Condition2 extends Component {
@@ -286,8 +286,8 @@ export class Condition2 extends Component {
         const {conditions} = this.state
         if(conditions['all']){
             return <SubCond conditions={conditions['all']} selected_val='all' parentId={null} variables={variables} changeCondition={this.changeCondition} changeSubCondition ={this.changeSubCondition} read={this.state.read} createNewCondition={this.createNewCondition} createNewSubCondition={this.createNewSubCondition}/>
-        }else if(conditions['any']){
-            
+        }
+        else if(conditions['any']){
             return <SubCond conditions = {conditions['any']} selected_val = 'any' parentId={null} variables={variables} changeCondition={this.changeCondition} changeSubCondition ={this.changeSubCondition} read = {this.state.read} createNewCondition={this.createNewCondition} createNewSubCondition={this.createNewSubCondition}/>
         }
         return ''
@@ -325,7 +325,7 @@ class SubCond extends Component {
         const {conditions,variables,changeCondition,changeSubCondition} = this.props
         const show = conditions.map(ele => {
             if(ele['name']){
-                return <Cond element={ele} variables={variables} changeCondition={changeCondition}  read={this.props.read} />
+                return <ListGroup.Item><Cond element={ele} variables={variables} changeCondition={changeCondition}  read={this.props.read} /></ListGroup.Item>
             }
         })
         return show
@@ -335,9 +335,9 @@ class SubCond extends Component {
         const {conditions,variables,changeCondition,changeSubCondition} = this.props
         const show = conditions.map(ele => {
             if(ele['all']){
-                return <SubCond conditions={ele['all']} selected_val='all' variables={variables} parentId={conditions[0]} changeCondition={changeCondition} changeSubCondition ={changeSubCondition} read={this.props.read} createNewCondition={this.props.createNewCondition} createNewSubCondition={this.props.createNewSubCondition}/>
+                return <ListGroup.Item><SubCond conditions={ele['all']} selected_val='all' variables={variables} parentId={conditions[0]} changeCondition={changeCondition} changeSubCondition ={changeSubCondition} read={this.props.read} createNewCondition={this.props.createNewCondition} createNewSubCondition={this.props.createNewSubCondition}/></ListGroup.Item>
             }else if(ele['any']){
-                return <SubCond conditions={ele['any']} selected_val='any' variables={variables} parentId = {conditions[0]} changeCondition={changeCondition} changeSubCondition ={changeSubCondition} read={this.props.read} createNewCondition={this.props.createNewCondition} createNewSubCondition={this.props.createNewSubCondition}/>
+                return <ListGroup.Item><SubCond conditions={ele['any']} selected_val='any' variables={variables} parentId = {conditions[0]} changeCondition={changeCondition} changeSubCondition ={changeSubCondition} read={this.props.read} createNewCondition={this.props.createNewCondition} createNewSubCondition={this.props.createNewSubCondition}/></ListGroup.Item>
             }
         })
         return show
@@ -362,35 +362,28 @@ class SubCond extends Component {
         return(
             <React.Fragment>
                 <Form.Group>
-                    <Form.Label>{conditions[0]}</Form.Label>
                     <Row>
-                        <Col sm={2}>
+                        <Col md="auto">
                         <Form.Control as = 'select' value={selected_val}  name='selected_val' disabled={read} onChange={this.changeSC}>
-                            <option value={null} selected  hidden>Select a condition</option>
                             <option value='all'>all</option>
                             <option value = 'any'>any </option>
                         </Form.Control>
                         </Col>
-                        <Col sm={4}>
+                        <Col md="auto">
                             <Button variant='outline-dark' disabled={read} onClick={this.addCond}>Add Condition</Button>
                         </Col>
-                        <Col sm={4}>
+                        <Col md="auto">
                             <Button variant = 'outline-dark' disabled={read} onClick={this.addSubCond}>Add Sub-Condition</Button>
                         </Col>
                     </Row>
-                    <Row>
-                        <Col sm = {1}></Col>
+                    <ListGroup>
                         {
                             this.renderConditions()
                         }
-                    </Row>
-                    <Row>
-                        <Col sm={1}></Col>
                         {
                             this.renderSubConditions()
                         }
-
-                    </Row>
+                    </ListGroup>
                 </Form.Group>
             </React.Fragment>
         )
@@ -420,36 +413,34 @@ class Cond extends Component {
         return(
             <React.Fragment>
                <Form.Group>
-                   <Form.Label>{element['id']}</Form.Label>
                 <Row>
-                    <Col sm={1}></Col>
-                    <Col sm={2}>
-                        <Form.Control as='select' name='name1' value={element['name'][0]} disabled={read} onChange = {this.changeCond}>
-                            <option value={null} hidden selected>Select variable</option>    
+                    <Col md="auto">
+                        <Form.Control required as='select' name='name1' value={element['name'][0]} disabled={read} onChange = {this.changeCond}>
+                            <option value="" hidden selected>Select variable</option>    
                             {
                                 variables.map(ele => <option value={ele}>{ele}</option>)
                             }
                         </Form.Control>    
                     </Col>
-                    <Col sm={2}>
-                        <Form.Control as='select'  name='operator' value={element['operator']} disabled={read} onChange = {this.changeCond}>
-                            <option value={null} hidden selected>Select operator</option>
+                    <Col md="auto">
+                        <Form.Control required as='select'  name='operator' value={element['operator']} disabled={read} onChange = {this.changeCond}>
+                            <option value="" hidden selected>Select operator</option>
                             <option value ='greater_than'>Greater than</option>
                             <option value ='less_than'>Less than</option>
                             <option value ='equal_to'>Equal to</option>
                         </Form.Control>
                     </Col>    
-                    <Col sm={2}>
+                    <Col md="auto">
                             <Form.Label>Select another variable</Form.Label>
                             <Form.Check checked={this.state.checked} onChange={this.changeCheck} name='checked' disabled={read} />
                     </Col>
                     
-                    <Col sm ={2} hidden={this.state.checked}>
-                        <Form.Control type='text' placeholder='Enter value' value={element['value']}  name='value' disabled={read} onChange = {this.changeCond}/>
+                    <Col md="auto" hidden={this.state.checked}>
+                        <Form.Control required={!this.state.checked} type='text' placeholder='Enter value' value={element['value']}  name='value' disabled={read} onChange = {this.changeCond}/>
                     </Col>
-                    <Col sm ={2} hidden={!this.state.checked}>
-                        <Form.Control as='select' name='name2' value={element['name'][1]}  disabled={read} onChange = {this.changeCond}> 
-                            <option value={null} hidden selected>Select variable</option>    
+                    <Col md="auto" hidden={!this.state.checked}>
+                        <Form.Control as='select'required={this.state.checked} name='name2' value={element['name'][1]}  disabled={read} onChange = {this.changeCond}> 
+                            <option value="" hidden selected>Select variable</option>    
                             {
                                 variables.map(ele => <option value={ele}>{ele}</option>)
                             }

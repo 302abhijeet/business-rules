@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { Consumer } from '../context';
 import {Accordion,Card, Container, Button,Row,Col,Spinner, ListGroup} from 'react-bootstrap'
 import DatePicker from "react-datepicker"
-import "react-datepicker/dist/react-datepicker.css";
+import "react-datepicker/dist/react-datepicker.css"
+import {HistoryCard} from "./Home"
 
 export class History extends Component {
     state = {
@@ -89,12 +90,12 @@ export class History extends Component {
                                         <Col md='auto'><Button variant="primary" onClick={this.showHistory}>See History</Button></Col>
                                     </Row>
                                     <br />
-                                    <ListGroup hidden={!this.state.show_history}>
+                                    <Accordion hidden={!this.state.show_history}>
                                         {   type=="UseCase"? 
-                                            history.filter(ele =>ele["Use_Case"]===name && new Date(ele["Date"].substr(0,10))<=this.state.end_date && new Date(ele["Date"].substr(0,10))>=this.state.start_date).map(ele => <ListGroup.Item>{JSON.stringify(ele)}</ListGroup.Item>)
-                                            :history.filter(ele =>ele["Rules"][name]!==undefined && new Date(ele["Date"].substr(0,10))<=this.state.end_date && new Date(ele["Date"].substr(0,10))>=this.state.start_date).map(ele => <ListGroup.Item>{JSON.stringify(ele)}</ListGroup.Item>)
+                                            history.filter(ele =>ele["Use_Case"]===name && new Date(ele["Date"].substr(0,10))<=this.state.end_date && new Date(ele["Date"].substr(0,10))>=this.state.start_date).map(ele => <HistoryCard his={ele} />)
+                                            :history.filter(ele =>ele["Rules"][name]!==undefined && new Date(ele["Date"].substr(0,10))<=this.state.end_date && new Date(ele["Date"].substr(0,10))>=this.state.start_date).map(ele => <HistoryCard his={ele} />)
                                         }
-                                    </ListGroup>
+                                    </Accordion>
                                 </Container>
                             )
                         }

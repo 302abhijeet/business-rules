@@ -1,0 +1,49 @@
+INFO Module:API Function:_run_API Line:58 Starting _run_API
+INFO Module:API Function:_run_API Line:245 Use_case fetched from database
+INFO Module:API Function:_run_API Line:311 source_variable_list made :[]
+INFO Module:API Function:_run_API Line:344 Adding rule: distance_check variables
+INFO Module:API Function:_run_API Line:346 Adding variable: distance 
+INFO Module:API Function:_run_API Line:360 Adding Variable: distance to DataSource: API_mapQuest
+INFO Module:API Function:_run_API Line:346 Adding variable: dist_limit 
+INFO Module:API Function:_run_API Line:360 Adding Variable: dist_limit to DataSource: API_getPostman
+INFO Module:API Function:_run_API Line:344 Adding rule: cost_check variables
+INFO Module:API Function:_run_API Line:346 Adding variable: cost 
+INFO Module:API Function:_run_API Line:360 Adding Variable: cost to DataSource: API_mapQuest
+INFO Module:API Function:_run_API Line:346 Adding variable: cost_limit 
+INFO Module:API Function:_run_API Line:360 Adding Variable: cost_limit to DataSource: API_getPostman
+INFO Module:API Function:_run_API Line:386 Addin data source: API_mapQuest to be populated!
+INFO Module:API Function:_run_API Line:386 Addin data source: API_getPostman to be populated!
+INFO Module:collector Function:__init__ Line:97 starting collector module
+INFO Module:collector Function:__init__ Line:104 Getting data source: API_mapQuest variables!
+INFO Module:collector Function:__init__ Line:113 Starting thread: API_mapQuest
+INFO Module:collector Function:__init__ Line:104 Getting data source: API_getPostman variables!
+INFO Module:collector Function:__init__ Line:113 Starting thread: API_getPostman
+INFO Module:collector Function:_get_source Line:66 Source: API_mapQuest fetched variables: {'distance': 13.783, 'cost': 1142}
+INFO Module:collector Function:_init_source_variables Line:29 Variable: distance has been created!Value: 13.783!Source: API_mapQuest
+INFO Module:collector Function:_init_source_variables Line:29 Variable: cost has been created!Value: 1142!Source: API_mapQuest
+INFO Module:collector Function:_get_source Line:66 Source: API_getPostman fetched variables: {'dist_limit': 78, 'cost_limit': 78}
+INFO Module:collector Function:_init_source_variables Line:29 Variable: dist_limit has been created!Value: 78!Source: API_getPostman
+INFO Module:collector Function:_init_source_variables Line:29 Variable: cost_limit has been created!Value: 78!Source: API_getPostman
+INFO Module:API Function:_run_API Line:391 variables input taken from collector!
+INFO Module:API Function:ProductVariables Line:426 Product Variable: distance has been created!
+INFO Module:API Function:ProductVariables Line:426 Product Variable: dist_limit has been created!
+INFO Module:API Function:ProductVariables Line:426 Product Variable: cost has been created!
+INFO Module:API Function:ProductVariables Line:426 Product Variable: cost_limit has been created!
+INFO Module:API Function:_run_API Line:454 Adding action : condition_pass to list!
+INFO Module:API Function:_run_API Line:454 Adding action : condition_fail to list!
+INFO Module:API Function:_run_API Line:461 Adding action : Threshold_true to list!
+INFO Module:API Function:_run_API Line:461 Adding action : Threshold_false to list!
+INFO Module:API Function:_run_API Line:461 Adding action : Threshold_true to list!
+INFO Module:API Function:_run_API Line:463 Action : Threshold_true already in list!
+INFO Module:API Function:_run_API Line:461 Adding action : Threshold_false to list!
+INFO Module:API Function:_run_API Line:463 Action : Threshold_false already in list!
+INFO Module:API Function:ProductActions Line:487 Creater Product action : condition_pass successfully!
+INFO Module:API Function:ProductActions Line:487 Creater Product action : condition_fail successfully!
+INFO Module:API Function:ProductActions Line:487 Creater Product action : Threshold_true successfully!
+INFO Module:API Function:ProductActions Line:487 Creater Product action : Threshold_false successfully!
+INFO Module:engine Function:do_actions Line:108 Starting action: Threshold_true
+INFO Module:API Function:run_rules_list Line:167 Rule: distance_check returned true
+INFO Module:engine Function:do_actions Line:108 Starting action: Threshold_false
+INFO Module:API Function:run_rules_list Line:174 Rule: cost_check returned false
+INFO Module:API Function:_run_API Line:527 Case has retuned false!
+INFO Module:engine Function:do_actions Line:108 Starting action: condition_fail
