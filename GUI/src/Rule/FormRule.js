@@ -22,6 +22,7 @@ export class FormRule extends Component {
         actions_true:[],
         actions_false:[],
         variables:[],
+        count:1,
         actions:[],
         multi_thread:true,
         read:false,
@@ -50,7 +51,7 @@ export class FormRule extends Component {
                 show_modal:false,
                 show_variableForm:false,
                 show_actionForm:false,
-                current_mt_false:false,})
+                current_mt_false:false,count:1})
         }
         
     }
@@ -69,7 +70,7 @@ export class FormRule extends Component {
                     show_modal:false,
                     show_variableForm:false,
                     show_actionForm:false,
-                    current_mt_false:false})
+                    current_mt_false:false,count:1})
             }else{
                 this.setState({
                     name:'',
@@ -89,8 +90,8 @@ export class FormRule extends Component {
                     validated:false,
                     show_modal:false,
                     show_variableForm:false,
-                    show_actionForm:false
-
+                    show_actionForm:false,
+                    count:1
                 })
             }
         }
