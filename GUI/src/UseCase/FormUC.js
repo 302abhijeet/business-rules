@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Modal,Form,Row,Col,Button } from 'react-bootstrap';
 import Select from 'react-select'
-import {Link } from 'react-router-dom'
+import {withRouter } from 'react-router-dom'
  import {DisplayActionList} from '../Rule/FormRule'
 import RuleCondition from './RuleCondition'
 import { Prompt } from 'react-router'
@@ -10,6 +10,11 @@ import FormRule from './../Rule/FormRule'
 
 export class FormUC extends Component {
     
+
+    handleRulesChange=(rules,id)=>{
+        this.setState({rules,count:id})
+    }
+
     state={
         name:'',
         rule_list:[],
@@ -27,7 +32,8 @@ export class FormUC extends Component {
         current_param_false:{},
         current_mt_false:false,
         validated:false,
-        show_modal:false
+        show_modal:false,
+        count:1
     }
     
     componentWillMount = () =>{
@@ -36,6 +42,7 @@ export class FormUC extends Component {
             const uc = use_cases.filter(ele => ele['name']===cat)[0]
             this.setState({...uc,read:true,current_act_true:undefined,
                 current_param_true:{},
+                count:1,
                 current_mt_true:false,
                 current_act_false:undefined,
                 current_param_false:{},
@@ -54,6 +61,7 @@ export class FormUC extends Component {
                 const uc = use_cases.filter(ele => ele['name']===cat)[0]
                 this.setState({...uc,read:true,current_act_true:undefined,
                     current_param_true:{},
+                    count:1,
                     current_mt_true:false,
                     current_act_false:undefined,
                     current_param_false:{},
@@ -82,10 +90,43 @@ export class FormUC extends Component {
                     validated:false,
                     show_modal:false,
                     show_ruleForm:false,
-                    show_actionForm:false
+                    show_actionForm:false,
+                    count:1
                 })
             }
         }
+    }
+
+    convertBack = rule => {
+        if(Array.isArray(rule)){
+            if(Number.isInteger(rule[0])){
+                rule.splice(0,1)
+            }
+            for(let i in rule){
+                if( typeof rule[i] === 'object' && 'name' in rule[i] ){
+                    rule[i]= rule[i]['name']
+                }
+                else if( typeof rule[i] === 'object' && 'multi_thread' in rule[i] ){
+                    delete rule[i]['id']
+                    rule[i]['multi_thread']=this.convertBack(rule[i]['multi_thread'])
+                }
+                else if(typeof rule[i] === 'object' && ('all' in rule[i] || 'any' in rule[i])){
+                    delete rule[i]['id']
+                    if(rule[i]['all'])
+                        rule[i]['all'] = this.convertBack(rule[i]['all'])
+                    else if(rule[i]['any'])
+                        rule[i]['any'][Object.keys(rule[i]['any'])[0]] = this.convertBack(rule[i]['any'][Object.keys(rule[i]['any'])[0]])
+                    if(rule[i]['then'])
+                        rule[i]['then'] = this.convertBack(rule[i]['then'])
+                    if(rule[i]['else'])
+                        rule[i]['else'] = this.convertBack(rule[i]['else']) 
+                }
+                else if(Array.isArray(rule[i])){
+                    rule[i] = this.convertBack(rule[i])
+                }
+            }
+        }
+        return rule
     }
 
     changeActs = (values) =>{
@@ -228,7 +269,8 @@ export class FormUC extends Component {
     }
     
     delData = () =>{
-
+        this.props.delData('use_cases',{name:this.state.name})
+        this.props.history.push('/UseCase/index')
     }
 
     submitData = (e) =>{
@@ -239,7 +281,6 @@ export class FormUC extends Component {
         }
         else {
             e.preventDefault()
-            //write code here
             let data = this.state
             if(this.props.cat==='add'){
                 console.log('in add')
@@ -249,6 +290,46 @@ export class FormUC extends Component {
                     return false
                 }
                 //Write code here
+                delete data['current_act_false']
+                delete data['current_act_true']
+                delete data['current_mt_false']
+                delete data['current_mt_true']
+                delete data['current_param_false']
+                delete data['current_param_true']
+                delete data['read']
+                if(data['id'])
+                    delete data['id']
+
+                data['rules'] = this.convertBack(data['rules'])
+                if(this.props.cat === 'add'){
+                    
+                    this.props.addData('use_cases',data)
+                
+                    this.props.history.push('/UseCase/index')
+                }
+                
+            }else{
+                //modify data
+                delete data['current_act_false']
+                delete data['current_act_true']
+                delete data['current_mt_false']
+                delete data['current_mt_true']
+                delete data['current_param_false']
+                delete data['current_param_true']
+                delete data['read']
+                if(data['id'])
+                    delete data['id']
+
+                data['rules'] = this.convertBack(data['rules'])
+                const newOb = {
+                    'querry':{
+                        'name':data['name']
+                    },
+                    'newData':data
+                }   
+                this.props.modifyData('use_cases',newOb)
+                this.props.history.push('/UseCase/index')
+
             }
         }
         this.setState({validated:true})
@@ -498,7 +579,7 @@ export class FormUC extends Component {
                             this.state.actions_false.map(ele => <DisplayActionList ele={ele} read={this.state.read} delAction={(keyname)=>    this.delAction('actions_false',keyname)}/>)
                         }
                         <hr />
-                        <RuleCondition rules = {this.state.rules} rule_list={this.state.rule_list} read = {this.state.read}/>
+                        <RuleCondition rules = {this.state.rules} rule_list={this.state.rule_list} count={this.state.count} read = {this.state.read} handleRulesChange={this.handleRulesChange}/>
                         <hr />
 
                         <Row>
@@ -519,4 +600,4 @@ export class FormUC extends Component {
     }
 }
 
-export default FormUC
+export default withRouter(FormUC)

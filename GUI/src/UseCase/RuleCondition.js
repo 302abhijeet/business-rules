@@ -2,43 +2,47 @@ import React, { Component } from 'react'
 import {Form,Row,Col,Button,Dropdown, ListGroup} from 'react-bootstrap'
 
 export class RuleCondition extends Component {
-    
-    createID = (rootArray,id) =>{
+    createID = (rootArray,count) =>{
         if(Array.isArray(rootArray)){
-            if(!Number.isInteger(rootArray[0])){
-                rootArray.unshift(id)
+            if(!Number.isInteger(rootArray[0]) && rootArray[0]!==undefined && rootArray[0]!==null){
+                rootArray.unshift(count)
             }
-            id++
+            count++
 
 
 
             for (let i in rootArray){
-                if(typeof rootArray[i] === 'string'){
+                if(Number.isInteger(rootArray[i]))
+                    continue
+
+                else if(typeof rootArray[i] === 'string'){
                     const name = rootArray[i]
-                    rootArray[i] = {id,name}
-                    id++
+                    rootArray[i] = {id:count,name}
+                    count++
                 }
-                else if(rootArray[i]['all'] || rootArray[i]['any']){
-                    rootArray[i]['id'] = id
-                    id++
+                else if(typeof rootArray[i]==='object' && ('all' in rootArray[i]|| 'any' in rootArray[i])){
+                    rootArray[i]['id'] = count
+                    count++
                     if(rootArray[i]['all'])
-                        id = this.createID(rootArray[i]['all'],id)
+                        count = this.createID(rootArray[i]['all'],count)
                     else if(rootArray[i]['any'])
-                        id = this.createID(rootArray[i]['any'][Object.keys(rootArray[i]['any'])[0]],id)
-                    id = this.createID(rootArray[i]['then'],id)
-                    id = this.createID(rootArray[i]['else'],id)
+                        count = this.createID(rootArray[i]['any'][Object.keys(rootArray[i]['any'])[0]],count)
+                    if(rootArray[i]['then'])
+                        count = this.createID(rootArray[i]['then'],count)
+                    if(rootArray[i]['else'])    
+                        count = this.createID(rootArray[i]['else'],count)
                 }
-                else if(rootArray[i]['multi_thread']){
-                    rootArray[i]['id'] =id
-                    id++
-                    id = this.createID(rootArray[i]['multi_thread'],id)
+                else if(typeof rootArray[i]==='object' && 'multi_thread' in rootArray[i]){
+                    rootArray[i]['id'] =count
+                    count++
+                    count = this.createID(rootArray[i]['multi_thread'],count)
                 }else if(Array.isArray(rootArray[i])){
-                    id = this.createID(rootArray[i],id)
+                    count = this.createID(rootArray[i],count)
+
                 }
             }
-            console.log(id)
-            return id
         }
+        return count
         
 
     }
@@ -58,7 +62,7 @@ export class RuleCondition extends Component {
             const {rules} = nextProps
             if(rules.length!==0){
                 const id = this.createID(rules,1)
-                this.setState({rules,id})
+                this.setState({rules,id:this.props.count})
             }else{
                 this.setState({rules:[],id:1})
             }
@@ -67,29 +71,12 @@ export class RuleCondition extends Component {
 
     state = {
         rules:[],
-        id:1
+
     }
     
    
 
-    convertBack = rule => {
-        if(Array.isArray(rule)){
-            for(let i in rule){
-                if(rule[i]['name']){
-                    rule[i] = rule[i]['name']
-                }else if(rule[i]['all'] || rule[i]['any']){
-                    delete rule[i]['id']
-                    if(rule[i]['all'])
-                        rule[i]['all'] = this.convertBack(rule[i]['all'])
-                    else if(rule[i]['any'])
-                        rule[i]['any'] = this.convertBack(rule[i]['any'])
-                    rule[i]['then'] = this.convertBack(rule[i]['then'])
-                    rule[i]['else'] = this.convertBack(rule[i]['else'])
-                }
-            }
-        }
-        return rule
-    }
+  
 
     getID = (id,data) =>{
         let stack = []
@@ -104,12 +91,12 @@ export class RuleCondition extends Component {
                 else    
                     stack = [...stack,...element]
             }
-            else if('name' in element){
+            else if(typeof element === 'object' && 'name' in element){
                 if(element['id'] === id){
                     return element
                 }
             }
-            else if('multi_thread' in element){
+            else if(typeof element === 'object' &&'multi_thread' in element){
                 if(element['id'===id]){
                     return element
                 }
@@ -117,7 +104,7 @@ export class RuleCondition extends Component {
                     stack = [...stack,element['multi_thread']]
                 }
             }
-            else if('all' in element|| 'any'in element){
+            else if(typeof element === 'object' && ('all' in element|| 'any'in element)){
                 if(element['id']===id){
                     return element
                 }
@@ -144,45 +131,80 @@ export class RuleCondition extends Component {
 
     //Data addition functions
     addRule = (obid) => {
-        console.log('add rule')
         const {rules} = this.state
+        const {count} = this.props
         const ob = this.getID(obid,rules)
-        ob.push({ name:'',id:this.state.id +1  })
-        this.setState({rules,id:this.state.id+1})
+        ob.push({ name:'',id:count +1  })
+        this.props.handleRulesChange(rules,count+2)
+        //this.setState({rules,id:this.state.id+1})
     }
 
-    addCondition = (id) =>{
-        console.log('add condition')
-        console.log(id)
-    }
-
-    addMulti = (id) => {
-        console.log('add multi')
-        console.log(id)
-    }
-
-    //Data modification functions
-    modRule = (id,newval) =>{
-        console.log('mod rule')
+    modCondition = (id,newval) =>{
         const {rules} = this.state
+        const {count} = this.props
+        const ob = this.getID(id,rules)
+        if(typeof ob === 'object' && 'all' in ob){
+            ob[newval] = {1:ob['all']}
+            delete ob['all']
+
+        }else if(typeof ob ==='object' && 'any' in ob){
+            ob[newval] = ob['any'][Object.keys(ob['any'])[0]]
+            delete ob['any']
+        }
+        this.props.handleRulesChange(rules,count)
+//        this.setState({rules})
+    }
+
+    modAny = (id,newval) => {
+        const {rules} = this.state
+        const {count} = this.props
+
+        const ob = this.getID(id,rules)
+        if(typeof ob==='object' && 'any' in ob){
+            const delkey = Object.keys(ob['any'])[0]
+            ob['any'][newval] = ob['any'][delkey]
+            delete ob['any'][delkey]
+
+        }
+        this.props.handleRulesChange(rules,count)
+        // this.setState({rules})
+    }
+
+    addCondition = (obid) =>{
+        
+        const {rules} = this.state
+        const {count} = this.props
+
+        const ob = this.getID(obid,rules)
+        ob.push({'all':[count+4],'then':[count+2],'else':[count+3],id:count+1})
+        this.props.handleRulesChange(rules,count+5)
+        // this.setState({rules,id:this.state.id+4})
+    }
+
+    addMulti = (obid) => {
+        const {rules} = this.state
+        const {count} = this.props
+
+        const ob = this.getID(obid,rules)
+        ob.push({'multi_thread':[count+2],id:count+1})
+        this.props.handleRulesChange(rules,count+3)
+        // this.setState({rules,id:id+2})
+    }
+
+    modRule = (id,newval) =>{
+        const {rules} = this.state
+        const {count} = this.props
+
         const ob = this.getID(id,rules)
         ob['name'] = newval
-        this.setState({rules})
+        this.props.handleRulesChange(rules,count)
+        // this.setState({rules})
     }
 
-    modCondition = () =>{
-        console.log('mod condition')
-
-    }
-
-    modMulti = () =>{
-        console.log('mod multi')
-
-    }
+  
 
     //Data deletion functions
-    delRule = (id,parentId) =>{
-        console.log('del rule')
+    delData = (id,parentId) =>{
         const {rules} = this.state
         //const ob = this.getID(id,rules)
         let pob
@@ -196,7 +218,7 @@ export class RuleCondition extends Component {
             for(let i in pob){
                 if(Number.isInteger(pob[i]))    
                     continue
-                if('id' in pob[i]){
+                if(typeof pob[i] === 'object' && 'id' in pob[i]){
                     if(pob[i]['id']===id){
                         ind = i
                         break
@@ -205,21 +227,11 @@ export class RuleCondition extends Component {
             }
             pob.splice(ind,1)
         }
-        console.log(pob)
-        this.setState({rules})
+        this.props.handleRulesChange(rules,this.props.count)
+        // this.setState({rules})
 
     }
 
-
-    delCondition = () =>{
-        console.log('del condition')
-
-    }
-
-    delMulti = () =>{
-        console.log('del multi')
-
-    }
 
 
    
@@ -232,7 +244,7 @@ export class RuleCondition extends Component {
                     
                     <ListGroup>
                     {
-                        <RuleArr data={this.state.rules} rule_list={this.props.rule_list} modRule={this.modRule} delRule={this.delRule} parentId={null} addCondition={this.addCondition} addMulti={this.addMulti} addRule={this.addRule}/>
+                        <RuleArr read={this.props.read} data={this.state.rules} rule_list={this.props.rule_list} modRule={this.modRule} delData={this.delData} parentId={null} addCondition={this.addCondition} addMulti={this.addMulti} addRule={this.addRule} modAny= {this.modAny} modCondition={this.modCondition}  />
                     }
                     </ListGroup>
                     
@@ -255,11 +267,10 @@ class RuleVar extends Component {
         return(
             <React.Fragment>
                 <ListGroup.Item>
-                {data['id']}
                 <Row>
                     <Col sm={6}>
                     
-                    <Form.Control as='select' value={data['name'] } onChange={event=>this.props.modRule(data['id'],event.target.value)} >
+                    <Form.Control disabled={this.props.read} as='select' value={data['name'] } onChange={event=>this.props.modRule(data['id'],event.target.value)} >
                         <option hidden value="">Select Rule</option>
                         {
                             rule_list.map(ele => <option value={ele}>{ele}</option>)
@@ -267,7 +278,7 @@ class RuleVar extends Component {
                     </Form.Control>
                     </Col>
                     <Col>
-                        <Button variant='outline-danger' onClick={()=>this.props.delRule(data['id'],this.props.parentId)} >Delete</Button>
+                        <Button disabled = {this.props.read} variant='outline-danger' onClick={()=>this.props.delData(data['id'],this.props.parentId)} >Delete</Button>
                     </Col>
                     </Row></ListGroup.Item>
             </React.Fragment>
@@ -280,19 +291,20 @@ class Multi extends Component {
 
 
     render() {
-        const {data,rule_list,modRule,delRule,addCondition,addMulti,addRule} = this.props
+        const {data,rule_list,modRule,delData,addCondition,addMulti,addRule,modCondition,modAny,read} = this.props
         return(
             <React.Fragment>
                 <ListGroup.Item>
                 <Row>
-                {data['id']}
                 <Col sm={2}>
                     <Form.Label>Multithreaded</Form.Label>
                 </Col>
                 <Col sm ={6}>
-                    <RuleArr data={data['multi_thread'] } rule_list={rule_list} modRule={modRule} delRule={delRule}  parentId={data['id']}  addCondition={addCondition} addMulti={addMulti} addRule={addRule}/>
+                    <RuleArr read = {read} data={data['multi_thread'] } rule_list={rule_list} modRule={modRule} delData={delData}  parentId={data['id']}  addCondition={addCondition} addMulti={addMulti} addRule={addRule} modCondition={modCondition} modAny={modAny}/>
                 </Col>
-                <Col></Col>
+                <Col>
+                    <Button disabled={read} variant='outline-danger' onClick={()=>this.props.delData(data['id'],this.props.parentId)} >Delete</Button>
+                </Col>
                 </Row></ListGroup.Item>
             </React.Fragment>
         )
@@ -302,38 +314,42 @@ class Multi extends Component {
 class Conditional extends Component{
 
     renderData = val => {
-        const {data,rule_list,modRule,delRule,addCondition,addMulti,addRule} = this.props
+        const {data,rule_list,modRule,delData,addCondition,addMulti,addRule,modCondition,modAny,read} = this.props
         if(data[val]){
             if(val==='any'){
               
-                return <RuleArr data={data[val][Object.keys(data['any'])[0]]} rule_list = {rule_list} modRule={modRule} delRule={delRule} parentId={data['id']}  addCondition={addCondition} addMulti={addMulti} addRule={addRule}/>
+                return <RuleArr read={read} data={data[val][Object.keys(data['any'])[0]]} rule_list = {rule_list} modRule={modRule} delData={delData} parentId={data['id']}  addCondition={addCondition} addMulti={addMulti} addRule={addRule} modCondition={modCondition} modAny={modAny}/>
             }
             else{
-                return <RuleArr data={data[val]} rule_list={rule_list} modRule={modRule} delRule={delRule}  parentId={data['id']}  addCondition={addCondition} addMulti={addMulti} addRule={addRule}/>
+                return <RuleArr read={read} data={data[val]} rule_list={rule_list} modRule={modRule} delData={delData}  parentId={data['id']}  addCondition={addCondition} addMulti={addMulti} addRule={addRule} modCondition={modCondition} modAny={modAny}/>
             }
         }
     }
 
 
     render(){
-        const {data} = this.props
+        const {data,read} = this.props
 
         return(
             <React.Fragment>
                 <ListGroup.Item>
                 <Row>
                     <br />
-                    {data['id']}
                     <ListGroup.Item>
                     <Col>
-                        <Form.Control as='select' value={ 'all' in data?'all':'any' }>
+                        <Form.Control disabled={read} as='select' value={ 'all' in data?'all':'any' } onChange={e => this.props.modCondition(data['id'],e.target.value)}>
                             <option value='all'>all</option>
                             <option value='any'>any</option>
                         </Form.Control>
-                        {/* {data['any']? data['any'][Object.keys(data['any'])[0]] :''} */}
+                        <Col hidden={'any' in data?false:true}>
+                            <Form.Control disabled={read} type = 'text' value={ 'any' in data ? Object.keys(data['any'])[0]:'' } onChange={event=>this.props.modAny(data['id'],event.target.value)}/>
+                        </Col>
+                            {/* {data['any']? data['any'][Object.keys(data['any'])[0]] :''} */}
                         {this.renderData(data['all']?'all':'any')}
 
-                    </Col></ListGroup.Item>
+                    </Col>
+                    
+                    </ListGroup.Item>
                     <ListGroup.Item>
                     <Col>
                         <Form.Label>Then</Form.Label>
@@ -343,7 +359,12 @@ class Conditional extends Component{
                     <Col>
                     <Form.Label>else</Form.Label>
                         {this.renderData('else')}
-                    </Col></ListGroup.Item>
+                    </Col>
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                    <Col><Button disabled={read} variant='outline-danger' onClick={()=>this.props.delData(data['id'],this.props.parentId)}>Delete </Button></Col>
+
+                    </ListGroup.Item>
                 </Row></ListGroup.Item><br />
             </React.Fragment>
         )
@@ -354,18 +375,17 @@ class RuleArr extends Component{
 
 
     renderRules = (data) =>{
-        const {rule_list,modRule,delRule,addCondition,addMulti,addRule} = this.props
-        console.log(data)
+        const {rule_list,modRule,delData,addCondition,addMulti,addRule,modCondition,modAny,read} = this.props
         const display = data.map(ele => {
             if(Number.isInteger(ele)){}
                 
-            else if('name' in ele){
-                return <RuleVar data={ele} rule_list={rule_list} modRule={modRule} delRule={delRule} parentId={data[0]}/>
+            else if(typeof ele === 'object' && 'name' in ele){
+                return <RuleVar read={read} data={ele} rule_list={rule_list} modRule={modRule} delData={delData} parentId={data[0]} modCondition={modCondition} modAny={modAny}/>
             }
-            else if('multi_thread' in ele){
-                return <Multi data={ele} rule_list={rule_list} modRule={modRule} delRule={delRule} parentId={data[0]} addCondition={addCondition} addMulti={addMulti} addRule={addRule}/>
-            }else if('all' in ele || 'any' in ele){
-                return <Conditional data={ele} rule_list={rule_list} modRule={modRule} delRule={delRule} parentId={data[0]}  addCondition={addCondition} addMulti={addMulti} addRule={addRule}/>
+            else if(typeof ele === 'object' && 'multi_thread' in ele){
+                return <Multi read={read} data={ele} rule_list={rule_list} modRule={modRule} delData={delData} parentId={data[0]} addCondition={addCondition} addMulti={addMulti} addRule={addRule} modCondition={modCondition} modAny={modAny}/>
+            }else if(typeof ele === 'object' && ('all' in ele || 'any' in ele)){
+                return <Conditional read={read} data={ele} rule_list={rule_list} modRule={modRule} delData={delData} parentId={data[0]}  addCondition={addCondition} addMulti={addMulti} addRule={addRule} modCondition={modCondition} modAny={modAny}/>
             }else if(Array.isArray(ele)){
                 //array in array, pass the state as a parameter and make this function recursive
                 return this.renderRules(ele)
@@ -379,7 +399,7 @@ class RuleArr extends Component{
             <React.Fragment>
             <ListGroup.Item>
                     <Dropdown>
-                        <Dropdown.Toggle variant='outline-secondary' id = 'add'>Add</Dropdown.Toggle>
+                        <Dropdown.Toggle disabled={this.props.read} variant='outline-secondary' id = 'add'>Add</Dropdown.Toggle>
                         <Dropdown.Menu>
                             <Dropdown.Item onClick ={()=>this.props.addCondition(this.props.data[0])}>Add condition</Dropdown.Item>
                             <Dropdown.Item onClick ={()=>this.props.addRule(this.props.data[0])}>Add rule</Dropdown.Item>
