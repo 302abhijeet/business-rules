@@ -330,7 +330,7 @@ class SubCond extends Component {
                 return <ListGroup.Item>
                         <Row>
                             <Col><Cond element={ele} variables={variables} changeCondition={changeCondition}  read={this.props.read} /></Col>
-                            <Col md="auto"><Button variant="outline-danger" onClick={delCondition}>Delete</Button></Col>
+                            <Col md="auto"><Button variant="outline-danger" onClick={this.delCondition}>Delete</Button></Col>
                         </Row>
                     </ListGroup.Item>
             }
@@ -345,14 +345,14 @@ class SubCond extends Component {
                 return <ListGroup.Item>
                     <Row>
                         <Col><SubCond conditions={ele['all']} selected_val='all' variables={variables} parentId={conditions[0]} changeCondition={changeCondition} changeSubCondition ={changeSubCondition} read={this.props.read} createNewCondition={this.props.createNewCondition} createNewSubCondition={this.props.createNewSubCondition}/></Col>
-                        <Col md="auto"><Button variant="outline-danger" onClick={delCondition}>Delete</Button></Col>
+                        <Col md="auto"><Button variant="outline-danger" onClick={this.delCondition}>Delete</Button></Col>
                     </Row>
                 </ListGroup.Item>
             }else if(ele['any']){
                 return <ListGroup.Item>
                     <Row>
                         <Col> <SubCond conditions={ele['any']} selected_val='any' variables={variables} parentId = {conditions[0]} changeCondition={changeCondition} changeSubCondition ={changeSubCondition} read={this.props.read} createNewCondition={this.props.createNewCondition} createNewSubCondition={this.props.createNewSubCondition}/></Col>
-                        <Col md="auto"><Button variant="outline-danger" onClick={delCondition}>Delete</Button></Col>
+                        <Col md="auto"><Button variant="outline-danger" onClick={this.delCondition}>Delete</Button></Col>
                     </Row>
                 </ListGroup.Item>
             }

@@ -270,7 +270,7 @@ class RuleVar extends Component {
                 <Row>
                     <Col sm={6}>
                     
-                    <Form.Control disabled={this.props.read} as='select' value={data['name'] } onChange={event=>this.props.modRule(data['id'],event.target.value)} >
+                    <Form.Control required disabled={this.props.read} as='select' value={data['name'] } onChange={event=>this.props.modRule(data['id'],event.target.value)} >
                         <option hidden value="">Select Rule</option>
                         {
                             rule_list.map(ele => <option value={ele}>{ele}</option>)
