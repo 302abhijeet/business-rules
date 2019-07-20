@@ -241,6 +241,27 @@ export class FormRule extends Component {
         this.setState({read:!this.state.read})
     }
 
+    convertBack = data =>{
+        if(typeof data === 'object' && 'all' in data){
+            data['all'] = this.convertBack(data['all'])
+        }else if(typeof data === 'object' && 'any' in data){
+            data['any'] = this.convertBack(data['any'])
+        }
+        else if(typeof data === 'object' && 'name' in data){
+            delete data['id']
+        }
+
+        else if(Array.isArray(data)){
+            if(Number.isInteger(data[0]))
+                data.splice(0,1)
+            for(let i in data){
+                data[i] = this.convertBack(data[i])
+
+            }
+        }
+        return data
+    }
+
     addData = (e) =>{
         const form = e.currentTarget
         if (form.checkValidity() === false) {
@@ -255,16 +276,16 @@ export class FormRule extends Component {
                 this.showModal()
                 return false
             }
-                delete newData['current_act_false']
-                delete newData['current_act_true']
-                delete newData['current_mt_false']
-                delete newData['current_mt_true']
-                delete newData['current_param_false']
-                delete newData['current_param_true']
-                delete newData['read']
-                if(newData['count'])
-                    delete newData['count']
-            
+            delete newData['current_act_false']
+            delete newData['current_act_true']
+            delete newData['current_mt_false']
+            delete newData['current_mt_true']
+            delete newData['current_param_false']
+            delete newData['current_param_true']
+            delete newData['read']
+            if(newData['count'])
+                delete newData['count']
+            newData['conditions'] = this.convertBack(newData['conditions'])
             if(this.props.cat === 'add'){
                 //add data and redirect
                 
@@ -278,6 +299,8 @@ export class FormRule extends Component {
             }
             else{
                 //modify data
+                console.log(newData)
+
                 const newOb = {
                     'querry':{
                         'name':newData['name']

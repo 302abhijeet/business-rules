@@ -7,7 +7,6 @@ export class Condition2 extends Component {
     componentWillMount = () =>{
         //give id using recursion
         const cond = this.props.conditions
-        console.log(cond)
        if(Object.keys(cond).length===0){
            const ob = {'any':[1]}
            console.log('in this')
