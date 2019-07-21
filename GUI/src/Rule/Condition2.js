@@ -37,9 +37,7 @@ export class Condition2 extends Component {
             count
         })}
     }
-    delCondition = () => {
-        //add code o delete condition
-    }
+    
 
     createID = (rootObject,id_count) => {
         if(Array.isArray(rootObject)){
@@ -126,6 +124,40 @@ export class Condition2 extends Component {
             }
             return false
             
+        }
+    }
+
+    delCondition = (id,parentId) => {
+        const cond = this.state.conditions
+        let pob
+        if(cond['all'])
+            pob = this.getOb(cond['all'],parentId)
+        else if(cond['any'])
+            pob = this.getOb(cond['any'],parentId)
+
+        if(Array.isArray(pob)){
+            let ind
+            for(let i in pob){
+
+                if(pob[i]['name'] && pob[i]['id']===id){
+                    ind = i
+                    break
+                }
+                else if( pob[i]['all']){
+                    if(pob[i]['all'][0] === id){
+                        ind = i
+                        break
+                    }
+                }
+                else if(pob[i]['any']){
+                    if(pob[i]['any'][0]===id){
+                        ind = i 
+                        break
+                    }
+                }
+            }
+            pob.splice(ind,1)
+            this.props.handleConditionChange(cond,this.state.count)
         }
     }
 
@@ -271,11 +303,6 @@ export class Condition2 extends Component {
             }
         }
 
-         
-      
-        //delete the condition
-
-        //Add the new condition
     }
 
     state= {
@@ -287,10 +314,10 @@ export class Condition2 extends Component {
         const {variables} = this.props
         const {conditions} = this.state
         if(conditions['all']){
-            return <SubCond conditions={conditions['all']} selected_val='all' parentId={null} variables={variables} changeCondition={this.changeCondition} changeSubCondition ={this.changeSubCondition} read={this.state.read} createNewCondition={this.createNewCondition} createNewSubCondition={this.createNewSubCondition}/>
+            return <SubCond conditions={conditions['all']} selected_val='all' parentId={null} variables={variables} changeCondition={this.changeCondition} changeSubCondition ={this.changeSubCondition} read={this.state.read} createNewCondition={this.createNewCondition} createNewSubCondition={this.createNewSubCondition} delCondition={this.delCondition}/>
         }
         else if(conditions['any']){
-            return <SubCond conditions = {conditions['any']} selected_val = 'any' parentId={null} variables={variables} changeCondition={this.changeCondition} changeSubCondition ={this.changeSubCondition} read = {this.state.read} createNewCondition={this.createNewCondition} createNewSubCondition={this.createNewSubCondition}/>
+            return <SubCond conditions = {conditions['any']} selected_val = 'any' parentId={null} variables={variables} changeCondition={this.changeCondition} changeSubCondition ={this.changeSubCondition} read = {this.state.read} createNewCondition={this.createNewCondition} createNewSubCondition={this.createNewSubCondition} delCondition={this.delCondition}/>
         }
         return ''
     }
@@ -329,8 +356,8 @@ class SubCond extends Component {
             if(ele['name']){
                 return <ListGroup.Item>
                         <Row>
-                            <Col><Cond element={ele} variables={variables} changeCondition={changeCondition}  read={this.props.read} /></Col>
-                            <Col md="auto"><Button variant="outline-danger" onClick={this.delCondition}>Delete</Button></Col>
+                            <Col><Cond element={ele} variables={variables} changeCondition={changeCondition}  read={this.props.read} delCondition={this.props.delCondition}/></Col>
+                            <Col md="auto"><Button variant="outline-danger" onClick={()=>this.props.delCondition(ele['id'],conditions[0])}>Delete</Button></Col>
                         </Row>
                     </ListGroup.Item>
             }
@@ -344,15 +371,15 @@ class SubCond extends Component {
             if(ele['all']){
                 return <ListGroup.Item>
                     <Row>
-                        <Col><SubCond conditions={ele['all']} selected_val='all' variables={variables} parentId={conditions[0]} changeCondition={changeCondition} changeSubCondition ={changeSubCondition} read={this.props.read} createNewCondition={this.props.createNewCondition} createNewSubCondition={this.props.createNewSubCondition}/></Col>
-                        <Col md="auto"><Button variant="outline-danger" onClick={this.delCondition}>Delete</Button></Col>
+                        <Col><SubCond conditions={ele['all']} selected_val='all' variables={variables} parentId={conditions[0]} changeCondition={changeCondition} changeSubCondition ={changeSubCondition} read={this.props.read} createNewCondition={this.props.createNewCondition} createNewSubCondition={this.props.createNewSubCondition} delCondition={this.props.delCondition}/></Col>
+                        <Col md="auto"><Button variant="outline-danger" onClick={()=>this.props.delCondition(ele['all'][0],conditions[0])}>Delete</Button></Col>
                     </Row>
                 </ListGroup.Item>
             }else if(ele['any']){
                 return <ListGroup.Item>
                     <Row>
-                        <Col> <SubCond conditions={ele['any']} selected_val='any' variables={variables} parentId = {conditions[0]} changeCondition={changeCondition} changeSubCondition ={changeSubCondition} read={this.props.read} createNewCondition={this.props.createNewCondition} createNewSubCondition={this.props.createNewSubCondition}/></Col>
-                        <Col md="auto"><Button variant="outline-danger" onClick={this.delCondition}>Delete</Button></Col>
+                        <Col> <SubCond conditions={ele['any']} selected_val='any' variables={variables} parentId = {conditions[0]} changeCondition={changeCondition} changeSubCondition ={changeSubCondition} read={this.props.read} createNewCondition={this.props.createNewCondition} createNewSubCondition={this.props.createNewSubCondition} delCondition={this.props.delCondition}/></Col>
+                        <Col md="auto"><Button variant="outline-danger" onClick={()=>this.props.delCondition(ele['any'][0],conditions[0])}>Delete</Button></Col>
                     </Row>
                 </ListGroup.Item>
             }

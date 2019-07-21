@@ -289,7 +289,6 @@ export class FormRule extends Component {
             if(this.props.cat === 'add'){
                 //add data and redirect
                 
-                console.log(newData)
                 this.props.addData('rules',newData)
                 if (!this.props.popUp) {
                     console.log("Why here")
@@ -299,7 +298,6 @@ export class FormRule extends Component {
             }
             else{
                 //modify data
-                console.log(newData)
 
                 const newOb = {
                     'querry':{
