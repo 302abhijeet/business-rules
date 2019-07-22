@@ -62,7 +62,7 @@ export class Home extends Component {
                                     </Row>
                                     <br />
                                     <Accordion style={{height: '300px',overflowY: 'scroll'}} hidden={!this.state.show_history}>
-                                        {history.reverse().filter(ele => new Date(ele["Date"].substr(0,10))<=this.state.end_date && new Date(ele["Date"].substr(0,10))>=this.state.start_date).map(ele => <HistoryCard his={ele} />)}
+                                        {history.slice().reverse().filter(ele => new Date(ele["Date"].substr(0,10))<=this.state.end_date && new Date(ele["Date"].substr(0,10))>=this.state.start_date).map(ele => <HistoryCard his={ele} />)}
                                     </Accordion>
 
                                 </Container>
