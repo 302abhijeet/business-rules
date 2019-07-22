@@ -20,7 +20,7 @@ export  class Provider extends Component {
 
     delData = (ty,newOb)=>{
         this.setState({in_operation:true})
-        axios.post(`http://127.0.0.1:5000/del/${ty}`,JSON.stringify(newOb))
+        axios.post(`http://10.137.89.13:5000/del/${ty}`,JSON.stringify(newOb))
             .then((res)=>{
                 console.log(res)
                 const datas = this.state[ty]
@@ -45,7 +45,7 @@ export  class Provider extends Component {
 
     addData = (ty,newOb) =>{
         this.setState({in_operation:true})
-        axios.post(`http://127.0.0.1:5000/add/${ty}`,JSON.stringify(newOb))
+        axios.post(`http://10.137.89.13:5000/add/${ty}`,JSON.stringify(newOb))
             .then(res=>{
                 alert(`${newOb['name']} added`)
                 this.setState({
@@ -70,7 +70,7 @@ export  class Provider extends Component {
     modifyData = (ty,newOb)=>{
         this.setState({in_operation:true})
 
-        axios.post(`http://127.0.0.1:5000/modify/${ty}`,JSON.stringify(newOb))
+        axios.post(`http://10.137.89.13:5000/modify/${ty}`,JSON.stringify(newOb))
         .then(res =>{
             alert(`${newOb['name']} modified`)
             const datas = this.state[ty]
@@ -98,42 +98,42 @@ export  class Provider extends Component {
     //fetch data from server here
     componentDidMount(){
         //use axios to get data
-        axios.get('http://127.0.0.1:5000/get/variables ')
+        axios.get('http://10.137.89.13:5000/get/variables ')
             .then(res => {
                 //console.log(res.data.data)
                 this.setState({ variables: res.data.data})
             })
             .catch(err => console.log(err))
 
-        axios.get('http://127.0.0.1:5000/get/DataSource ')
+        axios.get('http://10.137.89.13:5000/get/DataSource ')
             .then(res => {
                 
                 this.setState({ DataSource: res.data.data})
             })
             .catch(err => console.log(err))
         
-        axios.get('http://127.0.0.1:5000/get/rules ')
+        axios.get('http://10.137.89.13:5000/get/rules ')
             .then(res => {
                 
                 this.setState({ rules: res.data.data})
             })
             .catch(err => console.log(err))
 
-        axios.get('http://127.0.0.1:5000/get/use_cases ')
+        axios.get('http://10.137.89.13:5000/get/use_cases ')
             .then(res => {
                 
                 this.setState({ use_cases: res.data.data})
             })
             .catch(err => console.log(err))
         
-        axios.get('http://127.0.0.1:5000/get/actions ')
+        axios.get('http://10.137.89.13:5000/get/actions ')
             .then(res => {
                 
                 this.setState({ actions: res.data.data})
             })
             .catch(err => console.log(err))
 
-        axios.get('http://127.0.0.1:5000/get/history ')
+        axios.get('http://10.137.89.13:5000/get/history ')
         .then(res => {
             
             this.setState({ history: res.data.data})
