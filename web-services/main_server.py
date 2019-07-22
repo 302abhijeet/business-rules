@@ -305,4 +305,4 @@ def not_found(error):
     return Response(status=404,response=json.dumps({'Error':'Route not found'}))
 
 if __name__ == "__main__":
-    server.run(port = 5000)
+    server.run(port = 5000,host='0.0.0.0')
