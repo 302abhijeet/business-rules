@@ -11,7 +11,7 @@ export class Variable extends Component {
             <Consumer>
                 {value=>{
                     const {cat} = this.props
-                    const {variables,redirect} = value.value
+                    const {variables,in_operation} = value.value
                     const data_sources = value.value.DataSource
                     // if(redirect===true)
                     //     return <Redirect to='/Variable/index' />
@@ -30,11 +30,17 @@ export class Variable extends Component {
                                     <Col>
                                         <SideVar variables = {variables} />
                                     </Col>
-                                    <Col lg = {9}>
+                                    <Col lg = {10}>
                                         <h1>Variable</h1>
                                         <p>Click on the Add button to create a variable or choose a variable from the given list</p>
                                         <Link to = '/Variable/add'><Button variant='outline-primary'>Add new Variable</Button></Link>
                                         
+                                    </Col>
+                                    <Col hidden={!in_operation}>
+                                    <Spinner animation="border" role="status">
+                                        <span className="sr-only">Loading...</span>
+
+                                    </Spinner>
                                     </Col>
                                     </Row>
                                 </Container>

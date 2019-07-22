@@ -383,7 +383,7 @@ export class FormUC extends Component {
                         this.props.cat ==='add' ? <h1>Add new Use Case</h1> : <h1>{this.props.cat} Use Case</h1>
                     } </Col>
                     <Col md='auto'>
-                        <Button variant='outline-secondary' onClick={this.modifyRead} disabled={!this.state.read}>Modify</Button>
+                        <Button variant='outline-primary' onClick={this.modifyRead} disabled={!this.state.read}>Modify</Button>
                     </Col>
                     <Col md='auto'> 
                     <Button variant = 'outline-danger' onClick = {this.delData} disabled = {this.props.cat!=='add'?false:true}>Delete</Button>
@@ -410,7 +410,7 @@ export class FormUC extends Component {
                             })} options={rule_options} onChange={this.changeRules} name='rule_list' isMulti isDisabled={this.state.read}/>
                         </Col>
                         <Col>
-                            <Button variant='outline-dark' onClick={this.showRuleFormModal} disabled={this.state.read}  >Add new Rule</Button>
+                            <Button variant='outline-success' onClick={this.showRuleFormModal} disabled={this.state.read}  >Add new Rule</Button>
                         </Col>
                     </Form.Group>
 
@@ -426,7 +426,7 @@ export class FormUC extends Component {
                             })} options={act_options} onChange={this.changeActs} name='actions' isMulti isDisabled={this.state.read}/>
                         </Col>
                         <Col>
-                            <Button variant='outline-dark' onClick={this.showActionFormModal} disabled={this.state.read}   >Add new Action</Button>             
+                            <Button variant='outline-success' onClick={this.showActionFormModal} disabled={this.state.read}   >Add new Action</Button>             
                         </Col>
                     </Form.Group>
 
@@ -459,7 +459,7 @@ export class FormUC extends Component {
 
                         </Col>
                         <Col sm={4}>
-                            <Button variant='outline-dark' onClick={this.addTrueAct} disabled={this.state.read}>Add this action for true</Button>
+                            <Button variant='outline-success' onClick={this.addTrueAct} disabled={this.state.read}>Add this action for true</Button>
                         </Col>
                     </Form.Group>
 
@@ -527,7 +527,7 @@ export class FormUC extends Component {
 
                         </Col>
                         <Col sm={4}>
-                            <Button variant='outline-dark' onClick={this.addActFalse} disabled={this.state.read}>Add this action for false</Button>
+                            <Button variant='outline-success' onClick={this.addActFalse} disabled={this.state.read}>Add this action for false</Button>
                         </Col>
                     </Form.Group>
 
@@ -584,7 +584,7 @@ export class FormUC extends Component {
 
                         <Row>
                             <Col>
-                                <Button variant='outline-success' type='submit' disabled={this.state.read}>Submit</Button>
+                                <Button variant='outline-success' type='submit' hidden={this.state.read} disabled={this.state.read}>Submit</Button>
                             </Col>
                             <Col>
                             </Col>

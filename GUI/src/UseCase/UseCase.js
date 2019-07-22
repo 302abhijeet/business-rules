@@ -11,7 +11,7 @@ export class UseCase extends Component {
             <Consumer>
                 {value=>{
                     const {cat} = this.props
-                    const {actions,rules,use_cases,DataSource,variables} = value.value
+                    const {actions,rules,use_cases,DataSource,variables,in_operation} = value.value
                    
             
                     if( use_cases === null || use_cases===undefined || DataSource=== null || DataSource===undefined || variables===null || variables===undefined || actions===null || actions===undefined || rules===null || rules===undefined){
@@ -33,6 +33,12 @@ export class UseCase extends Component {
                                         <p>Click on the Add button to create a use case or choose a use case from the given list</p>
                                         <Link to = '/UseCase/add'><Button variant='outline-primary'>Add new Use Case</Button></Link>
                                         
+                                    </Col>
+                                    <Col hidden={!in_operation}>
+                                    <Spinner animation="border" role="status">
+                                        <span className="sr-only">Loading...</span>
+
+                                    </Spinner>
                                     </Col>
                                     
                                     </Row>

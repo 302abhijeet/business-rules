@@ -263,14 +263,14 @@ export class FormDS extends Component {
                     <Col hidden={this.props.run}>{
                         this.props.cat ==='add' ? <h1>Add new Data Source</h1> : <h1>{this.props.cat} Data Source</h1>
                     }</Col>
-                    <Col md="auto"><Button name='modify' variant='outline-secondary' disabled={!this.state.read} hidden={this.props.popUp || this.props.run} onClick={this.changeReadMode}>Modify</Button></Col>
-                    <Col md="auto"><Button name = 'delete' variant='outline-danger' disabled={!this.state.read} hidden={this.props.popUp || this.props.run} onClick={this.deleteData}>Delete</Button></Col>
+                    <Col md="auto"><Button name='modify' variant='outline-primary' disabled={!this.state.read} hidden={this.props.popUp || this.props.run} onClick={this.changeReadMode}>Modify</Button></Col>
+                    <Col md="auto"><Button name = 'delete' variant='outline-danger' disabled={this.props.cat==='add'?true:false} hidden={this.props.popUp || this.props.run} onClick={this.deleteData}>Delete</Button></Col>
                 </Row>
                 <Form onChange={this.props.changeCheck} className="overflow-auto" noValidate validated={validated} onSubmit={this.submitData} hidden={this.props.hidden}>
                     <Form.Group as={Row} controlId='name'>
                         <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Name</Form.Label>
                         <Col sm={9}>
-                            <Form.Control required type='text' name='name' onChange={this.changeState} readOnly={this.state.read} value={this.state.name} />
+                            <Form.Control required type='text' name='name' onChange={this.changeState} readOnly={this.props.cat==='add'?false:true} value={this.state.name} />
                         </Col>
                     </Form.Group>
                     
@@ -318,7 +318,7 @@ export class FormDS extends Component {
                     </div>
 
                     <Row>
-                        <Col md="auto"><Button type = 'submit' variant='outline-success' disabled={this.state.read}>Submit</Button></Col>
+                        <Col md="auto"><Button type = 'submit' variant='outline-success' disabled={this.state.read} hidden={this.state.read}>Submit</Button></Col>
                     </Row>
                 </Form>
 
@@ -517,7 +517,7 @@ export class FormDSAPIhelper extends Component {
                     </Row>
                     <Row>
                         <Col sm={3}>
-                            <Form.Label><Button variant = 'outline-dark' onClick={this.addNewData} disabled={readOnly}>Add new {id}</Button></Form.Label>
+                            <Form.Label><Button variant = 'outline-success' onClick={this.addNewData} disabled={readOnly}>Add new {id}</Button></Form.Label>
 
                         </Col>
                         <Col><Row> 

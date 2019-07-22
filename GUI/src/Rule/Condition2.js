@@ -357,7 +357,7 @@ class SubCond extends Component {
                 return <ListGroup.Item>
                         <Row>
                             <Col><Cond element={ele} variables={variables} changeCondition={changeCondition}  read={this.props.read} delCondition={this.props.delCondition}/></Col>
-                            <Col md="auto"><Button variant="outline-danger" onClick={()=>this.props.delCondition(ele['id'],conditions[0])}>Delete</Button></Col>
+                            <Col md="auto"><Button variant="outline-danger" disabled={this.props.read} onClick={()=>this.props.delCondition(ele['id'],conditions[0])}>Delete</Button></Col>
                         </Row>
                     </ListGroup.Item>
             }
@@ -372,14 +372,14 @@ class SubCond extends Component {
                 return <ListGroup.Item>
                     <Row>
                         <Col><SubCond conditions={ele['all']} selected_val='all' variables={variables} parentId={conditions[0]} changeCondition={changeCondition} changeSubCondition ={changeSubCondition} read={this.props.read} createNewCondition={this.props.createNewCondition} createNewSubCondition={this.props.createNewSubCondition} delCondition={this.props.delCondition}/></Col>
-                        <Col md="auto"><Button variant="outline-danger" onClick={()=>this.props.delCondition(ele['all'][0],conditions[0])}>Delete</Button></Col>
+                        <Col md="auto"><Button variant="outline-danger" disabled={this.props.read} onClick={()=>this.props.delCondition(ele['all'][0],conditions[0])}>Delete</Button></Col>
                     </Row>
                 </ListGroup.Item>
             }else if(ele['any']){
                 return <ListGroup.Item>
                     <Row>
                         <Col> <SubCond conditions={ele['any']} selected_val='any' variables={variables} parentId = {conditions[0]} changeCondition={changeCondition} changeSubCondition ={changeSubCondition} read={this.props.read} createNewCondition={this.props.createNewCondition} createNewSubCondition={this.props.createNewSubCondition} delCondition={this.props.delCondition}/></Col>
-                        <Col md="auto"><Button variant="outline-danger" onClick={()=>this.props.delCondition(ele['any'][0],conditions[0])}>Delete</Button></Col>
+                        <Col md="auto"><Button variant="outline-danger" disabled={this.props.read} onClick={()=>this.props.delCondition(ele['any'][0],conditions[0])}>Delete</Button></Col>
                     </Row>
                 </ListGroup.Item>
             }
@@ -414,10 +414,10 @@ class SubCond extends Component {
                         </Form.Control>
                         </Col>
                         <Col md="auto">
-                            <Button variant='outline-dark' disabled={read} onClick={this.addCond}>Add Condition</Button>
+                            <Button variant='outline-success' disabled={read} onClick={this.addCond}>Add Condition</Button>
                         </Col>
                         <Col md="auto">
-                            <Button variant = 'outline-dark' disabled={read} onClick={this.addSubCond}>Add Sub-Condition</Button>
+                            <Button variant = 'outline-success' disabled={read} onClick={this.addSubCond}>Add Sub-Condition</Button>
                         </Col>
                     </Row>
                     <ListGroup>
