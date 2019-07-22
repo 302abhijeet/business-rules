@@ -319,7 +319,7 @@ export class FormVar extends Component {
                             <Form.Control.Feedback type="invalid">Please select None if variable is "derived"</Form.Control.Feedback>
                         </Col>
                         <Col>
-                            <Button hidden={this.props.popUp} variant='outline-secondary' onClick={this.showDataSourceModal} disabled={this.state.read}>Add new Data Source</Button>
+                            <Button hidden={this.props.popUp} variant='outline-success' onClick={this.showDataSourceModal} disabled={this.state.read}>Add new Data Source</Button>
                         </Col>
                     </Form.Group>
             
