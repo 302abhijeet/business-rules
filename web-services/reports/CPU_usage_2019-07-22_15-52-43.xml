@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+	<Rules_engine>
+		<Errors/>
+		<Warning/>
+		<Rules_status>
+			<CPU_usage>Rule has returned false!</CPU_usage>
+		</Rules_status>
+		<Variables>
+			<CPU_usage source="API_getPostman">78</CPU_usage>
+		</Variables>
+		<Case_Report/>
+	</Rules_engine>

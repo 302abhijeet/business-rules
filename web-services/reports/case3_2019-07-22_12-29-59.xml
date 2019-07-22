@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+	<Rules_engine>
+		<Errors/>
+		<Warning/>
+		<Rules_status>
+			<rule1>Rule returned true!</rule1>
+			<rule2>Rule returned false!</rule2>
+			<rule3>Rule returned true!</rule3>
+		</Rules_status>
+		<Variables>
+			<actual source="API_getPostman">78</actual>
+			<correct source="database_sqlRuleEngine">5</correct>
+			<incorrect source="API_postPostman">33</incorrect>
+			<expected source="SSH_awsIntern">104
+</expected>
+		</Variables>
+		<Case_Report>Case has returned false!</Case_Report>
+	</Rules_engine>

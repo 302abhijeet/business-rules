@@ -1,0 +1,18 @@
+INFO Module:API Function:_run_API Line:57 Starting _run_API
+INFO Module:API Function:_run_API Line:263 Run_Rule fetched from database
+INFO Module:API Function:_run_API Line:310 source_variable_list made :[]
+INFO Module:API Function:_run_API Line:315 adding variable: CPU_usage
+INFO Module:API Function:_run_API Line:385 Addin data source: API_getPostman to be populated!
+INFO Module:collector Function:__init__ Line:97 starting collector module
+INFO Module:collector Function:__init__ Line:104 Getting data source: API_getPostman variables!
+INFO Module:collector Function:__init__ Line:113 Starting thread: API_getPostman
+INFO Module:collector Function:_get_source Line:66 Source: API_getPostman fetched variables: {'CPU_usage': 78}
+INFO Module:collector Function:_init_source_variables Line:29 Variable: CPU_usage has been created!Value: 78!Source: API_getPostman
+INFO Module:API Function:_run_API Line:390 variables input taken from collector!
+INFO Module:API Function:ProductVariables Line:425 Product Variable: CPU_usage has been created!
+INFO Module:API Function:_run_API Line:449 Adding action : Threshold_true to list!
+INFO Module:API Function:_run_API Line:449 Adding action : Threshold_false to list!
+INFO Module:API Function:ProductActions Line:486 Creater Product action : Threshold_true successfully!
+INFO Module:API Function:ProductActions Line:486 Creater Product action : Threshold_false successfully!
+INFO Module:engine Function:do_actions Line:108 Starting action: Threshold_false
+INFO Module:API Function:_run_API Line:516 Rule has retuned false!

@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+	<Rules_engine>
+		<Errors/>
+		<Warning/>
+		<Rules_status>
+			<rule1>Rule returned true!</rule1>
+			<rule2>Rule returned false!</rule2>
+			<Dictionary>All conditions were NOT satisfied: ['rule1', 'rule2']!Running all else rules: ['rule2']</Dictionary>
+			<rule2>Rule returned false!</rule2>
+			<rule1>Rule returned true!</rule1>
+			<rule2>Rule returned false!</rule2>
+			<rule3>Rule returned true!</rule3>
+			<Dictionary>Any condition was satisfied: {'1': ['rule1', 'rule2', 'rule3']}!Running all then rules: ['rule3', 'rule2']</Dictionary>
+			<rule3>Rule returned true!</rule3>
+			<rule2>Rule returned false!</rule2>
+		</Rules_status>
+		<Variables>
+			<actual source="API_getPostman">78</actual>
+			<correct source="database_sqlRuleEngine">5</correct>
+			<incorrect source="API_postPostman">33</incorrect>
+			<expected source="SSH_awsIntern">104
+</expected>
+		</Variables>
+		<Case_Report>Case has returned false!</Case_Report>
+	</Rules_engine>

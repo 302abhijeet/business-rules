@@ -1,0 +1,80 @@
+INFO Module:API Function:_run_API Line:58 Starting _run_API
+INFO Module:API Function:_run_API Line:245 Use_case fetched from database
+INFO Module:API Function:_run_API Line:311 source_variable_list made :[]
+INFO Module:API Function:_run_API Line:344 Adding rule: rule1 variables
+INFO Module:API Function:_run_API Line:346 Adding variable: actual 
+INFO Module:API Function:_run_API Line:360 Adding Variable: actual to DataSource: API_getPostman
+INFO Module:API Function:_run_API Line:346 Adding variable: expected 
+INFO Module:API Function:_run_API Line:360 Adding Variable: expected to DataSource: SSH_awsIntern
+INFO Module:API Function:_run_API Line:346 Adding variable: correct 
+INFO Module:API Function:_run_API Line:360 Adding Variable: correct to DataSource: database_sqlRuleEngine
+INFO Module:API Function:_run_API Line:344 Adding rule: rule2 variables
+INFO Module:API Function:_run_API Line:346 Adding variable: actual 
+INFO Module:API Function:_run_API Line:348 Variable: actual already in list
+INFO Module:API Function:_run_API Line:346 Adding variable: expected 
+INFO Module:API Function:_run_API Line:348 Variable: expected already in list
+INFO Module:API Function:_run_API Line:346 Adding variable: correct 
+INFO Module:API Function:_run_API Line:348 Variable: correct already in list
+INFO Module:API Function:_run_API Line:346 Adding variable: incorrect 
+INFO Module:API Function:_run_API Line:360 Adding Variable: incorrect to DataSource: API_postPostman
+INFO Module:API Function:_run_API Line:344 Adding rule: rule3 variables
+INFO Module:API Function:_run_API Line:346 Adding variable: actual 
+INFO Module:API Function:_run_API Line:348 Variable: actual already in list
+INFO Module:API Function:_run_API Line:346 Adding variable: expected 
+INFO Module:API Function:_run_API Line:348 Variable: expected already in list
+INFO Module:API Function:_run_API Line:346 Adding variable: correct 
+INFO Module:API Function:_run_API Line:348 Variable: correct already in list
+INFO Module:API Function:_run_API Line:386 Addin data source: API_getPostman to be populated!
+INFO Module:API Function:_run_API Line:386 Addin data source: SSH_awsIntern to be populated!
+INFO Module:API Function:_run_API Line:386 Addin data source: database_sqlRuleEngine to be populated!
+INFO Module:API Function:_run_API Line:386 Addin data source: API_postPostman to be populated!
+INFO Module:collector Function:__init__ Line:97 starting collector module
+INFO Module:collector Function:__init__ Line:104 Getting data source: API_getPostman variables!
+INFO Module:collector Function:__init__ Line:113 Starting thread: API_getPostman
+INFO Module:collector Function:__init__ Line:104 Getting data source: SSH_awsIntern variables!
+INFO Module:collector Function:__init__ Line:113 Starting thread: SSH_awsIntern
+INFO Module:collector Function:__init__ Line:104 Getting data source: database_sqlRuleEngine variables!
+INFO Module:collector Function:__init__ Line:113 Starting thread: database_sqlRuleEngine
+INFO Module:collector Function:__init__ Line:104 Getting data source: API_postPostman variables!
+INFO Module:collector Function:__init__ Line:113 Starting thread: API_postPostman
+INFO Module:collector Function:_get_source Line:66 Source: API_getPostman fetched variables: {'actual': 78}
+INFO Module:collector Function:_init_source_variables Line:29 Variable: actual has been created!Value: 78!Source: API_getPostman
+INFO Module:collector Function:_get_source Line:66 Source: database_sqlRuleEngine fetched variables: {'correct': 5}
+INFO Module:transport Function:_log Line:1760 Connected (version 2.0, client OpenSSH_7.2p2)
+INFO Module:collector Function:_init_source_variables Line:29 Variable: correct has been created!Value: 5!Source: database_sqlRuleEngine
+INFO Module:collector Function:_get_source Line:66 Source: API_postPostman fetched variables: {'incorrect': 33}
+INFO Module:collector Function:_init_source_variables Line:29 Variable: incorrect has been created!Value: 33!Source: API_postPostman
+INFO Module:transport Function:_log Line:1760 Authentication (publickey) successful!
+INFO Module:collector Function:_get_source Line:66 Source: SSH_awsIntern fetched variables: {'expected': '104\n'}
+INFO Module:collector Function:_init_source_variables Line:29 Variable: expected has been created!Value: 104
+!Source: SSH_awsIntern
+INFO Module:API Function:_run_API Line:391 variables input taken from collector!
+INFO Module:API Function:ProductVariables Line:426 Product Variable: actual has been created!
+INFO Module:API Function:ProductVariables Line:426 Product Variable: expected has been created!
+INFO Module:API Function:ProductVariables Line:426 Product Variable: correct has been created!
+INFO Module:API Function:ProductVariables Line:426 Product Variable: incorrect has been created!
+INFO Module:API Function:_run_API Line:454 Adding action : condition_pass to list!
+INFO Module:API Function:_run_API Line:454 Adding action : condition_fail to list!
+INFO Module:API Function:_run_API Line:461 Adding action : condition_pass to list!
+INFO Module:API Function:_run_API Line:463 Action : condition_pass already in list!
+INFO Module:API Function:_run_API Line:461 Adding action : condition_fail to list!
+INFO Module:API Function:_run_API Line:463 Action : condition_fail already in list!
+INFO Module:API Function:_run_API Line:461 Adding action : condition_pass to list!
+INFO Module:API Function:_run_API Line:463 Action : condition_pass already in list!
+INFO Module:API Function:_run_API Line:461 Adding action : condition_fail to list!
+INFO Module:API Function:_run_API Line:463 Action : condition_fail already in list!
+INFO Module:API Function:_run_API Line:461 Adding action : condition_pass to list!
+INFO Module:API Function:_run_API Line:463 Action : condition_pass already in list!
+INFO Module:API Function:_run_API Line:461 Adding action : condition_fail to list!
+INFO Module:API Function:_run_API Line:463 Action : condition_fail already in list!
+INFO Module:API Function:ProductActions Line:487 Creater Product action : condition_pass successfully!
+INFO Module:API Function:ProductActions Line:487 Creater Product action : condition_fail successfully!
+INFO Module:engine Function:do_actions Line:108 Starting action: condition_pass
+INFO Module:API Function:run_rules_list Line:167 Rule: rule1 returned true
+INFO Module:engine Function:do_actions Line:108 Starting action: condition_fail
+INFO Module:API Function:run_rules_list Line:174 Rule: rule2 returned false
+INFO Module:engine Function:do_actions Line:108 Starting action: condition_pass
+INFO Module:API Function:run_rules_list Line:167 Rule: rule3 returned true
+INFO Module:API Function:run_rules_list Line:209 List: ['rule1', 'rule2', 'rule3'] has returned False
+INFO Module:API Function:_run_API Line:527 Case has retuned false!
+INFO Module:engine Function:do_actions Line:108 Starting action: condition_fail
