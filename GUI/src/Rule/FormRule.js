@@ -397,7 +397,7 @@ export class FormRule extends Component {
                             })} options={var_options} onChange={this.changeVars} name='variables' isMulti isDisabled={this.state.read}/>
                         </Col>
                         <Col>
-                            <Button variant='outline-dark' disabled={this.state.read} onClick={this.showVariableFormModal}  >Add new Variable</Button>
+                            <Button hidden={this.props.popUp} variant='outline-dark' disabled={this.state.read} onClick={this.showVariableFormModal}  >Add new Variable</Button>
                         </Col>
                     </Form.Group>
 
@@ -412,7 +412,7 @@ export class FormRule extends Component {
                             })} options={act_options} onChange={this.changeActs} name='actions' isMulti isDisabled={this.state.read}/>
                         </Col>
                         <Col>
-                            <Button variant='outline-dark' disabled={this.state.read}  onClick={this.showActionFormModal} >Add new Action</Button>
+                            <Button hidden={this.props.popUp} variant='outline-dark' disabled={this.state.read}  onClick={this.showActionFormModal} >Add new Action</Button>
                         </Col>
                     </Form.Group>
                     

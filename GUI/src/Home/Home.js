@@ -46,23 +46,23 @@ export class Home extends Component {
                                 <Container>
                                     <Row>
                                         <Col><h3>Use Cases</h3></Col>
-                                        <Col md="auto"><Link to = {'/UseCase/add'}><Button variant='info' size='md'>ADD</Button></Link></Col>
+                                        <Col md="auto"><Link to = {'/UseCase/add'}><Button variant='success' size='md'>ADD</Button></Link></Col>
                                     </Row>
                                     <Accordion>
                                         {use_cases.map(uc => <UCCard name={uc["name"]} rules={uc['rule_list']}/>)}
                                     </Accordion>
                                     <hr/>
                                     <Row>
-                                        <Col md='auto'><h3>History: </h3></Col>
-                                        <Col md='auto'><h6>FROM:</h6></Col>
+                                        <Col md="auto"><h3>History: </h3></Col>
+                                        <Col md='auto'><h6 style={{marginTop:"10px"}}>FROM:</h6></Col>
                                         <Col md="auto"><DatePicker selected={this.state.start_date} onChange={this.changeStartDate} value={this.state.start_date}/></Col>
-                                        <Col md="auto"><h6>TO:</h6></Col>
+                                        <Col md="auto"><h6 style={{marginTop:"10px"}}>TO:</h6></Col>
                                         <Col md="auto"><DatePicker selected={this.state.end_date} onChange={this.changeEndDate} value={this.state.end_date}/></Col>
                                         <Col md='auto'><Button variant="primary" onClick={this.showHistory}>See History</Button></Col>
                                     </Row>
                                     <br />
-                                    <Accordion hidden={!this.state.show_history}>
-                                        {history.filter(ele => new Date(ele["Date"].substr(0,10))<=this.state.end_date && new Date(ele["Date"].substr(0,10))>=this.state.start_date).map(ele => <HistoryCard his={ele} />)}
+                                    <Accordion style={{height: '300px',overflowY: 'scroll'}} hidden={!this.state.show_history}>
+                                        {history.reverse().filter(ele => new Date(ele["Date"].substr(0,10))<=this.state.end_date && new Date(ele["Date"].substr(0,10))>=this.state.start_date).map(ele => <HistoryCard his={ele} />)}
                                     </Accordion>
 
                                 </Container>
@@ -98,12 +98,13 @@ export class HistoryCard extends Component {
             })
     }
     render(){
+        const color = this.props.his["passed"] === undefined?'red':'green'
         return(
             <Card>
                 <Accordion.Toggle as={Card.Header} eventKey={this.props.his["Date"]}>
                     <Row>
                         <Col>{this.props.his["Date"]}</Col>
-                        <Col sm="auto"><h5>{this.props.his["Use_Case"]}</h5></Col>
+                        <Col sm="auto"><h5 style={{color:color}}>{this.props.his["Use_Case"]}</h5></Col>
                         <Col md="auto"><Button onClick={()=>this.returnFile(this.props.his["Report"])} variant="outline-info">Report</Button></Col>
                     </Row>
                 </Accordion.Toggle>
@@ -126,8 +127,8 @@ class UCCard extends Component{
                         {console.log(this.props.rules)}
                         <Col>{this.props.name}</Col>
                         <Col sm="auto"><Link to = {'/History/UseCase/'+this.props.name}><Button variant='outline-warning' size='sm'>History</Button></Link></Col>
-                        <Col sm="auto"><Link to = {'/UseCase/'+this.props.name}><Button variant='outline-secondary' size='sm'>Modify</Button></Link></Col>
-                        <Col sm="auto"><Link to = {'/Run/UseCase/'+this.props.name}><Button variant='outline-primary' size="sm">Run</Button></Link></Col>
+                        <Col sm="auto"><Link to = {'/UseCase/'+this.props.name}><Button variant='outline-primary' size='sm'>Modify</Button></Link></Col>
+                        <Col sm="auto"><Link to = {'/Run/UseCase/'+this.props.name}><Button variant='outline-info' size="sm">Run</Button></Link></Col>
                     </Row>
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey={this.props.name}>
@@ -148,8 +149,8 @@ class RuleInfo extends Component{
                 <Row>
                     <Col>{this.props.name}</Col>
                     <Col sm="auto"><Link to = {'/History/Rule/'+this.props.name}><Button variant='outline-warning' size='sm'>History</Button></Link></Col>
-                    <Col sm="auto"><Link to = {'/Rule/'+this.props.name}><Button variant='outline-secondary' size='sm'>Modify</Button></Link></Col>
-                    <Col sm="auto"><Link to = {`/Run/Rule/${this.props.name}`}><Button variant='outline-primary' size="sm">Run</Button></Link></Col>
+                    <Col sm="auto"><Link to = {'/Rule/'+this.props.name}><Button variant='outline-primary' size='sm'>Modify</Button></Link></Col>
+                    <Col sm="auto"><Link to = {`/Run/Rule/${this.props.name}`}><Button variant='outline-info' size="sm">Run</Button></Link></Col>
                 </Row>
             </ListGroup.Item>
         )
