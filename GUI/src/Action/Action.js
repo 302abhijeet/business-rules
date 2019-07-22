@@ -13,6 +13,7 @@ export class Action extends Component {
             <Consumer>
                 {value=>{
                     const {cat} = this.props
+                    const {in_operation} = value.value
                     const action = value.value.actions
                     // if(redirect===true)
                     //     return <Redirect to='/Variable/index' />
@@ -31,11 +32,17 @@ export class Action extends Component {
                                     <Col>
                                         <SideAct actions = {action} />
                                     </Col>
-                                    <Col lg = {9}>
+                                    <Col lg = {10}>
                                         <h1>Action</h1>
                                         <p>Click on the Add button to create an action or choose an action from the given list</p>
                                         <Link to = '/Action/add'><Button variant='outline-primary'>Add new Action</Button></Link>
                                         
+                                    </Col>
+                                    <Col hidden={!in_operation}>
+                                    <Spinner animation="border" role="status">
+                                        <span className="sr-only">Loading...</span>
+
+                                    </Spinner>
                                     </Col>
                                     </Row>
                                 </Container>

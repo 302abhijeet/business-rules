@@ -11,7 +11,7 @@ export class Rule extends Component {
             <Consumer>
                 {value=>{
                     const {cat} = this.props
-                    const {DataSource,actions,rules,variables,redirect} = value.value
+                    const {DataSource,actions,rules,variables,in_operation} = value.value
                     const action=actions,rule=rules
                     // if(redirect===true)  
                     //     return <Redirect to='/Variable/index' />
@@ -36,7 +36,12 @@ export class Rule extends Component {
                                         <Link to = '/Rule/add'><Button variant='outline-primary'>Add new Rule</Button></Link>
                                         
                                     </Col>
-                                    
+                                    <Col hidden={!in_operation}>
+                                    <Spinner animation="border" role="status">
+                                        <span className="sr-only">Loading...</span>
+
+                                    </Spinner>
+                                    </Col>
                                     </Row>
                                 </Container>
                             )

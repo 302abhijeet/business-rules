@@ -15,46 +15,83 @@ export  class Provider extends Component {
         history:null,
         DataSource:null,
         use_cases:null,
-        redirect:false
+        in_operation:false
     }
 
     delData = (ty,newOb)=>{
+        this.setState({in_operation:true})
         axios.post(`http://127.0.0.1:5000/del/${ty}`,JSON.stringify(newOb))
             .then((res)=>{
                 console.log(res)
-            })
-            .catch(err=>console.log(err))
-        const datas = this.state[ty]
-        const newData = datas.filter(ele => ele['name']!==newOb["name"])
-        this.setState({
-            [ty]:[...newData],
-            redirect:true
+                const datas = this.state[ty]
+                const newData = datas.filter(ele => ele['name']!==newOb["name"])
+                alert(`${newOb['name']} deleted`)
+                this.setState({
+                    [ty]:[...newData],
+                   in_operation:false
         })
+            })
+            .catch(err=>{
+
+                alert(`${newOb['name']} couldn't be deleted`)
+                console.log(err)
+                this.setState({in_operation:false})
+
+                
+            }   
+            )
+        
     }
 
     addData = (ty,newOb) =>{
-        console.log(newOb)
+        this.setState({in_operation:true})
         axios.post(`http://127.0.0.1:5000/add/${ty}`,JSON.stringify(newOb))
-        this.setState({
-            [ty]:[...this.state[ty],newOb],
-            redirect:true
+            .then(res=>{
+                alert(`${newOb['name']} added`)
+                this.setState({
+                    [ty]:[...this.state[ty],newOb],
+                    in_operation:false
+        
+                })
+            })
 
-        })
+            .catch(
+                err=>{
+                    alert(`${newOb['name']} couldn't be created`)
+                    console.log(err)
+                    this.setState({in_operation:false})
+
+                }
+            )
+       
+    
     }
 
     modifyData = (ty,newOb)=>{
+        this.setState({in_operation:true})
+
         axios.post(`http://127.0.0.1:5000/modify/${ty}`,JSON.stringify(newOb))
-        const datas = this.state[ty]
-        datas.forEach(element => {
-            if(element['name']===newOb['name']){
-                element = newOb
-            }    
+        .then(res =>{
+            alert(`${newOb['name']} modified`)
+            const datas = this.state[ty]
+            datas.forEach(element => {
+                if(element['name']===newOb['name']){
+                    element = newOb
+                }    
+            })
+            this.setState({
+                [ty]:[...datas],
+                in_operation:false
+    
+            })
         })
-        this.setState({
-            [ty]:[...datas],
-            redirect:true
+        .catch(err =>{
+            alert(`${newOb['name']} couldn't be modified`)
+            console.log(err)
+            this.setState({in_operation:false})
 
         })
+      
     }
 
     

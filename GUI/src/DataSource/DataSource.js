@@ -15,6 +15,7 @@ export class DataSource extends Component {
                     {(value) => {
                         const {cat} = this.props
                         const data_sources =value.value.DataSource
+                        const {in_operation} = value.value
 
                         if( data_sources === null || data_sources===undefined){
                             return(<Spinner animation="border" role="status">
@@ -30,11 +31,17 @@ export class DataSource extends Component {
                                         <Col>
                                             <SideDS data_sources = {data_sources} />
                                         </Col>
-                                        <Col lg = {9}>
+                                        <Col lg = {10}>
                                             <h1>Data Source</h1>
                                             <p>Click on the Add button to create a data source or choose a data source from the given list</p>
                                             <Link to = '/DataSource/add'><Button variant='outline-primary'>Add new Data Source</Button></Link>
                                             
+                                        </Col>
+                                        <Col hidden={!in_operation}>
+                                            <Spinner animation="border" role="status">
+                                                <span className="sr-only">Loading...</span>
+
+                                            </Spinner>
                                         </Col>
                                         </Row>
                                     </Container>
