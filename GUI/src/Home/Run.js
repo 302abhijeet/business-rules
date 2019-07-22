@@ -58,8 +58,8 @@ export class Run extends Component {
         })
     }
     returnFile = () => {
-        console.log("http://127.0.0.1:5000/return-files?file=reports\\"+this.state.result["file"].substr(10,))
-        fetch("http://127.0.0.1:5000/return-files?file=reports\\"+this.state.result["file"].substr(10,))
+        console.log("http://10.137.89.13:5000/return-files?file=reports\\"+this.state.result["file"].substr(10,))
+        fetch("http://10.137.89.13:5000/return-files?file=reports\\"+this.state.result["file"].substr(10,))
             .then(res => res.blob())
             .then(blob => {
                 // 2. Create blob link to download
