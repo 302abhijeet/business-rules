@@ -6,7 +6,6 @@ from business_rules.actions import *
 from business_rules.best_case import *
 from datetime import datetime
 import business_rules.collector as collector
-import weakref
 import threading
 import logging
 import xml.etree.ElementTree as ET
