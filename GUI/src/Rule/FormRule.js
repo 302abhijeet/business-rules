@@ -371,7 +371,7 @@ export class FormRule extends Component {
                         this.props.cat ==='add' ? <h1>Add new Rule</h1> : <h1>{this.props.cat} Rule</h1>
                     } </Col>
                     <Col md='auto'>
-                        <Button hidden={this.props.popUp} variant='outline-secondary' onClick={this.modifyRead} disabled={!this.state.read}>Modify</Button>
+                        <Button hidden={this.props.popUp} variant='outline-primary' onClick={this.modifyRead} disabled={!this.state.read}>Modify</Button>
                     </Col>
                     <Col md='auto'> 
                     <Button variant = 'outline-danger' hidden={this.props.popUp} onClick = {this.delData} disabled = {this.props.cat!=='add'?false:true}>Delete</Button>
@@ -397,7 +397,7 @@ export class FormRule extends Component {
                             })} options={var_options} onChange={this.changeVars} name='variables' isMulti isDisabled={this.state.read}/>
                         </Col>
                         <Col>
-                            <Button variant='outline-dark' disabled={this.state.read} onClick={this.showVariableFormModal}  >Add new Variable</Button>
+                            <Button variant='outline-success' disabled={this.state.read} onClick={this.showVariableFormModal}  >Add new Variable</Button>
                         </Col>
                     </Form.Group>
 
@@ -412,7 +412,7 @@ export class FormRule extends Component {
                             })} options={act_options} onChange={this.changeActs} name='actions' isMulti isDisabled={this.state.read}/>
                         </Col>
                         <Col>
-                            <Button variant='outline-dark' disabled={this.state.read}  onClick={this.showActionFormModal} >Add new Action</Button>
+                            <Button variant='outline-success' disabled={this.state.read}  onClick={this.showActionFormModal} >Add new Action</Button>
                         </Col>
                     </Form.Group>
                     
@@ -435,7 +435,7 @@ export class FormRule extends Component {
 
                         </Col>
                         <Col sm={4}>
-                            <Button variant='outline-dark' onClick={this.addTrueAct} disabled={this.state.read}>Add this action for true</Button>
+                            <Button variant='outline-sucess' onClick={this.addTrueAct} disabled={this.state.read}>Add this action for true</Button>
                         </Col>
                     </Form.Group>
 
@@ -505,7 +505,7 @@ export class FormRule extends Component {
 
                         </Col>
                         <Col sm={4}>
-                            <Button variant='outline-dark' onClick={this.addActFalse} disabled={this.state.read}>Add this action for false</Button>
+                            <Button variant='outline-success' onClick={this.addActFalse} disabled={this.state.read}>Add this action for false</Button>
                         </Col>
                     </Form.Group>
 
@@ -562,7 +562,7 @@ export class FormRule extends Component {
 
                         <Row>
                             <Col>
-                                <Button variant='outline-success' type='submit' disabled={this.state.read}>Submit</Button>
+                                <Button variant='outline-success' type='submit' hidden = {this.state.read} disabled={this.state.read}>Submit</Button>
                             </Col>
                             <Col>
                             </Col>

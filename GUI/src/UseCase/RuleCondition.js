@@ -399,7 +399,7 @@ class RuleArr extends Component{
             <React.Fragment>
             <ListGroup.Item>
                     <Dropdown>
-                        <Dropdown.Toggle disabled={this.props.read} variant='outline-secondary' id = 'add'>Add</Dropdown.Toggle>
+                        <Dropdown.Toggle disabled={this.props.read} variant='outline-success' id = 'add'>Add</Dropdown.Toggle>
                         <Dropdown.Menu>
                             <Dropdown.Item onClick ={()=>this.props.addCondition(this.props.data[0])}>Add condition</Dropdown.Item>
                             <Dropdown.Item onClick ={()=>this.props.addRule(this.props.data[0])}>Add rule</Dropdown.Item>

@@ -252,13 +252,13 @@ export class FormVar extends Component {
                     <Col>{
                         this.props.cat ==='add' ? <h1>Add new Variable</h1> : <h1>{this.props.cat} Variable</h1>
                     }</Col>
-                    <Col hidden={this.props.popUp} md="auto"><Button name='modify' variant='outline-secondary' disabled={!this.state.read} onClick={this.changeReadMode}>Modify</Button></Col>
-                    <Col hidden={this.props.popUp} md="auto"><Button name = 'delete' variant='outline-danger' disabled={!this.state.read} onClick={this.deleteData}>Delete</Button></Col>   
+                    <Col hidden={this.props.popUp} md="auto"><Button name='modify' variant='outline-primary' disabled={!this.state.read} onClick={this.changeReadMode}>Modify</Button></Col>
+                    <Col hidden={this.props.popUp} md="auto"><Button name = 'delete' variant='outline-danger' disabled={this.props.cat==='add'?true:false} onClick={this.deleteData}>Delete</Button></Col>   
                 </Row>
                     <Form.Group as={Row} controlId='name'>
                         <Form.Label column sm={3}><span style={{color:"red"}}>*</span>Name</Form.Label>
                         <Col sm={9}>
-                            <Form.Control required type='text' name='name' onChange={this.changeState} readOnly={this.state.read} value={this.state.name} />
+                            <Form.Control required type='text' name='name' onChange={this.changeState} readOnly={this.props.cat==='add'?false:true} value={this.state.name} />
                             <Form.Control.Feedback type="invalid">Enter Variable Name!</Form.Control.Feedback>
                         </Col>
                     </Form.Group>
@@ -319,7 +319,7 @@ export class FormVar extends Component {
                             <Form.Control.Feedback type="invalid">Please select None if variable is "derived"</Form.Control.Feedback>
                         </Col>
                         <Col>
-                            <Button variant='outline-secondary' onClick={this.showDataSourceModal} disabled={this.state.read}>Add new Data Source</Button>
+                            <Button variant='outline-success' onClick={this.showDataSourceModal} disabled={this.state.read}>Add new Data Source</Button>
                         </Col>
                     </Form.Group>
             
@@ -389,7 +389,7 @@ export class FormVar extends Component {
                     </Form.Group>
 
                     <Row>
-                        <Col><Button type = 'submit' variant='outline-success' disabled={this.state.read}>Submit</Button></Col>
+                        <Col><Button type = 'submit' variant='outline-success' hidden={this.state.read} disabled={this.state.read}>Submit</Button></Col>
                     </Row>
 
             </Form>                
