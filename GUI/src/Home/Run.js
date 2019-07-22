@@ -82,7 +82,7 @@ export class Run extends Component {
 
     runCase = () => {
         this.setState({isLoading:true})
-        let url = " http://127.0.0.1:5000/"+ (this.props.type==='UseCase'?"runusecase?use_case=":"runrule?rule=")+ this.props.name
+        let url = " http://10.137.89.13:5000/"+ (this.props.type==='UseCase'?"runusecase?use_case=":"runrule?rule=")+ this.props.name
         this.state.parameter_variables.forEach(ele => {
             url += "&"+ele['name']+"="+ele["value"]
         })
