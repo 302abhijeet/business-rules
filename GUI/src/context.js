@@ -73,11 +73,14 @@ export  class Provider extends Component {
         axios.post(`http://10.137.89.13:5000/modify/${ty}`,JSON.stringify(newOb))
         .then(res =>{
             alert(`${newOb["querry"]['name']} modified`)
-            const datas = this.state[ty]
-            datas.forEach(element => {
-                if(element['name']===newOb["query"]['name']){
-                    element = newOb
-                }    
+            let datas = this.state[ty]
+            datas= datas.map(element => {
+                if(element['name']===newOb['querry']['name']){
+                    element = newOb['newData']
+                    return newOb['newData']
+                }else{
+                    return element
+                }
             })
             this.setState({
                 [ty]:[...datas],
