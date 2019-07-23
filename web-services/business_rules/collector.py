@@ -68,8 +68,9 @@ class Collector:
         except Exception as e:
             cache = mydb["cache"].find_one({"name":source['name']},{"_id":0,"result":1}) or {}
             if cache:
-                for var in cache["result"] and var in source["variables"]:
-                    result[var] = cache["result"][var]
+                for var in cache["result"]:
+                    if var in source["variables"]:
+                        result[var] = cache["result"][var]
                 API.logger.warning("Unable to connect to source host: {}! Source Variables will be taken from cache: {}! Error: {}".format(source['name'],source["variables"],e))
                 ET.SubElement(API.root[1],"RuntimeError").text = str("Unable to connect to source host: {}! Source variables in source will be taken from cache: {}! Error: {}".format(source['name'],source["variables"],e))
                 if not source["cache"]:
