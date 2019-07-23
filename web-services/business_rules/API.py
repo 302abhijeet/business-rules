@@ -233,8 +233,10 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
                 return run_rules_list(dicts['then'])
             else :
                 logger.info("Any condition was satisfied: {}!Running all else rules: {}".format(dicts['any'],dicts['else']))
-                ET.SubElement(rules_report,"Dictionary").text = str("Any condition was satisfied: {}!Running all else rules: {}".format(dicts['any'],dicts['else']))
+                ET.SubElement(rules_report,"Dictionary").text = str("Any condition NOT was satisfied: {}!Running all else rules: {}".format(dicts['any'],dicts['else']))
                 return run_rules_list(dicts['else'])
+        elif "multi_thread" in dicts:
+            return run_rules_tuple(tuple(dicts["multi_thread"]))
 
 
     #check if use_case and run_rule defined in config
@@ -244,12 +246,6 @@ def _run_API(mydb,case = "",run_rule = "",parameter_variables = {},parameter_dat
             logger.info("Use_case fetched from database")
             #changing multi-thread dicts to tuple
             i = 0
-            for dicts in case["rules"]:
-                if(type(dicts)==dict):
-                    if 'multi_thread' in dicts:
-                        case["rules"][i] = tuple(dicts["multi_thread"])
-                        logger.info("Changed multi-thread dict to tuple")
-                i += 1
         else:
             logger.critical("Case not defined in config")
             ET.SubElement(error,'NameError').text = str("Case: " + case +" not defined in config!")
