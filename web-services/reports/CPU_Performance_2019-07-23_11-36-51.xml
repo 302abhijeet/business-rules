@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+	<Rules_engine>
+		<Errors/>
+		<Warning/>
+		<Rules_status>
+			<CPU_usage>Rule returned false!</CPU_usage>
+			<memory>Rule returned true!</memory>
+			<disk_space>Rule returned true!</disk_space>
+		</Rules_status>
+		<Variables>
+			<CPU_usage source="API_getPostman">78</CPU_usage>
+			<disk_space source="API_postPostman">33</disk_space>
+			<free_mem source="SSH_awsIntern">         3559368 </free_mem>
+			<total_mem source="SSH_awsIntern">        4044604 </total_mem>
+			<memory source="Derived">11.997120113613107</memory>
+		</Variables>
+		<Case_Report>Case has returned false!</Case_Report>
+	</Rules_engine>
