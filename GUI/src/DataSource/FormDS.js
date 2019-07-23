@@ -212,6 +212,9 @@ export class FormDS extends Component {
             }
             else{
                 console.log('in '+this.props.cat)
+                if(data["method"]==="SSH" && data["key_filname"]==="") {
+                    data["key_filename"] = null
+                }
                 let newData = {
                     querry : {name : data['name']},
                     newData : data
