@@ -2,4 +2,4 @@ cd GUI
 serve -l 5001 -s build &
 cd .. 
 cd web-services
-python main_server.py
+python3.7 main_server.py
