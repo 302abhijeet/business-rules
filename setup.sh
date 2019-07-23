@@ -2,7 +2,6 @@
 cd GUI
 sudo apt-get install nodejs
 npm install
-npm run build
 cd ..
 cd web-services
 sudo apt-get install python3
