@@ -77,7 +77,7 @@ export class Home extends Component {
 export class HistoryCard extends Component {
     returnFile = (filename) => {
         console.log("http://10.137.89.13:5000/return-files?file=reports/"+filename.substr(9,))
-        fetch("http://10.137.87.13:5000/return-files?file=reports/"+filename.substr(9,))
+        fetch("http://10.137.89.13:5000/return-files?file=reports/"+filename.substr(9,))
             .then(res => res.blob())
             .then(blob => {
                 // 2. Create blob link to download
