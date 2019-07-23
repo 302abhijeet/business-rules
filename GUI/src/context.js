@@ -72,10 +72,10 @@ export  class Provider extends Component {
 
         axios.post(`http://10.137.89.13:5000/modify/${ty}`,JSON.stringify(newOb))
         .then(res =>{
-            alert(`${newOb['name']} modified`)
+            alert(`${newOb["querry"]['name']} modified`)
             const datas = this.state[ty]
             datas.forEach(element => {
-                if(element['name']===newOb['name']){
+                if(element['name']===newOb["query"]['name']){
                     element = newOb
                 }    
             })
@@ -86,7 +86,7 @@ export  class Provider extends Component {
             })
         })
         .catch(err =>{
-            alert(`${newOb['name']} couldn't be modified`)
+            alert(`${newOb["querry"]['name']} couldn't be modified`)
             console.log(err)
             this.setState({in_operation:false})
 
