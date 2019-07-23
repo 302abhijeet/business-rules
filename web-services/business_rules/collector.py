@@ -47,7 +47,7 @@ class Collector:
         result = {}
         if source["cache"]:
             cache = mydb["cache"].find_one({"name":source['name']},{"_id":0,"result":1})
-            if result and set(source['variables']).issubset(cache['result'].keys()):
+            if cache and set(source['variables']).issubset(cache['result'].keys()):
                 API.logger.info("Variables : {} of Source : {} taken from cache!".format(source['variables'],source["name"]))
                 ET.SubElement(API.root[1],"INFO").text = str("Variables: {} of Source: {} taken from cache!".format(source['variables'],source["name"]))
                 for var in source["variables"]:
@@ -66,14 +66,14 @@ class Collector:
             API.logger.info("Source: {} fetched variables: {}".format(source['name'],result))
             mydb["cache"].update_one({"name":source['name']},{"$set":{"result":result}},upsert=True)
         except Exception as e:
-            result = mydb["cache"].find_one({"name":source['name']},{"_id":0,"result":1}) or {}
-            if result:
+            cache = mydb["cache"].find_one({"name":source['name']},{"_id":0,"result":1}) or {}
+            if cache:
                 for var in source["variables"]:
                     result[var] = cache["result"][var]
                 API.logger.warning("Unable to connect to source host: {}! Source Variables will be taken from cache: {}! Error: {}".format(source['name'],source["variables"],e))
                 ET.SubElement(API.root[1],"RuntimeError").text = str("Unable to connect to source host: {}! Source variables in source will be taken from cache: {}! Error: {}".format(source['name'],source["variables"],e))
                 if not source["cache"]:
-                    for var in result:
+                    for var in source["variables"]:
                         if not variables[var]["cache"] or var not in result:
                             result[var] = RuntimeError("Variable cannot be cached!")
                             kill_variable.append(var)
